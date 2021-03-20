@@ -1,0 +1,11 @@
+html {
+  box-sizing: border-box;
+  font-size: 65.5%; // to make 1rem equal 10px
+  overflow: hidden;
+}
+
+body {
+  height: 500px;
+  width: 100vw;
+  background-color: aqua;
+}

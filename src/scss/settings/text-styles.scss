@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Spartan:wght@300;600&display=swap');
+
+@mixin font-family-one {
+  font-family: 'Spartan', sans-serif;
+}
+
+@mixin font-family-two {
+  font-family: 'Roboto', sans-serif;
+}
+
+// ZONE - headings
+
+h1 {
+  font-size: 2.4rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1.8rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include font-family-one();
+}
+
+p,
+a,
+button {
+  @include font-family-two();
+  font-size: 1.8rem;
+}
+
+td,
+span {
+  @include font-family-one();
+  font-size: 1.8rem;
+}
+
+// ZONE - mixins
+
+@mixin ts-heading-1 {
+  font-weight: 400;
+  color: $grey-light;
+}
+
+@mixin ts-heading-2 {
+  font-weight: 400;
+  color: $grey-light;
+}
+
+@mixin ts-body {
+  color: $grey-light;
+  line-height: 22;
+}
+
+@mixin ts-emphasis {
+  color: $grey-light;
+  font-weight: 600;
+}
+
+@mixin ts-numerical {
+  color: $grey-light;
+  font-weight: 400;
+}
+
+@mixin ts-profit {
+  color: $green-light;
+  font-weight: 400;
+}

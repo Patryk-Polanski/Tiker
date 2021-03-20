@@ -1,0 +1,37 @@
+{
+  "name": "Tiker",
+  "version": "1.0.0",
+  "description": "Trading Journal and Performance analysis tool",
+  "main": "dist/index.html",
+  "scripts": {
+    "watch": "parcel watch ./src/*.html",
+    "start": "parcel ./src/*.html",
+    "build": "parcel build ./src/index.html ./src/app.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Patryk-Polanski/tiker.git"
+  },
+  "keywords": [
+    "trading",
+    "journal",
+    "visualization",
+    "statistics"
+  ],
+  "author": "Patryk Polanski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Patryk-Polanski/tiker/issues"
+  },
+  "homepage": "https://github.com/Patryk-Polanski/tiker#readme",
+  "dependencies": {
+    "core-js": "^3.9.1",
+    "d3": "^6.6.0",
+    "regenerator-runtime": "^0.13.7"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-beta.2",
+    "parcel": "^2.0.0-beta.2",
+    "sass": "^1.32.8"
+  }
+}
