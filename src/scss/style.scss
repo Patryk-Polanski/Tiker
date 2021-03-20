@@ -1,8 +1,10 @@
 // ZONE - Settings
 @import './settings/reset';
+@import './settings/text-styles';
+@import './settings/variables';
 
 // ZONE - Base
-@import './base/base';
+@import './base/global';
 
 // ZONE - Sections
 @import './sections/login';

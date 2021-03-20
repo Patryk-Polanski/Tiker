@@ -4,9 +4,9 @@
   "description": "Trading Journal and Performance analysis tool",
   "main": "dist/index.html",
   "scripts": {
-    "watch": "parcel watch ./src/*.html",
-    "start": "parcel ./src/*.html",
-    "build": "parcel build ./src/index.html ./src/app.html"
+    "watch": "parcel watch ./src/index.html",
+    "start": "parcel ./src/index.html",
+    "build": "parcel build ./src/index.html"
   },
   "repository": {
     "type": "git",

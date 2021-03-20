@@ -1,0 +1,13 @@
+.s-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &-container {
+    height: 500px;
+    width: 500px;
+    background-color: $black;
+    border-radius: 10px;
+  }
+}
