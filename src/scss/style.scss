@@ -1,16 +1,17 @@
 // ZONE - Settings
-@import './settings/animations';
-@import './settings/mixins';
 @import './settings/reset';
-@import './settings/svg';
-@import './settings/text-styles';
 @import './settings/variables';
+@import './settings/text-styles';
+@import './settings/mixins';
+@import './settings/animations';
+@import './settings/svg';
 
 // ZONE - Base
 @import './base/global';
 
 // ZONE - Sections
 @import './sections/calculators';
+@import './sections/content';
 @import './sections/glossary';
 @import './sections/guide';
 @import './sections/help';

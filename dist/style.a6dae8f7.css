@@ -181,16 +181,39 @@ span {
   font-size: 1.8rem;
 }
 
+.svg--nav {
+  cursor: pointer;
+  fill: none;
+  height: 75px;
+  width: 75px;
+}
+.svg--nav:nth-of-type(1) {
+  background-color: rgba(10, 12, 10, 0.5);
+}
+.svg--nav:nth-of-type(2), .svg--nav:nth-of-type(4) {
+  background-color: rgba(12, 10, 10, 0.5);
+}
+.svg--nav:nth-of-type(3) {
+  background-color: rgba(22, 18, 22, 0.4);
+}
+
 html {
   box-sizing: border-box;
   font-size: 65.5%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 body {
   height: 100vh;
   width: 100vw;
   background-color: #000000;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  max-width: 2560px;
+  margin: 0 auto;
 }
 
 .background-pattern {
@@ -265,11 +288,14 @@ body {
   height: 100vh;
   width: 75px;
   background-color: #000000;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0 1rem;
+  padding-top: 0.5rem;
 }
 .c-nav__logo {
   width: 66px;
