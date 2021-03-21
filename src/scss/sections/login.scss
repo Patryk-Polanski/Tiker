@@ -5,7 +5,8 @@
   height: 100vh;
 
   &__container {
-    height: 500px;
+    // height: 500px;
+    padding: 2rem 4rem 4rem;
     width: 500px;
     background-color: $black;
     border-radius: 10px;
@@ -38,10 +39,16 @@
     border-bottom: 2px solid $grey-light;
     color: $grey-light;
     padding: 0.8rem 1rem;
+    &:focus {
+      outline: none;
+      border-bottom: 2px solid $purple-medium;
+    }
   }
 
   &__form-button-wrapper {
     display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
   }
 
   &__form-button {

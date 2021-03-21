@@ -8,5 +8,17 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: $black;
+}
+
+.background-pattern {
   background: url('../img/carbon-fibre.png');
+}
+
+.background-gradient {
+  background: $grey-dark;
+  background: linear-gradient(
+    63deg,
+    rgba($grey-dark, 1) 0%,
+    rgba($purple-dark, 1) 100%
+  );
 }

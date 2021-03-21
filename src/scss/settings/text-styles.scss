@@ -32,18 +32,20 @@ h4,
 h5,
 h6,
 label,
-input {
+input,
+button,
+a {
   @include font-family-one();
 }
 
 label,
-input {
+input,
+button,
+a {
   font-size: 1.8rem;
 }
 
-p,
-a,
-button {
+p {
   @include font-family-two();
   font-size: 1.8rem;
 }

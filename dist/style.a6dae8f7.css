@@ -92,6 +92,7 @@ video {
   vertical-align: baseline;
   box-sizing: border-box;
 }
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -106,17 +107,21 @@ nav,
 section {
   display: block;
 }
+
 body {
   line-height: 1;
 }
+
 ol,
 ul {
   list-style: none;
 }
+
 blockquote,
 q {
   quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -124,22 +129,27 @@ q:after {
   content: "";
   content: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
 h1 {
   font-size: 2.4rem;
 }
+
 h2 {
   font-size: 1.2rem;
 }
+
 h3,
 h4,
 h5,
 h6 {
   font-size: 1.8rem;
 }
+
 h1,
 h2,
 h3,
@@ -147,35 +157,51 @@ h4,
 h5,
 h6,
 label,
-input {
+input,
+button,
+a {
   font-family: "Spartan", sans-serif;
 }
+
 label,
-input {
+input,
+button,
+a {
   font-size: 1.8rem;
 }
-p,
-a,
-button {
+
+p {
   font-family: "Roboto", sans-serif;
   font-size: 1.8rem;
 }
+
 td,
 span {
   font-family: "Spartan", sans-serif;
   font-size: 1.8rem;
 }
+
 html {
   box-sizing: border-box;
   font-size: 65.5%;
   overflow: hidden;
 }
+
 body {
   height: 100vh;
   width: 100vw;
   background-color: #000000;
-  background: url("carbon-fibre.9e6e6878.png");
 }
+
+.background-pattern {
+  background: url("/carbon-fibre.14ebb3a3.png");
+}
+
+.background-gradient {
+  background: #080808;
+  background: linear-gradient(63deg, #080808 0%, #161216 100%);
+}
+
 .s-login {
   display: flex;
   justify-content: center;
@@ -183,7 +209,7 @@ body {
   height: 100vh;
 }
 .s-login__container {
-  height: 500px;
+  padding: 2rem 4rem 4rem;
   width: 500px;
   background-color: #000000;
   border-radius: 10px;
@@ -211,13 +237,42 @@ body {
   color: #aaaaaa;
   padding: 0.8rem 1rem;
 }
+.s-login__form-username-input:focus, .s-login__form-password-input:focus {
+  outline: none;
+  border-bottom: 2px solid #370943;
+}
 .s-login__form-button-wrapper {
   display: flex;
+  justify-content: space-between;
+  margin-top: 4rem;
 }
 .btn {
   border: none;
+  color: #aaaaaa;
+  border-radius: 5px;
+  padding: 0.7rem 4rem;
+  cursor: pointer;
+  text-decoration: none;
 }
 .btn--primary {
   background-color: #370943;
 }
-/*# sourceMappingURL=index.906f4b28.css.map */
+.btn--secondary {
+  background-color: #29242a;
+}
+
+.c-nav {
+  height: 100vh;
+  width: 75px;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0 1rem;
+}
+.c-nav__logo {
+  width: 66px;
+}
+
+/*# sourceMappingURL=/style.a6dae8f7.css.map */
