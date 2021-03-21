@@ -30,8 +30,15 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+label,
+input {
   @include font-family-one();
+}
+
+label,
+input {
+  font-size: 1.8rem;
 }
 
 p,
@@ -61,7 +68,7 @@ span {
 
 @mixin ts-body {
   color: $grey-light;
-  line-height: 22;
+  line-height: 22px;
 }
 
 @mixin ts-emphasis {

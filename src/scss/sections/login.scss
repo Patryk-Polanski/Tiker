@@ -4,10 +4,46 @@
   align-items: center;
   height: 100vh;
 
-  &-container {
+  &__container {
     height: 500px;
     width: 500px;
     background-color: $black;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__logo {
+    width: 250px;
+    height: auto;
+  }
+
+  &__form {
+    & > * {
+      margin-top: 2rem;
+    }
+  }
+
+  &__form-username-label,
+  &__form-password-label {
+    display: block;
+    @include ts-body;
+  }
+
+  &__form-username-input,
+  &__form-password-input {
+    background-color: $grey-medium;
+    border: none;
+    border-bottom: 2px solid $grey-light;
+    color: $grey-light;
+    padding: 0.8rem 1rem;
+  }
+
+  &__form-button-wrapper {
+    display: flex;
+  }
+
+  &__form-button {
   }
 }
