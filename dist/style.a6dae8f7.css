@@ -167,18 +167,18 @@ label,
 input,
 button,
 a {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 p {
   font-family: "Roboto", sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 td,
 span {
   font-family: "Spartan", sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 .svg--nav {
@@ -310,7 +310,7 @@ body {
   border: none;
   color: #aaaaaa;
   border-radius: 5px;
-  padding: 0.7rem 4rem;
+  padding: 0.7rem 3.2rem;
   cursor: pointer;
   text-decoration: none;
 }
@@ -323,7 +323,6 @@ body {
 
 .c-chart-performance {
   background-color: #080808;
-  background-color: blue;
   grid-column: 1/span 3;
   grid-row: 1/span 7;
   border-radius: 10px;
@@ -336,7 +335,6 @@ body {
 
 .c-chart-worst-best {
   background-color: #080808;
-  background-color: orange;
   grid-column: 3/-1;
   grid-row: 8/-1;
   border-radius: 10px;
@@ -367,7 +365,6 @@ body {
 
 .c-pie-streak {
   background-color: #080808;
-  background-color: green;
   grid-column: 4/-1;
   grid-row: 1/span 7;
   border-radius: 10px;
@@ -381,7 +378,6 @@ body {
 
 .c-table-profitable {
   background-color: #080808;
-  background-color: purple;
   grid-column: 1/span 2;
   grid-row: 8/-1;
   border-radius: 10px;

@@ -42,18 +42,18 @@ label,
 input,
 button,
 a {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 p {
   @include font-family-two();
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 td,
 span {
   @include font-family-one();
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 // ZONE - mixins
