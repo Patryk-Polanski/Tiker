@@ -170,15 +170,21 @@ a {
   font-size: 1.6rem;
 }
 
-p {
+p,
+td {
   font-family: "Roboto", sans-serif;
   font-size: 1.6rem;
 }
 
-td,
+th,
 span {
   font-family: "Spartan", sans-serif;
   font-size: 1.6rem;
+}
+
+.negative {
+  color: #c4456f !important;
+  font-weight: 400;
 }
 
 .svg--nav {
@@ -285,15 +291,60 @@ body {
   font-weight: 400;
   color: #aaaaaa;
   margin-top: 4rem;
-  flex-grow: 0;
 }
 .s-monthly__table-wrapper {
   margin-top: 4rem;
-  width: 66%;
-  max-width: 1200px;
+  width: 90%;
+  max-width: 1400px;
+  min-width: 900px;
   background-color: #080808;
   border-radius: 10px;
-  flex-grow: 1;
+  padding: 2rem;
+}
+@media only screen and (max-width: 75em) {
+  .s-monthly__table-wrapper {
+    width: 98%;
+    padding: 1rem;
+  }
+}
+.s-monthly__table {
+  color: #aaaaaa;
+  width: 100%;
+  text-align: center;
+}
+.s-monthly__table th,
+.s-monthly__table td {
+  padding: 1.5rem 0.6rem;
+}
+.s-monthly__table tr:nth-of-type(1) {
+  border-bottom: 1px solid #aaaaaa;
+}
+.s-monthly__table th {
+  border-right: 1px solid #aaaaaa;
+  line-height: 22px;
+}
+.s-monthly__table th ~ th {
+  border-right: 1px solid #29242a;
+}
+.s-monthly__table th:first-child {
+  padding-left: 0;
+  min-width: 76px;
+}
+.s-monthly__table th + td {
+  color: #189fae;
+}
+.s-monthly__table td {
+  border-right: 1px solid #29242a;
+}
+.s-monthly__table td:last-of-type,
+.s-monthly__table th:last-of-type {
+  border-right: 1px solid #aaaaaa;
+}
+.s-monthly__table td:nth-of-type(3) {
+  color: #189fae;
+}
+.s-monthly__table-unit {
+  border-bottom: 1px solid #aaaaaa;
 }
 
 .s-visualisations {

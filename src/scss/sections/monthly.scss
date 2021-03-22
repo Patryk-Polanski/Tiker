@@ -8,15 +8,72 @@
   &__heading {
     @include ts-heading-1;
     margin-top: 4rem;
-    flex-grow: 0;
+    // flex-grow: 0;
   }
 
   &__table-wrapper {
     margin-top: 4rem;
-    width: 66%;
-    max-width: 1200px;
+    width: 90%;
+    max-width: 1400px;
+    min-width: 900px;
     background-color: $grey-dark;
     border-radius: 10px;
-    flex-grow: 1;
+    // flex-grow: 1;
+    padding: 2rem;
+
+    @media only screen and (max-width: $bp-largest) {
+      width: 98%;
+      padding: 1rem;
+    }
+  }
+
+  &__table {
+    color: $grey-light;
+    width: 100%;
+    text-align: center;
+
+    & th,
+    td {
+      padding: 1.5rem 0.6rem;
+    }
+
+    & tr:nth-of-type(1) {
+      border-bottom: 1px solid $grey-light;
+    }
+
+    & th {
+      border-right: 1px solid $grey-light;
+      line-height: 22px;
+    }
+
+    & th ~ th {
+      border-right: 1px solid $brown-light;
+    }
+
+    & th:first-child {
+      padding-left: 0;
+      min-width: 76px;
+    }
+
+    & th + td {
+      color: $green-light;
+    }
+
+    td {
+      border-right: 1px solid $brown-light;
+    }
+
+    & td:last-of-type,
+    th:last-of-type {
+      border-right: 1px solid $grey-light;
+    }
+
+    & td:nth-of-type(3) {
+      color: $green-light;
+    }
+  }
+
+  &__table-unit {
+    border-bottom: 1px solid $grey-light;
   }
 }
