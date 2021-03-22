@@ -1,0 +1,22 @@
+.s-monthly {
+  height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__heading {
+    @include ts-heading-1;
+    margin-top: 4rem;
+    flex-grow: 0;
+  }
+
+  &__table-wrapper {
+    margin-top: 4rem;
+    width: 66%;
+    max-width: 1200px;
+    background-color: $grey-dark;
+    border-radius: 10px;
+    flex-grow: 1;
+  }
+}
