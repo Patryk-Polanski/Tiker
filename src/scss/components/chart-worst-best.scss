@@ -1,0 +1,12 @@
+.c-chart-worst-best {
+  background-color: $grey-dark;
+  background-color: orange;
+  grid-column: 3 / -1;
+  grid-row: 8 / -1;
+  border-radius: 10px;
+
+  @media only screen and (max-width: $bp-largest) {
+    grid-column: 1 / span 3;
+    grid-row: 13 / span 5;
+  }
+}

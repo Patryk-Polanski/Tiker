@@ -1,0 +1,11 @@
+.c-chart-performance {
+  background-color: $grey-dark;
+  background-color: blue;
+  grid-column: 1 / span 3;
+  grid-row: 1 / span 7;
+  border-radius: 10px;
+
+  @media only screen and (max-width: $bp-largest) {
+    grid-column: 1 / -1;
+  }
+}

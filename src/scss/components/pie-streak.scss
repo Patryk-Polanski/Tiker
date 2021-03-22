@@ -1,0 +1,12 @@
+.c-pie-streak {
+  background-color: $grey-dark;
+  background-color: green;
+  grid-column: 4 / -1;
+  grid-row: 1 / span 7;
+  border-radius: 10px;
+
+  @media only screen and (max-width: $bp-largest) {
+    grid-column: 4 / -1;
+    grid-row: 8 / -1;
+  }
+}

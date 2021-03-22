@@ -1,18 +1,18 @@
 html {
   box-sizing: border-box;
   font-size: 65.5%; // to make 1rem equal 10px
-  overflow-x: hidden;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 body {
   height: 100vh;
-  width: 100vw;
   background-color: $black;
 }
 
 .container {
   height: 100vh;
-  width: 100vw;
   max-width: 2560px;
   margin: 0 auto;
 }
