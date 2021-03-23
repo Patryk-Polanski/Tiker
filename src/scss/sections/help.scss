@@ -5,14 +5,14 @@
 
   &__heading {
     @include ts-heading-1;
-    margin-top: 4rem;
+    margin-top: 3rem;
   }
 
   &__content-wrapper {
     width: 90%;
     max-width: 1500px;
     min-width: 900px;
-    margin: 3rem auto 0;
+    margin: 2rem auto 0;
     display: flex;
 
     @media only screen and (max-width: $bp-large) {

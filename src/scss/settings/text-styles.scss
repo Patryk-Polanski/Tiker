@@ -22,7 +22,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 h1,
@@ -65,6 +65,11 @@ span {
 }
 
 @mixin ts-heading-2 {
+  font-weight: 400;
+  color: $grey-light;
+}
+
+@mixin ts-heading-3 {
   font-weight: 400;
   color: $grey-light;
 }

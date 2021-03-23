@@ -1,5 +1,4 @@
 .s-visualisations {
-  // height: 100vh;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -7,15 +6,15 @@
 
   &__heading {
     @include ts-heading-1;
-    margin-top: 4rem;
+    margin-top: 3rem;
     flex-grow: 0;
   }
 
   &__grid {
     min-width: 900px;
-    min-height: 100%;
+    // min-height: 820px;
     padding: 10px;
-    margin-top: 3rem;
+    margin-top: 2rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(12, 1fr);

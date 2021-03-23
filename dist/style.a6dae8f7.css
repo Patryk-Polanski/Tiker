@@ -147,7 +147,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 h1,
@@ -265,11 +265,11 @@ body {
 .s-calculators__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 4rem;
+  margin-top: 3rem;
   flex-grow: 0;
 }
 .s-calculators__wrapper {
-  margin-top: 3rem;
+  margin-top: 2rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -289,13 +289,13 @@ body {
 .s-help__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 .s-help__content-wrapper {
   width: 90%;
   max-width: 1500px;
   min-width: 900px;
-  margin: 3rem auto 0;
+  margin: 2rem auto 0;
   display: flex;
 }
 @media only screen and (max-width: 75em) {
@@ -426,10 +426,10 @@ body {
 .s-monthly__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 .s-monthly__table-wrapper {
-  margin-top: 3rem;
+  margin-top: 2rem;
   width: 90%;
   max-width: 1400px;
   min-width: 900px;
@@ -492,14 +492,13 @@ body {
 .s-visualisations__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 4rem;
+  margin-top: 3rem;
   flex-grow: 0;
 }
 .s-visualisations__grid {
   min-width: 900px;
-  min-height: 100%;
   padding: 10px;
-  margin-top: 3rem;
+  margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(12, 1fr);
@@ -796,11 +795,109 @@ body {
   grid-column: 4/-1;
   grid-row: 1/span 6;
   border-radius: 10px;
+  padding: 2rem;
 }
 @media only screen and (max-width: 75em) {
   .c-pie-streak {
     grid-column: 4/-1;
     grid-row: 7/-1;
+  }
+}
+@media only screen and (max-width: 75em) {
+  .c-pie-streak h3,
+.c-pie-streak p,
+.c-pie-streak span {
+    margin-top: 1.8rem;
+  }
+}
+.c-pie-streak__total-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@media only screen and (max-width: 75em) {
+  .c-pie-streak__total-wrapper {
+    flex-direction: column;
+  }
+}
+.c-pie-streak__heading, .c-pie-streak__win-heading, .c-pie-streak__loss-heading, .c-pie-streak__streak-profit-heading, .c-pie-streak__streak-loss-heading {
+  font-weight: 400;
+  color: #aaaaaa;
+  text-align: left;
+}
+.c-pie-streak__total, .c-pie-streak__streak-profit-total, .c-pie-streak__streak-loss-total {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+  color: #aaaaaa;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 2px solid #762e88;
+  display: inline-block;
+  padding: 0.6rem 2rem;
+  color: #762e88;
+}
+.c-pie-streak__streak-profit-total {
+  color: #189fae;
+  border: 2px solid #189fae;
+}
+.c-pie-streak__streak-loss-total {
+  color: #c4456f;
+  border: 2px solid #c4456f;
+}
+.c-pie-streak__pie-wrapper {
+  margin-top: 1rem;
+  height: 140px;
+  width: 100%;
+  background-color: #080808;
+}
+.c-pie-streak__win-wrapper, .c-pie-streak__loss-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+@media only screen and (max-width: 75em) {
+  .c-pie-streak__win-wrapper, .c-pie-streak__loss-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.c-pie-streak__win-inner-wrapper, .c-pie-streak__loss-inner-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+.c-pie-streak__win-date, .c-pie-streak__loss-date {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+}
+.c-pie-streak__win-streak-total, .c-pie-streak__loss-streak-total {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+  color: #aaaaaa;
+  font-weight: 600;
+  color: #189fae;
+  border: 2px solid #189fae;
+  border-radius: 50%;
+  display: inline-block;
+  padding: 1rem 1.4rem;
+}
+.c-pie-streak__loss-streak-total {
+  color: #c4456f;
+  border: 2px solid #c4456f;
+}
+.c-pie-streak__streak-profit-wrapper, .c-pie-streak__streak-loss-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media only screen and (max-width: 75em) {
+  .c-pie-streak__streak-profit-wrapper, .c-pie-streak__streak-loss-wrapper {
+    flex-direction: column;
   }
 }
 
@@ -809,7 +906,7 @@ body {
   grid-column: 1/span 2;
   grid-row: 7/-1;
   border-radius: 10px;
-  padding: 0 0.2rem 2rem 0.2rem;
+  padding: 0 0.2rem 1rem 0.2rem;
 }
 @media only screen and (max-width: 75em) {
   .c-table-profitable {

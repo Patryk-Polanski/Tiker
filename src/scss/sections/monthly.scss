@@ -7,12 +7,12 @@
 
   &__heading {
     @include ts-heading-1;
-    margin-top: 4rem;
+    margin-top: 3rem;
     // flex-grow: 0;
   }
 
   &__table-wrapper {
-    margin-top: 3rem;
+    margin-top: 2rem;
     width: 90%;
     max-width: 1400px;
     min-width: 900px;

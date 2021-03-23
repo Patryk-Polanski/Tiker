@@ -4,9 +4,119 @@
   grid-column: 4 / -1;
   grid-row: 1 / span 6;
   border-radius: 10px;
+  padding: 2rem;
 
   @media only screen and (max-width: $bp-large) {
     grid-column: 4 / -1;
     grid-row: 7 / -1;
+  }
+
+  & h3,
+  p,
+  span {
+    @media only screen and (max-width: $bp-large) {
+      margin-top: 1.8rem;
+    }
+  }
+
+  &__total-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media only screen and (max-width: $bp-large) {
+      flex-direction: column;
+    }
+  }
+
+  &__heading,
+  &__win-heading,
+  &__loss-heading,
+  &__streak-profit-heading,
+  &__streak-loss-heading {
+    @include ts-heading-2;
+    text-align: left;
+  }
+
+  &__total,
+  &__streak-profit-total,
+  &__streak-loss-total {
+    @include ts-numerical;
+    @include ts-emphasis;
+    border-radius: 10px;
+    border: 2px solid $purple-light;
+    display: inline-block;
+    padding: 0.6rem 2rem;
+    color: $purple-light;
+  }
+
+  &__streak-profit-total {
+    color: $green-light;
+    border: 2px solid $green-light;
+  }
+
+  &__streak-loss-total {
+    color: $red-light;
+    border: 2px solid $red-light;
+  }
+
+  &__pie-wrapper {
+    margin-top: 1rem;
+    height: 140px;
+    width: 100%;
+    background-color: $grey-dark;
+  }
+
+  &__win-wrapper,
+  &__loss-wrapper {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    @media only screen and (max-width: $bp-large) {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  &__win-inner-wrapper,
+  &__loss-inner-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+  }
+
+  &__win-date,
+  &__loss-date {
+    @include ts-numerical;
+  }
+
+  &__win-streak-total,
+  &__loss-streak-total {
+    @include ts-numerical;
+    @include ts-emphasis;
+    color: $green-light;
+    border: 2px solid $green-light;
+    border-radius: 50%;
+    display: inline-block;
+    padding: 1rem 1.4rem;
+  }
+
+  &__loss-streak-total {
+    color: $red-light;
+    border: 2px solid $red-light;
+  }
+
+  &__streak-profit-wrapper,
+  &__streak-loss-wrapper {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media only screen and (max-width: $bp-large) {
+      flex-direction: column;
+    }
   }
 }
