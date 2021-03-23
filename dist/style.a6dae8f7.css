@@ -293,7 +293,8 @@ body {
 }
 .s-help__content-wrapper {
   width: 90%;
-  max-width: 1400px;
+  max-width: 1500px;
+  min-width: 900px;
   margin: 4rem auto 0;
   display: flex;
 }
@@ -304,8 +305,13 @@ body {
   }
 }
 .s-help__guide, .s-help__glossary {
-  margin: 1rem 2rem;
   width: 50%;
+}
+.s-help__guide {
+  margin: 1rem 2rem 1rem 0;
+}
+.s-help__glossary {
+  margin: 1rem 0 1rem 2rem;
 }
 .s-help__guide-heading, .s-help__glossary-heading {
   font-weight: 400;
@@ -330,15 +336,27 @@ body {
 .s-help__glossary-keyword-wrapper {
   display: flex;
   align-items: center;
+  margin-top: 3rem;
+}
+@media only screen and (max-width: 87.5em) {
+  .s-help__glossary-keyword-wrapper {
+    flex-direction: column;
+  }
 }
 .s-help__glossary-keyword {
   color: #aaaaaa;
   font-weight: 600;
 }
 .s-help__glossary-img {
-  height: 106px;
-  width: auto;
+  height: auto;
+  width: 188px;
   margin-left: 2rem;
+}
+@media only screen and (max-width: 87.5em) {
+  .s-help__glossary-img {
+    margin-left: 0;
+    margin-top: 2rem;
+  }
 }
 
 .s-login {

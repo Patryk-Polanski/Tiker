@@ -10,11 +10,12 @@
 
   &__content-wrapper {
     width: 90%;
-    max-width: 1400px;
+    max-width: 1500px;
+    min-width: 900px;
     margin: 4rem auto 0;
     display: flex;
 
-    @media only screen and (max-width: $bp-largest) {
+    @media only screen and (max-width: $bp-large) {
       width: 100%;
       padding: 1rem;
     }
@@ -22,8 +23,18 @@
 
   &__guide,
   &__glossary {
-    margin: 1rem 2rem;
     width: 50%;
+  }
+
+  &__guide {
+    margin: 1rem 2rem 1rem 0;
+  }
+
+  &__glossary {
+    margin: 1rem 0 1rem 2rem;
+  }
+
+  &__guide {
   }
 
   &__guide-heading,
@@ -57,6 +68,11 @@
   &__glossary-keyword-wrapper {
     display: flex;
     align-items: center;
+    margin-top: 3rem;
+
+    @media only screen and (max-width: $bp-largest) {
+      flex-direction: column;
+    }
   }
 
   &__glossary-keyword {
@@ -64,8 +80,13 @@
   }
 
   &__glossary-img {
-    height: 106px;
-    width: auto;
+    height: auto;
+    width: 188px;
     margin-left: 2rem;
+
+    @media only screen and (max-width: $bp-largest) {
+      margin-left: 0;
+      margin-top: 2rem;
+    }
   }
 }
