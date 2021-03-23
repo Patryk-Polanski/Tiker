@@ -21,6 +21,8 @@
   }
 
   &__form {
+    text-align: left;
+
     & > * {
       margin-top: 2rem;
     }
@@ -29,7 +31,12 @@
   &__form-username-label,
   &__form-password-label {
     display: block;
+    text-align: left;
     @include ts-body;
+  }
+
+  &__form-password-input {
+    letter-spacing: 4px;
   }
 
   &__form-button-wrapper {
@@ -39,5 +46,12 @@
   }
 
   &__form-button {
+    &:first-of-type {
+      margin-right: 0.6rem;
+    }
+
+    &:last-of-type {
+      margin-left: 0.6rem;
+    }
   }
 }

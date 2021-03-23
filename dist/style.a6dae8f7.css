@@ -389,19 +389,33 @@ body {
   width: 250px;
   height: auto;
 }
+.s-login__form {
+  text-align: left;
+}
 .s-login__form > * {
   margin-top: 2rem;
 }
 .s-login__form-username-label, .s-login__form-password-label {
   display: block;
+  text-align: left;
   color: #aaaaaa;
   line-height: 22px;
+}
+.s-login__form-password-input {
+  letter-spacing: 4px;
 }
 .s-login__form-button-wrapper {
   display: flex;
   justify-content: space-between;
   margin-top: 4rem;
 }
+.s-login__form-button:first-of-type {
+  margin-right: 0.6rem;
+}
+.s-login__form-button:last-of-type {
+  margin-left: 0.6rem;
+}
+
 .s-monthly {
   height: 100vh;
   min-height: 100vh;
