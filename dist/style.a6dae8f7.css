@@ -527,6 +527,28 @@ body {
 .btn--secondary {
   background-color: #29242a;
 }
+.btn--tertiary {
+  background-color: #0d0d0d;
+  width: 8rem;
+  height: 4.2rem;
+  padding: 0.2rem;
+}
+.btn--tertiary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  background-color: #762e88;
+  border-radius: 5px;
+  z-index: -1;
+}
+.btn--tertiary--active::before {
+  left: -6px;
+  opacity: 1;
+}
 .btn--icon {
   border-radius: 0px;
 }
@@ -677,11 +699,28 @@ body {
   grid-column: 1/span 3;
   grid-row: 1/span 7;
   border-radius: 10px;
+  position: relative;
 }
 @media only screen and (max-width: 75em) {
   .c-chart-performance {
     grid-column: 1/-1;
   }
+}
+.c-chart-performance__heading {
+  font-weight: 400;
+  color: #aaaaaa;
+  margin-top: 2rem;
+}
+.c-chart-performance__button-wrapper {
+  top: 0;
+  right: 0;
+  position: absolute;
+  z-index: 2;
+}
+.c-chart-performance__button {
+  margin-top: 1rem;
+  margin-right: 1rem;
+  position: relative;
 }
 
 .c-chart-worst-best {

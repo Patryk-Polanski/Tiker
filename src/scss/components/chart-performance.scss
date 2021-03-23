@@ -4,8 +4,27 @@
   grid-column: 1 / span 3;
   grid-row: 1 / span 7;
   border-radius: 10px;
+  position: relative;
 
   @media only screen and (max-width: $bp-large) {
     grid-column: 1 / -1;
+  }
+
+  &__heading {
+    @include ts-heading-2;
+    margin-top: 2rem;
+  }
+
+  &__button-wrapper {
+    top: 0;
+    right: 0;
+    position: absolute;
+    z-index: 2;
+  }
+
+  &__button {
+    margin-top: 1rem;
+    margin-right: 1rem;
+    position: relative;
   }
 }
