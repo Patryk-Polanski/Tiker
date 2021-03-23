@@ -2,7 +2,7 @@
   width: 800px;
   background-color: $grey-dark;
   border-radius: 10px;
-  padding: 3rem 1rem;
+  padding: 3rem;
 
   &__heading {
     @include ts-heading-2;

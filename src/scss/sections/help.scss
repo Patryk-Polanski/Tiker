@@ -1,0 +1,71 @@
+.s-help {
+  height: 100vh;
+  min-height: 100vh;
+  text-align: center;
+
+  &__heading {
+    @include ts-heading-1;
+    margin-top: 4rem;
+  }
+
+  &__content-wrapper {
+    width: 90%;
+    max-width: 1400px;
+    margin: 4rem auto 0;
+    display: flex;
+
+    @media only screen and (max-width: $bp-largest) {
+      width: 100%;
+      padding: 1rem;
+    }
+  }
+
+  &__guide,
+  &__glossary {
+    margin: 1rem 2rem;
+    width: 50%;
+  }
+
+  &__guide-heading,
+  &__glossary-heading {
+    @include ts-heading-2;
+
+    & + p,
+    & + div {
+      margin-top: 4rem;
+    }
+  }
+
+  &__guide-body,
+  &__glossary-body {
+    @include ts-body;
+    margin-top: 2rem;
+    text-align: left;
+  }
+
+  &__glossary-body {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &__guide-img {
+    margin-top: 2rem;
+    max-width: 100%;
+  }
+
+  &__glossary-keyword-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__glossary-keyword {
+    @include ts-emphasis;
+  }
+
+  &__glossary-img {
+    height: 106px;
+    width: auto;
+    margin-left: 2rem;
+  }
+}

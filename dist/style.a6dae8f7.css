@@ -196,13 +196,13 @@ span {
   width: 75px;
 }
 .svg--nav:nth-of-type(1) {
-  background-color: rgba(10, 12, 10, 0.5);
+  background-color: rgba(10, 12, 10, 0.6);
 }
 .svg--nav:nth-of-type(2), .svg--nav:nth-of-type(4) {
-  background-color: rgba(12, 10, 10, 0.5);
+  background-color: rgba(12, 10, 10, 0.6);
 }
 .svg--nav:nth-of-type(3) {
-  background-color: rgba(22, 18, 22, 0.4);
+  background-color: rgba(22, 18, 22, 0.5);
 }
 .svg--plus {
   height: 13px;
@@ -279,6 +279,66 @@ body {
 .s-content {
   flex-direction: column;
   margin-left: 75px;
+}
+
+.s-help {
+  height: 100vh;
+  min-height: 100vh;
+  text-align: center;
+}
+.s-help__heading {
+  font-weight: 400;
+  color: #aaaaaa;
+  margin-top: 4rem;
+}
+.s-help__content-wrapper {
+  width: 90%;
+  max-width: 1400px;
+  margin: 4rem auto 0;
+  display: flex;
+}
+@media only screen and (max-width: 75em) {
+  .s-help__content-wrapper {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+.s-help__guide, .s-help__glossary {
+  margin: 1rem 2rem;
+  width: 50%;
+}
+.s-help__guide-heading, .s-help__glossary-heading {
+  font-weight: 400;
+  color: #aaaaaa;
+}
+.s-help__guide-heading + p, .s-help__guide-heading + div, .s-help__glossary-heading + p, .s-help__glossary-heading + div {
+  margin-top: 4rem;
+}
+.s-help__guide-body, .s-help__glossary-body {
+  color: #aaaaaa;
+  line-height: 22px;
+  margin-top: 2rem;
+  text-align: left;
+}
+.s-help__glossary-body:first-child {
+  margin-top: 0;
+}
+.s-help__guide-img {
+  margin-top: 2rem;
+  max-width: 100%;
+}
+.s-help__glossary-keyword-wrapper {
+  display: flex;
+  align-items: center;
+}
+.s-help__glossary-keyword {
+  color: #aaaaaa;
+  font-weight: 600;
+}
+.s-help__glossary-img {
+  height: 106px;
+  width: auto;
+  margin-left: 2rem;
 }
 
 .s-login {
@@ -433,7 +493,7 @@ body {
   width: 800px;
   background-color: #080808;
   border-radius: 10px;
-  padding: 3rem 1rem;
+  padding: 3rem;
 }
 .c-calculator-capital__heading {
   font-weight: 400;
@@ -491,7 +551,7 @@ body {
   background-color: #080808;
   border-radius: 10px;
   padding: 3rem 1rem;
-  margin-top: 2rem;
+  margin-top: 1.4rem;
 }
 .c-calculator-position__heading {
   font-weight: 400;
@@ -533,7 +593,7 @@ body {
   background-color: #080808;
   border-radius: 10px;
   padding: 3rem 1rem;
-  margin-top: 2rem;
+  margin-top: 1.4rem;
 }
 .c-calculator-ratio__heading {
   font-weight: 400;
@@ -605,6 +665,10 @@ body {
 .c-input-text:focus {
   outline: none;
   border-bottom: 2px solid #370943;
+}
+.c-input-text::placeholder {
+  color: #29242a;
+  opacity: 1;
 }
 .c-input-text--no-border {
   border: none;

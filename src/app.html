@@ -356,7 +356,7 @@
                     <h1 class="s-calculators__heading">Capital management</h1>
                     <div class="s-calculators__wrapper">
                         <div class="c-calculator-capital">
-                            <h1 class="c-calculator-capital__heading">Add or remove capital</h1>
+                            <h2 class="c-calculator-capital__heading">Add or remove capital</h2>
                             <div class="c-calculator-capital__form-wrapper">
                                 <div class="c-calculator-capital__action-wrapper">
                                     <span class="c-calculator-capital__action-text">action</span>
@@ -380,7 +380,8 @@
                                 </div>
                                 <div class="c-calculator-capital__amount-wrapper">
                                     <span class="c-calculator-capital__amount-text">amount</span>
-                                    <input class="c-calculator-capital__amount-input c-input-text" type="number">
+                                    <input class="c-calculator-capital__amount-input c-input-text" type="number"
+                                        placeholder="00.00">
                                 </div>
                                 <button class="c-calculator-capital__button btn btn--primary">update</button>
                             </div>
@@ -391,19 +392,22 @@
                             </p>
                         </div>
                         <div class="c-calculator-position">
-                            <h1 class="c-calculator-position__heading">Position sizing</h1>
+                            <h2 class="c-calculator-position__heading">Position sizing</h2>
                             <div class="c-calculator-position__form-wrapper">
                                 <div class="c-calculator-position__entry-wrapper">
                                     <span class="c-calculator-position__entry-text">entry price</span>
-                                    <input class="c-calculator-position__entry-input c-input-text" type="number">
+                                    <input class="c-calculator-position__entry-input c-input-text" type="number"
+                                        placeholder="00.00">
                                 </div>
                                 <div class="c-calculator-position__percentage-wrapper">
                                     <span class="c-calculator-position__percentage-text">risk percentage %</span>
-                                    <input class="c-calculator-position__percentage-input c-input-text" type="number">
+                                    <input class="c-calculator-position__percentage-input c-input-text" type="number"
+                                        placeholder="0">
                                 </div>
                                 <div class="c-calculator-position__stop-wrapper">
                                     <span class="c-calculator-position__stop-text">stop loss</span>
-                                    <input class="c-calculator-position__stop-input c-input-text" type="number">
+                                    <input class="c-calculator-position__stop-input c-input-text" type="number"
+                                        placeholder="00.00">
                                 </div>
                             </div>
                             <div class="c-calculator-position__result-wrapper">
@@ -413,19 +417,22 @@
                             </div>
                         </div>
                         <div class="c-calculator-ratio">
-                            <h1 class="c-calculator-ratio__heading">Risk to Reward Ratio</h1>
+                            <h2 class="c-calculator-ratio__heading">Risk to Reward Ratio</h2>
                             <div class="c-calculator-ratio__form-wrapper">
                                 <div class="c-calculator-ratio__entry-wrapper">
                                     <span class="c-calculator-ratio__entry-text">entry price</span>
-                                    <input class="c-calculator-ratio__entry-input c-input-text" type="number">
+                                    <input class="c-calculator-ratio__entry-input c-input-text" type="number"
+                                        placeholder="00.00">
                                 </div>
                                 <div class="c-calculator-ratio__exit-wrapper">
                                     <span class="c-calculator-ratio__exit-text">exit target</span>
-                                    <input class="c-calculator-ratio__exit-input c-input-text" type="number">
+                                    <input class="c-calculator-ratio__exit-input c-input-text" type="number"
+                                        placeholder="00.00">
                                 </div>
                                 <div class="c-calculator-ratio__stop-wrapper">
                                     <span class="c-calculator-ratio__stop-text">stop loss</span>
-                                    <input class="c-calculator-ratio__stop-input c-input-text" type="number">
+                                    <input class="c-calculator-ratio__stop-input c-input-text" type="number"
+                                        placeholder="00.00">
                                 </div>
                             </div>
                             <div class="c-calculator-ratio__result-wrapper">
@@ -435,6 +442,55 @@
                             </div>
                         </div>
                     </div>
+                </section>
+                <section class="s-help">
+                    <h1 class="s-help__heading">Help and Support</h1>
+                    <section class="s-help__content-wrapper">
+                        <div class="s-help__guide">
+                            <h2 class="s-help__guide-heading">User guide</h2>
+                            <p class="s-help__guide-body">
+                                The application can be broken down into several stages: Visualisations, Journal and
+                                Capital Management. To begin using the application, the account size needs to be entered
+                                in the ‘Capital management’ section, which can be accessed by clicking the ‘calculator’
+                                icon.
+                            </p>
+                            <img class="s-help__guide-img" src="./img/cursor-calculator.png" alt="">
+                            <p class="s-help__guide-body">
+                                Input your trading account size into the form. If you will be using leverage, specify
+                                the leveraged capital that you will be using. When you add or withdraw capital, please
+                                update it here as well to ensure the calculations are precise and generate correct
+                                statistics.
+                            </p>
+                            <img class="s-help__guide-img" src="./img/guide-capital.png" alt="">
+                            <p class="s-help__guide-body">
+                                You are now able to start using the application. You will not able to see any diagrams
+                                until you enter your first trade in the ‘Trading Journal’, which can be accessed by
+                                clicking the ‘pen icon’.
+                            </p>
+                            <img class="s-help__guide-img" src="./img/cursor-journal.png" alt="">
+                            <p class="s-help__guide-body">
+                                All of your recorded trades will appear on the left hand side. To get started, clock on
+                                the ‘new trade’ button. This will show a form that needs to be filled in to record every
+                                trade. The required data is the date, stock traded, side of the trade (long or short),
+                                entries, exits, position size and stop losses. You can also enter the descriptive sides
+                                of the trade such as your reasoning and emotional state.
+                            </p>
+                        </div>
+                        <div class="s-help__glossary">
+                            <h2 class="s-help__glossary-heading">Glossary</h2>
+                            <div class="s-help__glossary-keyword-wrapper">
+                                <p class="s-help__glossary-body">
+                                    <span class="s-help__glossary-keyword">Daily performance:</span>
+                                    Shows your daily account fluctuations. If you have traded multiple stocks per day,
+                                    all of the profits and losses will be compiled down into one number for the day.
+                                    Same applied to the monthly performance that can be viewed by clicking on the button
+                                    in the upper right corner.
+                                </p>
+                                <img class="s-help__glossary-img" src="../src/img/glossary-daily-performance.png"
+                                    alt="">
+                            </div>
+                        </div>
+                    </section>
                 </section>
             </section>
         </section>
