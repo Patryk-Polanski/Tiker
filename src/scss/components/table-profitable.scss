@@ -2,11 +2,67 @@
   background-color: $grey-dark;
   // background-color: purple;
   grid-column: 1 / span 2;
-  grid-row: 8 / -1;
+  grid-row: 7 / -1;
   border-radius: 10px;
+  padding: 0 0.2rem 2rem 0.2rem;
 
   @media only screen and (max-width: $bp-large) {
     grid-column: 1 / span 3;
-    grid-row: 8 / span 5;
+    grid-row: 7 / span 6;
+  }
+
+  &__heading {
+    @include ts-heading-2;
+    margin-top: 2rem;
+    margin: 2rem 0 1rem;
+  }
+
+  &__table {
+    color: $grey-light;
+    width: 100%;
+    text-align: center;
+
+    & th,
+    td {
+      padding: 1.4rem 0.5rem;
+    }
+
+    & tr:nth-of-type(1) {
+      border-bottom: 1px solid $grey-light;
+    }
+
+    & th ~ th {
+      border-right: 1px solid $brown-light;
+    }
+
+    & th:first-child {
+      padding-left: 0;
+      min-width: 70px;
+    }
+
+    & th + td {
+      color: $green-light;
+    }
+
+    & td:nth-of-type(3) {
+      color: $green-light;
+    }
+
+    td {
+      border-right: 1px solid $brown-light;
+    }
+
+    & tr:first-of-type {
+      line-height: 22px;
+    }
+
+    & td:last-of-type,
+    th:last-of-type {
+      border-right: none;
+    }
+
+    & tr > th:first-of-type {
+      border-right: 1px solid $grey-light;
+    }
   }
 }

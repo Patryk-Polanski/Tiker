@@ -2,11 +2,32 @@
   background-color: $grey-dark;
   // background-color: orange;
   grid-column: 3 / -1;
-  grid-row: 8 / -1;
+  grid-row: 7 / -1;
   border-radius: 10px;
+  position: relative;
 
   @media only screen and (max-width: $bp-large) {
     grid-column: 1 / span 3;
     grid-row: 13 / span 5;
+  }
+
+  &__heading {
+    @include ts-heading-2;
+    margin-top: 2rem;
+    margin-left: 20%;
+    text-align: left;
+  }
+
+  &__button-wrapper {
+    top: 0;
+    right: 0;
+    position: absolute;
+    z-index: 2;
+  }
+
+  &__button {
+    margin-top: 1rem;
+    margin-right: 1rem;
+    position: relative;
   }
 }
