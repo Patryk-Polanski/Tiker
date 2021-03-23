@@ -425,6 +425,9 @@ body {
 .btn--secondary {
   background-color: #29242a;
 }
+.btn--icon {
+  border-radius: 0px;
+}
 
 .c-calculator-capital {
   width: 800px;
