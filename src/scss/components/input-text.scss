@@ -3,7 +3,7 @@
   border: none;
   border-bottom: 2px solid $grey-light;
   color: $grey-light;
-  padding: 0.8rem 1rem;
+  padding: 8px 10px;
 
   &:focus {
     outline: none;
@@ -17,6 +17,6 @@
 
   &--no-border {
     border: none;
-    width: 8rem;
+    width: 80px;
   }
 }

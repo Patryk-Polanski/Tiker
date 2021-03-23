@@ -2,7 +2,7 @@
   border: none;
   color: $grey-light;
   border-radius: 5px;
-  padding: 0.7rem 3.2rem;
+  padding: 7px 32px;
   cursor: pointer;
   text-decoration: none;
 
@@ -16,9 +16,9 @@
 
   &--tertiary {
     background-color: $grey-medium;
-    width: 8rem;
-    height: 4.2rem;
-    padding: 0.2rem;
+    width: 80px;
+    height: 42px;
+    padding: 2px;
 
     &::before {
       content: '';

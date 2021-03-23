@@ -6,7 +6,7 @@
 
   &__container {
     // height: 500px;
-    padding: 2rem 4rem 4rem;
+    padding: 20px 40px 40px;
     width: 500px;
     background-color: $black;
     border-radius: 10px;
@@ -24,7 +24,7 @@
     text-align: left;
 
     & > * {
-      margin-top: 2rem;
+      margin-top: 20px;
     }
   }
 
@@ -42,16 +42,16 @@
   &__form-button-wrapper {
     display: flex;
     justify-content: space-between;
-    margin-top: 4rem;
+    margin-top: 40px;
   }
 
   &__form-button {
     &:first-of-type {
-      margin-right: 0.6rem;
+      margin-right: 6px;
     }
 
     &:last-of-type {
-      margin-left: 0.6rem;
+      margin-left: 6px;
     }
   }
 }

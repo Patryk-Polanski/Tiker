@@ -12,7 +12,7 @@
 
   &__heading {
     @include ts-heading-2;
-    margin-top: 2rem;
+    margin-top: 20px;
   }
 
   &__button-wrapper {
@@ -23,8 +23,8 @@
   }
 
   &__button {
-    margin-top: 1rem;
-    margin-right: 1rem;
+    margin-top: 10px;
+    margin-right: 10px;
     position: relative;
   }
 }

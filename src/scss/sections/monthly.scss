@@ -7,23 +7,23 @@
 
   &__heading {
     @include ts-heading-1;
-    margin-top: 3rem;
+    margin-top: 30px;
     // flex-grow: 0;
   }
 
   &__table-wrapper {
-    margin-top: 2rem;
+    margin-top: 20px;
     width: 90%;
     max-width: 1400px;
     min-width: 900px;
     background-color: $grey-dark;
     border-radius: 10px;
     // flex-grow: 1;
-    padding: 2rem;
+    padding: 20px;
 
     @media only screen and (max-width: $bp-large) {
       width: 98%;
-      padding: 1rem;
+      padding: 10px;
     }
   }
 
@@ -34,7 +34,7 @@
 
     & th,
     td {
-      padding: 1.5rem 0.6rem;
+      padding: 15px 6px;
     }
 
     & tr:nth-of-type(1) {

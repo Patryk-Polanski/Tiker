@@ -2,7 +2,7 @@
   width: 800px;
   background-color: $grey-dark;
   border-radius: 10px;
-  padding: 3rem;
+  padding: 30px;
 
   &__heading {
     @include ts-heading-2;
@@ -12,7 +12,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-evenly;
-    margin-top: 4rem;
+    margin-top: 40px;
   }
 
   &__action-wrapper,
@@ -24,7 +24,7 @@
 
   &__inputs-wrapper {
     display: flex;
-    margin-top: 1rem;
+    margin-top: 10px;
   }
 
   &__action-text,
@@ -33,7 +33,7 @@
   }
 
   &__amount-input {
-    margin-top: 1rem;
+    margin-top: 10px;
   }
 
   &__action-sign,
@@ -47,7 +47,7 @@
   }
 
   &__action-sign {
-    margin-right: 2rem;
+    margin-right: 20px;
   }
 
   &__button {
@@ -56,7 +56,7 @@
 
   &__message {
     @include ts-body;
-    margin-top: 3rem;
+    margin-top: 30px;
   }
 
   &__message-number {

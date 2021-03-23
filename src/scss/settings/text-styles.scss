@@ -11,18 +11,18 @@
 // ZONE - headings
 
 h1 {
-  font-size: 2rem;
+  font-size: 20px;
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 18px;
 }
 
 h3,
 h4,
 h5,
 h6 {
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 
 h1,
@@ -42,19 +42,19 @@ label,
 button,
 a,
 p {
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 
 input,
 td {
   @include font-family-two();
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 
 th,
 span {
   @include font-family-one();
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 
 // ZONE - mixins
@@ -92,7 +92,7 @@ span {
 
 @mixin ts-result {
   @include font-family-two();
-  font-size: 1.8rem;
+  font-size: 18px;
 }
 
 @mixin ts-loss {

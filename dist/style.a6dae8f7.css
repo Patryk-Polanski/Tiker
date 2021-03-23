@@ -136,18 +136,18 @@ table {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 20px;
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 18px;
 }
 
 h3,
 h4,
 h5,
 h6 {
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 
 h1,
@@ -167,19 +167,19 @@ label,
 button,
 a,
 p {
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 
 input,
 td {
   font-family: "Roboto", sans-serif;
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 
 th,
 span {
   font-family: "Spartan", sans-serif;
-  font-size: 1.6rem;
+  font-size: 16px;
 }
 
 .negative {
@@ -265,11 +265,11 @@ body {
 .s-calculators__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 3rem;
+  margin-top: 30px;
   flex-grow: 0;
 }
 .s-calculators__wrapper {
-  margin-top: 2rem;
+  margin-top: 20px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -289,38 +289,38 @@ body {
 .s-help__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 3rem;
+  margin-top: 30px;
 }
 .s-help__content-wrapper {
   width: 90%;
   max-width: 1500px;
   min-width: 900px;
-  margin: 2rem auto 0;
+  margin: 20px auto 0;
   display: flex;
 }
 @media only screen and (max-width: 75em) {
   .s-help__content-wrapper {
     width: 100%;
-    padding: 1rem;
+    padding: 10px;
   }
 }
 .s-help__guide, .s-help__glossary {
   width: 50%;
 }
 .s-help__guide {
-  margin: 1rem 2rem 1rem 0;
+  margin: 10px 20px 10px 0;
 }
 @media only screen and (max-width: 87.5em) {
   .s-help__guide {
-    margin: 1rem;
+    margin: 10px;
   }
 }
 .s-help__glossary {
-  margin: 1rem 0 1rem 2rem;
+  margin: 10px 0 10px 20px;
 }
 @media only screen and (max-width: 87.5em) {
   .s-help__glossary {
-    margin: 1rem;
+    margin: 10px;
   }
 }
 .s-help__guide-heading, .s-help__glossary-heading {
@@ -328,25 +328,25 @@ body {
   color: #aaaaaa;
 }
 .s-help__guide-heading + p, .s-help__guide-heading + div, .s-help__glossary-heading + p, .s-help__glossary-heading + div {
-  margin-top: 4rem;
+  margin-top: 40px;
 }
 .s-help__guide-body, .s-help__glossary-body {
   color: #aaaaaa;
   line-height: 22px;
-  margin-top: 2rem;
+  margin-top: 20px;
   text-align: left;
 }
 .s-help__glossary-body:first-child {
   margin-top: 0;
 }
 .s-help__guide-img {
-  margin-top: 2rem;
+  margin-top: 20px;
   max-width: 100%;
 }
 .s-help__glossary-keyword-wrapper {
   display: flex;
   align-items: center;
-  margin-top: 3rem;
+  margin-top: 30px;
 }
 @media only screen and (max-width: 87.5em) {
   .s-help__glossary-keyword-wrapper {
@@ -360,12 +360,12 @@ body {
 .s-help__glossary-img {
   height: auto;
   width: 188px;
-  margin-left: 2rem;
+  margin-left: 20px;
 }
 @media only screen and (max-width: 87.5em) {
   .s-help__glossary-img {
     margin-left: 0;
-    margin-top: 2rem;
+    margin-top: 20px;
   }
 }
 
@@ -376,7 +376,7 @@ body {
   height: 100vh;
 }
 .s-login__container {
-  padding: 2rem 4rem 4rem;
+  padding: 20px 40px 40px;
   width: 500px;
   background-color: #000000;
   border-radius: 10px;
@@ -393,7 +393,7 @@ body {
   text-align: left;
 }
 .s-login__form > * {
-  margin-top: 2rem;
+  margin-top: 20px;
 }
 .s-login__form-username-label, .s-login__form-password-label {
   display: block;
@@ -407,13 +407,13 @@ body {
 .s-login__form-button-wrapper {
   display: flex;
   justify-content: space-between;
-  margin-top: 4rem;
+  margin-top: 40px;
 }
 .s-login__form-button:first-of-type {
-  margin-right: 0.6rem;
+  margin-right: 6px;
 }
 .s-login__form-button:last-of-type {
-  margin-left: 0.6rem;
+  margin-left: 6px;
 }
 
 .s-monthly {
@@ -426,21 +426,21 @@ body {
 .s-monthly__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 3rem;
+  margin-top: 30px;
 }
 .s-monthly__table-wrapper {
-  margin-top: 2rem;
+  margin-top: 20px;
   width: 90%;
   max-width: 1400px;
   min-width: 900px;
   background-color: #080808;
   border-radius: 10px;
-  padding: 2rem;
+  padding: 20px;
 }
 @media only screen and (max-width: 75em) {
   .s-monthly__table-wrapper {
     width: 98%;
-    padding: 1rem;
+    padding: 10px;
   }
 }
 .s-monthly__table {
@@ -450,7 +450,7 @@ body {
 }
 .s-monthly__table th,
 .s-monthly__table td {
-  padding: 1.5rem 0.6rem;
+  padding: 15px 6px;
 }
 .s-monthly__table tr:nth-of-type(1) {
   border-bottom: 1px solid #aaaaaa;
@@ -492,13 +492,13 @@ body {
 .s-visualisations__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 3rem;
+  margin-top: 30px;
   flex-grow: 0;
 }
 .s-visualisations__grid {
   min-width: 900px;
   padding: 10px;
-  margin-top: 2rem;
+  margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(12, 1fr);
@@ -515,7 +515,7 @@ body {
   border: none;
   color: #aaaaaa;
   border-radius: 5px;
-  padding: 0.7rem 3.2rem;
+  padding: 7px 32px;
   cursor: pointer;
   text-decoration: none;
 }
@@ -527,9 +527,9 @@ body {
 }
 .btn--tertiary {
   background-color: #0d0d0d;
-  width: 8rem;
-  height: 4.2rem;
-  padding: 0.2rem;
+  width: 80px;
+  height: 42px;
+  padding: 2px;
 }
 .btn--tertiary::before {
   content: "";
@@ -555,7 +555,7 @@ body {
   width: 800px;
   background-color: #080808;
   border-radius: 10px;
-  padding: 3rem;
+  padding: 30px;
 }
 .c-calculator-capital__heading {
   font-weight: 400;
@@ -565,7 +565,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
-  margin-top: 4rem;
+  margin-top: 40px;
 }
 .c-calculator-capital__action-wrapper, .c-calculator-capital__amount-wrapper {
   display: flex;
@@ -574,14 +574,14 @@ body {
 }
 .c-calculator-capital__inputs-wrapper {
   display: flex;
-  margin-top: 1rem;
+  margin-top: 10px;
 }
 .c-calculator-capital__action-text, .c-calculator-capital__amount-text {
   color: #aaaaaa;
   line-height: 22px;
 }
 .c-calculator-capital__amount-input {
-  margin-top: 1rem;
+  margin-top: 10px;
 }
 .c-calculator-capital__action-sign, .c-calculator-capital__action-swap {
   padding: 6px 16px;
@@ -592,7 +592,7 @@ body {
   align-items: center;
 }
 .c-calculator-capital__action-sign {
-  margin-right: 2rem;
+  margin-right: 20px;
 }
 .c-calculator-capital__button {
   align-self: flex-end;
@@ -600,7 +600,7 @@ body {
 .c-calculator-capital__message {
   color: #aaaaaa;
   line-height: 22px;
-  margin-top: 3rem;
+  margin-top: 30px;
 }
 .c-calculator-capital__message-number {
   font-family: "Roboto", sans-serif;
@@ -612,8 +612,8 @@ body {
   width: 800px;
   background-color: #080808;
   border-radius: 10px;
-  padding: 3rem 1rem;
-  margin-top: 1.4rem;
+  padding: 30px 10px;
+  margin-top: 14px;
 }
 .c-calculator-position__heading {
   font-weight: 400;
@@ -623,7 +623,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
-  margin-top: 4rem;
+  margin-top: 40px;
 }
 .c-calculator-position__entry-wrapper, .c-calculator-position__percentage-wrapper, .c-calculator-position__stop-wrapper {
   display: flex;
@@ -635,16 +635,16 @@ body {
   line-height: 22px;
 }
 .c-calculator-position__entry-input, .c-calculator-position__percentage-input, .c-calculator-position__stop-input {
-  margin-top: 1rem;
+  margin-top: 10px;
 }
 .c-calculator-position__result-wrapper {
-  margin-top: 3rem;
+  margin-top: 30px;
 }
 .c-calculator-position__result {
   font-family: "Roboto", sans-serif;
-  font-size: 1.8rem;
+  font-size: 18px;
   text-align: center;
-  margin-right: 1rem;
+  margin-right: 10px;
 }
 .c-calculator-position__result-text {
   color: #aaaaaa;
@@ -654,8 +654,8 @@ body {
   width: 800px;
   background-color: #080808;
   border-radius: 10px;
-  padding: 3rem 1rem;
-  margin-top: 1.4rem;
+  padding: 30px 10px;
+  margin-top: 14px;
 }
 .c-calculator-ratio__heading {
   font-weight: 400;
@@ -665,7 +665,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
-  margin-top: 4rem;
+  margin-top: 40px;
 }
 .c-calculator-ratio__entry-wrapper, .c-calculator-ratio__exit-wrapper, .c-calculator-ratio__stop-wrapper {
   display: flex;
@@ -677,16 +677,16 @@ body {
   line-height: 22px;
 }
 .c-calculator-ratio__entry-input, .c-calculator-ratio__exit-input, .c-calculator-ratio__stop-input {
-  margin-top: 1rem;
+  margin-top: 10px;
 }
 .c-calculator-ratio__result-wrapper {
-  margin-top: 3rem;
+  margin-top: 30px;
 }
 .c-calculator-ratio__result {
   font-family: "Roboto", sans-serif;
-  font-size: 1.8rem;
+  font-size: 18px;
   text-align: center;
-  margin-right: 1rem;
+  margin-right: 10px;
 }
 .c-calculator-ratio__result-text {
   color: #aaaaaa;
@@ -707,7 +707,7 @@ body {
 .c-chart-performance__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 2rem;
+  margin-top: 20px;
 }
 .c-chart-performance__button-wrapper {
   top: 0;
@@ -716,8 +716,8 @@ body {
   z-index: 2;
 }
 .c-chart-performance__button {
-  margin-top: 1rem;
-  margin-right: 1rem;
+  margin-top: 10px;
+  margin-right: 10px;
   position: relative;
 }
 
@@ -737,7 +737,7 @@ body {
 .c-chart-worst-best__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 2rem;
+  margin-top: 20px;
   margin-left: 20%;
   text-align: left;
 }
@@ -748,8 +748,8 @@ body {
   z-index: 2;
 }
 .c-chart-worst-best__button {
-  margin-top: 1rem;
-  margin-right: 1rem;
+  margin-top: 10px;
+  margin-right: 10px;
   position: relative;
 }
 
@@ -758,7 +758,7 @@ body {
   border: none;
   border-bottom: 2px solid #aaaaaa;
   color: #aaaaaa;
-  padding: 0.8rem 1rem;
+  padding: 8px 10px;
 }
 .c-input-text:focus {
   outline: none;
@@ -770,7 +770,7 @@ body {
 }
 .c-input-text--no-border {
   border: none;
-  width: 8rem;
+  width: 80px;
 }
 
 .c-nav {
@@ -784,7 +784,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-top: 0.5rem;
+  padding-top: 5px;
 }
 .c-nav__logo {
   width: 66px;
@@ -795,7 +795,7 @@ body {
   grid-column: 4/-1;
   grid-row: 1/span 6;
   border-radius: 10px;
-  padding: 2rem;
+  padding: 20px;
 }
 @media only screen and (max-width: 75em) {
   .c-pie-streak {
@@ -807,7 +807,7 @@ body {
   .c-pie-streak h3,
 .c-pie-streak p,
 .c-pie-streak span {
-    margin-top: 1.8rem;
+    margin-top: 18px;
   }
 }
 .c-pie-streak__total-wrapper {
@@ -834,7 +834,7 @@ body {
   border-radius: 10px;
   border: 2px solid #762e88;
   display: inline-block;
-  padding: 0.6rem 2rem;
+  padding: 6px 20px;
   color: #762e88;
 }
 .c-pie-streak__streak-profit-total {
@@ -846,13 +846,13 @@ body {
   border: 2px solid #c4456f;
 }
 .c-pie-streak__pie-wrapper {
-  margin-top: 1rem;
+  margin-top: 10px;
   height: 140px;
   width: 100%;
   background-color: #080808;
 }
 .c-pie-streak__win-wrapper, .c-pie-streak__loss-wrapper {
-  margin-top: 1rem;
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -883,14 +883,14 @@ body {
   border: 2px solid #189fae;
   border-radius: 50%;
   display: inline-block;
-  padding: 1rem 1.4rem;
+  padding: 10px 14px;
 }
 .c-pie-streak__loss-streak-total {
   color: #c4456f;
   border: 2px solid #c4456f;
 }
 .c-pie-streak__streak-profit-wrapper, .c-pie-streak__streak-loss-wrapper {
-  margin-top: 1rem;
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -906,7 +906,7 @@ body {
   grid-column: 1/span 2;
   grid-row: 7/-1;
   border-radius: 10px;
-  padding: 0 0.2rem 1rem 0.2rem;
+  padding: 0 2px 10px 2px;
 }
 @media only screen and (max-width: 75em) {
   .c-table-profitable {
@@ -917,8 +917,8 @@ body {
 .c-table-profitable__heading {
   font-weight: 400;
   color: #aaaaaa;
-  margin-top: 2rem;
-  margin: 2rem 0 1rem;
+  margin-top: 20px;
+  margin: 20px 0 10px;
 }
 .c-table-profitable__table {
   color: #aaaaaa;
@@ -927,7 +927,7 @@ body {
 }
 .c-table-profitable__table th,
 .c-table-profitable__table td {
-  padding: 1.4rem 0.5rem;
+  padding: 14px 5px;
 }
 .c-table-profitable__table tr:nth-of-type(1) {
   border-bottom: 1px solid #aaaaaa;

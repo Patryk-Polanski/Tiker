@@ -5,19 +5,19 @@
 
   &__heading {
     @include ts-heading-1;
-    margin-top: 3rem;
+    margin-top: 30px;
   }
 
   &__content-wrapper {
     width: 90%;
     max-width: 1500px;
     min-width: 900px;
-    margin: 2rem auto 0;
+    margin: 20px auto 0;
     display: flex;
 
     @media only screen and (max-width: $bp-large) {
       width: 100%;
-      padding: 1rem;
+      padding: 10px;
     }
   }
 
@@ -27,18 +27,18 @@
   }
 
   &__guide {
-    margin: 1rem 2rem 1rem 0;
+    margin: 10px 20px 10px 0;
 
     @media only screen and (max-width: $bp-largest) {
-      margin: 1rem;
+      margin: 10px;
     }
   }
 
   &__glossary {
-    margin: 1rem 0 1rem 2rem;
+    margin: 10px 0 10px 20px;
 
     @media only screen and (max-width: $bp-largest) {
-      margin: 1rem;
+      margin: 10px;
     }
   }
 
@@ -48,14 +48,14 @@
 
     & + p,
     & + div {
-      margin-top: 4rem;
+      margin-top: 40px;
     }
   }
 
   &__guide-body,
   &__glossary-body {
     @include ts-body;
-    margin-top: 2rem;
+    margin-top: 20px;
     text-align: left;
   }
 
@@ -66,14 +66,14 @@
   }
 
   &__guide-img {
-    margin-top: 2rem;
+    margin-top: 20px;
     max-width: 100%;
   }
 
   &__glossary-keyword-wrapper {
     display: flex;
     align-items: center;
-    margin-top: 3rem;
+    margin-top: 30px;
 
     @media only screen and (max-width: $bp-largest) {
       flex-direction: column;
@@ -87,11 +87,11 @@
   &__glossary-img {
     height: auto;
     width: 188px;
-    margin-left: 2rem;
+    margin-left: 20px;
 
     @media only screen and (max-width: $bp-largest) {
       margin-left: 0;
-      margin-top: 2rem;
+      margin-top: 20px;
     }
   }
 }
