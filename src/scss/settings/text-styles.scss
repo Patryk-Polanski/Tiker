@@ -32,20 +32,20 @@ h4,
 h5,
 h6,
 label,
-input,
 button,
-a {
+a,
+p {
   @include font-family-one();
 }
 
 label,
-input,
 button,
-a {
+a,
+p {
   font-size: 1.6rem;
 }
 
-p,
+input,
 td {
   @include font-family-two();
   font-size: 1.6rem;
@@ -80,6 +80,7 @@ span {
 }
 
 @mixin ts-numerical {
+  @include font-family-two();
   color: $grey-light;
   font-weight: 400;
 }

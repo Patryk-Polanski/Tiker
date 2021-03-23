@@ -5,6 +5,7 @@
 @import './settings/mixins';
 @import './settings/animations';
 @import './settings/svg';
+@import './settings/form';
 
 // ZONE - Base
 @import './base/global';
@@ -29,6 +30,7 @@
 @import './components/chart-performance';
 @import './components/chart-worst-best';
 @import './components/exit-popup';
+@import './components/input-text';
 @import './components/journal-card';
 @import './components/journal-filter';
 @import './components/journal-form';

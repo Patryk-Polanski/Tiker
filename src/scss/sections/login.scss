@@ -32,19 +32,6 @@
     @include ts-body;
   }
 
-  &__form-username-input,
-  &__form-password-input {
-    background-color: $grey-medium;
-    border: none;
-    border-bottom: 2px solid $grey-light;
-    color: $grey-light;
-    padding: 0.8rem 1rem;
-    &:focus {
-      outline: none;
-      border-bottom: 2px solid $purple-medium;
-    }
-  }
-
   &__form-button-wrapper {
     display: flex;
     justify-content: space-between;

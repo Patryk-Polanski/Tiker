@@ -1,0 +1,23 @@
+.s-calculators {
+  height: 100vh;
+  min-height: 100vh;
+  padding: 0 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__heading {
+    @include ts-heading-1;
+    margin-top: 4rem;
+    flex-grow: 0;
+  }
+
+  &__wrapper {
+    margin-top: 4rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

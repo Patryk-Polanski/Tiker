@@ -1,0 +1,66 @@
+.c-calculator-capital {
+  //   height: 250px;
+  width: 800px;
+  background-color: $grey-dark;
+  border-radius: 10px;
+  padding: 3rem;
+
+  &__heading {
+    @include ts-heading-2;
+  }
+
+  &__form-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    margin-top: 4rem;
+  }
+
+  &__action-wrapper,
+  &__amount-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  &__inputs-wrapper {
+    display: flex;
+    margin-top: 1rem;
+  }
+
+  &__action-text,
+  &__amount-text {
+    @include ts-body;
+  }
+
+  &__amount-input {
+    margin-top: 1rem;
+  }
+
+  &__action-sign,
+  &__action-swap {
+    padding: 6px 16px;
+    background-color: $grey-medium;
+    border-bottom: 2px solid $grey-light;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__action-sign {
+    margin-right: 2rem;
+  }
+
+  &__button {
+    align-self: flex-end;
+  }
+
+  &__message {
+    @include ts-body;
+    margin-top: 3rem;
+  }
+
+  &__message-number {
+    @include ts-numerical;
+  }
+}

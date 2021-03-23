@@ -1,7 +1,8 @@
 .svg {
+  fill: none;
+
   &--nav {
     cursor: pointer;
-    fill: none;
     height: 75px;
     width: 75px;
 
@@ -17,5 +18,15 @@
     &:nth-of-type(3) {
       background-color: rgba($purple-dark, 0.4);
     }
+  }
+
+  &--plus {
+    height: 13px;
+    width: 13px;
+  }
+
+  &--swap {
+    height: 26px;
+    width: 15px;
   }
 }
