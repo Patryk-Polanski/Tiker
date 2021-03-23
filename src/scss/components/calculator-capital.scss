@@ -1,9 +1,8 @@
 .c-calculator-capital {
-  //   height: 250px;
   width: 800px;
   background-color: $grey-dark;
   border-radius: 10px;
-  padding: 3rem;
+  padding: 3rem 1rem;
 
   &__heading {
     @include ts-heading-2;

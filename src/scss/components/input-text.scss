@@ -8,4 +8,9 @@
     outline: none;
     border-bottom: 2px solid $purple-medium;
   }
+
+  &--no-border {
+    border: none;
+    width: 8rem;
+  }
 }

@@ -1,7 +1,52 @@
 .c-calculator-ratio {
-  margin-top: 2rem;
-  height: 250px;
   width: 800px;
-  background-color: green;
+  background-color: $grey-dark;
   border-radius: 10px;
+  padding: 3rem 1rem;
+  margin-top: 2rem;
+
+  &__heading {
+    @include ts-heading-2;
+  }
+
+  &__form-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    margin-top: 4rem;
+  }
+
+  &__entry-wrapper,
+  &__exit-wrapper,
+  &__stop-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+
+  &__entry-text,
+  &__exit-text,
+  &__stop-text {
+    @include ts-body;
+  }
+
+  &__entry-input,
+  &__exit-input,
+  &__stop-input {
+    margin-top: 1rem;
+  }
+
+  &__result-wrapper {
+    margin-top: 3rem;
+  }
+
+  &__result {
+    @include ts-result;
+    text-align: center;
+    margin-right: 1rem;
+  }
+
+  &__result-text {
+    color: $grey-light;
+  }
 }

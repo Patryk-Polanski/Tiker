@@ -85,6 +85,11 @@ span {
   font-weight: 400;
 }
 
+@mixin ts-result {
+  @include font-family-two();
+  font-size: 1.8rem;
+}
+
 @mixin ts-loss {
   color: $red-light !important;
   font-weight: 400;

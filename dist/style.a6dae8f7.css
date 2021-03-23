@@ -433,7 +433,7 @@ body {
   width: 800px;
   background-color: #080808;
   border-radius: 10px;
-  padding: 3rem;
+  padding: 3rem 1rem;
 }
 .c-calculator-capital__heading {
   font-weight: 400;
@@ -487,19 +487,87 @@ body {
 }
 
 .c-calculator-position {
-  margin-top: 2rem;
-  height: 250px;
   width: 800px;
-  background-color: purple;
+  background-color: #080808;
   border-radius: 10px;
+  padding: 3rem 1rem;
+  margin-top: 2rem;
+}
+.c-calculator-position__heading {
+  font-weight: 400;
+  color: #aaaaaa;
+}
+.c-calculator-position__form-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  margin-top: 4rem;
+}
+.c-calculator-position__entry-wrapper, .c-calculator-position__percentage-wrapper, .c-calculator-position__stop-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.c-calculator-position__entry-text, .c-calculator-position__percentage-text, .c-calculator-position__stop-text {
+  color: #aaaaaa;
+  line-height: 22px;
+}
+.c-calculator-position__entry-input, .c-calculator-position__percentage-input, .c-calculator-position__stop-input {
+  margin-top: 1rem;
+}
+.c-calculator-position__result-wrapper {
+  margin-top: 3rem;
+}
+.c-calculator-position__result {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-right: 1rem;
+}
+.c-calculator-position__result-text {
+  color: #aaaaaa;
 }
 
 .c-calculator-ratio {
-  margin-top: 2rem;
-  height: 250px;
   width: 800px;
-  background-color: green;
+  background-color: #080808;
   border-radius: 10px;
+  padding: 3rem 1rem;
+  margin-top: 2rem;
+}
+.c-calculator-ratio__heading {
+  font-weight: 400;
+  color: #aaaaaa;
+}
+.c-calculator-ratio__form-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  margin-top: 4rem;
+}
+.c-calculator-ratio__entry-wrapper, .c-calculator-ratio__exit-wrapper, .c-calculator-ratio__stop-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.c-calculator-ratio__entry-text, .c-calculator-ratio__exit-text, .c-calculator-ratio__stop-text {
+  color: #aaaaaa;
+  line-height: 22px;
+}
+.c-calculator-ratio__entry-input, .c-calculator-ratio__exit-input, .c-calculator-ratio__stop-input {
+  margin-top: 1rem;
+}
+.c-calculator-ratio__result-wrapper {
+  margin-top: 3rem;
+}
+.c-calculator-ratio__result {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-right: 1rem;
+}
+.c-calculator-ratio__result-text {
+  color: #aaaaaa;
 }
 
 .c-chart-performance {
@@ -537,6 +605,10 @@ body {
 .c-input-text:focus {
   outline: none;
   border-bottom: 2px solid #370943;
+}
+.c-input-text--no-border {
+  border: none;
+  width: 8rem;
 }
 
 .c-nav {
