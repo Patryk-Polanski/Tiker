@@ -695,20 +695,42 @@
                             <div class="c-journal-form">
                                 <div class="c-journal-form__upper-region">
                                     <div class="c-journal-form__unit-wrapper">
-                                        <span class="c-journal-form__data">date: <span
-                                                class="c-journal-form__date">28/07/21</span>
+                                        <span class="c-journal-form__data">date: <input
+                                                class="c-input-text c-input-text--compact c-input-text--activated"
+                                                type="number" placeholder="28/07/21" disabled>
                                         </span>
-                                        <span class="c-journal-form__data">stock: ROKU</span>
+                                        <span class="c-journal-form__data">stock: <input
+                                                class="c-input-text c-input-text--compact c-input-text--activated"
+                                                type="text" placeholder="ROKU" disabled></span>
                                     </div>
                                     <div class="c-journal-form__unit-wrapper">
-                                        <span class="c-journal-form__data">side: long position</span>
-                                        <span class="c-journal-form__data">%return: 1.63%</span>
+                                        <div class="c-journal-form__trade-side-wrapper">
+                                            <span class="c-journal-form__data">side: <input
+                                                    class="c-input-text c-input-text--compact c-input-text--activated"
+                                                    type="text" placeholder="long" disabled></span>
+                                            <button class="c-journal-form__swap btn btn--form-icon">
+                                                <svg class="svg svg--swap" viewBox="0 0 17 29"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z"
+                                                        fill="#C4C4C4" />
+                                                    <path d="M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z"
+                                                        fill="#C4C4C4" />
+                                                </svg>
+
+                                            </button>
+                                        </div>
+                                        <span class="c-journal-form__data">%return: <input
+                                                class="c-input-text c-input-text--compact" type="number"
+                                                placeholder="1.63%" disabled></span>
                                     </div>
                                     <div class="c-journal-form__unit-wrapper">
-                                        <span class="c-journal-form__data">100 shares</span>
-                                        <span class="c-journal-form__data">return: 112.52</span>
+                                        <span class="c-journal-form__data">shares: <input
+                                                class="c-input-text c-input-text--compact" type="number"
+                                                placeholder="100" disabled></span>
+                                        <span class="c-journal-form__data">return: <input
+                                                class="c-input-text c-input-text--compact" type="number"
+                                                placeholder="112.52" disabled></span>
                                     </div>
-                                    <span class="c-journal-form__trade-number">#167</span>
                                 </div>
                                 <div class="c-journal-form__middle-region">
                                     <div class="c-journal-form__entries-wrapper">
@@ -731,15 +753,7 @@
                                                     placeholder="180.90">
                                                 <input type="number"
                                                     class="c-journal-form__size c-input-text c-input-text--compact c-input-text--activated"
-                                                    placeholder="40">
-                                            </div>
-                                            <div class="c-journal-form__entry-size-wrapper">
-                                                <input type="number"
-                                                    class="c-journal-form__entry c-input-text c-input-text--compact c-input-text--activated"
-                                                    placeholder="181.16">
-                                                <input type="number"
-                                                    class="c-journal-form__size c-input-text c-input-text--compact c-input-text--activated"
-                                                    placeholder="20">
+                                                    placeholder="60">
                                             </div>
                                         </div>
                                         <button class="c-journal-form__plus-entry btn btn--icon">
@@ -783,18 +797,10 @@
                                             <div class="c-journal-form__entry-size-wrapper">
                                                 <input type="number"
                                                     class="c-journal-form__entry c-input-text c-input-text--compact c-input-text--activated"
-                                                    placeholder="181.84">
+                                                    placeholder="181.42">
                                                 <input type="number"
                                                     class="c-journal-form__size c-input-text c-input-text--compact c-input-text--activated"
-                                                    placeholder="20">
-                                            </div>
-                                            <div class="c-journal-form__entry-size-wrapper">
-                                                <input type="number"
-                                                    class="c-journal-form__entry c-input-text c-input-text--compact c-input-text--activated"
-                                                    placeholder="182.50">
-                                                <input type="number"
-                                                    class="c-journal-form__size c-input-text c-input-text--compact c-input-text--activated"
-                                                    placeholder="40">
+                                                    placeholder="60">
                                             </div>
                                         </div>
                                         <button class="c-journal-form__plus-entry btn btn--icon">

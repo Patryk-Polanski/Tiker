@@ -1,5 +1,6 @@
 .s-journal {
   min-height: 100vh;
+  min-width: 960px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -14,6 +15,14 @@
     max-width: 1600px;
     margin: 20px auto 0;
     display: flex;
+
+    @media only screen and (max-width: $bp-largest) {
+      width: 98%;
+    }
+
+    @media only screen and (max-width: $bp-large) {
+      flex-direction: column;
+    }
   }
 
   &__entries-wrapper,
@@ -22,5 +31,17 @@
     width: 50%;
     margin-right: 10px;
     position: relative;
+
+    @media only screen and (max-width: $bp-large) {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+
+  &__form-wrapper {
+    @media only screen and (max-width: $bp-large) {
+      order: -1;
+      margin-bottom: 40px;
+    }
   }
 }

@@ -2,7 +2,11 @@
   background-color: $grey-dark;
   height: 100%;
   border-radius: 10px;
-  padding: 14px 18px;
+  padding: 10px 18px 14px;
+
+  @media only screen and (max-width: $bp-largest) {
+    padding: 10px;
+  }
 
   & input {
     margin-top: 10px;
@@ -17,7 +21,7 @@
   }
 
   &__middle-region {
-    margin-top: 10px;
+    margin-top: 5px;
     justify-content: space-around;
   }
 
@@ -60,13 +64,6 @@
     @include ts-date;
   }
 
-  &__trade-number {
-    @include ts-numerical;
-    color: $brown-light;
-    font-size: 24px;
-    font-weight: 600;
-  }
-
   &__entries-wrapper,
   &__exits-wrapper,
   &__entries-shares-wrapper,
@@ -87,6 +84,15 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  &__trade-side-wrapper {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__swap {
+    margin-left: 10px;
   }
 
   &__plus-entry {

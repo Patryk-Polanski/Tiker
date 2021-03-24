@@ -388,6 +388,7 @@ body {
 
 .s-journal {
   min-height: 100vh;
+  min-width: 960px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -403,11 +404,33 @@ body {
   margin: 20px auto 0;
   display: flex;
 }
+@media only screen and (max-width: 87.5em) {
+  .s-journal__journal-wrapper {
+    width: 98%;
+  }
+}
+@media only screen and (max-width: 75em) {
+  .s-journal__journal-wrapper {
+    flex-direction: column;
+  }
+}
 .s-journal__entries-wrapper, .s-journal__form-wrapper {
   height: 100%;
   width: 50%;
   margin-right: 10px;
   position: relative;
+}
+@media only screen and (max-width: 75em) {
+  .s-journal__entries-wrapper, .s-journal__form-wrapper {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+@media only screen and (max-width: 75em) {
+  .s-journal__form-wrapper {
+    order: -1;
+    margin-bottom: 40px;
+  }
 }
 
 .s-login {
@@ -631,6 +654,7 @@ body {
 
 .c-calculator-capital {
   width: 800px;
+  min-width: 800px;
   background-color: #080808;
   border-radius: 10px;
   padding: 30px;
@@ -687,6 +711,7 @@ body {
 
 .c-calculator-position {
   width: 800px;
+  min-width: 800px;
   background-color: #080808;
   border-radius: 10px;
   padding: 30px 10px;
@@ -729,6 +754,7 @@ body {
 
 .c-calculator-ratio {
   width: 800px;
+  min-width: 800px;
   background-color: #080808;
   border-radius: 10px;
   padding: 30px 10px;
@@ -852,7 +878,7 @@ body {
 .c-input-text--compact {
   background-color: #080808;
   border-bottom: 2px solid transparent;
-  width: 100px;
+  width: 90px;
   padding: 8px;
 }
 .c-input-text--compact::placeholder {
@@ -878,6 +904,11 @@ body {
   padding: 14px 24px 14px 18px;
   position: relative;
   margin-top: 10px;
+}
+@media only screen and (max-width: 87.5em) {
+  .c-journal-entry {
+    padding: 10px;
+  }
 }
 .c-journal-entry:hover {
   background-color: #0d0d0d;
@@ -975,7 +1006,12 @@ body {
   background-color: #080808;
   height: 100%;
   border-radius: 10px;
-  padding: 14px 18px;
+  padding: 10px 18px 14px;
+}
+@media only screen and (max-width: 87.5em) {
+  .c-journal-form {
+    padding: 10px;
+  }
 }
 .c-journal-form input {
   margin-top: 10px;
@@ -987,7 +1023,7 @@ body {
   width: 100%;
 }
 .c-journal-form__middle-region {
-  margin-top: 10px;
+  margin-top: 5px;
   justify-content: space-around;
 }
 .c-journal-form__unit-wrapper {
@@ -1019,14 +1055,6 @@ body {
   font-weight: 300;
   font-style: italic;
 }
-.c-journal-form__trade-number {
-  font-family: "Roboto", sans-serif;
-  color: #aaaaaa;
-  font-weight: 400;
-  color: #29242a;
-  font-size: 24px;
-  font-weight: 600;
-}
 .c-journal-form__entries-wrapper, .c-journal-form__exits-wrapper, .c-journal-form__entries-shares-wrapper, .c-journal-form__exits-wrapper, .c-journal-form__exits-shares-wrapper {
   margin-top: 20px;
   display: flex;
@@ -1040,6 +1068,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.c-journal-form__trade-side-wrapper {
+  display: flex;
+  align-items: flex-end;
+}
+.c-journal-form__swap {
+  margin-left: 10px;
 }
 .c-journal-form__plus-entry {
   margin-top: 10px;
