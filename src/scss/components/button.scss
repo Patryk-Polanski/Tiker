@@ -56,4 +56,32 @@
   &--icon {
     background-color: transparent;
   }
+
+  &--pagination {
+    height: 28px;
+    width: 28px;
+    padding: 2px;
+    background-color: $brown-light;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      background-color: $purple-light;
+      border-radius: 5px;
+      z-index: -1;
+    }
+
+    &--active {
+      &::before {
+        left: -4px;
+        opacity: 1;
+      }
+    }
+  }
 }
