@@ -986,6 +986,10 @@ body {
 .c-journal-filter__month-input {
   margin-right: 10px;
 }
+.c-journal-filter__month-input::placeholder {
+  color: #aaaaaa;
+  opacity: 1;
+}
 .c-journal-filter__wins-wrapper, .c-journal-filter__loss-wrapper {
   display: flex;
   flex-direction: column;

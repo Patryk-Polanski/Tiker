@@ -29,6 +29,11 @@
 
   &__month-input {
     margin-right: 10px;
+
+    &::placeholder {
+      color: $grey-light;
+      opacity: 1;
+    }
   }
 
   &__wins-wrapper,
