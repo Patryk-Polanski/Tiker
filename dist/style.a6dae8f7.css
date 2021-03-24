@@ -225,6 +225,10 @@ span {
   height: 20px;
   width: 31px;
 }
+.svg--plus-circle {
+  height: 30px;
+  width: 30px;
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -587,7 +591,7 @@ body {
   left: -6px;
   opacity: 1;
 }
-.btn--icon {
+.btn--fom-icon {
   border-radius: 0px;
   padding: 1px;
   height: 35px;
@@ -597,6 +601,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.btn--icon {
+  background-color: transparent;
 }
 
 .c-calculator-capital {
@@ -819,6 +826,23 @@ body {
   border: none;
   width: 80px;
 }
+.c-input-text--compact {
+  background-color: #080808;
+  border-bottom: 2px solid transparent;
+  width: 80px;
+  padding: 8px;
+}
+.c-input-text--compact::placeholder {
+  color: #aaaaaa;
+  opacity: 1;
+}
+.c-input-text--activated {
+  background-color: #0d0d0d;
+  border: none;
+  border-bottom: 2px solid #aaaaaa;
+  color: #aaaaaa;
+  padding: 8px;
+}
 
 .c-journal-entry {
   width: 100%;
@@ -928,6 +952,10 @@ body {
   border-radius: 10px;
   padding: 14px 18px;
 }
+.c-journal-form input {
+  margin-top: 10px;
+  text-align: center;
+}
 .c-journal-form__upper-region, .c-journal-form__middle-region {
   display: flex;
   justify-content: space-between;
@@ -941,10 +969,14 @@ body {
 .c-journal-form__unit-wrapper span:last-child {
   margin-top: 10px;
 }
-.c-journal-form__data {
+.c-journal-form__data, .c-journal-form__entry, .c-journal-form__average-entry, .c-journal-form__average-entry-label, .c-journal-form__entries-label {
   font-family: "Roboto", sans-serif;
   color: #aaaaaa;
   font-weight: 400;
+}
+.c-journal-form__average-entry, .c-journal-form__average-entry-label {
+  display: inline-block;
+  margin-top: 10px;
 }
 .c-journal-form__date {
   font-family: "Roboto", sans-serif;
@@ -961,10 +993,17 @@ body {
   font-weight: 600;
 }
 .c-journal-form__entries-wrapper, .c-journal-form__entries-shares-wrapper, .c-journal-form__stops-wrapper, .c-journal-form__exits-wrapper, .c-journal-form__exits-shares-wrapper {
-  height: 200px;
-  width: 20px;
-  background-color: orange;
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.c-journal-form__entries-inner-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.c-journal-form__plus-entry {
+  margin-top: 10px;
 }
 .c-journal-form__text-area {
   font-family: "Roboto", sans-serif;

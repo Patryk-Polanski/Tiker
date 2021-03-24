@@ -6,6 +6,11 @@
   border-radius: 10px;
   padding: 14px 18px;
 
+  & input {
+    margin-top: 10px;
+    text-align: center;
+  }
+
   &__upper-region,
   &__middle-region {
     display: flex;
@@ -23,8 +28,18 @@
     }
   }
 
-  &__data {
+  &__data,
+  &__entry,
+  &__average-entry,
+  &__average-entry-label,
+  &__entries-label {
     @include ts-numerical;
+  }
+
+  &__average-entry,
+  &__average-entry-label {
+    display: inline-block;
+    margin-top: 10px;
   }
 
   &__date {
@@ -43,10 +58,19 @@
   &__stops-wrapper,
   &__exits-wrapper,
   &__exits-shares-wrapper {
-    height: 200px;
-    width: 20px;
-    background-color: orange;
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__entries-inner-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__plus-entry {
+    margin-top: 10px;
   }
 
   &__text-area {

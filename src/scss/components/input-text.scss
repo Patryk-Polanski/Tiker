@@ -19,4 +19,24 @@
     border: none;
     width: 80px;
   }
+
+  &--compact {
+    background-color: $grey-dark;
+    border-bottom: 2px solid transparent;
+    width: 80px;
+    padding: 8px;
+
+    &::placeholder {
+      color: $grey-light;
+      opacity: 1;
+    }
+  }
+
+  &--activated {
+    background-color: $grey-medium;
+    border: none;
+    border-bottom: 2px solid $grey-light;
+    color: $grey-light;
+    padding: 8px;
+  }
 }

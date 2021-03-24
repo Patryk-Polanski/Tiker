@@ -435,7 +435,7 @@
                             <p class="c-journal-filter__month-label">month</p>
                             <div class="c-journal-filter__month-inner-wrapper">
                                 <input class="c-journal-filter__month-input c-input-text" type="number" placeholder="all">
-                                <button class="c-journal-filter__dropdown btn btn--icon">
+                                <button class="c-journal-filter__dropdown btn btn--fom-icon">
                                     <svg class="svg svg--dropdown" viewBox="0 0 15 13" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7.5 13L0.138786 0.249999L14.8612 0.25L7.5 13Z" fill="#C4C4C4"></path>
                                     </svg>
@@ -444,7 +444,7 @@
                         </div>
                         <div class="c-journal-filter__wins-wrapper">
                             <p class="c-journal-filter__wins-label">wins</p>
-                            <button class="c-journal-filter__tick btn btn--icon">
+                            <button class="c-journal-filter__tick btn btn--fom-icon">
                                 <svg class="svg svg--tick" viewBox="0 0 32 26" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12.252 22.5637L11.0137 24.1343L12.4867 25.2957L13.74 23.9L12.252 22.5637ZM0.793 16.0759L11.0137 24.1343L13.4902 20.9932L3.26957 12.9348L0.793 16.0759ZM13.74 23.9L31.9508 3.62049L28.9746 0.947942L10.7639 21.2275L13.74 23.9Z" fill="#C4C4C4"></path>
                                 </svg>
@@ -452,7 +452,7 @@
                         </div>
                         <div class="c-journal-filter__loss-wrapper">
                             <p class="c-journal-filter__loss-label">losses</p>
-                            <button class="c-journal-filter__tick btn btn--icon">
+                            <button class="c-journal-filter__tick btn btn--fom-icon">
                                 <svg class="svg svg--tick" viewBox="0 0 32 26" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12.252 22.5637L11.0137 24.1343L12.4867 25.2957L13.74 23.9L12.252 22.5637ZM0.793 16.0759L11.0137 24.1343L13.4902 20.9932L3.26957 12.9348L0.793 16.0759ZM13.74 23.9L31.9508 3.62049L28.9746 0.947942L10.7639 21.2275L13.74 23.9Z" fill="#C4C4C4"></path>
                                 </svg>
@@ -644,13 +644,30 @@
                                     <span class="c-journal-form__data">%return: 1.63%</span>
                                 </div>
                                 <div class="c-journal-form__unit-wrapper">
-                                    <span class="c-journal-form__data">realized RRR: 1.97</span>
-                                    <span class="c-journal-form__data">return 112.52</span>
+                                    <span class="c-journal-form__data">100 shares</span>
+                                    <span class="c-journal-form__data">return: 112.52</span>
                                 </div>
                                 <span class="c-journal-form__trade-number">#167</span>
                             </div>
                             <div class="c-journal-form__middle-region">
-                                <div class="c-journal-form__entries-wrapper"></div>
+                                <div class="c-journal-form__entries-wrapper">
+                                    <span class="c-journal-form__entries-label">entries</span>
+                                    <div class="c-journal-form__entries-inner-wrapper">
+                                        <input type="number" class="c-journal-form__entry c-input-text c-input-text--compact c-input-text--activated" placeholder="180.75">
+                                        <input type="number" class="c-journal-form__entry c-input-text c-input-text--compact c-input-text--activated" placeholder="180.90">
+                                        <input type="number" class="c-journal-form__entry c-input-text c-input-text--compact c-input-text--activated" placeholder="181.16">
+                                    </div>
+                                    <button class="c-journal-form__plus-entry btn btn--icon">
+                                        <svg class="svg svg--plus-circle" viewBox="0 0 17 17" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="8.5" cy="8.5" r="8.5" fill="#29242A"></circle>
+                                            <path d="M14 7H3V10H14V7Z" fill="#C4C4C4"></path>
+                                            <path d="M10 14V3H7L7 14H10Z" fill="#C4C4C4"></path>
+                                        </svg>
+
+                                    </button>
+                                    <span class="c-journal-form__average-entry-label">average</span>
+                                    <span class="c-journal-form__average-entry">180.94</span>
+                                </div>
                                 <div class="c-journal-form__entries-shares-wrapper"></div>
                                 <div class="c-journal-form__stops-wrapper"></div>
                                 <div class="c-journal-form__exits-wrapper"></div>
@@ -675,7 +692,7 @@
                                                 <rect x="8" width="13" height="3" transform="rotate(90 8 0)" fill="#C4C4C4"></rect>
                                             </svg>
                                         </span>
-                                        <button class="c-calculator-capital__action-swap btn btn--icon">
+                                        <button class="c-calculator-capital__action-swap btn btn--fom-icon">
                                             <svg class="svg svg--swap" viewBox="0 0 17 29" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z" fill="#C4C4C4"></path>
                                                 <path d="M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z" fill="#C4C4C4"></path>
