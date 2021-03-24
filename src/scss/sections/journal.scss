@@ -16,7 +16,8 @@
     display: flex;
   }
 
-  &__entries-wrapper {
+  &__entries-wrapper,
+  &__form-wrapper {
     height: 100%;
     width: 50%;
     margin-right: 10px;

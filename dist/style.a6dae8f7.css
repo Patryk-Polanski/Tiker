@@ -403,7 +403,7 @@ body {
   margin: 20px auto 0;
   display: flex;
 }
-.s-journal__entries-wrapper {
+.s-journal__entries-wrapper, .s-journal__form-wrapper {
   height: 100%;
   width: 50%;
   margin-right: 10px;
@@ -947,8 +947,6 @@ body {
 .c-journal-form {
   background-color: #080808;
   height: 100%;
-  width: 50%;
-  margin-left: 10px;
   border-radius: 10px;
   padding: 14px 18px;
 }
@@ -1029,6 +1027,15 @@ body {
   background-color: #0d0d0d;
   border: none;
   border-radius: 10px;
+}
+.c-journal-form__buttons-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+.c-journal-form__button-save, .c-journal-form__button-cancel {
+  margin: 0 10px;
 }
 
 .c-nav {

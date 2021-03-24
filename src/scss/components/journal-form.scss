@@ -1,8 +1,6 @@
 .c-journal-form {
   background-color: $grey-dark;
   height: 100%;
-  width: 50%;
-  margin-left: 10px;
   border-radius: 10px;
   padding: 14px 18px;
 
@@ -103,5 +101,17 @@
     background-color: $grey-medium;
     border: none;
     border-radius: 10px;
+  }
+
+  &__buttons-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 14px;
+  }
+
+  &__button-save,
+  &__button-cancel {
+    margin: 0 10px;
   }
 }
