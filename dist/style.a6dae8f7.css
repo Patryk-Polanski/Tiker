@@ -267,7 +267,7 @@ body {
 
 .background-gradient {
   background: #080808;
-  background: linear-gradient(63deg, #080808 0%, #161216 100%);
+  background: linear-gradient(0deg, #0f0d0f 0%, #111010 50%, #0f0d0f);
 }
 
 .s-calculators {
@@ -586,6 +586,9 @@ body {
   cursor: pointer;
   text-decoration: none;
 }
+.btn:focus {
+  outline: 2px solid #762e88;
+}
 .btn--primary {
   background-color: #370943;
 }
@@ -614,6 +617,13 @@ body {
   left: -6px;
   opacity: 1;
 }
+.btn--nav {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  height: 75px;
+  width: 75px;
+}
 .btn--form-icon {
   border-radius: 0px;
   padding: 1px;
@@ -627,6 +637,9 @@ body {
 }
 .btn--icon {
   background-color: transparent;
+  height: 45px;
+  width: 35px;
+  padding: 0;
 }
 .btn--pagination {
   height: 28px;
@@ -1080,8 +1093,9 @@ body {
 .c-journal-form__swap {
   margin-left: 10px;
 }
-.c-journal-form__plus-entry {
+.c-journal-form__plus-entry, .c-journal-form__plus-exit {
   margin-top: 10px;
+  align-self: center;
 }
 .c-journal-form__text-area {
   font-family: "Roboto", sans-serif;

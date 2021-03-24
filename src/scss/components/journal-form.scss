@@ -95,8 +95,10 @@
     margin-left: 10px;
   }
 
-  &__plus-entry {
+  &__plus-entry,
+  &__plus-exit {
     margin-top: 10px;
+    align-self: center;
   }
 
   &__text-area {

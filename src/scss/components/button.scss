@@ -6,6 +6,10 @@
   cursor: pointer;
   text-decoration: none;
 
+  &:focus {
+    outline: 2px solid $purple-light;
+  }
+
   &--primary {
     background-color: $purple-medium;
   }
@@ -41,6 +45,14 @@
     }
   }
 
+  &--nav {
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    height: 75px;
+    width: 75px;
+  }
+
   &--form-icon {
     border-radius: 0px;
     padding: 1px;
@@ -55,6 +67,9 @@
 
   &--icon {
     background-color: transparent;
+    height: 45px;
+    width: 35px;
+    padding: 0;
   }
 
   &--pagination {

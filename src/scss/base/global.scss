@@ -24,8 +24,9 @@ body {
 .background-gradient {
   background: $grey-dark;
   background: linear-gradient(
-    63deg,
-    rgba($grey-dark, 1) 0%,
-    rgba($purple-dark, 1) 100%
+    0deg,
+    rgba(#0f0d0f, 1) 0%,
+    rgba(#111010, 1) 50%,
+    rgba(#0f0d0f, 1)
   );
 }
