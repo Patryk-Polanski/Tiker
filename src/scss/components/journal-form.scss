@@ -18,6 +18,11 @@
     width: 100%;
   }
 
+  &__middle-region {
+    margin-top: 10px;
+    justify-content: space-around;
+  }
+
   &__unit-wrapper {
     display: flex;
     flex-direction: column;
@@ -30,16 +35,27 @@
 
   &__data,
   &__entry,
-  &__average-entry,
-  &__average-entry-label,
-  &__entries-label {
+  &__size,
+  &__entries-label,
+  &__entries-label-result,
+  &__exits-label,
+  &__exits-label-result,
+  &__average-entry {
     @include ts-numerical;
   }
 
-  &__average-entry,
-  &__average-entry-label {
+  &__entries-label-result,
+  &__exits-label-result {
     display: inline-block;
     margin-top: 10px;
+  }
+
+  &__entry {
+    margin-right: 5px;
+  }
+
+  &__size {
+    margin-left: 5px;
   }
 
   &__date {
@@ -54,13 +70,19 @@
   }
 
   &__entries-wrapper,
+  &__exits-wrapper,
   &__entries-shares-wrapper,
-  &__stops-wrapper,
   &__exits-wrapper,
   &__exits-shares-wrapper {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
+  }
+
+  &__entries-labels-wrapper,
+  &__exits-labels-wrapper {
+    display: flex;
+    justify-content: space-around;
   }
 
   &__entries-inner-wrapper {

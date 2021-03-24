@@ -591,7 +591,7 @@ body {
   left: -6px;
   opacity: 1;
 }
-.btn--fom-icon {
+.btn--form-icon {
   border-radius: 0px;
   padding: 1px;
   height: 35px;
@@ -829,7 +829,7 @@ body {
 .c-input-text--compact {
   background-color: #080808;
   border-bottom: 2px solid transparent;
-  width: 80px;
+  width: 100px;
   padding: 8px;
 }
 .c-input-text--compact::placeholder {
@@ -961,6 +961,10 @@ body {
   justify-content: space-between;
   width: 100%;
 }
+.c-journal-form__middle-region {
+  margin-top: 10px;
+  justify-content: space-around;
+}
 .c-journal-form__unit-wrapper {
   display: flex;
   flex-direction: column;
@@ -969,14 +973,20 @@ body {
 .c-journal-form__unit-wrapper span:last-child {
   margin-top: 10px;
 }
-.c-journal-form__data, .c-journal-form__entry, .c-journal-form__average-entry, .c-journal-form__average-entry-label, .c-journal-form__entries-label {
+.c-journal-form__data, .c-journal-form__entry, .c-journal-form__size, .c-journal-form__entries-label, .c-journal-form__entries-label-result, .c-journal-form__exits-label, .c-journal-form__exits-label-result, .c-journal-form__average-entry {
   font-family: "Roboto", sans-serif;
   color: #aaaaaa;
   font-weight: 400;
 }
-.c-journal-form__average-entry, .c-journal-form__average-entry-label {
+.c-journal-form__entries-label-result, .c-journal-form__exits-label-result {
   display: inline-block;
   margin-top: 10px;
+}
+.c-journal-form__entry {
+  margin-right: 5px;
+}
+.c-journal-form__size {
+  margin-left: 5px;
 }
 .c-journal-form__date {
   font-family: "Roboto", sans-serif;
@@ -992,10 +1002,14 @@ body {
   font-size: 24px;
   font-weight: 600;
 }
-.c-journal-form__entries-wrapper, .c-journal-form__entries-shares-wrapper, .c-journal-form__stops-wrapper, .c-journal-form__exits-wrapper, .c-journal-form__exits-shares-wrapper {
+.c-journal-form__entries-wrapper, .c-journal-form__exits-wrapper, .c-journal-form__entries-shares-wrapper, .c-journal-form__exits-wrapper, .c-journal-form__exits-shares-wrapper {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
+}
+.c-journal-form__entries-labels-wrapper, .c-journal-form__exits-labels-wrapper {
+  display: flex;
+  justify-content: space-around;
 }
 .c-journal-form__entries-inner-wrapper {
   display: flex;
