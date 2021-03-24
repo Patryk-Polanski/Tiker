@@ -495,6 +495,10 @@ body {
   margin-top: 30px;
   flex-grow: 0;
 }
+.s-visualisations__grid-wrapper {
+  min-height: 100%;
+  flex-grow: 1;
+}
 .s-visualisations__grid {
   min-width: 900px;
   padding: 10px;
@@ -503,7 +507,6 @@ body {
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(12, 1fr);
   grid-gap: 10px;
-  flex-grow: 1;
 }
 @media only screen and (max-width: 75em) {
   .s-visualisations__grid {
@@ -852,7 +855,7 @@ body {
   background-color: #080808;
 }
 .c-pie-streak__win-wrapper, .c-pie-streak__loss-wrapper {
-  margin-top: 10px;
+  margin-top: 14px;
   display: flex;
   justify-content: space-between;
 }
@@ -890,7 +893,7 @@ body {
   border: 2px solid #c4456f;
 }
 .c-pie-streak__streak-profit-wrapper, .c-pie-streak__streak-loss-wrapper {
-  margin-top: 10px;
+  margin-top: 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -907,6 +910,8 @@ body {
   grid-row: 7/-1;
   border-radius: 10px;
   padding: 0 2px 10px 2px;
+  display: flex;
+  flex-direction: column;
 }
 @media only screen and (max-width: 75em) {
   .c-table-profitable {
@@ -920,10 +925,14 @@ body {
   margin-top: 20px;
   margin: 20px 0 10px;
 }
+.c-table-profitable__table-wrapper {
+  flex-grow: 1;
+}
 .c-table-profitable__table {
   color: #aaaaaa;
   width: 100%;
   text-align: center;
+  height: 100%;
 }
 .c-table-profitable__table th,
 .c-table-profitable__table td {
