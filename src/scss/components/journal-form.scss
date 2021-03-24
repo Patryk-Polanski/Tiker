@@ -1,7 +1,61 @@
 .c-journal-form {
-  background-color: purple;
+  background-color: $grey-dark;
   height: 100%;
   width: 50%;
   margin-left: 10px;
   border-radius: 10px;
+  padding: 14px 18px;
+
+  &__upper-region,
+  &__middle-region {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__unit-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    & span:last-child {
+      margin-top: 10px;
+    }
+  }
+
+  &__data {
+    @include ts-numerical;
+  }
+
+  &__date {
+    @include ts-date;
+  }
+
+  &__trade-number {
+    @include ts-numerical;
+    color: $brown-light;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  &__entries-wrapper,
+  &__entries-shares-wrapper,
+  &__stops-wrapper,
+  &__exits-wrapper,
+  &__exits-shares-wrapper {
+    height: 200px;
+    width: 20px;
+    background-color: orange;
+    margin-top: 20px;
+  }
+
+  &__text-area {
+    @include ts-numerical;
+    margin: 20px auto 0;
+    width: 96%;
+    padding: 10px;
+    background-color: $grey-medium;
+    border: none;
+    border-radius: 10px;
+  }
 }
