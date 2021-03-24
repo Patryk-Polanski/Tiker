@@ -43,5 +43,13 @@
 
   &--icon {
     border-radius: 0px;
+    padding: 1px;
+    height: 35px;
+    width: 45px;
+    background-color: $grey-medium;
+    border-bottom: 2px solid $grey-light;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

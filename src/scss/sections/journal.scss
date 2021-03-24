@@ -1,0 +1,11 @@
+.s-journal {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  &__heading {
+    @include ts-heading-1;
+    margin-top: 30px;
+  }
+}

@@ -212,6 +212,14 @@ span {
   height: 26px;
   width: 15px;
 }
+.svg--dropdown {
+  height: 13px;
+  width: 15px;
+}
+.svg--tick {
+  height: 16px;
+  width: 21px;
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -367,6 +375,18 @@ body {
     margin-left: 0;
     margin-top: 20px;
   }
+}
+
+.s-journal {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.s-journal__heading {
+  font-weight: 400;
+  color: #aaaaaa;
+  margin-top: 30px;
 }
 
 .s-login {
@@ -552,6 +572,14 @@ body {
 }
 .btn--icon {
   border-radius: 0px;
+  padding: 1px;
+  height: 35px;
+  width: 45px;
+  background-color: #0d0d0d;
+  border-bottom: 2px solid #aaaaaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .c-calculator-capital {
@@ -586,10 +614,9 @@ body {
 .c-calculator-capital__amount-input {
   margin-top: 10px;
 }
-.c-calculator-capital__action-sign, .c-calculator-capital__action-swap {
+.c-calculator-capital__action-sign {
   padding: 6px 16px;
   background-color: #0d0d0d;
-  border-bottom: 2px solid #aaaaaa;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -774,6 +801,49 @@ body {
 .c-input-text--no-border {
   border: none;
   width: 80px;
+}
+
+.c-journal-filter {
+  background-color: #080808;
+  margin: 20px auto 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-end;
+  padding: 26px;
+}
+.c-journal-filter > * {
+  margin-right: 26px;
+}
+.c-journal-filter__month-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.c-journal-filter__month-inner-wrapper {
+  display: flex;
+  margin-top: 10px;
+}
+.c-journal-filter__month-label, .c-journal-filter__wins-label, .c-journal-filter__loss-label {
+  color: #aaaaaa;
+  line-height: 22px;
+}
+.c-journal-filter__month-input {
+  margin-right: 10px;
+}
+.c-journal-filter__wins-wrapper, .c-journal-filter__loss-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.c-journal-filter__dropdown {
+  align-self: flex-end;
+}
+.c-journal-filter__checkbox {
+  margin-top: 10px;
+}
+.c-journal-filter__button-new {
+  padding: 7px 14px;
+  margin-right: 0;
 }
 
 .c-nav {

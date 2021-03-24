@@ -36,11 +36,9 @@
     margin-top: 10px;
   }
 
-  &__action-sign,
-  &__action-swap {
+  &__action-sign {
     padding: 6px 16px;
     background-color: $grey-medium;
-    border-bottom: 2px solid $grey-light;
     display: flex;
     justify-content: center;
     align-items: center;
