@@ -2,7 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Spartan:wght@300;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&family=Spartan:wght@300;600&display=swap");
 html,
 body,
 div,
@@ -209,8 +209,8 @@ span {
   width: 13px;
 }
 .svg--swap {
-  height: 26px;
-  width: 15px;
+  height: 22px;
+  width: 12px;
 }
 .svg--dropdown {
   height: 13px;
@@ -219,6 +219,10 @@ span {
 .svg--tick {
   height: 16px;
   width: 21px;
+}
+.svg--chevron {
+  height: 20px;
+  width: 31px;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -387,6 +391,19 @@ body {
   font-weight: 400;
   color: #aaaaaa;
   margin-top: 30px;
+}
+.s-journal__journal-wrapper {
+  width: 94%;
+  max-width: 1600px;
+  height: 500px;
+  margin: 20px auto 0;
+  display: flex;
+}
+.s-journal__entries-wrapper {
+  height: 100%;
+  width: 50%;
+  margin-right: 10px;
+  position: relative;
 }
 
 .s-login {
@@ -803,6 +820,63 @@ body {
   width: 80px;
 }
 
+.c-journal-entry {
+  width: 100%;
+  background-color: #080808;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px 14px 18px;
+  position: relative;
+  margin-top: 10px;
+}
+.c-journal-entry:first-child {
+  margin-top: 0;
+}
+.c-journal-entry::after {
+  content: "";
+  top: 0;
+  left: 0;
+  background-color: #762e88;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-radius: 10px;
+  opacity: 0;
+  z-index: -1;
+  transition: transform 0.1s ease-in;
+}
+.c-journal-entry--active::after {
+  transform: translateX(-4px);
+  opacity: 1;
+}
+.c-journal-entry--active svg {
+  transform: rotateZ(-90deg);
+}
+.c-journal-entry__unit-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.c-journal-entry__unit-wrapper span:last-child {
+  margin-top: 10px;
+}
+.c-journal-entry__data {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+}
+.c-journal-entry__date {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 300;
+  font-style: italic;
+}
+.c-journal-entry__chevron {
+  transition: transform 0.1s ease-in;
+}
+
 .c-journal-filter {
   background-color: #080808;
   margin: 20px auto 0;
@@ -844,6 +918,14 @@ body {
 .c-journal-filter__button-new {
   padding: 7px 14px;
   margin-right: 0;
+}
+
+.c-journal-form {
+  background-color: purple;
+  height: 100%;
+  width: 50%;
+  margin-left: 10px;
+  border-radius: 10px;
 }
 
 .c-nav {
@@ -944,7 +1026,8 @@ body {
 .c-pie-streak__win-date, .c-pie-streak__loss-date {
   font-family: "Roboto", sans-serif;
   color: #aaaaaa;
-  font-weight: 400;
+  font-weight: 300;
+  font-style: italic;
 }
 .c-pie-streak__win-streak-total, .c-pie-streak__loss-streak-total {
   font-family: "Roboto", sans-serif;

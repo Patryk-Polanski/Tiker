@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Spartan:wght@300;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&family=Spartan:wght@300;600&display=swap');
 
 @mixin font-family-one {
   font-family: 'Spartan', sans-serif;
@@ -88,6 +88,13 @@ span {
   @include font-family-two();
   color: $grey-light;
   font-weight: 400;
+}
+
+@mixin ts-date {
+  @include font-family-two();
+  color: $grey-light;
+  font-weight: 300;
+  font-style: italic;
 }
 
 @mixin ts-result {

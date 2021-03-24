@@ -8,4 +8,19 @@
     @include ts-heading-1;
     margin-top: 30px;
   }
+
+  &__journal-wrapper {
+    width: 94%;
+    max-width: 1600px;
+    height: 500px;
+    margin: 20px auto 0;
+    display: flex;
+  }
+
+  &__entries-wrapper {
+    height: 100%;
+    width: 50%;
+    margin-right: 10px;
+    position: relative;
+  }
 }

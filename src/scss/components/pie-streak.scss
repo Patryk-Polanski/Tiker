@@ -89,7 +89,7 @@
 
   &__win-date,
   &__loss-date {
-    @include ts-numerical;
+    @include ts-date;
   }
 
   &__win-streak-total,

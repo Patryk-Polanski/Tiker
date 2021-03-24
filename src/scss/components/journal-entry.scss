@@ -1,0 +1,62 @@
+.c-journal-entry {
+  width: 100%;
+  background-color: $grey-dark;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px 14px 18px;
+  position: relative;
+  margin-top: 10px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &::after {
+    content: '';
+    top: 0;
+    left: 0;
+    background-color: $purple-light;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border-radius: 10px;
+    opacity: 0;
+    z-index: -1;
+    transition: transform 0.1s ease-in;
+  }
+
+  &--active {
+    &::after {
+      transform: translateX(-4px);
+      opacity: 1;
+    }
+
+    & svg {
+      transform: rotateZ(-90deg);
+    }
+  }
+
+  &__unit-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    & span:last-child {
+      margin-top: 10px;
+    }
+  }
+
+  &__data {
+    @include ts-numerical;
+  }
+
+  &__date {
+    @include ts-date;
+  }
+
+  &__chevron {
+    transition: transform 0.1s ease-in;
+  }
+}

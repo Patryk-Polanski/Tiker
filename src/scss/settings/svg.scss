@@ -26,8 +26,8 @@
   }
 
   &--swap {
-    height: 26px;
-    width: 15px;
+    height: 22px;
+    width: 12px;
   }
 
   &--dropdown {
@@ -38,5 +38,10 @@
   &--tick {
     height: 16px;
     width: 21px;
+  }
+
+  &--chevron {
+    height: 20px;
+    width: 31px;
   }
 }
