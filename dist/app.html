@@ -757,19 +757,19 @@
                 <section class="s-calculators">
                     <h1 class="s-calculators__heading">Capital management</h1>
                     <div class="s-calculators__wrapper">
-                        <div class="c-calculator-capital">
+                        <div class="c-calculator-capital js-calc-capital">
                             <h2 class="c-calculator-capital__heading">Add or remove capital</h2>
                             <div class="c-calculator-capital__form-wrapper">
                                 <div class="c-calculator-capital__action-wrapper">
                                     <span class="c-calculator-capital__action-text">action</span>
                                     <div class="c-calculator-capital__inputs-wrapper">
-                                        <span class="c-calculator-capital__action-sign">
+                                        <span class="c-calculator-capital__action-sign js-calc-capital-sign">
                                             <svg class="svg svg--plus" viewBox="0 0 13 13" xmlns="http://www.w3.org/2000/svg">
                                                 <rect y="5" width="13" height="3" fill="#C4C4C4"></rect>
                                                 <rect x="8" width="13" height="3" transform="rotate(90 8 0)" fill="#C4C4C4"></rect>
                                             </svg>
                                         </span>
-                                        <button class="c-calculator-capital__action-swap btn btn--form-icon">
+                                        <button class="c-calculator-capital__action-swap btn btn--form-icon js-calc-capital-sign-btn">
                                             <svg class="svg svg--swap" viewBox="0 0 17 29" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z" fill="#C4C4C4"></path>
                                                 <path d="M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z" fill="#C4C4C4"></path>
@@ -779,54 +779,54 @@
                                 </div>
                                 <div class="c-calculator-capital__amount-wrapper">
                                     <span class="c-calculator-capital__amount-text">amount</span>
-                                    <input class="c-calculator-capital__amount-input c-input-text" type="number" placeholder="00.00">
+                                    <input class="c-calculator-capital__amount-input c-input-text js-calc-capital-input" type="number" placeholder="00.00">
                                 </div>
-                                <button class="c-calculator-capital__button btn btn--primary">update</button>
+                                <button class="c-calculator-capital__button btn btn--primary js-calc-capital-update-btn">update</button>
                             </div>
-                            <p class="c-calculator-capital__message">You have added <span class="c-calculator-capital__message-number">2,450</span>. Your account capital is
+                            <p class="c-calculator-capital__message js-calc-capital-message">You have added <span class="c-calculator-capital__message-number">2,450</span>. Your account capital is
                                 now
                                 <span class="c-calculator-capital__message-number">19,458</span>.
                             </p>
                         </div>
-                        <div class="c-calculator-position">
+                        <div class="c-calculator-position js-calc-position">
                             <h2 class="c-calculator-position__heading">Position sizing</h2>
                             <div class="c-calculator-position__form-wrapper">
                                 <div class="c-calculator-position__entry-wrapper">
                                     <span class="c-calculator-position__entry-text">entry price</span>
-                                    <input class="c-calculator-position__entry-input c-input-text js-calculator-position-entry" type="number" placeholder="00.00">
+                                    <input class="c-calculator-position__entry-input c-input-text js-calc-position-entry" type="number" placeholder="00.00">
                                 </div>
                                 <div class="c-calculator-position__percentage-wrapper">
                                     <span class="c-calculator-position__percentage-text">risk percentage %</span>
-                                    <input class="c-calculator-position__percentage-input c-input-text js-calculator-position-percentage" type="number" placeholder="0">
+                                    <input class="c-calculator-position__percentage-input c-input-text js-calc-position-percentage" type="number" placeholder="0">
                                 </div>
                                 <div class="c-calculator-position__stop-wrapper">
                                     <span class="c-calculator-position__stop-text">stop loss</span>
-                                    <input class="c-calculator-position__stop-input c-input-text js-calculator-position-stop" type="number" placeholder="00.00">
+                                    <input class="c-calculator-position__stop-input c-input-text js-calc-position-stop" type="number" placeholder="00.00">
                                 </div>
                             </div>
                             <div class="c-calculator-position__result-wrapper">
-                                <input class="c-calculator-position__result c-input-text c-input-text--no-border js-calculator-position-result" type="number" disabled="" placeholder="0">
+                                <input class="c-calculator-position__result c-input-text c-input-text--no-border js-calc-position-result" type="number" disabled="" placeholder="0">
                                 <span class="c-calculator-position__result-text">shares</span>
                             </div>
                         </div>
-                        <div class="c-calculator-ratio">
+                        <div class="c-calculator-ratio js-calc-ratio">
                             <h2 class="c-calculator-ratio__heading">Risk to Reward Ratio</h2>
                             <div class="c-calculator-ratio__form-wrapper">
                                 <div class="c-calculator-ratio__entry-wrapper">
                                     <span class="c-calculator-ratio__entry-text">entry price</span>
-                                    <input class="c-calculator-ratio__entry-input c-input-text js-calculator-ratio-entry " type="number" placeholder="00.00">
+                                    <input class="c-calculator-ratio__entry-input c-input-text js-calc-ratio-entry " type="number" placeholder="00.00">
                                 </div>
                                 <div class="c-calculator-ratio__exit-wrapper">
                                     <span class="c-calculator-ratio__exit-text">exit target</span>
-                                    <input class="c-calculator-ratio__exit-input c-input-text js-calculator-ratio-exit" type="number" placeholder="00.00">
+                                    <input class="c-calculator-ratio__exit-input c-input-text js-calc-ratio-exit" type="number" placeholder="00.00">
                                 </div>
                                 <div class="c-calculator-ratio__stop-wrapper">
                                     <span class="c-calculator-ratio__stop-text">stop loss</span>
-                                    <input class="c-calculator-ratio__stop-input c-input-text js-calculator-ratio-stop" type="number" placeholder="00.00">
+                                    <input class="c-calculator-ratio__stop-input c-input-text js-calc-ratio-stop" type="number" placeholder="00.00">
                                 </div>
                             </div>
                             <div class="c-calculator-ratio__result-wrapper">
-                                <input class="c-calculator-ratio__result c-input-text c-input-text--no-border js-calculator-ratio-result" type="number" disabled="" placeholder="00.00">
+                                <input class="c-calculator-ratio__result c-input-text c-input-text--no-border js-calc-ratio-result" type="number" disabled="" placeholder="00.00">
                                 <span class="c-calculator-ratio__result-text">RRR</span>
                             </div>
                         </div>

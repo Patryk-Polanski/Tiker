@@ -1,20 +1,36 @@
 let calculatorEls = {};
 
 const getElements = function (obj = {}) {
-  obj.positionEntryPrice = document.querySelector(
-    '.js-calculator-position-entry'
+  obj.calcPosition = document.querySelector('.js-calc-position');
+  obj.positionEntryPrice = obj.calcPosition.querySelector(
+    '.js-calc-position-entry'
   );
-  obj.positionRiskPercentage = document.querySelector(
-    '.js-calculator-position-percentage'
+  obj.positionRiskPercentage = obj.calcPosition.querySelector(
+    '.js-calc-position-percentage'
   );
-  obj.positionStopPrice = document.querySelector(
-    '.js-calculator-position-stop'
+  obj.positionStopPrice = obj.calcPosition.querySelector(
+    '.js-calc-position-stop'
   );
-  obj.positionResult = document.querySelector('.js-calculator-position-result');
-  obj.ratioEntryPrice = document.querySelector('.js-calculator-ratio-entry');
-  obj.ratioExitPrice = document.querySelector('.js-calculator-ratio-exit');
-  obj.ratioStopPrice = document.querySelector('.js-calculator-ratio-stop');
-  obj.ratioResult = document.querySelector('.js-calculator-ratio-result');
+  obj.positionResult = obj.calcPosition.querySelector(
+    '.js-calc-position-result'
+  );
+  obj.calcRatio = document.querySelector('.js-calc-ratio');
+  obj.ratioEntryPrice = obj.calcRatio.querySelector('.js-calc-ratio-entry');
+  obj.ratioExitPrice = obj.calcRatio.querySelector('.js-calc-ratio-exit');
+  obj.ratioStopPrice = obj.calcRatio.querySelector('.js-calc-ratio-stop');
+  obj.ratioResult = obj.calcRatio.querySelector('.js-calc-ratio-result');
+  obj.calcCapital = document.querySelector('.js-calc-capital');
+  obj.capitalSign = obj.calcCapital.querySelector('.js-calc-capital-sign');
+  obj.capitalSignBtn = obj.calcCapital.querySelector(
+    '.js-calc-capital-sign-btn'
+  );
+  obj.capitalInput = obj.calcCapital.querySelector('.js-calc-capital-input');
+  obj.capitalUpdateBtn = obj.calcCapital.querySelector(
+    '.js-calc-capital-update-btn'
+  );
+  obj.capitalMessage = obj.calcCapital.querySelector(
+    '.js-calc-capital-message'
+  );
   console.log(obj);
   return obj;
 };
