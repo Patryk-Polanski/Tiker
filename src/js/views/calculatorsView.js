@@ -126,6 +126,7 @@ export const renderCapitalMessage = function (arr) {
     calculatorEls.capitalMessage.classList.remove(
       'c-calculator-capital__message--is-active'
     );
+    calculatorEls.capitalInput.value = '';
   }, 6000);
 };
 

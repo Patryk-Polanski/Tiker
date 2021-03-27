@@ -1,3 +1,5 @@
+import { stringifyNum } from './../helpers';
+
 const user = {
   capital: 7000,
   overall: {
@@ -205,5 +207,5 @@ export const updateCapital = function (amount, action) {
   if (action === 'plus') user.capital += amount;
   if (user.capital < 0) user.capital = 0;
   console.log('updated global state', user);
-  return [action, amount, user.capital];
+  return [action, stringifyNum(amount), stringifyNum(user.capital)];
 };

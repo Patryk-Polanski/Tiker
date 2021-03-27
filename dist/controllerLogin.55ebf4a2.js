@@ -118,7 +118,18 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"js/helpers.js":[function(require,module,exports) {
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.stringifyNum = void 0;
+
+var stringifyNum = function stringifyNum(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+exports.stringifyNum = stringifyNum;
 },{}],"js/views/loginView.js":[function(require,module,exports) {
 "use strict";
 

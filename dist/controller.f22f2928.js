@@ -211,6 +211,7 @@ var renderCapitalMessage = function renderCapitalMessage(arr) {
   calculatorEls.capitalMessage.classList.add('c-calculator-capital__message--is-active');
   setTimeout(function () {
     calculatorEls.capitalMessage.classList.remove('c-calculator-capital__message--is-active');
+    calculatorEls.capitalInput.value = '';
   }, 6000);
 };
 
@@ -227,6 +228,19 @@ var clearCalcResult = function clearCalcResult(el) {
 };
 
 exports.clearCalcResult = clearCalcResult;
+},{}],"js/helpers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.stringifyNum = void 0;
+
+var stringifyNum = function stringifyNum(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+exports.stringifyNum = stringifyNum;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -234,6 +248,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.updateCapital = exports.passData = void 0;
+
+var _helpers = require("./../helpers");
+
 var user = {
   capital: 7000,
   overall: {
@@ -399,11 +416,11 @@ var updateCapital = function updateCapital(amount, action) {
   if (action === 'plus') user.capital += amount;
   if (user.capital < 0) user.capital = 0;
   console.log('updated global state', user);
-  return [action, amount, user.capital];
+  return [action, (0, _helpers.stringifyNum)(amount), (0, _helpers.stringifyNum)(user.capital)];
 };
 
 exports.updateCapital = updateCapital;
-},{}],"js/models/calculatorsModel.js":[function(require,module,exports) {
+},{"./../helpers":"js/helpers.js"}],"js/models/calculatorsModel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
