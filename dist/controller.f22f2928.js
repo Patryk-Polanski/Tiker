@@ -123,8 +123,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderCalcResult = exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.queryCalcEl = void 0;
-var calculatorEl = {};
+exports.clearCalcResult = exports.renderCalcResult = exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.queryCalcEl = void 0;
+var calculatorEls = {};
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -141,7 +141,7 @@ var getElements = function getElements() {
 };
 
 var queryCalcEl = function queryCalcEl() {
-  calculatorEl = getElements({});
+  calculatorEls = getElements({});
 };
 
 exports.queryCalcEl = queryCalcEl;
@@ -152,10 +152,10 @@ var checkFieldsForData = function checkFieldsForData(el1, el2, el3) {
 };
 
 var addCalcPositionHandler = function addCalcPositionHandler(handler) {
-  [calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice].forEach(function (input) {
+  [calculatorEls.positionEntryPrice, calculatorEls.positionRiskPercentage, calculatorEls.positionStopPrice].forEach(function (input) {
     input.addEventListener('keyup', function (e) {
       if (e.key === 'Tab' || !isFinite(e.key) && e.key !== 'Backspace') return;
-      var formattedData = checkFieldsForData(calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice);
+      var formattedData = checkFieldsForData(calculatorEls.positionEntryPrice, calculatorEls.positionRiskPercentage, calculatorEls.positionStopPrice);
       handler(formattedData);
     });
   });
@@ -164,11 +164,10 @@ var addCalcPositionHandler = function addCalcPositionHandler(handler) {
 exports.addCalcPositionHandler = addCalcPositionHandler;
 
 var addCalcRatioHandler = function addCalcRatioHandler(handler) {
-  [calculatorEl.ratioEntryPrice, calculatorEl.ratioExitPrice, calculatorEl.ratioStopPrice].forEach(function (input) {
+  [calculatorEls.ratioEntryPrice, calculatorEls.ratioExitPrice, calculatorEls.ratioStopPrice].forEach(function (input) {
     input.addEventListener('keyup', function (e) {
-      console.log(e.key);
-      if (e.key === 'Tab' || !isFinite(e.key) || e.key !== 'Backspace') return;
-      var formattedData = checkFieldsForData(calculatorEl.ratioEntryPrice, calculatorEl.ratioExitPrice, calculatorEl.ratioStopPrice);
+      if (e.key === 'Tab' || !isFinite(e.key) && e.key !== 'Backspace') return;
+      var formattedData = checkFieldsForData(calculatorEls.ratioEntryPrice, calculatorEls.ratioExitPrice, calculatorEls.ratioStopPrice);
       handler(formattedData);
     });
   });
@@ -177,10 +176,16 @@ var addCalcRatioHandler = function addCalcRatioHandler(handler) {
 exports.addCalcRatioHandler = addCalcRatioHandler;
 
 var renderCalcResult = function renderCalcResult(result, el) {
-  calculatorEl[el].value = result;
+  calculatorEls[el].value = result;
 };
 
 exports.renderCalcResult = renderCalcResult;
+
+var clearCalcResult = function clearCalcResult(el) {
+  calculatorEls[el].value = '';
+};
+
+exports.clearCalcResult = clearCalcResult;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -352,7 +357,7 @@ exports.passData = passData;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.calcPositionResult = void 0;
+exports.calcRatioResult = exports.calcPositionResult = void 0;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -374,11 +379,24 @@ var calcPositionResult = function calcPositionResult(accountCapital, dataArr) {
 
   var moneyRisk = accountCapital * (risk * 0.01);
   var stopDistance = Math.abs(entry - stop);
-  var shares = stopDistance !== 0 ? Math.round(moneyRisk / stopDistance) : 0;
-  return shares;
+  return stopDistance !== 0 ? Math.round(moneyRisk / stopDistance) : 0;
 };
 
 exports.calcPositionResult = calcPositionResult;
+
+var calcRatioResult = function calcRatioResult(dataArr) {
+  var _dataArr2 = _slicedToArray(dataArr, 3),
+      entry = _dataArr2[0],
+      exit = _dataArr2[1],
+      stop = _dataArr2[2];
+
+  if (dataArr.sort().indexOf(entry) !== 1) return;
+  var exitDistance = Math.abs(exit - entry);
+  var stopDistance = Math.abs(entry - stop);
+  return (exitDistance / stopDistance).toFixed(2);
+};
+
+exports.calcRatioResult = calcRatioResult;
 },{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
@@ -390,17 +408,17 @@ var _calculatorsModel = require("./models/calculatorsModel");
 
 // ZONE - controllers
 var controlCalcPosition = function controlCalcPosition(data) {
-  if (!data) return;
-  console.log('this is the data for the position calc');
+  if (!data) return (0, _calculatorsView.clearCalcResult)('positionResult');
   var positionResult = (0, _calculatorsModel.calcPositionResult)((0, _dataModel.passData)('capital'), data);
   if (isNaN(positionResult)) return;
   (0, _calculatorsView.renderCalcResult)(positionResult, 'positionResult');
 };
 
 var controlCalcRatio = function controlCalcRatio(data) {
-  if (!data) return;
-  console.log('this is the data for the position ratio');
-  console.log(data);
+  if (!data) return (0, _calculatorsView.clearCalcResult)('ratioResult');
+  var ratioResult = (0, _calculatorsModel.calcRatioResult)(data);
+  if (isNaN(ratioResult) || !ratioResult) return (0, _calculatorsView.clearCalcResult)('ratioResult');
+  (0, _calculatorsView.renderCalcResult)(ratioResult, 'ratioResult');
 }; // ZONE - event listeners
 
 

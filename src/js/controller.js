@@ -3,23 +3,24 @@ import {
   addCalcPositionHandler,
   addCalcRatioHandler,
   renderCalcResult,
+  clearCalcResult,
 } from './views/calculatorsView';
 import { passData } from './models/dataModel';
-import { calcPositionResult } from './models/calculatorsModel';
+import { calcPositionResult, calcRatioResult } from './models/calculatorsModel';
 
 // ZONE - controllers
 const controlCalcPosition = function (data) {
-  if (!data) return;
-  console.log('this is the data for the position calc');
+  if (!data) return clearCalcResult('positionResult');
   const positionResult = calcPositionResult(passData('capital'), data);
   if (isNaN(positionResult)) return;
   renderCalcResult(positionResult, 'positionResult');
 };
 
 const controlCalcRatio = function (data) {
-  if (!data) return;
-  console.log('this is the data for the position ratio');
-  console.log(data);
+  if (!data) return clearCalcResult('ratioResult');
+  const ratioResult = calcRatioResult(data);
+  if (isNaN(ratioResult) || !ratioResult) return clearCalcResult('ratioResult');
+  renderCalcResult(ratioResult, 'ratioResult');
 };
 
 // ZONE - event listeners

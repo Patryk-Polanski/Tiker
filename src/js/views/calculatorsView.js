@@ -1,4 +1,4 @@
-let calculatorEl = {};
+let calculatorEls = {};
 
 const getElements = function (obj = {}) {
   obj.positionEntryPrice = document.querySelector(
@@ -20,7 +20,7 @@ const getElements = function (obj = {}) {
 };
 
 export const queryCalcEl = function () {
-  calculatorEl = getElements({});
+  calculatorEls = getElements({});
 };
 
 const checkFieldsForData = function (el1, el2, el3) {
@@ -30,18 +30,18 @@ const checkFieldsForData = function (el1, el2, el3) {
 
 export const addCalcPositionHandler = function (handler) {
   [
-    calculatorEl.positionEntryPrice,
-    calculatorEl.positionRiskPercentage,
-    calculatorEl.positionStopPrice,
+    calculatorEls.positionEntryPrice,
+    calculatorEls.positionRiskPercentage,
+    calculatorEls.positionStopPrice,
   ].forEach(input => {
     input.addEventListener('keyup', e => {
       if (e.key === 'Tab' || (!isFinite(e.key) && e.key !== 'Backspace'))
         return;
 
       const formattedData = checkFieldsForData(
-        calculatorEl.positionEntryPrice,
-        calculatorEl.positionRiskPercentage,
-        calculatorEl.positionStopPrice
+        calculatorEls.positionEntryPrice,
+        calculatorEls.positionRiskPercentage,
+        calculatorEls.positionStopPrice
       );
       handler(formattedData);
     });
@@ -50,18 +50,18 @@ export const addCalcPositionHandler = function (handler) {
 
 export const addCalcRatioHandler = function (handler) {
   [
-    calculatorEl.ratioEntryPrice,
-    calculatorEl.ratioExitPrice,
-    calculatorEl.ratioStopPrice,
+    calculatorEls.ratioEntryPrice,
+    calculatorEls.ratioExitPrice,
+    calculatorEls.ratioStopPrice,
   ].forEach(input => {
     input.addEventListener('keyup', e => {
-      console.log(e.key);
-      if (e.key === 'Tab' || !isFinite(e.key) || e.key !== 'Backspace') return;
+      if (e.key === 'Tab' || (!isFinite(e.key) && e.key !== 'Backspace'))
+        return;
 
       const formattedData = checkFieldsForData(
-        calculatorEl.ratioEntryPrice,
-        calculatorEl.ratioExitPrice,
-        calculatorEl.ratioStopPrice
+        calculatorEls.ratioEntryPrice,
+        calculatorEls.ratioExitPrice,
+        calculatorEls.ratioStopPrice
       );
       handler(formattedData);
     });
@@ -69,5 +69,9 @@ export const addCalcRatioHandler = function (handler) {
 };
 
 export const renderCalcResult = function (result, el) {
-  calculatorEl[el].value = result;
+  calculatorEls[el].value = result;
+};
+
+export const clearCalcResult = function (el) {
+  calculatorEls[el].value = '';
 };
