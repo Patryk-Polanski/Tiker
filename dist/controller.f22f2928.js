@@ -117,79 +117,215 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"js/helpers.js":[function(require,module,exports) {
+"use strict";
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.user = void 0;
+var user = {
+  capital: 7305,
+  overall: {
+    total: 723,
+    long: 395,
+    short: 328
+  },
+  streak: {
+    wins: {
+      combo: 2,
+      trades: [{
+        ID: 'ZYRwa5z',
+        ticker: 'NFLX',
+        date: '14/06/21',
+        profit: 253
+      }, {
+        ID: 'Y58P1M',
+        ticker: 'BMBL',
+        date: '15/06/21',
+        profit: 312
+      }]
+    },
+    losses: {
+      combo: 2,
+      trades: [{
+        ID: 'ZYRwa5z',
+        ticker: 'NFLX',
+        date: '14/06/21',
+        loss: 253
+      }, {
+        ID: 'Y58P1M',
+        ticker: 'BMBL',
+        date: '15/06/21',
+        loss: 312
+      }]
+    },
+    current: {
+      combo: 1,
+      type: 'wins',
+      trades: [{
+        ID: 'ZYRwa5z',
+        ticker: 'NFLX',
+        date: '14/06/21',
+        profit: 253
+      }]
     }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
+  },
+  worstTrades: [{
+    ID: 'ZYRwa5z',
+    ticker: 'NFLX',
+    date: '14/06/21',
+    loss: 253
+  }, {
+    ID: 'Y58P1M1',
+    ticker: 'BMBL',
+    date: '15/06/21',
+    loss: 312
+  }],
+  bestTrades: [{
+    ID: 'ZYRwa5z',
+    ticker: 'NFLX',
+    date: '14/06/21',
+    loss: 253
+  }, {
+    ID: 'Y58P1M1',
+    ticker: 'BMBL',
+    date: '15/06/21',
+    loss: 312
+  }],
+  tickers: {
+    AAL: {
+      trades: [{
+        ID: '7Ft7s4w',
+        shares: 60,
+        result: 121,
+        winPercentage: 1.44
+      }]
+    },
+    AAPL: {
+      trades: [{
+        ID: 'QHnv65t',
+        shares: 40,
+        result: 175,
+        winPercentage: 1.54
+      }]
     }
+  },
+  profitable: {
+    BMBL: {
+      totalProfit: 2780,
+      totalShares: 312,
+      avgReturn: 134,
+      avgWinPercentage: 1.56,
+      battingAvgPercentage: 64,
+      winLossRatio: 3.11
+    },
+    AAPL: {
+      totalProfit: 2780,
+      totalShares: 312,
+      avgReturn: 134,
+      avgWinPercentage: 1.56,
+      battingAvgPercentage: 64,
+      winLossRatio: 3.11
+    }
+  },
+  monthlyData: {
+    june21: [{
+      ID: 'OL4stW4',
+      side: 'long',
+      result: 240,
+      resultPercentage: 1.83,
+      date: '16/06/21'
+    }, {
+      ID: 'SLX8f6s',
+      side: 'long',
+      result: -130,
+      resultPercentage: 1.92,
+      date: '13/06/21'
+    }],
+    may21: [{
+      ID: 'HR6q2pf',
+      side: 'short',
+      result: 160,
+      resultPercentage: 1.42,
+      date: '27/05/21'
+    }, {
+      ID: 'Gq9pd4H',
+      side: 'short',
+      result: -80,
+      resultPercentage: -0.8,
+      date: '27/05/21'
+    }]
+  },
+  journal: [{
+    ID: 'Hf5t3q1',
+    ticker: 'ROKU',
+    date: '28/07/21',
+    side: 'short',
+    entries: [[180.75, 40], [180.9, 60]],
+    exits: [[181.15, 20], [181.42, 20], [182.69, 60]],
+    body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
+  }, {
+    ID: 'nC4s97Q',
+    ticker: 'RIOT',
+    date: '28/07/21',
+    side: 'short',
+    entries: [[22.31, 80], [22.41, 60]],
+    exits: [[24.11, 40], [24.5, 50], [24.77, 50]],
+    body: 'Quis varius quam quisque id diam vel quam. Vulputate sapien nec sagittis aliquam malesuada bibendum. Et ultrices neque ornare aenean euismod elementum nisi quis. Amet luctus venenatis lectus magna fringilla urna porttitor. In est ante in nibh mauris cursus mattis.'
+  }]
+};
+exports.user = user;
+console.log(user);
+},{}],"js/views/calculatorsView.js":[function(require,module,exports) {
+"use strict";
 
-    cssTimeout = null;
-  }, 50);
-}
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addHandlerKeypress = void 0;
+var calculatorEl = {};
 
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/bundle-url.js"}],"scss/style.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.positionEntryPrice = document.querySelector('.js-calculator-position-entry');
+  obj.positionRiskPercentage = document.querySelector('.js-calculator-position-percentage');
+  obj.positionStopPrice = document.querySelector('.js-calculator-position-stop');
+  obj.positionResult = document.querySelector('.js-calculator-position-result');
+  return obj;
+};
 
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./..\\img\\carbon-fibre.png":[["carbon-fibre.14ebb3a3.png","img/carbon-fibre.png"],"img/carbon-fibre.png"],"_css_loader":"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/css-loader.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var checkFieldsForData = function checkFieldsForData(el1, el2, el3) {
+  if (!el1.value || !el2.value || !el3.value) return;
+  return [+el1.value, +el2.value, +el3.value];
+};
+
+var addHandlerKeypress = function addHandlerKeypress() {
+  calculatorEl = getElements({});
+  [calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice].forEach(function (input) {
+    input.addEventListener('keyup', function (e) {
+      if (e.key === 'Tab' || !isFinite(e.key)) return;
+      var formattedData = checkFieldsForData(calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice);
+      console.log(formattedData);
+    });
+  });
+};
+
+exports.addHandlerKeypress = addHandlerKeypress;
+},{}],"js/controller.js":[function(require,module,exports) {
+"use strict";
+
+var _helpers = _interopRequireDefault(require("./helpers"));
+
+var _calculatorsView = require("./views/calculatorsView");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+window.addEventListener('DOMContentLoaded', function (e) {
+  console.log('DOM app is loaded');
+  (0, _calculatorsView.addHandlerKeypress)();
+});
+},{"./helpers":"js/helpers.js","./views/calculatorsView":"js/views/calculatorsView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -393,5 +529,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/style.a6dae8f7.js.map
+},{}]},{},["../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js","js/controller.js"], null)
+//# sourceMappingURL=/controller.f22f2928.js.map
