@@ -35,7 +35,8 @@ export const addCalcPositionHandler = function (handler) {
     calculatorEl.positionStopPrice,
   ].forEach(input => {
     input.addEventListener('keyup', e => {
-      if (e.key === 'Tab' || !isFinite(e.key)) return;
+      if (e.key === 'Tab' || (!isFinite(e.key) && e.key !== 'Backspace'))
+        return;
 
       const formattedData = checkFieldsForData(
         calculatorEl.positionEntryPrice,
@@ -54,7 +55,8 @@ export const addCalcRatioHandler = function (handler) {
     calculatorEl.ratioStopPrice,
   ].forEach(input => {
     input.addEventListener('keyup', e => {
-      if (e.key === 'Tab' || !isFinite(e.key)) return;
+      console.log(e.key);
+      if (e.key === 'Tab' || !isFinite(e.key) || e.key !== 'Backspace') return;
 
       const formattedData = checkFieldsForData(
         calculatorEl.ratioEntryPrice,
@@ -64,4 +66,8 @@ export const addCalcRatioHandler = function (handler) {
       handler(formattedData);
     });
   });
+};
+
+export const renderCalcResult = function (result, el) {
+  calculatorEl[el].value = result;
 };

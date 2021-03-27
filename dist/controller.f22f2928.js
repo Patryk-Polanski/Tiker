@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.queryCalcEl = void 0;
+exports.renderCalcResult = exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.queryCalcEl = void 0;
 var calculatorEl = {};
 
 var getElements = function getElements() {
@@ -154,7 +154,7 @@ var checkFieldsForData = function checkFieldsForData(el1, el2, el3) {
 var addCalcPositionHandler = function addCalcPositionHandler(handler) {
   [calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice].forEach(function (input) {
     input.addEventListener('keyup', function (e) {
-      if (e.key === 'Tab' || !isFinite(e.key)) return;
+      if (e.key === 'Tab' || !isFinite(e.key) && e.key !== 'Backspace') return;
       var formattedData = checkFieldsForData(calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice);
       handler(formattedData);
     });
@@ -166,7 +166,8 @@ exports.addCalcPositionHandler = addCalcPositionHandler;
 var addCalcRatioHandler = function addCalcRatioHandler(handler) {
   [calculatorEl.ratioEntryPrice, calculatorEl.ratioExitPrice, calculatorEl.ratioStopPrice].forEach(function (input) {
     input.addEventListener('keyup', function (e) {
-      if (e.key === 'Tab' || !isFinite(e.key)) return;
+      console.log(e.key);
+      if (e.key === 'Tab' || !isFinite(e.key) || e.key !== 'Backspace') return;
       var formattedData = checkFieldsForData(calculatorEl.ratioEntryPrice, calculatorEl.ratioExitPrice, calculatorEl.ratioStopPrice);
       handler(formattedData);
     });
@@ -174,6 +175,12 @@ var addCalcRatioHandler = function addCalcRatioHandler(handler) {
 };
 
 exports.addCalcRatioHandler = addCalcRatioHandler;
+
+var renderCalcResult = function renderCalcResult(result, el) {
+  calculatorEl[el].value = result;
+};
+
+exports.renderCalcResult = renderCalcResult;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -367,10 +374,7 @@ var calcPositionResult = function calcPositionResult(accountCapital, dataArr) {
 
   var moneyRisk = accountCapital * (risk * 0.01);
   var stopDistance = Math.abs(entry - stop);
-  var shares = Math.round(moneyRisk / stopDistance);
-  console.log('This is the money risk', moneyRisk);
-  console.log('This is the stop Distance', stopDistance);
-  console.log('This is the shares amount', shares);
+  var shares = stopDistance !== 0 ? Math.round(moneyRisk / stopDistance) : 0;
   return shares;
 };
 
@@ -388,14 +392,15 @@ var _calculatorsModel = require("./models/calculatorsModel");
 var controlCalcPosition = function controlCalcPosition(data) {
   if (!data) return;
   console.log('this is the data for the position calc');
-  (0, _calculatorsModel.calcPositionResult)((0, _dataModel.passData)('capital'), data);
+  var positionResult = (0, _calculatorsModel.calcPositionResult)((0, _dataModel.passData)('capital'), data);
+  if (isNaN(positionResult)) return;
+  (0, _calculatorsView.renderCalcResult)(positionResult, 'positionResult');
 };
 
 var controlCalcRatio = function controlCalcRatio(data) {
   if (!data) return;
   console.log('this is the data for the position ratio');
   console.log(data);
-  var test = (0, _dataModel.passData)('capital');
 }; // ZONE - event listeners
 
 
