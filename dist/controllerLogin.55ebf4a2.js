@@ -123,13 +123,19 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.stringifyNum = void 0;
+exports.makeAbsolute = exports.stringifyNum = void 0;
 
 var stringifyNum = function stringifyNum(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 exports.stringifyNum = stringifyNum;
+
+var makeAbsolute = function makeAbsolute(num) {
+  return Math.abs(num);
+};
+
+exports.makeAbsolute = makeAbsolute;
 },{}],"js/views/loginView.js":[function(require,module,exports) {
 "use strict";
 

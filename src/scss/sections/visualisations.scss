@@ -3,11 +3,35 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  position: relative;
 
   &__heading {
     @include ts-heading-1;
     margin-top: 30px;
     flex-grow: 0;
+  }
+
+  &__account-info {
+    position: absolute;
+    display: flex;
+    top: 30px;
+    right: 10px;
+
+    @media only screen and (max-width: $bp-medium) {
+      top: 10px;
+    }
+  }
+
+  &__capital,
+  &__capital span,
+  &__username,
+  &__username span {
+    @include ts-numerical;
+  }
+
+  &__capital,
+  &__username {
+    margin: 0 10px;
   }
 
   &__grid-wrapper {

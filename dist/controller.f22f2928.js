@@ -234,13 +234,19 @@ exports.clearCalcResult = clearCalcResult;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.stringifyNum = void 0;
+exports.makeAbsolute = exports.stringifyNum = void 0;
 
 var stringifyNum = function stringifyNum(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 exports.stringifyNum = stringifyNum;
+
+var makeAbsolute = function makeAbsolute(num) {
+  return Math.abs(num);
+};
+
+exports.makeAbsolute = makeAbsolute;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -428,6 +434,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.calcRatioResult = exports.calcPositionResult = void 0;
 
+var _helpers = require("../helpers");
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -447,7 +455,7 @@ var calcPositionResult = function calcPositionResult(accountCapital, dataArr) {
       stop = _dataArr[2];
 
   var moneyRisk = accountCapital * (risk * 0.01);
-  var stopDistance = Math.abs(entry - stop);
+  var stopDistance = (0, _helpers.makeAbsolute)(entry - stop);
   return stopDistance !== 0 ? Math.round(moneyRisk / stopDistance) : 0;
 };
 
@@ -464,13 +472,13 @@ var calcRatioResult = function calcRatioResult(dataArr) {
   if (dataArr.sort(function (a, b) {
     return a - b;
   }).indexOf(entry) !== 1) return;
-  var exitDistance = Math.abs(exit - entry);
-  var stopDistance = Math.abs(entry - stop);
+  var exitDistance = (0, _helpers.makeAbsolute)(exit - entry);
+  var stopDistance = (0, _helpers.makeAbsolute)(entry - stop);
   return (exitDistance / stopDistance).toFixed(2);
 };
 
 exports.calcRatioResult = calcRatioResult;
-},{}],"js/controller.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _calculatorsView = require("./views/calculatorsView");

@@ -552,12 +552,32 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
+  position: relative;
 }
 .s-visualisations__heading {
   font-weight: 400;
   color: #aaaaaa;
   margin-top: 30px;
   flex-grow: 0;
+}
+.s-visualisations__account-info {
+  position: absolute;
+  display: flex;
+  top: 30px;
+  right: 10px;
+}
+@media only screen and (max-width: 56.25em) {
+  .s-visualisations__account-info {
+    top: 10px;
+  }
+}
+.s-visualisations__capital, .s-visualisations__capital span, .s-visualisations__username, .s-visualisations__username span {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+}
+.s-visualisations__capital, .s-visualisations__username {
+  margin: 0 10px;
 }
 .s-visualisations__grid-wrapper {
   min-height: 100%;

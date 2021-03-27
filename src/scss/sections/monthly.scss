@@ -8,7 +8,6 @@
   &__heading {
     @include ts-heading-1;
     margin-top: 30px;
-    // flex-grow: 0;
   }
 
   &__table-wrapper {
@@ -18,7 +17,6 @@
     min-width: 900px;
     background-color: $grey-dark;
     border-radius: 10px;
-    // flex-grow: 1;
     padding: 20px;
 
     @media only screen and (max-width: $bp-large) {
