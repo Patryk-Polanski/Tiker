@@ -208,6 +208,10 @@ var renderCapitalMessage = function renderCapitalMessage(arr) {
   spanEls[0].textContent = arr[0] === 'plus' ? 'added' : 'removed';
   spanEls[1].textContent = arr[1];
   spanEls[2].textContent = arr[2];
+  calculatorEls.capitalMessage.classList.add('c-calculator-capital__message--is-active');
+  setTimeout(function () {
+    calculatorEls.capitalMessage.classList.remove('c-calculator-capital__message--is-active');
+  }, 6000);
 };
 
 exports.renderCapitalMessage = renderCapitalMessage;

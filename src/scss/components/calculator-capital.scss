@@ -56,6 +56,12 @@
   &__message {
     @include ts-body;
     margin-top: 30px;
+    opacity: 0;
+    transition: opacity 0.4s ease-in;
+
+    &--is-active {
+      opacity: 1;
+    }
   }
 
   &__message-number {

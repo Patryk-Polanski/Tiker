@@ -721,6 +721,11 @@ body {
   color: #aaaaaa;
   line-height: 22px;
   margin-top: 30px;
+  opacity: 0;
+  transition: opacity 0.4s ease-in;
+}
+.c-calculator-capital__message--is-active {
+  opacity: 1;
 }
 .c-calculator-capital__message-number {
   font-family: "Roboto", sans-serif;
