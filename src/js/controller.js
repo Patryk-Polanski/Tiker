@@ -11,8 +11,8 @@ import { passData, updateCapital } from './models/dataModel';
 import { calcPositionResult, calcRatioResult } from './models/calculatorsModel';
 
 // ZONE - controllers
-const controlCalcCapital = function (data) {
-  renderCapitalMessage(updateCapital(data));
+const controlCalcCapital = function (amount, action) {
+  renderCapitalMessage(updateCapital(amount, action));
 };
 
 const controlCalcPosition = function (data) {

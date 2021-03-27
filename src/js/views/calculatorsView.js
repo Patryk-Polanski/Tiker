@@ -47,7 +47,30 @@ export const addCalcCapitalHandler = function (handler) {
   calculatorEls.capitalUpdateBtn.addEventListener('click', e => {
     const amount = +calculatorEls.capitalInput.value;
     if (!amount || isNaN(amount)) return;
-    handler(amount);
+    handler(amount, calculatorEls.capitalSign.getAttribute('data-action'));
+  });
+  calculatorEls.capitalSignBtn.addEventListener('click', e => {
+    if (
+      e.target.previousElementSibling.getAttribute('data-action') === 'plus'
+    ) {
+      calculatorEls.capitalSign.innerHTML = `
+      <svg class="svg svg--minus" viewBox="0 0 13 13" xmlns="http://www.w3.org/2000/svg">
+        <rect y="5" width="13" height="3" fill="#C4C4C4"/>
+      </svg>
+      `;
+      calculatorEls.capitalSign.setAttribute('data-action', 'minus');
+      console.log(calculatorEls.capitalSign);
+    } else {
+      calculatorEls.capitalSign.innerHTML = `
+      <svg class="svg svg--plus" viewBox="0 0 13 13"
+        xmlns="http://www.w3.org/2000/svg">
+        <rect y="5" width="13" height="3" fill="#C4C4C4" />
+        <rect x="8" width="13" height="3" transform="rotate(90 8 0)" fill="#C4C4C4" />
+      </svg>
+      `;
+      calculatorEls.capitalSign.setAttribute('data-action', 'plus');
+      console.log(calculatorEls.capitalSign);
+    }
   });
 };
 
@@ -92,8 +115,10 @@ export const addCalcRatioHandler = function (handler) {
 };
 
 export const renderCapitalMessage = function (arr) {
-  calculatorEls.capitalMessage.querySelector('span').textContent = arr[0];
-  calculatorEls.capitalMessage.querySelectorAll('span')[1].textContent = arr[1];
+  const spanEls = calculatorEls.capitalMessage.querySelectorAll('span');
+  spanEls[0].textContent = arr[0] === 'plus' ? 'added' : 'removed';
+  spanEls[1].textContent = arr[1];
+  spanEls[2].textContent = arr[2];
 };
 
 export const renderCalcResult = function (result, el) {

@@ -162,7 +162,18 @@ var addCalcCapitalHandler = function addCalcCapitalHandler(handler) {
   calculatorEls.capitalUpdateBtn.addEventListener('click', function (e) {
     var amount = +calculatorEls.capitalInput.value;
     if (!amount || isNaN(amount)) return;
-    handler(amount);
+    handler(amount, calculatorEls.capitalSign.getAttribute('data-action'));
+  });
+  calculatorEls.capitalSignBtn.addEventListener('click', function (e) {
+    if (e.target.previousElementSibling.getAttribute('data-action') === 'plus') {
+      calculatorEls.capitalSign.innerHTML = "\n      <svg class=\"svg svg--minus\" viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\">\n        <rect y=\"5\" width=\"13\" height=\"3\" fill=\"#C4C4C4\"/>\n      </svg>\n      ";
+      calculatorEls.capitalSign.setAttribute('data-action', 'minus');
+      console.log(calculatorEls.capitalSign);
+    } else {
+      calculatorEls.capitalSign.innerHTML = "\n      <svg class=\"svg svg--plus\" viewBox=\"0 0 13 13\"\n        xmlns=\"http://www.w3.org/2000/svg\">\n        <rect y=\"5\" width=\"13\" height=\"3\" fill=\"#C4C4C4\" />\n        <rect x=\"8\" width=\"13\" height=\"3\" transform=\"rotate(90 8 0)\" fill=\"#C4C4C4\" />\n      </svg>\n      ";
+      calculatorEls.capitalSign.setAttribute('data-action', 'plus');
+      console.log(calculatorEls.capitalSign);
+    }
   });
 };
 
@@ -193,8 +204,10 @@ var addCalcRatioHandler = function addCalcRatioHandler(handler) {
 exports.addCalcRatioHandler = addCalcRatioHandler;
 
 var renderCapitalMessage = function renderCapitalMessage(arr) {
-  calculatorEls.capitalMessage.querySelector('span').textContent = arr[0];
-  calculatorEls.capitalMessage.querySelectorAll('span')[1].textContent = arr[1];
+  var spanEls = calculatorEls.capitalMessage.querySelectorAll('span');
+  spanEls[0].textContent = arr[0] === 'plus' ? 'added' : 'removed';
+  spanEls[1].textContent = arr[1];
+  spanEls[2].textContent = arr[2];
 };
 
 exports.renderCapitalMessage = renderCapitalMessage;
@@ -376,10 +389,13 @@ var passData = function passData(field) {
 
 exports.passData = passData;
 
-var updateCapital = function updateCapital(amount) {
-  user.capital += amount;
+var updateCapital = function updateCapital(amount, action) {
+  Math.abs(action);
+  if (action === 'minus') user.capital -= amount;
+  if (action === 'plus') user.capital += amount;
+  if (user.capital < 0) user.capital = 0;
   console.log('updated global state', user);
-  return [amount, user.capital];
+  return [action, amount, user.capital];
 };
 
 exports.updateCapital = updateCapital;
@@ -443,8 +459,8 @@ var _dataModel = require("./models/dataModel");
 var _calculatorsModel = require("./models/calculatorsModel");
 
 // ZONE - controllers
-var controlCalcCapital = function controlCalcCapital(data) {
-  (0, _calculatorsView.renderCapitalMessage)((0, _dataModel.updateCapital)(data));
+var controlCalcCapital = function controlCalcCapital(amount, action) {
+  (0, _calculatorsView.renderCapitalMessage)((0, _dataModel.updateCapital)(amount, action));
 };
 
 var controlCalcPosition = function controlCalcPosition(data) {
@@ -497,7 +513,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59163" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61988" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
