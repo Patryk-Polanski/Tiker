@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.clearCalcResult = exports.renderCalcResult = exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.queryCalcEl = void 0;
+exports.clearCalcResult = exports.renderCalcResult = exports.renderCapitalMessage = exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.addCalcCapitalHandler = exports.queryCalcEl = void 0;
 var calculatorEls = {};
 
 var getElements = function getElements() {
@@ -144,12 +144,11 @@ var getElements = function getElements() {
   obj.capitalInput = obj.calcCapital.querySelector('.js-calc-capital-input');
   obj.capitalUpdateBtn = obj.calcCapital.querySelector('.js-calc-capital-update-btn');
   obj.capitalMessage = obj.calcCapital.querySelector('.js-calc-capital-message');
-  console.log(obj);
   return obj;
 };
 
 var queryCalcEl = function queryCalcEl() {
-  calculatorEls = getElements({});
+  calculatorEls = getElements();
 };
 
 exports.queryCalcEl = queryCalcEl;
@@ -158,6 +157,16 @@ var checkFieldsForData = function checkFieldsForData(el1, el2, el3) {
   if (!el1.value || !el2.value || !el3.value) return;
   return [+el1.value, +el2.value, +el3.value];
 };
+
+var addCalcCapitalHandler = function addCalcCapitalHandler(handler) {
+  calculatorEls.capitalUpdateBtn.addEventListener('click', function (e) {
+    var amount = +calculatorEls.capitalInput.value;
+    if (!amount || isNaN(amount)) return;
+    handler(amount);
+  });
+};
+
+exports.addCalcCapitalHandler = addCalcCapitalHandler;
 
 var addCalcPositionHandler = function addCalcPositionHandler(handler) {
   [calculatorEls.positionEntryPrice, calculatorEls.positionRiskPercentage, calculatorEls.positionStopPrice].forEach(function (input) {
@@ -183,6 +192,13 @@ var addCalcRatioHandler = function addCalcRatioHandler(handler) {
 
 exports.addCalcRatioHandler = addCalcRatioHandler;
 
+var renderCapitalMessage = function renderCapitalMessage(arr) {
+  calculatorEls.capitalMessage.querySelector('span').textContent = arr[0];
+  calculatorEls.capitalMessage.querySelectorAll('span')[1].textContent = arr[1];
+};
+
+exports.renderCapitalMessage = renderCapitalMessage;
+
 var renderCalcResult = function renderCalcResult(result, el) {
   calculatorEls[el].value = result;
 };
@@ -200,7 +216,7 @@ exports.clearCalcResult = clearCalcResult;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.passData = void 0;
+exports.updateCapital = exports.passData = void 0;
 var user = {
   capital: 7000,
   overall: {
@@ -359,6 +375,14 @@ var passData = function passData(field) {
 };
 
 exports.passData = passData;
+
+var updateCapital = function updateCapital(amount) {
+  user.capital += amount;
+  console.log('updated global state', user);
+  return [amount, user.capital];
+};
+
+exports.updateCapital = updateCapital;
 },{}],"js/models/calculatorsModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -419,6 +443,10 @@ var _dataModel = require("./models/dataModel");
 var _calculatorsModel = require("./models/calculatorsModel");
 
 // ZONE - controllers
+var controlCalcCapital = function controlCalcCapital(data) {
+  (0, _calculatorsView.renderCapitalMessage)((0, _dataModel.updateCapital)(data));
+};
+
 var controlCalcPosition = function controlCalcPosition(data) {
   if (!data) return (0, _calculatorsView.clearCalcResult)('positionResult');
   var positionResult = (0, _calculatorsModel.calcPositionResult)((0, _dataModel.passData)('capital'), data);
@@ -439,6 +467,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _calculatorsView.queryCalcEl)();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
+  (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
 });
 },{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -468,7 +497,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51451" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59163" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

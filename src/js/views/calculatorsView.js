@@ -31,17 +31,24 @@ const getElements = function (obj = {}) {
   obj.capitalMessage = obj.calcCapital.querySelector(
     '.js-calc-capital-message'
   );
-  console.log(obj);
   return obj;
 };
 
 export const queryCalcEl = function () {
-  calculatorEls = getElements({});
+  calculatorEls = getElements();
 };
 
 const checkFieldsForData = function (el1, el2, el3) {
   if (!el1.value || !el2.value || !el3.value) return;
   return [+el1.value, +el2.value, +el3.value];
+};
+
+export const addCalcCapitalHandler = function (handler) {
+  calculatorEls.capitalUpdateBtn.addEventListener('click', e => {
+    const amount = +calculatorEls.capitalInput.value;
+    if (!amount || isNaN(amount)) return;
+    handler(amount);
+  });
 };
 
 export const addCalcPositionHandler = function (handler) {
@@ -82,6 +89,11 @@ export const addCalcRatioHandler = function (handler) {
       handler(formattedData);
     });
   });
+};
+
+export const renderCapitalMessage = function (arr) {
+  calculatorEls.capitalMessage.querySelector('span').textContent = arr[0];
+  calculatorEls.capitalMessage.querySelectorAll('span')[1].textContent = arr[1];
 };
 
 export const renderCalcResult = function (result, el) {

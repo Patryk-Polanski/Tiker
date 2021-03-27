@@ -198,3 +198,9 @@ console.log(user);
 export const passData = function (field) {
   return user[field];
 };
+
+export const updateCapital = function (amount) {
+  user.capital += amount;
+  console.log('updated global state', user);
+  return [amount, user.capital];
+};

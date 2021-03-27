@@ -1,14 +1,20 @@
 import {
   queryCalcEl,
+  addCalcCapitalHandler,
   addCalcPositionHandler,
   addCalcRatioHandler,
+  renderCapitalMessage,
   renderCalcResult,
   clearCalcResult,
 } from './views/calculatorsView';
-import { passData } from './models/dataModel';
+import { passData, updateCapital } from './models/dataModel';
 import { calcPositionResult, calcRatioResult } from './models/calculatorsModel';
 
 // ZONE - controllers
+const controlCalcCapital = function (data) {
+  renderCapitalMessage(updateCapital(data));
+};
+
 const controlCalcPosition = function (data) {
   if (!data) return clearCalcResult('positionResult');
   const positionResult = calcPositionResult(passData('capital'), data);
@@ -30,4 +36,5 @@ window.addEventListener('DOMContentLoaded', e => {
   queryCalcEl();
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
+  addCalcCapitalHandler(controlCalcCapital);
 });
