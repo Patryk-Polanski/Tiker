@@ -117,15 +117,72 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"js/helpers.js":[function(require,module,exports) {
+})({"js/views/calculatorsView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.user = void 0;
+exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.queryCalcEl = void 0;
+var calculatorEl = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.positionEntryPrice = document.querySelector('.js-calculator-position-entry');
+  obj.positionRiskPercentage = document.querySelector('.js-calculator-position-percentage');
+  obj.positionStopPrice = document.querySelector('.js-calculator-position-stop');
+  obj.positionResult = document.querySelector('.js-calculator-position-result');
+  obj.ratioEntryPrice = document.querySelector('.js-calculator-ratio-entry');
+  obj.ratioExitPrice = document.querySelector('.js-calculator-ratio-exit');
+  obj.ratioStopPrice = document.querySelector('.js-calculator-ratio-stop');
+  obj.ratioResult = document.querySelector('.js-calculator-ratio-result');
+  console.log(obj);
+  return obj;
+};
+
+var queryCalcEl = function queryCalcEl() {
+  calculatorEl = getElements({});
+};
+
+exports.queryCalcEl = queryCalcEl;
+
+var checkFieldsForData = function checkFieldsForData(el1, el2, el3) {
+  if (!el1.value || !el2.value || !el3.value) return;
+  return [+el1.value, +el2.value, +el3.value];
+};
+
+var addCalcPositionHandler = function addCalcPositionHandler(handler) {
+  [calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice].forEach(function (input) {
+    input.addEventListener('keyup', function (e) {
+      if (e.key === 'Tab' || !isFinite(e.key)) return;
+      var formattedData = checkFieldsForData(calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice);
+      handler(formattedData);
+    });
+  });
+};
+
+exports.addCalcPositionHandler = addCalcPositionHandler;
+
+var addCalcRatioHandler = function addCalcRatioHandler(handler) {
+  [calculatorEl.ratioEntryPrice, calculatorEl.ratioExitPrice, calculatorEl.ratioStopPrice].forEach(function (input) {
+    input.addEventListener('keyup', function (e) {
+      if (e.key === 'Tab' || !isFinite(e.key)) return;
+      var formattedData = checkFieldsForData(calculatorEl.ratioEntryPrice, calculatorEl.ratioExitPrice, calculatorEl.ratioStopPrice);
+      handler(formattedData);
+    });
+  });
+};
+
+exports.addCalcRatioHandler = addCalcRatioHandler;
+},{}],"js/models/dataModel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.passData = void 0;
 var user = {
-  capital: 7305,
+  capital: 7000,
   overall: {
     total: 723,
     long: 395,
@@ -275,57 +332,80 @@ var user = {
     body: 'Quis varius quam quisque id diam vel quam. Vulputate sapien nec sagittis aliquam malesuada bibendum. Et ultrices neque ornare aenean euismod elementum nisi quis. Amet luctus venenatis lectus magna fringilla urna porttitor. In est ante in nibh mauris cursus mattis.'
   }]
 };
-exports.user = user;
 console.log(user);
-},{}],"js/views/calculatorsView.js":[function(require,module,exports) {
+
+var passData = function passData(field) {
+  return user[field];
+};
+
+exports.passData = passData;
+},{}],"js/models/calculatorsModel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addHandlerKeypress = void 0;
-var calculatorEl = {};
+exports.calcPositionResult = void 0;
 
-var getElements = function getElements() {
-  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  obj.positionEntryPrice = document.querySelector('.js-calculator-position-entry');
-  obj.positionRiskPercentage = document.querySelector('.js-calculator-position-percentage');
-  obj.positionStopPrice = document.querySelector('.js-calculator-position-stop');
-  obj.positionResult = document.querySelector('.js-calculator-position-result');
-  return obj;
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var calcPositionResult = function calcPositionResult(accountCapital, dataArr) {
+  var _dataArr = _slicedToArray(dataArr, 3),
+      entry = _dataArr[0],
+      risk = _dataArr[1],
+      stop = _dataArr[2];
+
+  var moneyRisk = accountCapital * (risk * 0.01);
+  var stopDistance = Math.abs(entry - stop);
+  var shares = Math.round(moneyRisk / stopDistance);
+  console.log('This is the money risk', moneyRisk);
+  console.log('This is the stop Distance', stopDistance);
+  console.log('This is the shares amount', shares);
+  return shares;
 };
 
-var checkFieldsForData = function checkFieldsForData(el1, el2, el3) {
-  if (!el1.value || !el2.value || !el3.value) return;
-  return [+el1.value, +el2.value, +el3.value];
-};
-
-var addHandlerKeypress = function addHandlerKeypress() {
-  calculatorEl = getElements({});
-  [calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice].forEach(function (input) {
-    input.addEventListener('keyup', function (e) {
-      if (e.key === 'Tab' || !isFinite(e.key)) return;
-      var formattedData = checkFieldsForData(calculatorEl.positionEntryPrice, calculatorEl.positionRiskPercentage, calculatorEl.positionStopPrice);
-      console.log(formattedData);
-    });
-  });
-};
-
-exports.addHandlerKeypress = addHandlerKeypress;
+exports.calcPositionResult = calcPositionResult;
 },{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
-var _helpers = _interopRequireDefault(require("./helpers"));
-
 var _calculatorsView = require("./views/calculatorsView");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _dataModel = require("./models/dataModel");
+
+var _calculatorsModel = require("./models/calculatorsModel");
+
+// ZONE - controllers
+var controlCalcPosition = function controlCalcPosition(data) {
+  if (!data) return;
+  console.log('this is the data for the position calc');
+  (0, _calculatorsModel.calcPositionResult)((0, _dataModel.passData)('capital'), data);
+};
+
+var controlCalcRatio = function controlCalcRatio(data) {
+  if (!data) return;
+  console.log('this is the data for the position ratio');
+  console.log(data);
+  var test = (0, _dataModel.passData)('capital');
+}; // ZONE - event listeners
+
 
 window.addEventListener('DOMContentLoaded', function (e) {
   console.log('DOM app is loaded');
-  (0, _calculatorsView.addHandlerKeypress)();
+  (0, _calculatorsView.queryCalcEl)();
+  (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
+  (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
 });
-},{"./helpers":"js/helpers.js","./views/calculatorsView":"js/views/calculatorsView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -353,7 +433,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56098" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51451" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

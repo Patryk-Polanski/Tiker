@@ -11,7 +11,16 @@ const getElements = function (obj = {}) {
     '.js-calculator-position-stop'
   );
   obj.positionResult = document.querySelector('.js-calculator-position-result');
+  obj.ratioEntryPrice = document.querySelector('.js-calculator-ratio-entry');
+  obj.ratioExitPrice = document.querySelector('.js-calculator-ratio-exit');
+  obj.ratioStopPrice = document.querySelector('.js-calculator-ratio-stop');
+  obj.ratioResult = document.querySelector('.js-calculator-ratio-result');
+  console.log(obj);
   return obj;
+};
+
+export const queryCalcEl = function () {
+  calculatorEl = getElements({});
 };
 
 const checkFieldsForData = function (el1, el2, el3) {
@@ -19,8 +28,7 @@ const checkFieldsForData = function (el1, el2, el3) {
   return [+el1.value, +el2.value, +el3.value];
 };
 
-export const addHandlerKeypress = function () {
-  calculatorEl = getElements({});
+export const addCalcPositionHandler = function (handler) {
   [
     calculatorEl.positionEntryPrice,
     calculatorEl.positionRiskPercentage,
@@ -34,7 +42,26 @@ export const addHandlerKeypress = function () {
         calculatorEl.positionRiskPercentage,
         calculatorEl.positionStopPrice
       );
-      console.log(formattedData);
+      handler(formattedData);
+    });
+  });
+};
+
+export const addCalcRatioHandler = function (handler) {
+  [
+    calculatorEl.ratioEntryPrice,
+    calculatorEl.ratioExitPrice,
+    calculatorEl.ratioStopPrice,
+  ].forEach(input => {
+    input.addEventListener('keyup', e => {
+      if (e.key === 'Tab' || !isFinite(e.key)) return;
+
+      const formattedData = checkFieldsForData(
+        calculatorEl.ratioEntryPrice,
+        calculatorEl.ratioExitPrice,
+        calculatorEl.ratioStopPrice
+      );
+      handler(formattedData);
     });
   });
 };
