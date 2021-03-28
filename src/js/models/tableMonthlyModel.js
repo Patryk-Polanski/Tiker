@@ -1,92 +1,80 @@
 // import { reduce } from 'core-js/core/array';
 import { crunchData, reduceData, filterNonStrings } from '../helpers';
 
+const createPlaceholderObj = function (current, key) {
+  return {
+    total: {
+      month: key,
+      monthlyReturn: [0],
+      totalTrades: current.length,
+      avgReturn: [],
+      avgWinPercent: [],
+      avgLossPercent: [],
+      profitableNumber: 0,
+      battingAvg: 0,
+      winLossRatio: [],
+    },
+    long: {
+      side: 'long',
+      monthlyReturn: [0],
+      totalTrades: 0,
+      avgReturn: [],
+      avgWinPercent: [],
+      avgLossPercent: [],
+      profitableNumber: 0,
+      battingAvg: [],
+      winLossRatio: [],
+    },
+    short: {
+      side: 'short',
+      monthlyReturn: [0],
+      totalTrades: 0,
+      avgReturn: [],
+      avgWinPercent: [],
+      avgLossPercent: [],
+      profitableNumber: 0,
+      battingAvg: [],
+      winLossRatio: [],
+    },
+  };
+};
+
+const calcBattingAvg = function (profitable, total) {
+  return Math.round((profitable / total) * 100);
+};
+
+const calcWinLossRatio = function (profitable, total) {
+  if (profitable === total) total++;
+  return (profitable / (total - profitable)).toFixed(2);
+};
+
 export const computeMonthlyData = function (rawData) {
-  console.log(rawData);
   const formattedMonths = {};
   const keys = Object.keys(rawData);
-  keys.forEach(key => {
-    // console.log(rawData[key]);
-    const currentKey = rawData[key];
-    let tableUnit = {
-      total: {
-        month: key,
-        monthlyReturn: [0],
-        totalTrades: currentKey.length,
-        avgReturn: [],
-        avgWinPercent: [],
-        avgLossPercent: [],
-        profitableNumber: 0,
-        battingAvg: 0,
-        winLossRatio: [],
-      },
-      long: {
-        side: 'long',
-        monthlyReturn: [0],
-        totalTrades: 0,
-        avgReturn: [],
-        avgWinPercent: [],
-        avgLossPercent: [],
-        battingAvg: [],
-        winLossRatio: [],
-      },
-      short: {
-        side: 'short',
-        monthlyReturn: [0],
-        totalTrades: 0,
-        avgReturn: [],
-        avgWinPercent: [],
-        avgLossPercent: [],
-        battingAvg: [],
-        winLossRatio: [],
-      },
-    };
 
-    currentKey.forEach(trade => {
-      let currentSide;
+  keys.forEach(key => {
+    const currentMonth = rawData[key];
+    let tableUnit = createPlaceholderObj(currentMonth, key);
+
+    currentMonth.forEach(trade => {
+      let currentSide; // decided which object to add data to
       if (trade.side === 'long') currentSide = tableUnit.long;
       else if (trade.side === 'short') currentSide = tableUnit.short;
       currentSide.monthlyReturn.push(trade.result); // monthly return
       currentSide.totalTrades++; // total trades
       currentSide.avgReturn.push(trade.result); // avg Return
       // avg win and loss %
-      if (trade.resultPercentage > 0) {
+      if (trade.resultPercentage >= 0) {
         currentSide.avgWinPercent.push(trade.resultPercentage);
         tableUnit.total.profitableNumber++;
+        currentSide.profitableNumber++;
       } else if (trade.resultPercentage <= 0) {
         currentSide.avgLossPercent.push(trade.resultPercentage);
       }
     });
 
-    // batting avg %
-    tableUnit.long.battingAvg =
-      (tableUnit.long.avgWinPercent.length /
-        (tableUnit.long.totalTrades !== 0 ? tableUnit.long.totalTrades : 1)) *
-      100;
-
-    tableUnit.short.battingAvg =
-      (tableUnit.short.avgWinPercent.length /
-        (tableUnit.short.totalTrades !== 0 ? tableUnit.short.totalTrades : 1)) *
-      100;
-
-    // win loss ratio %
-    tableUnit.long.winLossRatio =
-      (tableUnit.long.avgWinPercent.length !== 0
-        ? tableUnit.long.avgLossPercent.length
-        : 1) /
-      (tableUnit.long.avgLossPercent.length !== 0
-        ? tableUnit.long.avgLossPercent.length
-        : 1);
-
-    tableUnit.short.winLossRatio =
-      (tableUnit.short.avgWinPercent.length !== 0
-        ? tableUnit.short.avgLossPercent.length
-        : 1) /
-      (tableUnit.short.avgLossPercent.length !== 0
-        ? tableUnit.short.avgLossPercent.length
-        : 1);
-
-    tableUnit.long.monthlyReturn = reduceData(tableUnit.long.avgReturn);
+    // crunch the array data into single numbers
+    tableUnit.long.monthlyReturn = reduceData(tableUnit.long.monthlyReturn);
     tableUnit.long.avgReturn = crunchData(tableUnit.long.avgReturn);
     tableUnit.long.avgWinPercent = crunchData(tableUnit.long.avgWinPercent);
     tableUnit.long.avgLossPercent = crunchData(tableUnit.long.avgLossPercent);
@@ -100,18 +88,15 @@ export const computeMonthlyData = function (rawData) {
       tableUnit.long.monthlyReturn,
       tableUnit.short.monthlyReturn,
     ]);
-
     tableUnit.total.avgReturn = crunchData(
       filterNonStrings([tableUnit.long.avgReturn, tableUnit.short.avgReturn])
     );
-
     tableUnit.total.avgWinPercent = crunchData(
       filterNonStrings([
         tableUnit.long.avgWinPercent,
         tableUnit.short.avgWinPercent,
       ])
     );
-
     tableUnit.total.avgLossPercent = crunchData(
       filterNonStrings([
         tableUnit.long.avgLossPercent,
@@ -119,17 +104,38 @@ export const computeMonthlyData = function (rawData) {
       ])
     );
 
-    tableUnit.total.battingAvg = (
-      (tableUnit.total.profitableNumber / tableUnit.total.totalTrades) *
-      100
-    ).toFixed(2);
+    // batting avg %
+    tableUnit.long.battingAvg = calcBattingAvg(
+      tableUnit.long.profitableNumber,
+      tableUnit.long.totalTrades
+    );
 
-    tableUnit.total.winLossRatio = (
-      tableUnit.total.profitableNumber /
-      (tableUnit.total.totalTrades - tableUnit.total.profitableNumber)
-    ).toFixed(2);
+    tableUnit.short.battingAvg = calcBattingAvg(
+      tableUnit.short.profitableNumber,
+      tableUnit.short.totalTrades
+    );
 
-    // console.log(tableUnit);
+    tableUnit.total.battingAvg = calcBattingAvg(
+      tableUnit.total.profitableNumber,
+      tableUnit.total.totalTrades
+    );
+
+    // win loss ratio
+    tableUnit.long.winLossRatio = calcWinLossRatio(
+      tableUnit.long.profitableNumber,
+      tableUnit.long.totalTrades
+    );
+
+    tableUnit.short.winLossRatio = calcWinLossRatio(
+      tableUnit.short.profitableNumber,
+      tableUnit.short.totalTrades
+    );
+
+    tableUnit.total.winLossRatio = calcWinLossRatio(
+      tableUnit.total.profitableNumber,
+      tableUnit.total.totalTrades
+    );
+
     formattedMonths[key] = tableUnit;
   });
   return formattedMonths;

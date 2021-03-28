@@ -7,9 +7,9 @@ import {
   renderCalcResult,
   clearCalcResult,
 } from './views/calculatorsView';
-import { passData, updateCapital } from './models/dataModel';
+import { passData, updateCapital, updateMonthlyData } from './models/dataModel';
 import { calcPositionResult, calcRatioResult } from './models/calculatorsModel';
-import { queryMonthlyEls } from './views/tableMonthlyView';
+import { queryMonthlyEls, renderTable } from './views/tableMonthlyView';
 import { computeMonthlyData } from './models/tableMonthlyModel';
 
 // ZONE - controllers
@@ -33,8 +33,8 @@ const controlCalcRatio = function (data) {
 };
 
 const controlMonthlyRender = function () {
-  const computedData = computeMonthlyData(passData('monthlyData'));
-  console.log(computedData);
+  const computedData = computeMonthlyData(passData('calendarData'));
+  renderTable(updateMonthlyData(computedData));
 };
 
 // ZONE - event listeners

@@ -123,14 +123,45 @@ const user = {
       winLossRatio: 3.11,
     },
   },
-  monthlyData: {
+  monthlyData: {},
+  calendarData: {
+    jul21: [
+      {
+        ID: 'Kr92fYl',
+        side: 'short',
+        result: -90,
+        resultPercentage: -0.9,
+        date: '02/07/21',
+      },
+      {
+        ID: 'P9gHt21',
+        side: 'long',
+        result: -86,
+        resultPercentage: -0.84,
+        date: '07/07/21',
+      },
+      {
+        ID: 'K88spRl',
+        side: 'long',
+        result: 146,
+        resultPercentage: 1.46,
+        date: '15/07/21',
+      },
+      {
+        ID: 'Mn3z2pl',
+        side: 'short',
+        result: 67,
+        resultPercentage: 0.63,
+        date: '20/07/21',
+      },
+    ],
     jun21: [
       {
         ID: 'OL4stW4',
         side: 'long',
         result: 240,
         resultPercentage: 1.83,
-        date: '16/06/21',
+        date: '04/06/21',
       },
       {
         ID: 'SLX8f6s',
@@ -139,6 +170,20 @@ const user = {
         resultPercentage: -1.92,
         date: '13/06/21',
       },
+      {
+        ID: 'SLX8f6a',
+        side: 'long',
+        result: -130,
+        resultPercentage: -1.92,
+        date: '19/06/21',
+      },
+      {
+        ID: 'Qr4fG61',
+        side: 'short',
+        result: 106,
+        resultPercentage: 1.02,
+        date: '24/06/21',
+      },
     ],
     may21: [
       {
@@ -146,14 +191,28 @@ const user = {
         side: 'short',
         result: -160,
         resultPercentage: -1.42,
-        date: '27/05/21',
+        date: '07/05/21',
       },
       {
         ID: 'Gq9pd4H',
         side: 'short',
         result: -80,
         resultPercentage: -0.8,
-        date: '27/05/21',
+        date: '11/05/21',
+      },
+      {
+        ID: 'Bd99sd1',
+        side: 'long',
+        result: 213,
+        resultPercentage: 2.2,
+        date: '19/05/21',
+      },
+      {
+        ID: 'lE59t6A',
+        side: 'short',
+        result: 110,
+        resultPercentage: 1.1,
+        date: '25/05/21',
       },
     ],
   },
@@ -202,10 +261,19 @@ export const passData = function (field) {
 };
 
 export const updateCapital = function (amount, action) {
-  Math.abs(action);
+  action = Math.abs(action);
   if (action === 'minus') user.capital -= amount;
   if (action === 'plus') user.capital += amount;
   if (user.capital < 0) user.capital = 0;
   console.log('updated global state', user);
   return [action, stringifyNum(amount), stringifyNum(user.capital)];
+};
+
+export const updateMonthlyData = function (obj) {
+  console.log('this is the object to add to state');
+  Object.keys(obj).forEach(key => {
+    user.monthlyData[key] = obj[key];
+  });
+  console.log('this is the updated global state');
+  return user.monthlyData;
 };

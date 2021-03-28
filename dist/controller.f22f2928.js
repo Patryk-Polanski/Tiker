@@ -281,7 +281,7 @@ exports.filterNonStrings = filterNonStrings;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateCapital = exports.passData = void 0;
+exports.updateMonthlyData = exports.updateCapital = exports.passData = void 0;
 
 var _helpers = require("./../helpers");
 
@@ -390,32 +390,82 @@ var user = {
       winLossRatio: 3.11
     }
   },
-  monthlyData: {
+  monthlyData: {},
+  calendarData: {
+    jul21: [{
+      ID: 'Kr92fYl',
+      side: 'short',
+      result: -90,
+      resultPercentage: -0.9,
+      date: '02/07/21'
+    }, {
+      ID: 'P9gHt21',
+      side: 'long',
+      result: -86,
+      resultPercentage: -0.84,
+      date: '07/07/21'
+    }, {
+      ID: 'K88spRl',
+      side: 'long',
+      result: 146,
+      resultPercentage: 1.46,
+      date: '15/07/21'
+    }, {
+      ID: 'Mn3z2pl',
+      side: 'short',
+      result: 67,
+      resultPercentage: 0.63,
+      date: '20/07/21'
+    }],
     jun21: [{
       ID: 'OL4stW4',
       side: 'long',
       result: 240,
       resultPercentage: 1.83,
-      date: '16/06/21'
+      date: '04/06/21'
     }, {
       ID: 'SLX8f6s',
       side: 'long',
       result: -130,
       resultPercentage: -1.92,
       date: '13/06/21'
+    }, {
+      ID: 'SLX8f6a',
+      side: 'long',
+      result: -130,
+      resultPercentage: -1.92,
+      date: '19/06/21'
+    }, {
+      ID: 'Qr4fG61',
+      side: 'short',
+      result: 106,
+      resultPercentage: 1.02,
+      date: '24/06/21'
     }],
     may21: [{
       ID: 'HR6q2pf',
       side: 'short',
       result: -160,
       resultPercentage: -1.42,
-      date: '27/05/21'
+      date: '07/05/21'
     }, {
       ID: 'Gq9pd4H',
       side: 'short',
       result: -80,
       resultPercentage: -0.8,
-      date: '27/05/21'
+      date: '11/05/21'
+    }, {
+      ID: 'Bd99sd1',
+      side: 'long',
+      result: 213,
+      resultPercentage: 2.2,
+      date: '19/05/21'
+    }, {
+      ID: 'lE59t6A',
+      side: 'short',
+      result: 110,
+      resultPercentage: 1.1,
+      date: '25/05/21'
     }]
   },
   journal: [{
@@ -445,7 +495,7 @@ var passData = function passData(field) {
 exports.passData = passData;
 
 var updateCapital = function updateCapital(amount, action) {
-  Math.abs(action);
+  action = Math.abs(action);
   if (action === 'minus') user.capital -= amount;
   if (action === 'plus') user.capital += amount;
   if (user.capital < 0) user.capital = 0;
@@ -454,6 +504,17 @@ var updateCapital = function updateCapital(amount, action) {
 };
 
 exports.updateCapital = updateCapital;
+
+var updateMonthlyData = function updateMonthlyData(obj) {
+  console.log('this is the object to add to state');
+  Object.keys(obj).forEach(function (key) {
+    user.monthlyData[key] = obj[key];
+  });
+  console.log('this is the updated global state');
+  return user.monthlyData;
+};
+
+exports.updateMonthlyData = updateMonthlyData;
 },{"./../helpers":"js/helpers.js"}],"js/models/calculatorsModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -512,12 +573,13 @@ exports.calcRatioResult = calcRatioResult;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.queryMonthlyEls = void 0;
+exports.renderTable = exports.queryMonthlyEls = void 0;
 var monthlyEls = {};
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.monthlyTable = document.querySelector('.js-monthly-table');
+  obj.monthlyTableHead = obj.monthlyTable.querySelector('.js-monthly-table-head');
   return obj;
 };
 
@@ -526,6 +588,17 @@ var queryMonthlyEls = function queryMonthlyEls() {
 };
 
 exports.queryMonthlyEls = queryMonthlyEls;
+
+var renderTable = function renderTable(data) {
+  var keys = Object.keys(data).reverse();
+  keys.forEach(function (key) {
+    var current = data[key];
+    var html = "\n    <tr>\n        <th>".concat(current.total.month, "</th>\n        <td class=\"").concat(current.total.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.total.monthlyReturn, "</td>\n        <td>").concat(current.total.totalTrades, "</td>\n        <td class=\"").concat(current.total.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.total.avgReturn, "</td>\n        <td>").concat(+current.total.avgWinPercent, "%</td>\n        <td>").concat(+current.total.avgLossPercent, "%</td>\n        <td>").concat(+current.total.battingAvg, "%</td>\n        <td>").concat(current.total.winLossRatio, "</td>\n    </tr>\n    <tr>\n        <th>").concat(current.long.side, "</th>\n        <td class=\"").concat(current.long.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.long.monthlyReturn, "</td>\n        <td>").concat(current.long.totalTrades, "</td>\n        <td class=\"").concat(current.long.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.long.avgReturn, "</td>\n        <td>").concat(+current.long.avgWinPercent, "%</td>\n        <td>").concat(+current.long.avgLossPercent, "%</td>\n        <td>").concat(+current.long.battingAvg, "%</td>\n        <td>").concat(current.long.winLossRatio, "</td>\n    </tr>\n    <tr class=\"s-monthly__table-unit\">\n        <th>").concat(current.short.side, "</th>\n        <td class=\"").concat(current.short.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.short.monthlyReturn, "</td>\n        <td>").concat(current.short.totalTrades, "</td>\n        <td class=\"").concat(current.short.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.short.avgReturn, "</td>\n        <td>").concat(+current.short.avgWinPercent, "%</td>\n        <td>").concat(+current.short.avgLossPercent, "%</td>\n        <td>").concat(+current.short.battingAvg, "%</td>\n        <td>").concat(current.short.winLossRatio, "</td>\n    </tr>\n    ");
+    monthlyEls.monthlyTableHead.insertAdjacentHTML('afterend', html);
+  });
+};
+
+exports.renderTable = renderTable;
 },{}],"js/models/tableMonthlyModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -537,48 +610,62 @@ exports.computeMonthlyData = void 0;
 var _helpers = require("../helpers");
 
 // import { reduce } from 'core-js/core/array';
+var createPlaceholderObj = function createPlaceholderObj(current, key) {
+  return {
+    total: {
+      month: key,
+      monthlyReturn: [0],
+      totalTrades: current.length,
+      avgReturn: [],
+      avgWinPercent: [],
+      avgLossPercent: [],
+      profitableNumber: 0,
+      battingAvg: 0,
+      winLossRatio: []
+    },
+    long: {
+      side: 'long',
+      monthlyReturn: [0],
+      totalTrades: 0,
+      avgReturn: [],
+      avgWinPercent: [],
+      avgLossPercent: [],
+      profitableNumber: 0,
+      battingAvg: [],
+      winLossRatio: []
+    },
+    short: {
+      side: 'short',
+      monthlyReturn: [0],
+      totalTrades: 0,
+      avgReturn: [],
+      avgWinPercent: [],
+      avgLossPercent: [],
+      profitableNumber: 0,
+      battingAvg: [],
+      winLossRatio: []
+    }
+  };
+};
+
+var calcBattingAvg = function calcBattingAvg(profitable, total) {
+  return Math.round(profitable / total * 100);
+};
+
+var calcWinLossRatio = function calcWinLossRatio(profitable, total) {
+  if (profitable === total) total++;
+  return (profitable / (total - profitable)).toFixed(2);
+};
+
 var computeMonthlyData = function computeMonthlyData(rawData) {
-  console.log(rawData);
   var formattedMonths = {};
   var keys = Object.keys(rawData);
   keys.forEach(function (key) {
-    // console.log(rawData[key]);
-    var currentKey = rawData[key];
-    var tableUnit = {
-      total: {
-        month: key,
-        monthlyReturn: [0],
-        totalTrades: currentKey.length,
-        avgReturn: [],
-        avgWinPercent: [],
-        avgLossPercent: [],
-        profitableNumber: 0,
-        battingAvg: 0,
-        winLossRatio: []
-      },
-      long: {
-        side: 'long',
-        monthlyReturn: [0],
-        totalTrades: 0,
-        avgReturn: [],
-        avgWinPercent: [],
-        avgLossPercent: [],
-        battingAvg: [],
-        winLossRatio: []
-      },
-      short: {
-        side: 'short',
-        monthlyReturn: [0],
-        totalTrades: 0,
-        avgReturn: [],
-        avgWinPercent: [],
-        avgLossPercent: [],
-        battingAvg: [],
-        winLossRatio: []
-      }
-    };
-    currentKey.forEach(function (trade) {
-      var currentSide;
+    var currentMonth = rawData[key];
+    var tableUnit = createPlaceholderObj(currentMonth, key);
+    currentMonth.forEach(function (trade) {
+      var currentSide; // decided which object to add data to
+
       if (trade.side === 'long') currentSide = tableUnit.long;else if (trade.side === 'short') currentSide = tableUnit.short;
       currentSide.monthlyReturn.push(trade.result); // monthly return
 
@@ -587,20 +674,16 @@ var computeMonthlyData = function computeMonthlyData(rawData) {
       currentSide.avgReturn.push(trade.result); // avg Return
       // avg win and loss %
 
-      if (trade.resultPercentage > 0) {
+      if (trade.resultPercentage >= 0) {
         currentSide.avgWinPercent.push(trade.resultPercentage);
         tableUnit.total.profitableNumber++;
+        currentSide.profitableNumber++;
       } else if (trade.resultPercentage <= 0) {
         currentSide.avgLossPercent.push(trade.resultPercentage);
       }
-    }); // batting avg %
+    }); // crunch the array data into single numbers
 
-    tableUnit.long.battingAvg = tableUnit.long.avgWinPercent.length / (tableUnit.long.totalTrades !== 0 ? tableUnit.long.totalTrades : 1) * 100;
-    tableUnit.short.battingAvg = tableUnit.short.avgWinPercent.length / (tableUnit.short.totalTrades !== 0 ? tableUnit.short.totalTrades : 1) * 100; // win loss ratio %
-
-    tableUnit.long.winLossRatio = (tableUnit.long.avgWinPercent.length !== 0 ? tableUnit.long.avgLossPercent.length : 1) / (tableUnit.long.avgLossPercent.length !== 0 ? tableUnit.long.avgLossPercent.length : 1);
-    tableUnit.short.winLossRatio = (tableUnit.short.avgWinPercent.length !== 0 ? tableUnit.short.avgLossPercent.length : 1) / (tableUnit.short.avgLossPercent.length !== 0 ? tableUnit.short.avgLossPercent.length : 1);
-    tableUnit.long.monthlyReturn = (0, _helpers.reduceData)(tableUnit.long.avgReturn);
+    tableUnit.long.monthlyReturn = (0, _helpers.reduceData)(tableUnit.long.monthlyReturn);
     tableUnit.long.avgReturn = (0, _helpers.crunchData)(tableUnit.long.avgReturn);
     tableUnit.long.avgWinPercent = (0, _helpers.crunchData)(tableUnit.long.avgWinPercent);
     tableUnit.long.avgLossPercent = (0, _helpers.crunchData)(tableUnit.long.avgLossPercent);
@@ -611,10 +694,15 @@ var computeMonthlyData = function computeMonthlyData(rawData) {
     tableUnit.total.monthlyReturn = (0, _helpers.reduceData)([tableUnit.long.monthlyReturn, tableUnit.short.monthlyReturn]);
     tableUnit.total.avgReturn = (0, _helpers.crunchData)((0, _helpers.filterNonStrings)([tableUnit.long.avgReturn, tableUnit.short.avgReturn]));
     tableUnit.total.avgWinPercent = (0, _helpers.crunchData)((0, _helpers.filterNonStrings)([tableUnit.long.avgWinPercent, tableUnit.short.avgWinPercent]));
-    tableUnit.total.avgLossPercent = (0, _helpers.crunchData)((0, _helpers.filterNonStrings)([tableUnit.long.avgLossPercent, tableUnit.short.avgLossPercent]));
-    tableUnit.total.battingAvg = (tableUnit.total.profitableNumber / tableUnit.total.totalTrades * 100).toFixed(2);
-    tableUnit.total.winLossRatio = (tableUnit.total.profitableNumber / (tableUnit.total.totalTrades - tableUnit.total.profitableNumber)).toFixed(2); // console.log(tableUnit);
+    tableUnit.total.avgLossPercent = (0, _helpers.crunchData)((0, _helpers.filterNonStrings)([tableUnit.long.avgLossPercent, tableUnit.short.avgLossPercent])); // batting avg %
 
+    tableUnit.long.battingAvg = calcBattingAvg(tableUnit.long.profitableNumber, tableUnit.long.totalTrades);
+    tableUnit.short.battingAvg = calcBattingAvg(tableUnit.short.profitableNumber, tableUnit.short.totalTrades);
+    tableUnit.total.battingAvg = calcBattingAvg(tableUnit.total.profitableNumber, tableUnit.total.totalTrades); // win loss ratio
+
+    tableUnit.long.winLossRatio = calcWinLossRatio(tableUnit.long.profitableNumber, tableUnit.long.totalTrades);
+    tableUnit.short.winLossRatio = calcWinLossRatio(tableUnit.short.profitableNumber, tableUnit.short.totalTrades);
+    tableUnit.total.winLossRatio = calcWinLossRatio(tableUnit.total.profitableNumber, tableUnit.total.totalTrades);
     formattedMonths[key] = tableUnit;
   });
   return formattedMonths;
@@ -654,8 +742,8 @@ var controlCalcRatio = function controlCalcRatio(data) {
 };
 
 var controlMonthlyRender = function controlMonthlyRender() {
-  var computedData = (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('monthlyData'));
-  console.log(computedData);
+  var computedData = (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('calendarData'));
+  (0, _tableMonthlyView.renderTable)((0, _dataModel.updateMonthlyData)(computedData));
 }; // ZONE - event listeners
 
 
@@ -696,7 +784,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56337" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50746" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
