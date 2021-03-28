@@ -234,7 +234,7 @@ exports.clearCalcResult = clearCalcResult;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
+exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
 
 var stringifyNum = function stringifyNum(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -263,6 +263,18 @@ var crunchData = function crunchData(arr) {
 };
 
 exports.crunchData = crunchData;
+
+var filterNonStrings = function filterNonStrings(arr) {
+  var filtered = arr.filter(function (item) {
+    return typeof item === 'string' || typeof item === 'number';
+  }).map(function (item) {
+    return +item;
+  });
+  if (filtered.length < 1) filtered = [0];
+  return filtered;
+};
+
+exports.filterNonStrings = filterNonStrings;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -389,14 +401,14 @@ var user = {
       ID: 'SLX8f6s',
       side: 'long',
       result: -130,
-      resultPercentage: 1.92,
+      resultPercentage: -1.92,
       date: '13/06/21'
     }],
     may21: [{
       ID: 'HR6q2pf',
       side: 'short',
       result: -160,
-      resultPercentage: 1.42,
+      resultPercentage: -1.42,
       date: '27/05/21'
     }, {
       ID: 'Gq9pd4H',
@@ -527,7 +539,7 @@ var _helpers = require("../helpers");
 // import { reduce } from 'core-js/core/array';
 var computeMonthlyData = function computeMonthlyData(rawData) {
   console.log(rawData);
-  var formattedMonths = [];
+  var formattedMonths = {};
   var keys = Object.keys(rawData);
   keys.forEach(function (key) {
     // console.log(rawData[key]);
@@ -535,17 +547,18 @@ var computeMonthlyData = function computeMonthlyData(rawData) {
     var tableUnit = {
       total: {
         month: key,
-        monthlyReturn: [],
+        monthlyReturn: [0],
         totalTrades: currentKey.length,
         avgReturn: [],
         avgWinPercent: [],
         avgLossPercent: [],
-        battingAvg: [],
+        profitableNumber: 0,
+        battingAvg: 0,
         winLossRatio: []
       },
       long: {
         side: 'long',
-        monthlyReturn: [],
+        monthlyReturn: [0],
         totalTrades: 0,
         avgReturn: [],
         avgWinPercent: [],
@@ -555,7 +568,7 @@ var computeMonthlyData = function computeMonthlyData(rawData) {
       },
       short: {
         side: 'short',
-        monthlyReturn: [],
+        monthlyReturn: [0],
         totalTrades: 0,
         avgReturn: [],
         avgWinPercent: [],
@@ -574,28 +587,37 @@ var computeMonthlyData = function computeMonthlyData(rawData) {
       currentSide.avgReturn.push(trade.result); // avg Return
       // avg win and loss %
 
-      if (trade.resultPercentage > 0) currentSide.avgWinPercent.push(trade.resultPercentage);else if (trade.resultPercentage <= 0) currentSide.avgLossPercent.push(trade.resultPercentage);
+      if (trade.resultPercentage > 0) {
+        currentSide.avgWinPercent.push(trade.resultPercentage);
+        tableUnit.total.profitableNumber++;
+      } else if (trade.resultPercentage <= 0) {
+        currentSide.avgLossPercent.push(trade.resultPercentage);
+      }
     }); // batting avg %
 
-    tableUnit.long.avgWinPercent = tableUnit.long.avgWinPercent / tableUnit.long.totalTrades * 100;
-    tableUnit.short.avgWinPercent = tableUnit.short.avgWinPercent / tableUnit.short.totalTrades * 100; // win loss ratio %
+    tableUnit.long.battingAvg = tableUnit.long.avgWinPercent.length / (tableUnit.long.totalTrades !== 0 ? tableUnit.long.totalTrades : 1) * 100;
+    tableUnit.short.battingAvg = tableUnit.short.avgWinPercent.length / (tableUnit.short.totalTrades !== 0 ? tableUnit.short.totalTrades : 1) * 100; // win loss ratio %
 
     tableUnit.long.winLossRatio = (tableUnit.long.avgWinPercent.length !== 0 ? tableUnit.long.avgLossPercent.length : 1) / (tableUnit.long.avgLossPercent.length !== 0 ? tableUnit.long.avgLossPercent.length : 1);
     tableUnit.short.winLossRatio = (tableUnit.short.avgWinPercent.length !== 0 ? tableUnit.short.avgLossPercent.length : 1) / (tableUnit.short.avgLossPercent.length !== 0 ? tableUnit.short.avgLossPercent.length : 1);
     tableUnit.long.monthlyReturn = (0, _helpers.reduceData)(tableUnit.long.avgReturn);
     tableUnit.long.avgReturn = (0, _helpers.crunchData)(tableUnit.long.avgReturn);
-    console.log('this is the avg win % BEFORE');
-    console.log(tableUnit.long.avgWinPercent);
     tableUnit.long.avgWinPercent = (0, _helpers.crunchData)(tableUnit.long.avgWinPercent);
-    console.log('this is the avg win % AFTER');
-    console.log(tableUnit.long.avgWinPercent);
     tableUnit.long.avgLossPercent = (0, _helpers.crunchData)(tableUnit.long.avgLossPercent);
     tableUnit.short.monthlyReturn = (0, _helpers.reduceData)(tableUnit.short.avgReturn);
     tableUnit.short.avgReturn = (0, _helpers.crunchData)(tableUnit.short.avgReturn);
     tableUnit.short.avgWinPercent = (0, _helpers.crunchData)(tableUnit.short.avgWinPercent);
     tableUnit.short.avgLossPercent = (0, _helpers.crunchData)(tableUnit.short.avgLossPercent);
-    console.log(tableUnit);
+    tableUnit.total.monthlyReturn = (0, _helpers.reduceData)([tableUnit.long.monthlyReturn, tableUnit.short.monthlyReturn]);
+    tableUnit.total.avgReturn = (0, _helpers.crunchData)((0, _helpers.filterNonStrings)([tableUnit.long.avgReturn, tableUnit.short.avgReturn]));
+    tableUnit.total.avgWinPercent = (0, _helpers.crunchData)((0, _helpers.filterNonStrings)([tableUnit.long.avgWinPercent, tableUnit.short.avgWinPercent]));
+    tableUnit.total.avgLossPercent = (0, _helpers.crunchData)((0, _helpers.filterNonStrings)([tableUnit.long.avgLossPercent, tableUnit.short.avgLossPercent]));
+    tableUnit.total.battingAvg = (tableUnit.total.profitableNumber / tableUnit.total.totalTrades * 100).toFixed(2);
+    tableUnit.total.winLossRatio = (tableUnit.total.profitableNumber / (tableUnit.total.totalTrades - tableUnit.total.profitableNumber)).toFixed(2); // console.log(tableUnit);
+
+    formattedMonths[key] = tableUnit;
   });
+  return formattedMonths;
 };
 
 exports.computeMonthlyData = computeMonthlyData;
@@ -632,7 +654,8 @@ var controlCalcRatio = function controlCalcRatio(data) {
 };
 
 var controlMonthlyRender = function controlMonthlyRender() {
-  (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('monthlyData'));
+  var computedData = (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('monthlyData'));
+  console.log(computedData);
 }; // ZONE - event listeners
 
 

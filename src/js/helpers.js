@@ -10,3 +10,11 @@ export const crunchData = function (arr) {
   const singleNumber = reduceData(arr);
   return (singleNumber / arr.length).toFixed(2);
 };
+
+export const filterNonStrings = arr => {
+  let filtered = arr
+    .filter(item => typeof item === 'string' || typeof item === 'number')
+    .map(item => +item);
+  if (filtered.length < 1) filtered = [0];
+  return filtered;
+};

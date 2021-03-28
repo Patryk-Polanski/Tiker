@@ -33,7 +33,8 @@ const controlCalcRatio = function (data) {
 };
 
 const controlMonthlyRender = function () {
-  computeMonthlyData(passData('monthlyData'));
+  const computedData = computeMonthlyData(passData('monthlyData'));
+  console.log(computedData);
 };
 
 // ZONE - event listeners

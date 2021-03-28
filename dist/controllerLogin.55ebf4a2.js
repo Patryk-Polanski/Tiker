@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
+exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
 
 var stringifyNum = function stringifyNum(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -152,6 +152,18 @@ var crunchData = function crunchData(arr) {
 };
 
 exports.crunchData = crunchData;
+
+var filterNonStrings = function filterNonStrings(arr) {
+  var filtered = arr.filter(function (item) {
+    return typeof item === 'string' || typeof item === 'number';
+  }).map(function (item) {
+    return +item;
+  });
+  if (filtered.length < 1) filtered = [0];
+  return filtered;
+};
+
+exports.filterNonStrings = filterNonStrings;
 },{}],"js/views/loginView.js":[function(require,module,exports) {
 "use strict";
 

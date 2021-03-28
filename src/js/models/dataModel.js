@@ -136,7 +136,7 @@ const user = {
         ID: 'SLX8f6s',
         side: 'long',
         result: -130,
-        resultPercentage: 1.92,
+        resultPercentage: -1.92,
         date: '13/06/21',
       },
     ],
@@ -145,7 +145,7 @@ const user = {
         ID: 'HR6q2pf',
         side: 'short',
         result: -160,
-        resultPercentage: 1.42,
+        resultPercentage: -1.42,
         date: '27/05/21',
       },
       {
