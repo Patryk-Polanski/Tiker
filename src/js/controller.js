@@ -1,5 +1,5 @@
 import {
-  queryCalcEl,
+  queryCalcEls,
   addCalcCapitalHandler,
   addCalcPositionHandler,
   addCalcRatioHandler,
@@ -9,8 +9,11 @@ import {
 } from './views/calculatorsView';
 import { passData, updateCapital } from './models/dataModel';
 import { calcPositionResult, calcRatioResult } from './models/calculatorsModel';
+import { queryMonthlyEls } from './views/tableMonthlyView';
+import { computeMonthlyData } from './models/tableMonthlyModel';
 
 // ZONE - controllers
+
 const controlCalcCapital = function (amount, action) {
   renderCapitalMessage(updateCapital(amount, action));
 };
@@ -29,11 +32,17 @@ const controlCalcRatio = function (data) {
   renderCalcResult(ratioResult, 'ratioResult');
 };
 
+const controlMonthlyRender = function () {
+  computeMonthlyData(passData('monthlyData'));
+};
+
 // ZONE - event listeners
 
 window.addEventListener('DOMContentLoaded', e => {
   console.log('DOM app is loaded');
-  queryCalcEl();
+  queryCalcEls();
+  queryMonthlyEls();
+  controlMonthlyRender();
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);

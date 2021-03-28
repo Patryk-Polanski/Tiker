@@ -124,7 +124,7 @@ const user = {
     },
   },
   monthlyData: {
-    june21: [
+    jun21: [
       {
         ID: 'OL4stW4',
         side: 'long',

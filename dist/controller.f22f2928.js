@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.clearCalcResult = exports.renderCalcResult = exports.renderCapitalMessage = exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.addCalcCapitalHandler = exports.queryCalcEl = void 0;
+exports.clearCalcResult = exports.renderCalcResult = exports.renderCapitalMessage = exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.addCalcCapitalHandler = exports.queryCalcEls = void 0;
 var calculatorEls = {};
 
 var getElements = function getElements() {
@@ -147,11 +147,11 @@ var getElements = function getElements() {
   return obj;
 };
 
-var queryCalcEl = function queryCalcEl() {
+var queryCalcEls = function queryCalcEls() {
   calculatorEls = getElements();
 };
 
-exports.queryCalcEl = queryCalcEl;
+exports.queryCalcEls = queryCalcEls;
 
 var checkFieldsForData = function checkFieldsForData(el1, el2, el3) {
   if (!el1.value || !el2.value || !el3.value) return;
@@ -363,7 +363,7 @@ var user = {
     }
   },
   monthlyData: {
-    june21: [{
+    jun21: [{
       ID: 'OL4stW4',
       side: 'long',
       result: 240,
@@ -478,7 +478,65 @@ var calcRatioResult = function calcRatioResult(dataArr) {
 };
 
 exports.calcRatioResult = calcRatioResult;
-},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/views/tableMonthlyView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.queryMonthlyEls = void 0;
+var monthlyEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.monthlyTable = document.querySelector('.js-monthly-table');
+  return obj;
+};
+
+var queryMonthlyEls = function queryMonthlyEls() {
+  monthlyEls = getElements();
+};
+
+exports.queryMonthlyEls = queryMonthlyEls;
+},{}],"js/models/tableMonthlyModel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.computeMonthlyData = void 0;
+
+var computeMonthlyData = function computeMonthlyData(rawData) {
+  var formattedMonths = [];
+  var keys = Object.keys(rawData);
+  keys.forEach(function (key) {
+    console.log(rawData[key]);
+    var currentKey = rawData[key];
+    var tableUnit = {};
+    tableUnit.month = key;
+    tableUnit.totalTrades = currentKey.length;
+    tableUnit.avgReturn = [];
+    tableUnit.avgWinPercentage = [];
+    tableUnit.avgLossPercentage = [];
+    tableUnit.battingAvg;
+    tableUnit.winLossRatio;
+    currentKey.forEach(function (trade) {
+      tableUnit.avgReturn.push(trade.result);
+      if (trade.resultPercentage > 0) tableUnit.avgWinPercentage.push(trade.resultPercentage);else tableUnit.avgLossPercentage.push(trade.resultPercentage);
+    });
+    tableUnit.battingAvg = (tableUnit.avgWinPercentage.length / tableUnit.totalTrades * 100).toFixed(2);
+    tableUnit.winLossRatio = (tableUnit.avgWinPercentage.length / tableUnit.avgLossPercentage.length).toFixed(2);
+    tableUnit.avgReturn = currentKey.map(function (trade) {
+      return trade.result;
+    }).reduce(function (acc, cur) {
+      return acc + cur;
+    }, 0);
+    console.log(tableUnit);
+  });
+};
+
+exports.computeMonthlyData = computeMonthlyData;
+},{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _calculatorsView = require("./views/calculatorsView");
@@ -486,6 +544,10 @@ var _calculatorsView = require("./views/calculatorsView");
 var _dataModel = require("./models/dataModel");
 
 var _calculatorsModel = require("./models/calculatorsModel");
+
+var _tableMonthlyView = require("./views/tableMonthlyView");
+
+var _tableMonthlyModel = require("./models/tableMonthlyModel");
 
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
@@ -504,17 +566,23 @@ var controlCalcRatio = function controlCalcRatio(data) {
   var ratioResult = (0, _calculatorsModel.calcRatioResult)(data);
   if (isNaN(ratioResult) || !ratioResult) return (0, _calculatorsView.clearCalcResult)('ratioResult');
   (0, _calculatorsView.renderCalcResult)(ratioResult, 'ratioResult');
+};
+
+var controlMonthlyRender = function controlMonthlyRender() {
+  (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('monthlyData'));
 }; // ZONE - event listeners
 
 
 window.addEventListener('DOMContentLoaded', function (e) {
   console.log('DOM app is loaded');
-  (0, _calculatorsView.queryCalcEl)();
+  (0, _calculatorsView.queryCalcEls)();
+  (0, _tableMonthlyView.queryMonthlyEls)();
+  controlMonthlyRender();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -542,7 +610,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61988" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49956" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

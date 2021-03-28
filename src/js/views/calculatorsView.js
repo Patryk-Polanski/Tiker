@@ -34,7 +34,7 @@ const getElements = function (obj = {}) {
   return obj;
 };
 
-export const queryCalcEl = function () {
+export const queryCalcEls = function () {
   calculatorEls = getElements();
 };
 
