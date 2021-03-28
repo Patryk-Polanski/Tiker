@@ -234,7 +234,7 @@ exports.clearCalcResult = clearCalcResult;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.makeAbsolute = exports.stringifyNum = void 0;
+exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
 
 var stringifyNum = function stringifyNum(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -247,6 +247,22 @@ var makeAbsolute = function makeAbsolute(num) {
 };
 
 exports.makeAbsolute = makeAbsolute;
+
+var reduceData = function reduceData(arr) {
+  return arr.reduce(function (acc, num) {
+    return acc + num;
+  }, 0);
+};
+
+exports.reduceData = reduceData;
+
+var crunchData = function crunchData(arr) {
+  if (!Array.isArray(arr) || arr.length < 1) return [];
+  var singleNumber = reduceData(arr);
+  return (singleNumber / arr.length).toFixed(2);
+};
+
+exports.crunchData = crunchData;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -379,7 +395,7 @@ var user = {
     may21: [{
       ID: 'HR6q2pf',
       side: 'short',
-      result: 160,
+      result: -160,
       resultPercentage: 1.42,
       date: '27/05/21'
     }, {
@@ -506,37 +522,84 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.computeMonthlyData = void 0;
 
+var _helpers = require("../helpers");
+
+// import { reduce } from 'core-js/core/array';
 var computeMonthlyData = function computeMonthlyData(rawData) {
+  console.log(rawData);
   var formattedMonths = [];
   var keys = Object.keys(rawData);
   keys.forEach(function (key) {
-    console.log(rawData[key]);
+    // console.log(rawData[key]);
     var currentKey = rawData[key];
-    var tableUnit = {};
-    tableUnit.month = key;
-    tableUnit.totalTrades = currentKey.length;
-    tableUnit.avgReturn = [];
-    tableUnit.avgWinPercentage = [];
-    tableUnit.avgLossPercentage = [];
-    tableUnit.battingAvg;
-    tableUnit.winLossRatio;
+    var tableUnit = {
+      total: {
+        month: key,
+        monthlyReturn: [],
+        totalTrades: currentKey.length,
+        avgReturn: [],
+        avgWinPercent: [],
+        avgLossPercent: [],
+        battingAvg: [],
+        winLossRatio: []
+      },
+      long: {
+        side: 'long',
+        monthlyReturn: [],
+        totalTrades: 0,
+        avgReturn: [],
+        avgWinPercent: [],
+        avgLossPercent: [],
+        battingAvg: [],
+        winLossRatio: []
+      },
+      short: {
+        side: 'short',
+        monthlyReturn: [],
+        totalTrades: 0,
+        avgReturn: [],
+        avgWinPercent: [],
+        avgLossPercent: [],
+        battingAvg: [],
+        winLossRatio: []
+      }
+    };
     currentKey.forEach(function (trade) {
-      tableUnit.avgReturn.push(trade.result);
-      if (trade.resultPercentage > 0) tableUnit.avgWinPercentage.push(trade.resultPercentage);else tableUnit.avgLossPercentage.push(trade.resultPercentage);
-    });
-    tableUnit.battingAvg = (tableUnit.avgWinPercentage.length / tableUnit.totalTrades * 100).toFixed(2);
-    tableUnit.winLossRatio = (tableUnit.avgWinPercentage.length / tableUnit.avgLossPercentage.length).toFixed(2);
-    tableUnit.avgReturn = currentKey.map(function (trade) {
-      return trade.result;
-    }).reduce(function (acc, cur) {
-      return acc + cur;
-    }, 0);
+      var currentSide;
+      if (trade.side === 'long') currentSide = tableUnit.long;else if (trade.side === 'short') currentSide = tableUnit.short;
+      currentSide.monthlyReturn.push(trade.result); // monthly return
+
+      currentSide.totalTrades++; // total trades
+
+      currentSide.avgReturn.push(trade.result); // avg Return
+      // avg win and loss %
+
+      if (trade.resultPercentage > 0) currentSide.avgWinPercent.push(trade.resultPercentage);else if (trade.resultPercentage <= 0) currentSide.avgLossPercent.push(trade.resultPercentage);
+    }); // batting avg %
+
+    tableUnit.long.avgWinPercent = tableUnit.long.avgWinPercent / tableUnit.long.totalTrades * 100;
+    tableUnit.short.avgWinPercent = tableUnit.short.avgWinPercent / tableUnit.short.totalTrades * 100; // win loss ratio %
+
+    tableUnit.long.winLossRatio = (tableUnit.long.avgWinPercent.length !== 0 ? tableUnit.long.avgLossPercent.length : 1) / (tableUnit.long.avgLossPercent.length !== 0 ? tableUnit.long.avgLossPercent.length : 1);
+    tableUnit.short.winLossRatio = (tableUnit.short.avgWinPercent.length !== 0 ? tableUnit.short.avgLossPercent.length : 1) / (tableUnit.short.avgLossPercent.length !== 0 ? tableUnit.short.avgLossPercent.length : 1);
+    tableUnit.long.monthlyReturn = (0, _helpers.reduceData)(tableUnit.long.avgReturn);
+    tableUnit.long.avgReturn = (0, _helpers.crunchData)(tableUnit.long.avgReturn);
+    console.log('this is the avg win % BEFORE');
+    console.log(tableUnit.long.avgWinPercent);
+    tableUnit.long.avgWinPercent = (0, _helpers.crunchData)(tableUnit.long.avgWinPercent);
+    console.log('this is the avg win % AFTER');
+    console.log(tableUnit.long.avgWinPercent);
+    tableUnit.long.avgLossPercent = (0, _helpers.crunchData)(tableUnit.long.avgLossPercent);
+    tableUnit.short.monthlyReturn = (0, _helpers.reduceData)(tableUnit.short.avgReturn);
+    tableUnit.short.avgReturn = (0, _helpers.crunchData)(tableUnit.short.avgReturn);
+    tableUnit.short.avgWinPercent = (0, _helpers.crunchData)(tableUnit.short.avgWinPercent);
+    tableUnit.short.avgLossPercent = (0, _helpers.crunchData)(tableUnit.short.avgLossPercent);
     console.log(tableUnit);
   });
 };
 
 exports.computeMonthlyData = computeMonthlyData;
-},{}],"js/controller.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _calculatorsView = require("./views/calculatorsView");
@@ -610,7 +673,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49956" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56337" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

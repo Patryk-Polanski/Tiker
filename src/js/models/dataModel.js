@@ -144,7 +144,7 @@ const user = {
       {
         ID: 'HR6q2pf',
         side: 'short',
-        result: 160,
+        result: -160,
         resultPercentage: 1.42,
         date: '27/05/21',
       },

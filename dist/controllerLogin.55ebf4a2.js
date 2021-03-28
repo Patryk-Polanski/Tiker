@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.makeAbsolute = exports.stringifyNum = void 0;
+exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
 
 var stringifyNum = function stringifyNum(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -136,6 +136,22 @@ var makeAbsolute = function makeAbsolute(num) {
 };
 
 exports.makeAbsolute = makeAbsolute;
+
+var reduceData = function reduceData(arr) {
+  return arr.reduce(function (acc, num) {
+    return acc + num;
+  }, 0);
+};
+
+exports.reduceData = reduceData;
+
+var crunchData = function crunchData(arr) {
+  if (!Array.isArray(arr) || arr.length < 1) return [];
+  var singleNumber = reduceData(arr);
+  return (singleNumber / arr.length).toFixed(2);
+};
+
+exports.crunchData = crunchData;
 },{}],"js/views/loginView.js":[function(require,module,exports) {
 "use strict";
 
@@ -201,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49956" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56337" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
