@@ -7,10 +7,16 @@ import {
   renderCalcResult,
   clearCalcResult,
 } from './views/calculatorsView';
-import { passData, updateCapital, updateMonthlyData } from './models/dataModel';
+import {
+  passData,
+  passNestedData,
+  updateCapital,
+  updateMonthlyData,
+} from './models/dataModel';
 import { calcPositionResult, calcRatioResult } from './models/calculatorsModel';
 import { queryMonthlyEls, renderTable } from './views/tableMonthlyView';
 import { computeMonthlyData } from './models/tableMonthlyModel';
+import { checkAgainstLeaders } from './models/tableProfitableModel';
 
 // ZONE - controllers
 
@@ -37,6 +43,14 @@ const controlMonthlyRender = function () {
   renderTable(updateMonthlyData(computedData));
 };
 
+const controlProfitableRender = function () {
+  const newProfitable = checkAgainstLeaders(
+    passData('profitable'),
+    passNestedData('tickers', 'AAL')
+  );
+  // TODO - send new profitable to data model and check if not empty, then push to leaders object
+};
+
 // ZONE - event listeners
 
 window.addEventListener('DOMContentLoaded', e => {
@@ -44,6 +58,7 @@ window.addEventListener('DOMContentLoaded', e => {
   queryCalcEls();
   queryMonthlyEls();
   controlMonthlyRender();
+  controlProfitableRender();
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);

@@ -281,7 +281,7 @@ exports.filterNonStrings = filterNonStrings;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateMonthlyData = exports.updateCapital = exports.passData = void 0;
+exports.updateMonthlyData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
 
 var _helpers = require("./../helpers");
 
@@ -356,14 +356,30 @@ var user = {
   }],
   tickers: {
     AAL: {
+      ticker: 'AAL',
+      profitable: 0,
+      total: 2,
       trades: [{
         ID: '7Ft7s4w',
         shares: 60,
         result: 121,
         winPercentage: 1.44
+      }, {
+        ID: 'p8Hi52N',
+        shares: 72,
+        result: 118,
+        winPercentage: 1.32
+      }, {
+        ID: 'Jk6sDew',
+        shares: 70,
+        result: -82,
+        winPercentage: -1
       }]
     },
     AAPL: {
+      ticker: 'AAPL',
+      profitable: 0,
+      total: 1,
       trades: [{
         ID: 'QHnv65t',
         shares: 40,
@@ -372,23 +388,22 @@ var user = {
       }]
     }
   },
-  profitable: {
-    BMBL: {
-      totalProfit: 2780,
-      totalShares: 312,
-      avgReturn: 134,
-      avgWinPercentage: 1.56,
-      battingAvgPercentage: 64,
-      winLossRatio: 3.11
-    },
-    AAPL: {
-      totalProfit: 2780,
-      totalShares: 312,
-      avgReturn: 134,
-      avgWinPercentage: 1.56,
-      battingAvgPercentage: 64,
-      winLossRatio: 3.11
-    }
+  profitable: {// BMBL: {
+    //   totalProfit: 2780,
+    //   totalShares: 312,
+    //   avgReturn: 134,
+    //   avgWinPercentage: 1.56,
+    //   battingAvgPercentage: 64,
+    //   winLossRatio: 3.11,
+    // },
+    // AAPL: {
+    //   totalProfit: 2780,
+    //   totalShares: 312,
+    //   avgReturn: 134,
+    //   avgWinPercentage: 1.56,
+    //   battingAvgPercentage: 64,
+    //   winLossRatio: 3.11,
+    // },
   },
   monthlyData: {},
   calendarData: {
@@ -493,6 +508,12 @@ var passData = function passData(field) {
 };
 
 exports.passData = passData;
+
+var passNestedData = function passNestedData(field, field2) {
+  return user[field][field2];
+};
+
+exports.passNestedData = passNestedData;
 
 var updateCapital = function updateCapital(amount, action) {
   action = Math.abs(action);
@@ -709,7 +730,90 @@ var computeMonthlyData = function computeMonthlyData(rawData) {
 };
 
 exports.computeMonthlyData = computeMonthlyData;
-},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/models/tableProfitableModel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.checkAgainstLeaders = void 0;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var convertToLeader = function convertToLeader(data) {
+  var ticker = data.ticker;
+
+  var formattedLeader = _defineProperty({}, ticker, {
+    totalTrades: data.trades.length,
+    profitable: 0,
+    totalProfit: 0,
+    totalShares: 0,
+    avgReturn: 0,
+    avgWinPercent: 0,
+    battingAvgPercent: 0,
+    winLossRatio: 0
+  });
+
+  var current = formattedLeader[ticker];
+  var tradeResults = data.trades.map(function (trade) {
+    return trade.result;
+  });
+  var totalProfit = tradeResults.reduce(function (acc, num) {
+    return acc + num;
+  }, 0);
+  var totalShares = data.trades.map(function (trade) {
+    return trade.shares;
+  }).reduce(function (acc, num) {
+    return acc + num;
+  }, 0);
+  var winPercentTrades = data.trades.map(function (trade) {
+    return trade.winPercentage;
+  }).filter(function (percent) {
+    return percent >= 0;
+  });
+  console.log(winPercentTrades);
+  current.totalProfit = totalProfit;
+  current.totalShares = totalShares;
+  current.avgReturn = +(totalProfit / current.totalTrades).toFixed(0);
+  current.avgWinPercent = winPercentTrades.reduce(function (acc, num) {
+    return acc + num;
+  }) / winPercentTrades.length;
+  current.profitable = winPercentTrades.length;
+  current.battingAvgPercent = +(current.profitable / current.totalTrades * 100).toFixed(2);
+  current.winLossRatio = +(current.profitable / (current.totalTrades - current.profitable)).toFixed(2);
+  return formattedLeader;
+};
+
+var checkAgainstLeaders = function checkAgainstLeaders(leaders, data) {
+  var newLeader;
+  var avgWinPercent = (data.trades.map(function (trade) {
+    return trade.winPercentage;
+  }).reduce(function (acc, num) {
+    return acc + num;
+  }, 0) / data.trades.length).toFixed(2);
+  console.log(avgWinPercent);
+  var leaderTickers = Object.keys(leaders);
+  var leaderAvgReturn = [];
+  var leaderSmallestAvg;
+
+  if (leaderTickers.length > 5) {
+    leaderTickers.forEach(function (ticker) {
+      leaderAvgReturn.push(leaders[ticker].avgWinPercent);
+    });
+    leaderSmallestAvg = Math.min(leaderAvgReturn);
+    if (avgWinPercent > leaderSmallestAvg) newLeader = convertToLeader(data);
+  }
+
+  if (leaderTickers.length < 6) {
+    newLeader = convertToLeader(data);
+    console.log(newLeader);
+  }
+
+  return newLeader;
+};
+
+exports.checkAgainstLeaders = checkAgainstLeaders;
+},{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _calculatorsView = require("./views/calculatorsView");
@@ -721,6 +825,8 @@ var _calculatorsModel = require("./models/calculatorsModel");
 var _tableMonthlyView = require("./views/tableMonthlyView");
 
 var _tableMonthlyModel = require("./models/tableMonthlyModel");
+
+var _tableProfitableModel = require("./models/tableProfitableModel");
 
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
@@ -744,6 +850,10 @@ var controlCalcRatio = function controlCalcRatio(data) {
 var controlMonthlyRender = function controlMonthlyRender() {
   var computedData = (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('calendarData'));
   (0, _tableMonthlyView.renderTable)((0, _dataModel.updateMonthlyData)(computedData));
+};
+
+var controlProfitableRender = function controlProfitableRender() {
+  var newProfitable = (0, _tableProfitableModel.checkAgainstLeaders)((0, _dataModel.passData)('profitable'), (0, _dataModel.passNestedData)('tickers', 'AAL')); // TODO - send new profitable to data model and check if not empty, then push to leaders object
 }; // ZONE - event listeners
 
 
@@ -752,11 +862,12 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _calculatorsView.queryCalcEls)();
   (0, _tableMonthlyView.queryMonthlyEls)();
   controlMonthlyRender();
+  controlProfitableRender();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -784,7 +895,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50746" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56247" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

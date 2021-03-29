@@ -85,6 +85,9 @@ const user = {
   ],
   tickers: {
     AAL: {
+      ticker: 'AAL',
+      profitable: 0,
+      total: 2,
       trades: [
         {
           ID: '7Ft7s4w',
@@ -92,9 +95,24 @@ const user = {
           result: 121,
           winPercentage: 1.44,
         },
+        {
+          ID: 'p8Hi52N',
+          shares: 72,
+          result: 118,
+          winPercentage: 1.32,
+        },
+        {
+          ID: 'Jk6sDew',
+          shares: 70,
+          result: -82,
+          winPercentage: -1,
+        },
       ],
     },
     AAPL: {
+      ticker: 'AAPL',
+      profitable: 0,
+      total: 1,
       trades: [
         {
           ID: 'QHnv65t',
@@ -106,22 +124,22 @@ const user = {
     },
   },
   profitable: {
-    BMBL: {
-      totalProfit: 2780,
-      totalShares: 312,
-      avgReturn: 134,
-      avgWinPercentage: 1.56,
-      battingAvgPercentage: 64,
-      winLossRatio: 3.11,
-    },
-    AAPL: {
-      totalProfit: 2780,
-      totalShares: 312,
-      avgReturn: 134,
-      avgWinPercentage: 1.56,
-      battingAvgPercentage: 64,
-      winLossRatio: 3.11,
-    },
+    // BMBL: {
+    //   totalProfit: 2780,
+    //   totalShares: 312,
+    //   avgReturn: 134,
+    //   avgWinPercentage: 1.56,
+    //   battingAvgPercentage: 64,
+    //   winLossRatio: 3.11,
+    // },
+    // AAPL: {
+    //   totalProfit: 2780,
+    //   totalShares: 312,
+    //   avgReturn: 134,
+    //   avgWinPercentage: 1.56,
+    //   battingAvgPercentage: 64,
+    //   winLossRatio: 3.11,
+    // },
   },
   monthlyData: {},
   calendarData: {
@@ -258,6 +276,10 @@ console.log(user);
 
 export const passData = function (field) {
   return user[field];
+};
+
+export const passNestedData = function (field, field2) {
+  return user[field][field2];
 };
 
 export const updateCapital = function (amount, action) {
