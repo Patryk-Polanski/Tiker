@@ -306,9 +306,8 @@ var user = {
     long: 395,
     short: 328
   },
-  streak: {
+  streaks: {
     wins: {
-      combo: 2,
       trades: [{
         ID: 'ZYRwa5z',
         ticker: 'NFLX',
@@ -322,22 +321,19 @@ var user = {
       }]
     },
     losses: {
-      combo: 2,
       trades: [{
-        ID: 'ZYRwa5z',
-        ticker: 'NFLX',
-        date: '14/06/21',
-        loss: 253
+        ID: 'liJ56D3',
+        ticker: 'AMZN',
+        date: '12/08/21',
+        loss: -90
       }, {
         ID: 'Y58P1M',
-        ticker: 'BMBL',
-        date: '15/06/21',
-        loss: 312
+        ticker: 'X',
+        date: '21/07/21',
+        loss: -112
       }]
     },
     current: {
-      combo: 1,
-      type: 'wins',
       trades: [{
         ID: 'ZYRwa5z',
         ticker: 'NFLX',
@@ -701,6 +697,55 @@ var renderProfitableTable = function renderProfitableTable(tableData) {
 };
 
 exports.renderProfitableTable = renderProfitableTable;
+},{}],"js/views/chartOverallView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.renderStreaks = exports.queryOverallEls = void 0;
+var overallEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.pieStreakCard = document.querySelector('.js-pie-streak');
+  obj.winStreakDate = obj.pieStreakCard.querySelector('.js-win-streak-date');
+  obj.winStreakTotal = obj.pieStreakCard.querySelector('.js-win-streak-total');
+  obj.winStreakProfit = obj.pieStreakCard.querySelector('.js-win-streak-profit');
+  obj.lossStreakDate = obj.pieStreakCard.querySelector('.js-loss-streak-date');
+  obj.lossStreakTotal = obj.pieStreakCard.querySelector('.js-loss-streak-total');
+  obj.lossStreakProfit = obj.pieStreakCard.querySelector('.js-loss-streak-profit');
+  console.log('PIE STREAK ELS');
+  console.log(obj);
+  return obj;
+};
+
+var queryOverallEls = function queryOverallEls() {
+  overallEls = getElements();
+};
+
+exports.queryOverallEls = queryOverallEls;
+
+var renderStreaks = function renderStreaks(data) {
+  console.log('STREAK DATA!');
+  console.log(data);
+  overallEls.winStreakTotal.textContent = data.wins.trades.length;
+  overallEls.winStreakProfit.textContent = data.wins.trades.map(function (trade) {
+    return trade.profit;
+  }).reduce(function (acc, num) {
+    return acc + num;
+  }, 0);
+  overallEls.winStreakDate.textContent = "".concat(data.wins.trades[0].date, " - ").concat(data.wins.trades[data.wins.trades.length - 1].date);
+  overallEls.lossStreakTotal.textContent = data.losses.trades.length;
+  overallEls.lossStreakProfit.textContent = data.losses.trades.map(function (trade) {
+    return trade.loss;
+  }).reduce(function (acc, num) {
+    return acc + num;
+  }, 0);
+  overallEls.lossStreakDate.textContent = "".concat(data.losses.trades[0].date, " - ").concat(data.losses.trades[data.losses.trades.length - 1].date);
+};
+
+exports.renderStreaks = renderStreaks;
 },{}],"js/models/tableMonthlyModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -929,6 +974,8 @@ var _tableMonthlyView = require("./views/tableMonthlyView");
 
 var _tableProfitableView = require("./views/tableProfitableView");
 
+var _chartOverallView = require("./views/chartOverallView");
+
 var _tableMonthlyModel = require("./models/tableMonthlyModel");
 
 var _tableProfitableModel = require("./models/tableProfitableModel");
@@ -961,6 +1008,10 @@ var controlProfitableRender = function controlProfitableRender() {
   var newProfitable = (0, _tableProfitableModel.checkAgainstLeaders)((0, _dataModel.passData)('profitable'), [(0, _dataModel.passNestedData)('tickers', '')]);
   var tableData = (0, _dataModel.updateProfitableData)(newProfitable);
   (0, _tableProfitableView.renderProfitableTable)(tableData);
+};
+
+var controlOverallRender = function controlOverallRender() {
+  (0, _chartOverallView.renderStreaks)((0, _dataModel.passData)('streaks'));
 }; // ZONE - event listeners
 
 
@@ -969,13 +1020,15 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _calculatorsView.queryCalcEls)();
   (0, _tableMonthlyView.queryMonthlyEls)();
   (0, _tableProfitableView.queryProfitableEls)();
+  (0, _chartOverallView.queryOverallEls)();
   controlMonthlyRender();
   controlProfitableRender();
+  controlOverallRender();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1003,7 +1056,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52124" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58423" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

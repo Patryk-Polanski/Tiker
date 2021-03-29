@@ -20,6 +20,7 @@ import {
   queryProfitableEls,
   renderProfitableTable,
 } from './views/tableProfitableView';
+import { queryOverallEls, renderStreaks } from './views/chartOverallView';
 import { computeMonthlyData } from './models/tableMonthlyModel';
 import { checkAgainstLeaders } from './models/tableProfitableModel';
 
@@ -56,6 +57,10 @@ const controlProfitableRender = function () {
   renderProfitableTable(tableData);
 };
 
+const controlOverallRender = function () {
+  renderStreaks(passData('streaks'));
+};
+
 // ZONE - event listeners
 
 window.addEventListener('DOMContentLoaded', e => {
@@ -63,8 +68,10 @@ window.addEventListener('DOMContentLoaded', e => {
   queryCalcEls();
   queryMonthlyEls();
   queryProfitableEls();
+  queryOverallEls();
   controlMonthlyRender();
   controlProfitableRender();
+  controlOverallRender();
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);

@@ -7,9 +7,8 @@ const user = {
     long: 395,
     short: 328,
   },
-  streak: {
+  streaks: {
     wins: {
-      combo: 2,
       trades: [
         {
           ID: 'ZYRwa5z',
@@ -26,25 +25,22 @@ const user = {
       ],
     },
     losses: {
-      combo: 2,
       trades: [
         {
-          ID: 'ZYRwa5z',
-          ticker: 'NFLX',
-          date: '14/06/21',
-          loss: 253,
+          ID: 'liJ56D3',
+          ticker: 'AMZN',
+          date: '12/08/21',
+          loss: -90,
         },
         {
           ID: 'Y58P1M',
-          ticker: 'BMBL',
-          date: '15/06/21',
-          loss: 312,
+          ticker: 'X',
+          date: '21/07/21',
+          loss: -112,
         },
       ],
     },
     current: {
-      combo: 1,
-      type: 'wins',
       trades: [
         {
           ID: 'ZYRwa5z',
