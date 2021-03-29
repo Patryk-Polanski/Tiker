@@ -693,6 +693,11 @@ exports.queryProfitableEls = queryProfitableEls;
 var renderProfitableTable = function renderProfitableTable(tableData) {
   console.log('THIS IS THE TABLE DATA');
   console.log(tableData);
+  Object.keys(tableData).forEach(function (data) {
+    var ticker = tableData[data];
+    var html = "\n        <tr>\n            <th>".concat(data, "</th>\n            <td>").concat(ticker.totalProfit, "</td>\n            <td>").concat(ticker.totalTrades, "</td>\n            <td>").concat(ticker.avgReturn, "</td>\n            <td>").concat(ticker.avgWinPercent, "%</td>\n            <td>").concat(ticker.battingAvgPercent, "%</td>\n            <td>").concat(ticker.winLossRatio, "</td>\n        </tr>\n      ");
+    profitableEls.profitableTableHead.insertAdjacentHTML('afterend', html);
+  });
 };
 
 exports.renderProfitableTable = renderProfitableTable;
