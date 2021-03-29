@@ -14,8 +14,6 @@ const getElements = function (obj = {}) {
   obj.lossStreakProfit = obj.pieStreakCard.querySelector(
     '.js-loss-streak-profit'
   );
-  console.log('PIE STREAK ELS');
-  console.log(obj);
   return obj;
 };
 
@@ -24,8 +22,6 @@ export const queryOverallEls = function () {
 };
 
 export const renderStreaks = function (data) {
-  console.log('STREAK DATA!');
-  console.log(data);
   overallEls.winStreakTotal.textContent = data.wins.trades.length;
   overallEls.winStreakProfit.textContent = data.wins.trades
     .map(trade => trade.profit)

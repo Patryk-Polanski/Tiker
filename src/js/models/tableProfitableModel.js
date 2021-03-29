@@ -42,17 +42,12 @@ const convertToLeader = function (data) {
 };
 
 export const checkAgainstLeaders = function (leaders, dataArr) {
-  console.log('~~~~~~~~~~~~~');
-  console.log(dataArr);
-  console.log(leaders);
   const newLeadersArr = [];
 
   Object.keys(dataArr[0]).forEach(key => {
     const data = dataArr[0][key];
     let newLeader;
     let leaderSmallestAvg;
-    console.log('this iS THE data');
-    console.log(data);
     if (data.trades.length < 3) return { newLeader, leaderSmallestAvg }; // check if number of trades is greater than three
 
     const leaderTickers = Object.keys(leaders);
@@ -80,11 +75,7 @@ export const checkAgainstLeaders = function (leaders, dataArr) {
     // if the length of the leader tickers array is smaller than six, create a new leader
     if (leaderTickers.length < 6) {
       newLeader = convertToLeader(data);
-      console.log(newLeader);
     }
-
-    console.log('this is the new leader');
-    console.log(newLeader);
     newLeadersArr.push([newLeader, leaderSmallestAvg]);
   });
 

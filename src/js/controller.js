@@ -61,14 +61,18 @@ const controlOverallRender = function () {
   renderStreaks(passData('streaks'));
 };
 
-// ZONE - event listeners
-
-window.addEventListener('DOMContentLoaded', e => {
-  console.log('DOM app is loaded');
+const queryDOM = function () {
   queryCalcEls();
   queryMonthlyEls();
   queryProfitableEls();
   queryOverallEls();
+};
+
+// ZONE - event listeners
+
+window.addEventListener('DOMContentLoaded', e => {
+  console.log('DOM app is loaded');
+  queryDOM();
   controlMonthlyRender();
   controlProfitableRender();
   controlOverallRender();

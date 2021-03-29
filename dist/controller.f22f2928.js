@@ -531,8 +531,6 @@ var passNestedData = function passNestedData(field, field2) {
   if (field2) {
     return _defineProperty({}, field2, user[field][field2]);
   } else {
-    console.log('###~~~~####~~~~###');
-    console.log(user[field]);
     return user[field];
   }
 };
@@ -564,17 +562,12 @@ var updateProfitableData = function updateProfitableData(items) {
         newLeader = _item[0],
         oldLeader = _item[1];
 
-    console.log('DESTRUCTURED ITEM');
-    console.log(newLeader, oldLeader);
     if (oldLeader) delete user.profitable[oldLeader];
 
     if (newLeader) {
       var getTicker = Object.keys(newLeader)[0];
       user.profitable[getTicker] = newLeader[getTicker];
     }
-
-    console.log('THIS IS THE FINAL STATE');
-    console.log(user);
   });
   return user.profitable;
 };
@@ -687,8 +680,6 @@ var queryProfitableEls = function queryProfitableEls() {
 exports.queryProfitableEls = queryProfitableEls;
 
 var renderProfitableTable = function renderProfitableTable(tableData) {
-  console.log('THIS IS THE TABLE DATA');
-  console.log(tableData);
   Object.keys(tableData).forEach(function (data) {
     var ticker = tableData[data];
     var html = "\n        <tr>\n            <th>".concat(data, "</th>\n            <td>").concat(ticker.totalProfit, "</td>\n            <td>").concat(ticker.totalTrades, "</td>\n            <td>").concat(ticker.avgReturn, "</td>\n            <td>").concat(ticker.avgWinPercent, "%</td>\n            <td>").concat(ticker.battingAvgPercent, "%</td>\n            <td>").concat(ticker.winLossRatio, "</td>\n        </tr>\n      ");
@@ -715,8 +706,6 @@ var getElements = function getElements() {
   obj.lossStreakDate = obj.pieStreakCard.querySelector('.js-loss-streak-date');
   obj.lossStreakTotal = obj.pieStreakCard.querySelector('.js-loss-streak-total');
   obj.lossStreakProfit = obj.pieStreakCard.querySelector('.js-loss-streak-profit');
-  console.log('PIE STREAK ELS');
-  console.log(obj);
   return obj;
 };
 
@@ -727,8 +716,6 @@ var queryOverallEls = function queryOverallEls() {
 exports.queryOverallEls = queryOverallEls;
 
 var renderStreaks = function renderStreaks(data) {
-  console.log('STREAK DATA!');
-  console.log(data);
   overallEls.winStreakTotal.textContent = data.wins.trades.length;
   overallEls.winStreakProfit.textContent = data.wins.trades.map(function (trade) {
     return trade.profit;
@@ -910,16 +897,11 @@ var convertToLeader = function convertToLeader(data) {
 };
 
 var checkAgainstLeaders = function checkAgainstLeaders(leaders, dataArr) {
-  console.log('~~~~~~~~~~~~~');
-  console.log(dataArr);
-  console.log(leaders);
   var newLeadersArr = [];
   Object.keys(dataArr[0]).forEach(function (key) {
     var data = dataArr[0][key];
     var newLeader;
     var leaderSmallestAvg;
-    console.log('this iS THE data');
-    console.log(data);
     if (data.trades.length < 3) return {
       newLeader: newLeader,
       leaderSmallestAvg: leaderSmallestAvg
@@ -950,11 +932,8 @@ var checkAgainstLeaders = function checkAgainstLeaders(leaders, dataArr) {
 
     if (leaderTickers.length < 6) {
       newLeader = convertToLeader(data);
-      console.log(newLeader);
     }
 
-    console.log('this is the new leader');
-    console.log(newLeader);
     newLeadersArr.push([newLeader, leaderSmallestAvg]);
   });
   return newLeadersArr;
@@ -1012,15 +991,19 @@ var controlProfitableRender = function controlProfitableRender() {
 
 var controlOverallRender = function controlOverallRender() {
   (0, _chartOverallView.renderStreaks)((0, _dataModel.passData)('streaks'));
+};
+
+var queryDOM = function queryDOM() {
+  (0, _calculatorsView.queryCalcEls)();
+  (0, _tableMonthlyView.queryMonthlyEls)();
+  (0, _tableProfitableView.queryProfitableEls)();
+  (0, _chartOverallView.queryOverallEls)();
 }; // ZONE - event listeners
 
 
 window.addEventListener('DOMContentLoaded', function (e) {
   console.log('DOM app is loaded');
-  (0, _calculatorsView.queryCalcEls)();
-  (0, _tableMonthlyView.queryMonthlyEls)();
-  (0, _tableProfitableView.queryProfitableEls)();
-  (0, _chartOverallView.queryOverallEls)();
+  queryDOM();
   controlMonthlyRender();
   controlProfitableRender();
   controlOverallRender();

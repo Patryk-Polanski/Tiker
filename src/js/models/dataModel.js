@@ -288,8 +288,6 @@ export const passNestedData = function (field, field2) {
   if (field2) {
     return { [field2]: user[field][field2] };
   } else {
-    console.log('###~~~~####~~~~###');
-    console.log(user[field]);
     return user[field];
   }
 };
@@ -312,15 +310,11 @@ export const updateMonthlyData = function (obj) {
 export const updateProfitableData = function (items) {
   items.forEach(item => {
     const [newLeader, oldLeader] = item;
-    console.log('DESTRUCTURED ITEM');
-    console.log(newLeader, oldLeader);
     if (oldLeader) delete user.profitable[oldLeader];
     if (newLeader) {
       const getTicker = Object.keys(newLeader)[0];
       user.profitable[getTicker] = newLeader[getTicker];
     }
-    console.log('THIS IS THE FINAL STATE');
-    console.log(user);
   });
   return user.profitable;
 };
