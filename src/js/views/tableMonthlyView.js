@@ -12,7 +12,7 @@ export const queryMonthlyEls = function () {
   monthlyEls = getElements();
 };
 
-export const renderTable = function (data) {
+export const renderMonthlyTable = function (data) {
   const keys = Object.keys(data).reverse();
   keys.forEach(key => {
     const current = data[key];

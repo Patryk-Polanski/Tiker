@@ -87,7 +87,6 @@ const user = {
     AAL: {
       ticker: 'AAL',
       profitable: 0,
-      total: 2,
       trades: [
         {
           ID: '7Ft7s4w',
@@ -112,13 +111,24 @@ const user = {
     AAPL: {
       ticker: 'AAPL',
       profitable: 0,
-      total: 1,
       trades: [
         {
           ID: 'QHnv65t',
           shares: 40,
           result: 175,
           winPercentage: 1.54,
+        },
+        {
+          ID: 'kG24s8i',
+          shares: 50,
+          result: 125,
+          winPercentage: 1.23,
+        },
+        {
+          ID: 'Vz9qA1k',
+          shares: 42,
+          result: -102,
+          winPercentage: -1.1,
         },
       ],
     },
@@ -279,7 +289,13 @@ export const passData = function (field) {
 };
 
 export const passNestedData = function (field, field2) {
-  return user[field][field2];
+  if (field2) {
+    return { [field2]: user[field][field2] };
+  } else {
+    console.log('###~~~~####~~~~###');
+    console.log(user[field]);
+    return user[field];
+  }
 };
 
 export const updateCapital = function (amount, action) {
@@ -287,15 +303,28 @@ export const updateCapital = function (amount, action) {
   if (action === 'minus') user.capital -= amount;
   if (action === 'plus') user.capital += amount;
   if (user.capital < 0) user.capital = 0;
-  console.log('updated global state', user);
   return [action, stringifyNum(amount), stringifyNum(user.capital)];
 };
 
 export const updateMonthlyData = function (obj) {
-  console.log('this is the object to add to state');
   Object.keys(obj).forEach(key => {
     user.monthlyData[key] = obj[key];
   });
-  console.log('this is the updated global state');
   return user.monthlyData;
+};
+
+export const updateProfitableData = function (items) {
+  items.forEach(item => {
+    const [newLeader, oldLeader] = item;
+    console.log('DESTRUCTURED ITEM');
+    console.log(newLeader, oldLeader);
+    if (oldLeader) delete user.profitable[oldLeader];
+    if (newLeader) {
+      const getTicker = Object.keys(newLeader)[0];
+      user.profitable[getTicker] = newLeader[getTicker];
+    }
+    console.log('THIS IS THE FINAL STATE');
+    console.log(user);
+  });
+  return user.profitable;
 };

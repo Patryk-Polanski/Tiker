@@ -281,9 +281,23 @@ exports.filterNonStrings = filterNonStrings;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateMonthlyData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
+exports.updateProfitableData = exports.updateMonthlyData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
 
 var _helpers = require("./../helpers");
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var user = {
   capital: 7000,
@@ -358,7 +372,6 @@ var user = {
     AAL: {
       ticker: 'AAL',
       profitable: 0,
-      total: 2,
       trades: [{
         ID: '7Ft7s4w',
         shares: 60,
@@ -379,12 +392,21 @@ var user = {
     AAPL: {
       ticker: 'AAPL',
       profitable: 0,
-      total: 1,
       trades: [{
         ID: 'QHnv65t',
         shares: 40,
         result: 175,
         winPercentage: 1.54
+      }, {
+        ID: 'kG24s8i',
+        shares: 50,
+        result: 125,
+        winPercentage: 1.23
+      }, {
+        ID: 'Vz9qA1k',
+        shares: 42,
+        result: -102,
+        winPercentage: -1.1
       }]
     }
   },
@@ -510,7 +532,13 @@ var passData = function passData(field) {
 exports.passData = passData;
 
 var passNestedData = function passNestedData(field, field2) {
-  return user[field][field2];
+  if (field2) {
+    return _defineProperty({}, field2, user[field][field2]);
+  } else {
+    console.log('###~~~~####~~~~###');
+    console.log(user[field]);
+    return user[field];
+  }
 };
 
 exports.passNestedData = passNestedData;
@@ -520,22 +548,42 @@ var updateCapital = function updateCapital(amount, action) {
   if (action === 'minus') user.capital -= amount;
   if (action === 'plus') user.capital += amount;
   if (user.capital < 0) user.capital = 0;
-  console.log('updated global state', user);
   return [action, (0, _helpers.stringifyNum)(amount), (0, _helpers.stringifyNum)(user.capital)];
 };
 
 exports.updateCapital = updateCapital;
 
 var updateMonthlyData = function updateMonthlyData(obj) {
-  console.log('this is the object to add to state');
   Object.keys(obj).forEach(function (key) {
     user.monthlyData[key] = obj[key];
   });
-  console.log('this is the updated global state');
   return user.monthlyData;
 };
 
 exports.updateMonthlyData = updateMonthlyData;
+
+var updateProfitableData = function updateProfitableData(items) {
+  items.forEach(function (item) {
+    var _item = _slicedToArray(item, 2),
+        newLeader = _item[0],
+        oldLeader = _item[1];
+
+    console.log('DESTRUCTURED ITEM');
+    console.log(newLeader, oldLeader);
+    if (oldLeader) delete user.profitable[oldLeader];
+
+    if (newLeader) {
+      var getTicker = Object.keys(newLeader)[0];
+      user.profitable[getTicker] = newLeader[getTicker];
+    }
+
+    console.log('THIS IS THE FINAL STATE');
+    console.log(user);
+  });
+  return user.profitable;
+};
+
+exports.updateProfitableData = updateProfitableData;
 },{"./../helpers":"js/helpers.js"}],"js/models/calculatorsModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -594,7 +642,7 @@ exports.calcRatioResult = calcRatioResult;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderTable = exports.queryMonthlyEls = void 0;
+exports.renderMonthlyTable = exports.queryMonthlyEls = void 0;
 var monthlyEls = {};
 
 var getElements = function getElements() {
@@ -610,7 +658,7 @@ var queryMonthlyEls = function queryMonthlyEls() {
 
 exports.queryMonthlyEls = queryMonthlyEls;
 
-var renderTable = function renderTable(data) {
+var renderMonthlyTable = function renderMonthlyTable(data) {
   var keys = Object.keys(data).reverse();
   keys.forEach(function (key) {
     var current = data[key];
@@ -619,7 +667,35 @@ var renderTable = function renderTable(data) {
   });
 };
 
-exports.renderTable = renderTable;
+exports.renderMonthlyTable = renderMonthlyTable;
+},{}],"js/views/tableProfitableView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.renderProfitableTable = exports.queryProfitableEls = void 0;
+var profitableEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.profitableTable = document.querySelector('.js-profitable-table');
+  obj.profitableTableHead = obj.profitableTable.querySelector('.js-profitable-table-head');
+  return obj;
+};
+
+var queryProfitableEls = function queryProfitableEls() {
+  profitableEls = getElements();
+};
+
+exports.queryProfitableEls = queryProfitableEls;
+
+var renderProfitableTable = function renderProfitableTable(tableData) {
+  console.log('THIS IS THE TABLE DATA');
+  console.log(tableData);
+};
+
+exports.renderProfitableTable = renderProfitableTable;
 },{}],"js/models/tableMonthlyModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -771,7 +847,6 @@ var convertToLeader = function convertToLeader(data) {
   }).filter(function (percent) {
     return percent >= 0;
   });
-  console.log(winPercentTrades);
   current.totalProfit = totalProfit;
   current.totalShares = totalShares;
   current.avgReturn = +(totalProfit / current.totalTrades).toFixed(0);
@@ -784,32 +859,55 @@ var convertToLeader = function convertToLeader(data) {
   return formattedLeader;
 };
 
-var checkAgainstLeaders = function checkAgainstLeaders(leaders, data) {
-  var newLeader;
-  var avgWinPercent = (data.trades.map(function (trade) {
-    return trade.winPercentage;
-  }).reduce(function (acc, num) {
-    return acc + num;
-  }, 0) / data.trades.length).toFixed(2);
-  console.log(avgWinPercent);
-  var leaderTickers = Object.keys(leaders);
-  var leaderAvgReturn = [];
-  var leaderSmallestAvg;
+var checkAgainstLeaders = function checkAgainstLeaders(leaders, dataArr) {
+  console.log('~~~~~~~~~~~~~');
+  console.log(dataArr);
+  console.log(leaders);
+  var newLeadersArr = [];
+  Object.keys(dataArr[0]).forEach(function (key) {
+    var data = dataArr[0][key];
+    var newLeader;
+    var leaderSmallestAvg;
+    console.log('this iS THE data');
+    console.log(data);
+    if (data.trades.length < 3) return {
+      newLeader: newLeader,
+      leaderSmallestAvg: leaderSmallestAvg
+    }; // check if number of trades is greater than three
 
-  if (leaderTickers.length > 5) {
-    leaderTickers.forEach(function (ticker) {
-      leaderAvgReturn.push(leaders[ticker].avgWinPercent);
-    });
-    leaderSmallestAvg = Math.min(leaderAvgReturn);
-    if (avgWinPercent > leaderSmallestAvg) newLeader = convertToLeader(data);
-  }
+    var leaderTickers = Object.keys(leaders);
+    var leaderAvgReturn = []; // calculate avg wi percentage on the new data
 
-  if (leaderTickers.length < 6) {
-    newLeader = convertToLeader(data);
+    var avgWinPercent = (data.trades.map(function (trade) {
+      return trade.winPercentage;
+    }).reduce(function (acc, num) {
+      return acc + num;
+    }, 0) / data.trades.length).toFixed(2); // if the length of the leader tickers array is bigger than 6, push the avg return of each leader to an array
+    // sort the array so that the leader with the smallest avgWinPercent is first
+    // Compare the smallest leader to current data
+    // if the avgWinPercent of the current data is larger than the smallest leader, create a new leader
+
+    if (leaderTickers.length >= 6) {
+      leaderTickers.forEach(function (ticker) {
+        leaderAvgReturn.push([leaders[ticker].avgWinPercent, ticker]);
+      });
+      leaderSmallestAvg = leaderAvgReturn.sort(function (a, b) {
+        return a[0] - b[0];
+      })[0];
+      if (avgWinPercent > leaderSmallestAvg) newLeader = convertToLeader(data);
+    } // if the length of the leader tickers array is smaller than six, create a new leader
+
+
+    if (leaderTickers.length < 6) {
+      newLeader = convertToLeader(data);
+      console.log(newLeader);
+    }
+
+    console.log('this is the new leader');
     console.log(newLeader);
-  }
-
-  return newLeader;
+    newLeadersArr.push([newLeader, leaderSmallestAvg]);
+  });
+  return newLeadersArr;
 };
 
 exports.checkAgainstLeaders = checkAgainstLeaders;
@@ -823,6 +921,8 @@ var _dataModel = require("./models/dataModel");
 var _calculatorsModel = require("./models/calculatorsModel");
 
 var _tableMonthlyView = require("./views/tableMonthlyView");
+
+var _tableProfitableView = require("./views/tableProfitableView");
 
 var _tableMonthlyModel = require("./models/tableMonthlyModel");
 
@@ -849,11 +949,13 @@ var controlCalcRatio = function controlCalcRatio(data) {
 
 var controlMonthlyRender = function controlMonthlyRender() {
   var computedData = (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('calendarData'));
-  (0, _tableMonthlyView.renderTable)((0, _dataModel.updateMonthlyData)(computedData));
+  (0, _tableMonthlyView.renderMonthlyTable)((0, _dataModel.updateMonthlyData)(computedData));
 };
 
 var controlProfitableRender = function controlProfitableRender() {
-  var newProfitable = (0, _tableProfitableModel.checkAgainstLeaders)((0, _dataModel.passData)('profitable'), (0, _dataModel.passNestedData)('tickers', 'AAL')); // TODO - send new profitable to data model and check if not empty, then push to leaders object
+  var newProfitable = (0, _tableProfitableModel.checkAgainstLeaders)((0, _dataModel.passData)('profitable'), [(0, _dataModel.passNestedData)('tickers', '')]);
+  var tableData = (0, _dataModel.updateProfitableData)(newProfitable);
+  (0, _tableProfitableView.renderProfitableTable)(tableData);
 }; // ZONE - event listeners
 
 
@@ -861,13 +963,14 @@ window.addEventListener('DOMContentLoaded', function (e) {
   console.log('DOM app is loaded');
   (0, _calculatorsView.queryCalcEls)();
   (0, _tableMonthlyView.queryMonthlyEls)();
+  (0, _tableProfitableView.queryProfitableEls)();
   controlMonthlyRender();
   controlProfitableRender();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -895,7 +998,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56247" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52124" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -23,7 +23,6 @@ const convertToLeader = function (data) {
   const winPercentTrades = data.trades
     .map(trade => trade.winPercentage)
     .filter(percent => percent >= 0);
-  console.log(winPercentTrades);
 
   current.totalProfit = totalProfit;
   current.totalShares = totalShares;
@@ -42,32 +41,52 @@ const convertToLeader = function (data) {
   return formattedLeader;
 };
 
-export const checkAgainstLeaders = function (leaders, data) {
-  let newLeader;
+export const checkAgainstLeaders = function (leaders, dataArr) {
+  console.log('~~~~~~~~~~~~~');
+  console.log(dataArr);
+  console.log(leaders);
+  const newLeadersArr = [];
 
-  const avgWinPercent = (
-    data.trades
-      .map(trade => trade.winPercentage)
-      .reduce((acc, num) => acc + num, 0) / data.trades.length
-  ).toFixed(2);
-  console.log(avgWinPercent);
+  Object.keys(dataArr[0]).forEach(key => {
+    const data = dataArr[0][key];
+    let newLeader;
+    let leaderSmallestAvg;
+    console.log('this iS THE data');
+    console.log(data);
+    if (data.trades.length < 3) return { newLeader, leaderSmallestAvg }; // check if number of trades is greater than three
 
-  const leaderTickers = Object.keys(leaders);
-  const leaderAvgReturn = [];
-  let leaderSmallestAvg;
+    const leaderTickers = Object.keys(leaders);
+    const leaderAvgReturn = [];
 
-  if (leaderTickers.length > 5) {
-    leaderTickers.forEach(ticker => {
-      leaderAvgReturn.push(leaders[ticker].avgWinPercent);
-    });
-    leaderSmallestAvg = Math.min(leaderAvgReturn);
-    if (avgWinPercent > leaderSmallestAvg) newLeader = convertToLeader(data);
-  }
+    // calculate avg wi percentage on the new data
+    const avgWinPercent = (
+      data.trades
+        .map(trade => trade.winPercentage)
+        .reduce((acc, num) => acc + num, 0) / data.trades.length
+    ).toFixed(2);
 
-  if (leaderTickers.length < 6) {
-    newLeader = convertToLeader(data);
+    // if the length of the leader tickers array is bigger than 6, push the avg return of each leader to an array
+    // sort the array so that the leader with the smallest avgWinPercent is first
+    // Compare the smallest leader to current data
+    // if the avgWinPercent of the current data is larger than the smallest leader, create a new leader
+    if (leaderTickers.length >= 6) {
+      leaderTickers.forEach(ticker => {
+        leaderAvgReturn.push([leaders[ticker].avgWinPercent, ticker]);
+      });
+      leaderSmallestAvg = leaderAvgReturn.sort((a, b) => a[0] - b[0])[0];
+      if (avgWinPercent > leaderSmallestAvg) newLeader = convertToLeader(data);
+    }
+
+    // if the length of the leader tickers array is smaller than six, create a new leader
+    if (leaderTickers.length < 6) {
+      newLeader = convertToLeader(data);
+      console.log(newLeader);
+    }
+
+    console.log('this is the new leader');
     console.log(newLeader);
-  }
+    newLeadersArr.push([newLeader, leaderSmallestAvg]);
+  });
 
-  return newLeader;
+  return newLeadersArr;
 };
