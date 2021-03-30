@@ -4416,11 +4416,9 @@ var renderPerformanceChart = function renderPerformanceChart() {
     for (var index = 0; index < yAxisTicksNum; index++) {
       var horizontalLine = horizontalLinesGroup.append('line').attr('class', 'performance-graph-line').attr('stroke', '#aaa').attr('x1', 0).attr('x2', graphWidth).attr('y1', 0).attr('y2', 0).attr('transform', yTicksTranslates[index]);
     } // rotate axes text
-    // xAxisGroup
-    //   .selectAll('text')
-    //   .attr('transform', 'rotate(-30)')
-    //   .attr('text-anchor', 'end');
 
+
+    xAxisGroup.selectAll('text').attr('transform', 'translate(0, 5)');
   };
 
   updatePerformanceChart(testData);

@@ -184,10 +184,7 @@ export const renderPerformanceChart = function () {
     }
 
     // rotate axes text
-    // xAxisGroup
-    //   .selectAll('text')
-    //   .attr('transform', 'rotate(-30)')
-    //   .attr('text-anchor', 'end');
+    xAxisGroup.selectAll('text').attr('transform', 'translate(0, 5)');
   };
 
   updatePerformanceChart(testData);
