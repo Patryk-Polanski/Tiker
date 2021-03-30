@@ -35,4 +35,13 @@
 }
 
 .performance-label {
+  @include ts-numerical;
+  fill: $green-light;
+  font-size: 16px;
+}
+
+.performance-label--negative {
+  @include ts-numerical;
+  font-size: 16px;
+  fill: $red-light;
 }

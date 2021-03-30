@@ -272,6 +272,22 @@ input[type=number] {
   transform: translate(0, 20px);
 }
 
+.performance-label {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+  fill: #189fae;
+  font-size: 16px;
+}
+
+.performance-label--negative {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+  font-size: 16px;
+  fill: #c4456f;
+}
+
 html {
   box-sizing: border-box;
   font-size: 65.5%;
