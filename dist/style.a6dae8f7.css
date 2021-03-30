@@ -242,8 +242,8 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.performance-axes-y,
-.performance-axes-x {
+.performance-axis-y,
+.performance-axis-x {
   font-family: "Roboto", sans-serif;
   color: #aaaaaa;
   font-weight: 400;
@@ -261,6 +261,11 @@ input[type=number] {
   stroke-width: 2px;
   fill: none;
   stroke: #762e88;
+}
+
+.performance-graph-line {
+  stroke: #29242a;
+  stroke-width: 1;
 }
 
 html {
@@ -895,6 +900,8 @@ body {
   margin-top: 10px;
   width: 100%;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .c-chart-worst-best {

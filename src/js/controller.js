@@ -90,3 +90,11 @@ window.addEventListener('DOMContentLoaded', e => {
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);
 });
+
+let resizeTimer;
+window.addEventListener('resize', e => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    renderPerformanceChart();
+  }, 1000);
+});

@@ -1,5 +1,13 @@
-.performance-axes-y,
-.performance-axes-x {
+.performance-canvas {
+  //   flex-grow: 1;
+  //   width: 100%;
+  //   min-height: 400px;
+  //   height: 100%;
+  //   max-height: 50vh;
+}
+
+.performance-axis-y,
+.performance-axis-x {
   @include ts-numerical;
   font-size: 16px;
 }
@@ -15,4 +23,9 @@
   stroke-width: 2px;
   fill: none;
   stroke: $purple-light;
+}
+
+.performance-graph-line {
+  stroke: $brown-light;
+  stroke-width: 1;
 }

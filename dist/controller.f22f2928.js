@@ -4328,7 +4328,7 @@ exports.queryPerformanceEls = queryPerformanceEls;
 
 var renderPerformanceChart = function renderPerformanceChart() {
   // ZONE - D3
-  var data = [];
+  performanceEls.performanceCanvas.innerHTML = '';
   var canvasRect = performanceEls.performanceCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
@@ -4340,17 +4340,15 @@ var renderPerformanceChart = function renderPerformanceChart() {
   var graphWidth = canvasRect.width - margin.left - margin.right;
   var graphHeight = canvasRect.height - margin.top - margin.bottom; // create svg container, specify width & height, translate to create room for axes labels
 
-  var svg = d3.select('.js-performance-canvas').append('svg').attr('viewBox', "0 0 ".concat(canvasRect.width, " ").concat(canvasRect.height)); // .attr('width', canvasRect.width)
-  // .attr('height', canvasRect.height).attr('viewBox', `0 0 ${canvasRect.width} ${canvasRect.height}`);
-  // create a group for our graph elements and append it to our svg
+  var svg = d3.select('.js-performance-canvas').append('svg').attr('class', 'performance-canvas').attr('viewBox', "0 0 ".concat(canvasRect.width, " ").concat(canvasRect.height)); // create a group for our graph elements and append it to our svg
 
   var graph = svg.append('g').attr('width', graphWidth).attr('height', graphHeight).attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); // create scales
 
   var x = d3.scaleLinear().range([0, graphWidth]);
   var y = d3.scaleLinear().range([graphHeight, 0]); // create axes groups
 
-  var xAxisGroup = graph.append('g').attr('transform', "translate(0, ".concat(graphHeight, ")")).attr('class', 'performance-axes-x');
-  var yAxisGroup = graph.append('g').attr('color', '#eee').attr('class', 'performance-axes-y'); // set up d3 line graph generator
+  var xAxisGroup = graph.append('g').attr('transform', "translate(0, ".concat(graphHeight, ")")).attr('class', 'performance-axis-x');
+  var yAxisGroup = graph.append('g').attr('class', 'performance-axis-y'); // set up d3 line graph generator
   // it will generate a line, based on our data points
   // it returns a long string that is then used for 'd' attribute of the svg path
 
@@ -4360,13 +4358,7 @@ var renderPerformanceChart = function renderPerformanceChart() {
     return y(d.distance);
   }); // create line path element
 
-  var path = graph.append('path'); // create dotted line group and append to graph
-
-  var dottedLines = graph.append('g').attr('class', 'lines').style('opacity', 0); // create x dotted line and append to dotted line group
-
-  var xDottedLine = dottedLines.append('line').attr('stroke', '#aaa').attr('stroke-width', 1).attr('stroke-dasharray', 4); // create y dotted line and append to dotted line group
-
-  var yDottedLine = dottedLines.append('line').attr('stroke', '#aaa').attr('stroke-width', 1).attr('stroke-dasharray', 4); // ZONE - update function
+  var path = graph.append('path'); // ZONE - update function
 
   var updatePerformanceChart = function updatePerformanceChart(data) {
     // sort the data based on date object
@@ -4412,15 +4404,23 @@ var renderPerformanceChart = function renderPerformanceChart() {
     }); // generate all shapes for xAxis and yAxis and place them in axis groups
 
     xAxisGroup.call(xAxis);
-    yAxisGroup.call(yAxis);
-    var test = performanceEls.performanceCanvas.querySelectorAll('g.performance-axes-y g.tick');
-    var testTranslates = Array.from(test).map(function (t) {
+    yAxisGroup.call(yAxis); // ZONE - generate horizontal lines
+
+    var yAxisTicks = performanceEls.performanceCanvas.querySelectorAll('g.performance-axis-y g.tick');
+    var yTicksTranslates = Array.from(yAxisTicks).map(function (t) {
       return t.getAttribute('transform');
     });
-    console.log(test);
-    console.log(testTranslates); // rotate axes text
+    var yAxisTicksNum = yTicksTranslates.length;
+    var horizontalLinesGroup = graph.append('g');
 
-    xAxisGroup.selectAll('text').attr('transform', 'rotate(-30)').attr('text-anchor', 'end');
+    for (var index = 0; index < yAxisTicksNum; index++) {
+      var horizontalLine = horizontalLinesGroup.append('line').attr('class', 'performance-graph-line').attr('stroke', '#aaa').attr('x1', 0).attr('x2', graphWidth).attr('y1', 0).attr('y2', 0).attr('transform', yTicksTranslates[index]);
+    } // rotate axes text
+    // xAxisGroup
+    //   .selectAll('text')
+    //   .attr('transform', 'rotate(-30)')
+    //   .attr('text-anchor', 'end');
+
   };
 
   updatePerformanceChart(testData);
@@ -4505,6 +4505,13 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
+});
+var resizeTimer;
+window.addEventListener('resize', function (e) {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(function () {
+    (0, _chartPerformanceView.renderPerformanceChart)();
+  }, 1000);
 });
 },{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];

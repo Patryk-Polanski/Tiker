@@ -1,6 +1,5 @@
 .c-chart-performance {
   background-color: $grey-dark;
-  // background-color: blue;
   grid-column: 1 / span 3;
   grid-row: 1 / span 6;
   border-radius: 10px;
@@ -35,5 +34,7 @@
     margin-top: 10px;
     width: 100%;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
   }
 }

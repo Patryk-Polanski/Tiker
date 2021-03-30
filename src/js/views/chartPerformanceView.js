@@ -60,7 +60,7 @@ export const queryPerformanceEls = function () {
 
 export const renderPerformanceChart = function () {
   // ZONE - D3
-  let data = [];
+  performanceEls.performanceCanvas.innerHTML = '';
 
   const canvasRect = performanceEls.performanceCanvas.getBoundingClientRect();
 
@@ -73,9 +73,8 @@ export const renderPerformanceChart = function () {
   const svg = d3
     .select('.js-performance-canvas')
     .append('svg')
+    .attr('class', 'performance-canvas')
     .attr('viewBox', `0 0 ${canvasRect.width} ${canvasRect.height}`);
-  // .attr('width', canvasRect.width)
-  // .attr('height', canvasRect.height).attr('viewBox', `0 0 ${canvasRect.width} ${canvasRect.height}`);
 
   // create a group for our graph elements and append it to our svg
   const graph = svg
@@ -92,11 +91,8 @@ export const renderPerformanceChart = function () {
   const xAxisGroup = graph
     .append('g')
     .attr('transform', `translate(0, ${graphHeight})`)
-    .attr('class', 'performance-axes-x');
-  const yAxisGroup = graph
-    .append('g')
-    .attr('color', '#eee')
-    .attr('class', 'performance-axes-y');
+    .attr('class', 'performance-axis-x');
+  const yAxisGroup = graph.append('g').attr('class', 'performance-axis-y');
 
   // set up d3 line graph generator
   // it will generate a line, based on our data points
@@ -112,26 +108,6 @@ export const renderPerformanceChart = function () {
 
   // create line path element
   const path = graph.append('path');
-
-  // create dotted line group and append to graph
-  const dottedLines = graph
-    .append('g')
-    .attr('class', 'lines')
-    .style('opacity', 0);
-
-  // create x dotted line and append to dotted line group
-  const xDottedLine = dottedLines
-    .append('line')
-    .attr('stroke', '#aaa')
-    .attr('stroke-width', 1)
-    .attr('stroke-dasharray', 4);
-
-  // create y dotted line and append to dotted line group
-  const yDottedLine = dottedLines
-    .append('line')
-    .attr('stroke', '#aaa')
-    .attr('stroke-width', 1)
-    .attr('stroke-dasharray', 4);
 
   // ZONE - update function
   const updatePerformanceChart = function (data) {
@@ -182,20 +158,36 @@ export const renderPerformanceChart = function () {
     xAxisGroup.call(xAxis);
     yAxisGroup.call(yAxis);
 
-    const test = performanceEls.performanceCanvas.querySelectorAll(
-      'g.performance-axes-y g.tick'
+    // ZONE - generate horizontal lines
+
+    const yAxisTicks = performanceEls.performanceCanvas.querySelectorAll(
+      'g.performance-axis-y g.tick'
     );
-    const testTranslates = Array.from(test).map(t =>
+    const yTicksTranslates = Array.from(yAxisTicks).map(t =>
       t.getAttribute('transform')
     );
-    console.log(test);
-    console.log(testTranslates);
+
+    const yAxisTicksNum = yTicksTranslates.length;
+
+    const horizontalLinesGroup = graph.append('g');
+
+    for (let index = 0; index < yAxisTicksNum; index++) {
+      const horizontalLine = horizontalLinesGroup
+        .append('line')
+        .attr('class', 'performance-graph-line')
+        .attr('stroke', '#aaa')
+        .attr('x1', 0)
+        .attr('x2', graphWidth)
+        .attr('y1', 0)
+        .attr('y2', 0)
+        .attr('transform', yTicksTranslates[index]);
+    }
 
     // rotate axes text
-    xAxisGroup
-      .selectAll('text')
-      .attr('transform', 'rotate(-30)')
-      .attr('text-anchor', 'end');
+    // xAxisGroup
+    //   .selectAll('text')
+    //   .attr('transform', 'rotate(-30)')
+    //   .attr('text-anchor', 'end');
   };
 
   updatePerformanceChart(testData);
