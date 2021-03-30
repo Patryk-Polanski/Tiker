@@ -1,4 +1,34 @@
+import { path } from 'd3-path';
+import { curveLinearClosed } from 'd3-shape';
+
 let performanceEls = {};
+
+const testData = [
+  {
+    date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+    distance: 2400,
+  },
+  {
+    date: 'Mon Mar 02 2021 23:13:58 GMT+0000 (Greenwich Mean Time)',
+    distance: 1200,
+  },
+  {
+    date: 'Mon Mar 03 2021 23:12:58 GMT+0000 (Greenwich Mean Time)',
+    distance: 900,
+  },
+  {
+    date: 'Mon Mar 04 2021 23:11:58 GMT+0000 (Greenwich Mean Time)',
+    distance: 1400,
+  },
+  {
+    date: 'Mon Mar 05 2021 23:10:58 GMT+0000 (Greenwich Mean Time)',
+    distance: 2200,
+  },
+  {
+    date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+    distance: 600,
+  },
+];
 
 const getElements = function (obj = {}) {
   obj.performanceCanvas = document.querySelector('.js-performance-canvas');
@@ -10,10 +40,6 @@ const getElements = function (obj = {}) {
 export const queryPerformanceEls = function () {
   performanceEls = getElements();
 };
-
-const updatePerformanceChart = function(data)(){
-    
-}
 
 export const renderPerformanceChart = function () {
   // ZONE - D3
@@ -75,14 +101,71 @@ export const renderPerformanceChart = function () {
   // create x dotted line and append to dotted line group
   const xDottedLine = dottedLines
     .append('line')
-    .attr('stroke', #aaa)
+    .attr('stroke', '#aaa')
     .attr('stroke-width', 1)
     .attr('stroke-dasharray', 4);
 
   // create y dotted line and append to dotted line group
   const yDottedLine = dottedLines
     .append('line')
-    .attr('stroke', #aaa)
+    .attr('stroke', '#aaa')
     .attr('stroke-width', 1)
     .attr('stroke-dasharray', 4);
+
+  // ZONE - update function
+  const updatePerformanceChart = function (data) {
+    // sort the data based on date object
+    data.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // set scale domains
+    x.domain(d3.extent(data, d => new Date(d.date))); // find the lowest and highest dates, return in array format
+    y.domain([0, d3.max(data, d => d.distance)]); // find the highest value
+
+    // update path data
+    // when we are using d3 line, we need to pass the data inside of another array
+    path
+      .data([data])
+      .attr('fill', 'none')
+      .attr('stroke', '#00bfa5')
+      .attr('stroke-width', 2)
+      .attr('d', line);
+
+    // create circles for objects
+    // join data to the selection
+    const circles = graph.selectAll('circle').data(data);
+
+    // remove unwanted points
+    circles.exit().remove();
+
+    // add new points
+    circles
+      .enter()
+      .append('circle')
+      .attr('r', 4)
+      .attr('cx', d => x(new Date(d.date)))
+      .attr('cy', d => y(d.distance))
+      .attr('fill', '#ccc');
+
+    // update current points
+    circles.attr('cx', d => x(new Date(d.date))).attr('cy', d => y(d.distance));
+
+    // create axes
+    const xAxis = d3.axisBottom(x).ticks(3).tickFormat(d3.timeFormat('%b %d')); // create bottom axis based on our x scale
+    const yAxis = d3
+      .axisLeft(y)
+      .ticks(4)
+      .tickFormat(d => d + 'm');
+
+    // generate all shapes for xAxis and yAxis and place them in axis groups
+    xAxisGroup.call(xAxis);
+    yAxisGroup.call(yAxis);
+
+    // rotate axes text
+    xAxisGroup
+      .selectAll('text')
+      .attr('transform', 'rotate(-40)')
+      .attr('text-anchor', 'end');
+  };
+
+  updatePerformanceChart(testData);
 };
