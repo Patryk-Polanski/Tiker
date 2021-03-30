@@ -22,30 +22,44 @@ const testData = [
   {
     date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
     distance: 2400,
+    shortDate: '01/03/21',
+    position: 1,
   },
   {
     date: 'Mon Mar 02 2021 23:13:58 GMT+0000 (Greenwich Mean Time)',
     distance: 1200,
+    shortDate: '02/03/21',
+    position: 2,
   },
   {
     date: 'Mon Mar 03 2021 23:12:58 GMT+0000 (Greenwich Mean Time)',
     distance: 900,
+    shortDate: '03/03/21',
+    position: 3,
   },
   {
     date: 'Mon Mar 04 2021 23:11:58 GMT+0000 (Greenwich Mean Time)',
     distance: 1400,
+    shortDate: '04/03/21',
+    position: 4,
   },
   {
     date: 'Mon Mar 05 2021 23:10:58 GMT+0000 (Greenwich Mean Time)',
     distance: 2200,
+    shortDate: '05/03/21',
+    position: 5,
   },
   {
     date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
     distance: 600,
+    shortDate: '06/03/21',
+    position: 6,
   },
   {
     date: 'Mon Mar 07 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
     distance: 500,
+    shortDate: '07/03/21',
+    position: 7,
   },
 ];
 
