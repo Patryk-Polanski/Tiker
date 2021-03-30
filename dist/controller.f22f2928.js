@@ -4363,7 +4363,7 @@ var testData = [{
 }, {
   date: 'Mon Mar 29 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
   distance: 1497,
-  shortDate: '28/3/21',
+  shortDate: '29/3/21',
   position: 15
 }];
 
@@ -4418,11 +4418,13 @@ var renderPerformanceChart = function renderPerformanceChart() {
     data.sort(function (a, b) {
       return new Date(a.date) - new Date(b.date);
     }); // set scale domains
+    // x.domain(d3.extent(data, d => d.position)); // find the lowest and highest dates, return in array format
 
-    x.domain(d3.extent(data, function (d) {
+    x.domain([d3.min(data, function (d) {
       return d.position;
-    })); // find the lowest and highest dates, return in array format
-
+    }) - 0.5, d3.max(data, function (d) {
+      return d.position;
+    }) + 0.5]);
     y.domain([d3.min(data, function (d) {
       return d.distance;
     }) - 200, d3.max(data, function (d) {
@@ -4451,7 +4453,7 @@ var renderPerformanceChart = function renderPerformanceChart() {
     }); // create axes
 
     var xAxis = d3.axisBottom(x).ticks(data.length).tickFormat(function (d) {
-      return data[d - 1].shortDate;
+      return data[d - 1] ? data[d - 1].shortDate : '-';
     }); // create bottom axis based on our x scale
 
     var yAxis = d3.axisLeft(y).ticks(4).tickFormat(function (d) {
@@ -4470,13 +4472,17 @@ var renderPerformanceChart = function renderPerformanceChart() {
 
     for (var index = 0; index < yAxisTicksNum; index++) {
       var horizontalLine = horizontalLinesGroup.append('line').attr('class', 'performance-graph-line').attr('x1', 0).attr('x2', graphWidth).attr('y1', 0).attr('y2', 0).attr('transform', yTicksTranslates[index]);
-    } // rotate axes text
+    } // ZONE - create circle labels
+
+
+    var points = Array.from(performanceEls.performanceCanvas.querySelectorAll('circle.performance-circles'));
+    var pointsCoords = points.map(function (point) {
+      return [point.getAttribute('cx'), point.getAttribute('cy')];
+    });
+    console.log(pointsCoords); // rotate axes text
     // xAxisGroup.selectAll('text').attr('transform', 'translate(0, 5)');
 
-
-    xAxisGroup.selectAll('g.tick:nth-child(odd) text').attr('transform', 'translate(0, 18)').attr('class', 'performance-axis-odd');
-    var lastTick = performanceEls.performanceCanvas.querySelector('g.tick:last-child text');
-    if (lastTick.classList.contains('performance-axis-odd')) lastTick.classList.add('performance-axis-last-odd');else lastTick.classList.add('performance-axis-last-even'); // console.log(lastTick);
+    xAxisGroup.selectAll('g.tick:nth-child(odd) text').attr('transform', 'translate(0, 18)').attr('class', 'performance-axis-odd'); // console.log(lastTick);
     // lastTick.transform = `translate(-10, ${
     //   lastTick.classList.contains('performance-axis-odd') ? 18 : 0
     // })`;
@@ -4606,7 +4612,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49651" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56200" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

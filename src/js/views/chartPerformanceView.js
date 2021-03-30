@@ -91,7 +91,7 @@ const testData = [
   {
     date: 'Mon Mar 29 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
     distance: 1497,
-    shortDate: '28/3/21',
+    shortDate: '29/3/21',
     position: 15,
   },
 ];
@@ -162,7 +162,11 @@ export const renderPerformanceChart = function () {
     data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     // set scale domains
-    x.domain(d3.extent(data, d => d.position)); // find the lowest and highest dates, return in array format
+    // x.domain(d3.extent(data, d => d.position)); // find the lowest and highest dates, return in array format
+    x.domain([
+      d3.min(data, d => d.position) - 0.5,
+      d3.max(data, d => d.position) + 0.5,
+    ]);
     y.domain([
       d3.min(data, d => d.distance) - 200,
       d3.max(data, d => d.distance) + 100,
@@ -196,7 +200,7 @@ export const renderPerformanceChart = function () {
     const xAxis = d3
       .axisBottom(x)
       .ticks(data.length)
-      .tickFormat(d => data[d - 1].shortDate); // create bottom axis based on our x scale
+      .tickFormat(d => (data[d - 1] ? data[d - 1].shortDate : '-')); // create bottom axis based on our x scale
 
     const yAxis = d3
       .axisLeft(y)
@@ -231,20 +235,24 @@ export const renderPerformanceChart = function () {
         .attr('transform', yTicksTranslates[index]);
     }
 
+    // ZONE - create circle labels
+    const points = Array.from(
+      performanceEls.performanceCanvas.querySelectorAll(
+        'circle.performance-circles'
+      )
+    );
+    const pointsCoords = points.map(point => [
+      point.getAttribute('cx'),
+      point.getAttribute('cy'),
+    ]);
+    console.log(pointsCoords);
+
     // rotate axes text
     // xAxisGroup.selectAll('text').attr('transform', 'translate(0, 5)');
     xAxisGroup
       .selectAll('g.tick:nth-child(odd) text')
       .attr('transform', 'translate(0, 18)')
       .attr('class', 'performance-axis-odd');
-
-    const lastTick = performanceEls.performanceCanvas.querySelector(
-      'g.tick:last-child text'
-    );
-
-    if (lastTick.classList.contains('performance-axis-odd'))
-      lastTick.classList.add('performance-axis-last-odd');
-    else lastTick.classList.add('performance-axis-last-even');
 
     // console.log(lastTick);
     // lastTick.transform = `translate(-10, ${
