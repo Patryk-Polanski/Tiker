@@ -4290,6 +4290,7 @@ var _d3Path = require("d3-path");
 var _d3Shape = require("d3-shape");
 
 var performanceEls = {};
+var monthsArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var testData = [{
   date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
   distance: 2400
@@ -4308,13 +4309,14 @@ var testData = [{
 }, {
   date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
   distance: 600
+}, {
+  date: 'Mon Mar 07 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  distance: 500
 }];
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.performanceCanvas = document.querySelector('.js-performance-canvas');
-  console.log(obj.performanceCanvas.getBoundingClientRect().width);
-  console.log(obj.performanceCanvas.getBoundingClientRect().height);
   return obj;
 };
 
@@ -4333,20 +4335,22 @@ var renderPerformanceChart = function renderPerformanceChart() {
     top: 40,
     right: 20,
     bottom: 50,
-    left: 100
+    left: 50
   };
   var graphWidth = canvasRect.width - margin.left - margin.right;
   var graphHeight = canvasRect.height - margin.top - margin.bottom; // create svg container, specify width & height, translate to create room for axes labels
 
-  var svg = d3.select('.js-performance-canvas').append('svg').attr('width', canvasRect.width).attr('height', canvasRect.height); // create a group for our graph elements and append it to our svg
+  var svg = d3.select('.js-performance-canvas').append('svg').attr('viewBox', "0 0 ".concat(canvasRect.width, " ").concat(canvasRect.height)); // .attr('width', canvasRect.width)
+  // .attr('height', canvasRect.height).attr('viewBox', `0 0 ${canvasRect.width} ${canvasRect.height}`);
+  // create a group for our graph elements and append it to our svg
 
   var graph = svg.append('g').attr('width', graphWidth).attr('height', graphHeight).attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); // create scales
 
-  var x = d3.scaleTime().range([0, graphWidth]);
-  var y = d3.scaleTime().range([graphHeight, 0]); // create axes groups
+  var x = d3.scaleLinear().range([0, graphWidth]);
+  var y = d3.scaleLinear().range([graphHeight, 0]); // create axes groups
 
-  var xAxisGroup = graph.append('g').attr('class', 'x-axis').attr('transform', "translate(0, ".concat(graphHeight, ")"));
-  var yAxisGroup = graph.append('g').attr('class', 'y-axis'); // set up d3 line graph generator
+  var xAxisGroup = graph.append('g').attr('transform', "translate(0, ".concat(graphHeight, ")")).attr('class', 'performance-axes-x');
+  var yAxisGroup = graph.append('g').attr('color', '#eee').attr('class', 'performance-axes-y'); // set up d3 line graph generator
   // it will generate a line, based on our data points
   // it returns a long string that is then used for 'd' attribute of the svg path
 
@@ -4374,24 +4378,26 @@ var renderPerformanceChart = function renderPerformanceChart() {
       return new Date(d.date);
     })); // find the lowest and highest dates, return in array format
 
-    y.domain([0, d3.max(data, function (d) {
+    y.domain([d3.min(data, function (d) {
       return d.distance;
-    })]); // find the highest value
+    }) - 200, d3.max(data, function (d) {
+      return d.distance;
+    }) + 100]); // find the highest value
     // update path data
     // when we are using d3 line, we need to pass the data inside of another array
 
-    path.data([data]).attr('fill', 'none').attr('stroke', '#00bfa5').attr('stroke-width', 2).attr('d', line); // create circles for objects
+    path.data([data]).attr('d', line).attr('class', 'performance-line'); // create circles for objects
     // join data to the selection
 
     var circles = graph.selectAll('circle').data(data); // remove unwanted points
 
     circles.exit().remove(); // add new points
 
-    circles.enter().append('circle').attr('r', 4).attr('cx', function (d) {
+    circles.enter().append('circle').attr('cx', function (d) {
       return x(new Date(d.date));
     }).attr('cy', function (d) {
       return y(d.distance);
-    }).attr('fill', '#ccc'); // update current points
+    }).attr('class', 'performance-circles'); // update current points
 
     circles.attr('cx', function (d) {
       return x(new Date(d.date));
@@ -4399,16 +4405,22 @@ var renderPerformanceChart = function renderPerformanceChart() {
       return y(d.distance);
     }); // create axes
 
-    var xAxis = d3.axisBottom(x).ticks(3).tickFormat(d3.timeFormat('%b %d')); // create bottom axis based on our x scale
+    var xAxis = d3.axisBottom(x).ticks(data.length).tickFormat(d3.timeFormat('%d-%m')); // create bottom axis based on our x scale
 
     var yAxis = d3.axisLeft(y).ticks(4).tickFormat(function (d) {
-      return d + 'm';
+      return d;
     }); // generate all shapes for xAxis and yAxis and place them in axis groups
 
     xAxisGroup.call(xAxis);
-    yAxisGroup.call(yAxis); // rotate axes text
+    yAxisGroup.call(yAxis);
+    var test = performanceEls.performanceCanvas.querySelectorAll('g.performance-axes-y g.tick');
+    var testTranslates = Array.from(test).map(function (t) {
+      return t.getAttribute('transform');
+    });
+    console.log(test);
+    console.log(testTranslates); // rotate axes text
 
-    xAxisGroup.selectAll('text').attr('transform', 'rotate(-40)').attr('text-anchor', 'end');
+    xAxisGroup.selectAll('text').attr('transform', 'rotate(-30)').attr('text-anchor', 'end');
   };
 
   updatePerformanceChart(testData);

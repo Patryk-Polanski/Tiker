@@ -3,6 +3,21 @@ import { curveLinearClosed } from 'd3-shape';
 
 let performanceEls = {};
 
+const monthsArr = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
 const testData = [
   {
     date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
@@ -28,12 +43,14 @@ const testData = [
     date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
     distance: 600,
   },
+  {
+    date: 'Mon Mar 07 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+    distance: 500,
+  },
 ];
 
 const getElements = function (obj = {}) {
   obj.performanceCanvas = document.querySelector('.js-performance-canvas');
-  console.log(obj.performanceCanvas.getBoundingClientRect().width);
-  console.log(obj.performanceCanvas.getBoundingClientRect().height);
   return obj;
 };
 
@@ -48,7 +65,7 @@ export const renderPerformanceChart = function () {
   const canvasRect = performanceEls.performanceCanvas.getBoundingClientRect();
 
   // create room for axes
-  const margin = { top: 40, right: 20, bottom: 50, left: 100 };
+  const margin = { top: 40, right: 20, bottom: 50, left: 50 };
   const graphWidth = canvasRect.width - margin.left - margin.right;
   const graphHeight = canvasRect.height - margin.top - margin.bottom;
 
@@ -56,8 +73,9 @@ export const renderPerformanceChart = function () {
   const svg = d3
     .select('.js-performance-canvas')
     .append('svg')
-    .attr('width', canvasRect.width)
-    .attr('height', canvasRect.height);
+    .attr('viewBox', `0 0 ${canvasRect.width} ${canvasRect.height}`);
+  // .attr('width', canvasRect.width)
+  // .attr('height', canvasRect.height).attr('viewBox', `0 0 ${canvasRect.width} ${canvasRect.height}`);
 
   // create a group for our graph elements and append it to our svg
   const graph = svg
@@ -67,15 +85,18 @@ export const renderPerformanceChart = function () {
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
   // create scales
-  const x = d3.scaleTime().range([0, graphWidth]);
-  const y = d3.scaleTime().range([graphHeight, 0]);
+  const x = d3.scaleLinear().range([0, graphWidth]);
+  const y = d3.scaleLinear().range([graphHeight, 0]);
 
   // create axes groups
   const xAxisGroup = graph
     .append('g')
-    .attr('class', 'x-axis')
-    .attr('transform', `translate(0, ${graphHeight})`);
-  const yAxisGroup = graph.append('g').attr('class', 'y-axis');
+    .attr('transform', `translate(0, ${graphHeight})`)
+    .attr('class', 'performance-axes-x');
+  const yAxisGroup = graph
+    .append('g')
+    .attr('color', '#eee')
+    .attr('class', 'performance-axes-y');
 
   // set up d3 line graph generator
   // it will generate a line, based on our data points
@@ -119,16 +140,14 @@ export const renderPerformanceChart = function () {
 
     // set scale domains
     x.domain(d3.extent(data, d => new Date(d.date))); // find the lowest and highest dates, return in array format
-    y.domain([0, d3.max(data, d => d.distance)]); // find the highest value
+    y.domain([
+      d3.min(data, d => d.distance) - 200,
+      d3.max(data, d => d.distance) + 100,
+    ]); // find the highest value
 
     // update path data
     // when we are using d3 line, we need to pass the data inside of another array
-    path
-      .data([data])
-      .attr('fill', 'none')
-      .attr('stroke', '#00bfa5')
-      .attr('stroke-width', 2)
-      .attr('d', line);
+    path.data([data]).attr('d', line).attr('class', 'performance-line');
 
     // create circles for objects
     // join data to the selection
@@ -141,29 +160,41 @@ export const renderPerformanceChart = function () {
     circles
       .enter()
       .append('circle')
-      .attr('r', 4)
       .attr('cx', d => x(new Date(d.date)))
       .attr('cy', d => y(d.distance))
-      .attr('fill', '#ccc');
+      .attr('class', 'performance-circles');
 
     // update current points
     circles.attr('cx', d => x(new Date(d.date))).attr('cy', d => y(d.distance));
 
     // create axes
-    const xAxis = d3.axisBottom(x).ticks(3).tickFormat(d3.timeFormat('%b %d')); // create bottom axis based on our x scale
+    const xAxis = d3
+      .axisBottom(x)
+      .ticks(data.length)
+      .tickFormat(d3.timeFormat('%d-%m')); // create bottom axis based on our x scale
+
     const yAxis = d3
       .axisLeft(y)
       .ticks(4)
-      .tickFormat(d => d + 'm');
+      .tickFormat(d => d);
 
     // generate all shapes for xAxis and yAxis and place them in axis groups
     xAxisGroup.call(xAxis);
     yAxisGroup.call(yAxis);
 
+    const test = performanceEls.performanceCanvas.querySelectorAll(
+      'g.performance-axes-y g.tick'
+    );
+    const testTranslates = Array.from(test).map(t =>
+      t.getAttribute('transform')
+    );
+    console.log(test);
+    console.log(testTranslates);
+
     // rotate axes text
     xAxisGroup
       .selectAll('text')
-      .attr('transform', 'rotate(-40)')
+      .attr('transform', 'rotate(-30)')
       .attr('text-anchor', 'end');
   };
 

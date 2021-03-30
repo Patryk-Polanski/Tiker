@@ -242,6 +242,27 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.performance-axes-y,
+.performance-axes-x {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.performance-circles {
+  fill: #080808;
+  stroke: #762e88;
+  stroke-width: 2px;
+  r: 5px;
+}
+
+.performance-line {
+  stroke-width: 2px;
+  fill: none;
+  stroke: #762e88;
+}
+
 html {
   box-sizing: border-box;
   font-size: 65.5%;
