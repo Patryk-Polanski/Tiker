@@ -4447,13 +4447,14 @@ var renderPerformanceChart = function renderPerformanceChart() {
     }).attr('class', 'performance-circles'); // update current points
 
     circles.attr('cx', function (d) {
-      return x(new Date(d.date));
+      return x(d.position);
     }).attr('cy', function (d) {
       return y(d.distance);
-    }); // create axes
+    }); // circles.append('text').text('haha').attr('color', '#fff');
+    // create axes
 
     var xAxis = d3.axisBottom(x).ticks(data.length).tickFormat(function (d) {
-      return data[d - 1] ? data[d - 1].shortDate : '-';
+      return data[d - 1] ? data[d - 1].shortDate : '';
     }); // create bottom axis based on our x scale
 
     var yAxis = d3.axisLeft(y).ticks(4).tickFormat(function (d) {
@@ -4467,31 +4468,32 @@ var renderPerformanceChart = function renderPerformanceChart() {
     var yTicksTranslates = Array.from(yAxisTicks).map(function (t) {
       return t.getAttribute('transform');
     });
-    var yAxisTicksNum = yTicksTranslates.length;
     var horizontalLinesGroup = graph.append('g');
 
-    for (var index = 0; index < yAxisTicksNum; index++) {
-      var horizontalLine = horizontalLinesGroup.append('line').attr('class', 'performance-graph-line').attr('x1', 0).attr('x2', graphWidth).attr('y1', 0).attr('y2', 0).attr('transform', yTicksTranslates[index]);
+    for (var i = 0; i < yTicksTranslates.length; i++) {
+      var horizontalLine = horizontalLinesGroup.append('line').attr('class', 'performance-graph-line').attr('x1', 0).attr('x2', graphWidth).attr('y1', 0).attr('y2', 0).attr('transform', yTicksTranslates[i]);
     } // ZONE - create circle labels
+    // const points = Array.from(
+    //   performanceEls.performanceCanvas.querySelectorAll(
+    //     'circle.performance-circles'
+    //   )
+    // );
+    // const pointsCoords = points.map(point => [
+    //   point.getAttribute('cx'),
+    //   point.getAttribute('cy'),
+    // ]);
+    // console.log(pointsCoords);
+    // const labelsGroup = graph.append('g');
+    // for (let i = 0; i < pointsCoords.length; i++) {
+    //   const label = labelsGroup
+    //     .append('text')
+    //     .attr('class', 'performance-label')
+    //     .attr('color', '#fff');
+    // }
+    // select x axis text and translate down every odd text to make space
 
 
-    var points = Array.from(performanceEls.performanceCanvas.querySelectorAll('circle.performance-circles'));
-    var pointsCoords = points.map(function (point) {
-      return [point.getAttribute('cx'), point.getAttribute('cy')];
-    });
-    console.log(pointsCoords); // rotate axes text
-    // xAxisGroup.selectAll('text').attr('transform', 'translate(0, 5)');
-
-    xAxisGroup.selectAll('g.tick:nth-child(odd) text').attr('transform', 'translate(0, 18)').attr('class', 'performance-axis-odd'); // console.log(lastTick);
-    // lastTick.transform = `translate(-10, ${
-    //   lastTick.classList.contains('performance-axis-odd') ? 18 : 0
-    // })`;
-    // console.log(lastTick);
-    // if (lastTick.classList.contains('performance-axis-odd'))
-    //   console.log('asdljhasdlkasghdlkasgdklasgdklasgdklsagkl');
-    // xAxisGroup
-    //   .selectAll('g.tick:last-child text')
-    //   .attr('transform', 'translate(-14,0)');
+    xAxisGroup.selectAll('g.tick:nth-child(odd) text').attr('transform', 'translate(0, 18)').attr('class', 'performance-axis-odd');
   };
 
   updatePerformanceChart(testData);
@@ -4612,7 +4614,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56200" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58407" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

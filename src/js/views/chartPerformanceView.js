@@ -194,13 +194,15 @@ export const renderPerformanceChart = function () {
       .attr('class', 'performance-circles');
 
     // update current points
-    circles.attr('cx', d => x(new Date(d.date))).attr('cy', d => y(d.distance));
+    circles.attr('cx', d => x(d.position)).attr('cy', d => y(d.distance));
+
+    // circles.append('text').text('haha').attr('color', '#fff');
 
     // create axes
     const xAxis = d3
       .axisBottom(x)
       .ticks(data.length)
-      .tickFormat(d => (data[d - 1] ? data[d - 1].shortDate : '-')); // create bottom axis based on our x scale
+      .tickFormat(d => (data[d - 1] ? data[d - 1].shortDate : '')); // create bottom axis based on our x scale
 
     const yAxis = d3
       .axisLeft(y)
@@ -220,11 +222,9 @@ export const renderPerformanceChart = function () {
       t.getAttribute('transform')
     );
 
-    const yAxisTicksNum = yTicksTranslates.length;
-
     const horizontalLinesGroup = graph.append('g');
 
-    for (let index = 0; index < yAxisTicksNum; index++) {
+    for (let i = 0; i < yTicksTranslates.length; i++) {
       const horizontalLine = horizontalLinesGroup
         .append('line')
         .attr('class', 'performance-graph-line')
@@ -232,40 +232,35 @@ export const renderPerformanceChart = function () {
         .attr('x2', graphWidth)
         .attr('y1', 0)
         .attr('y2', 0)
-        .attr('transform', yTicksTranslates[index]);
+        .attr('transform', yTicksTranslates[i]);
     }
 
     // ZONE - create circle labels
-    const points = Array.from(
-      performanceEls.performanceCanvas.querySelectorAll(
-        'circle.performance-circles'
-      )
-    );
-    const pointsCoords = points.map(point => [
-      point.getAttribute('cx'),
-      point.getAttribute('cy'),
-    ]);
-    console.log(pointsCoords);
+    // const points = Array.from(
+    //   performanceEls.performanceCanvas.querySelectorAll(
+    //     'circle.performance-circles'
+    //   )
+    // );
+    // const pointsCoords = points.map(point => [
+    //   point.getAttribute('cx'),
+    //   point.getAttribute('cy'),
+    // ]);
+    // console.log(pointsCoords);
 
-    // rotate axes text
-    // xAxisGroup.selectAll('text').attr('transform', 'translate(0, 5)');
+    // const labelsGroup = graph.append('g');
+
+    // for (let i = 0; i < pointsCoords.length; i++) {
+    //   const label = labelsGroup
+    //     .append('text')
+    //     .attr('class', 'performance-label')
+    //     .attr('color', '#fff');
+    // }
+
+    // select x axis text and translate down every odd text to make space
     xAxisGroup
       .selectAll('g.tick:nth-child(odd) text')
       .attr('transform', 'translate(0, 18)')
       .attr('class', 'performance-axis-odd');
-
-    // console.log(lastTick);
-    // lastTick.transform = `translate(-10, ${
-    //   lastTick.classList.contains('performance-axis-odd') ? 18 : 0
-    // })`;
-    // console.log(lastTick);
-
-    // if (lastTick.classList.contains('performance-axis-odd'))
-    //   console.log('asdljhasdlkasghdlkasgdklasgdklasgdklsagkl');
-
-    // xAxisGroup
-    //   .selectAll('g.tick:last-child text')
-    //   .attr('transform', 'translate(-14,0)');
   };
 
   updatePerformanceChart(testData);
