@@ -268,6 +268,18 @@ input[type=number] {
   stroke-width: 1;
 }
 
+.performance-axis-odd {
+  transform: translate(0, 20px);
+}
+
+.performance-axis-last-odd {
+  transform: translate(-12px, 20px);
+}
+
+.performance-axis-last-even {
+  transform: translate(-12px, 0);
+}
+
 html {
   box-sizing: border-box;
   font-size: 65.5%;
@@ -897,7 +909,6 @@ body {
   position: relative;
 }
 .c-chart-performance__canvas {
-  margin-top: 10px;
   width: 100%;
   flex-grow: 1;
   display: flex;
