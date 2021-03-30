@@ -845,6 +845,8 @@ body {
   grid-row: 1/span 6;
   border-radius: 10px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 @media only screen and (max-width: 75em) {
   .c-chart-performance {
@@ -855,6 +857,7 @@ body {
   font-weight: 400;
   color: #aaaaaa;
   margin-top: 20px;
+  flex-grow: 0;
 }
 .c-chart-performance__button-wrapper {
   top: 0;
@@ -866,6 +869,12 @@ body {
   margin-top: 10px;
   margin-right: 10px;
   position: relative;
+}
+.c-chart-performance__canvas {
+  margin-top: 10px;
+  width: 100%;
+  background-color: pink;
+  flex-grow: 1;
 }
 
 .c-chart-worst-best {

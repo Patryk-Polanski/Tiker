@@ -5,6 +5,8 @@
   grid-row: 1 / span 6;
   border-radius: 10px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 
   @media only screen and (max-width: $bp-large) {
     grid-column: 1 / -1;
@@ -13,6 +15,7 @@
   &__heading {
     @include ts-heading-2;
     margin-top: 20px;
+    flex-grow: 0;
   }
 
   &__button-wrapper {
@@ -26,5 +29,12 @@
     margin-top: 10px;
     margin-right: 10px;
     position: relative;
+  }
+
+  &__canvas {
+    margin-top: 10px;
+    width: 100%;
+    background-color: pink;
+    flex-grow: 1;
   }
 }

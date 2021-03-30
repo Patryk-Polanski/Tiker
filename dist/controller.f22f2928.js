@@ -940,6 +940,67 @@ var checkAgainstLeaders = function checkAgainstLeaders(leaders, dataArr) {
 };
 
 exports.checkAgainstLeaders = checkAgainstLeaders;
+},{}],"js/views/chartPerformanceView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.renderPerformanceChart = exports.queryPerformanceEls = void 0;
+var performanceEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.performanceCanvas = document.querySelector('.js-performance-canvas');
+  console.log(obj.performanceCanvas.getBoundingClientRect().width);
+  console.log(obj.performanceCanvas.getBoundingClientRect().height);
+  return obj;
+};
+
+var queryPerformanceEls = function queryPerformanceEls() {
+  performanceEls = getElements();
+};
+
+exports.queryPerformanceEls = queryPerformanceEls;
+
+var renderPerformanceChart = function renderPerformanceChart() {
+  // ZONE - D3
+  var data = [];
+  var canvasRect = performanceEls.performanceCanvas.getBoundingClientRect(); // create room for axes
+
+  var margin = {
+    top: 40,
+    right: 20,
+    bottom: 50,
+    left: 100
+  };
+  var graphWidth = canvasRect.width - margin.left - margin.right;
+  var graphHeight = canvasRect.height - margin.top - margin.bottom; // create svg container, specify width & height, translate to create room for axes labels
+
+  var svg = d3.select('.js-performance-canvas').append('svg').attr('width', canvasRect.width).attr('height', canvasRect.height); // create a group for our graph elements and append it to our svg
+
+  var graph = svg.append('g').attr('width', graphWidth).attr('height', graphHeight).attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); // create scales
+
+  var x = d3.scaleTime().range([0, graphWidth]);
+  var y = d3.scaleTime().range([graphHeight, 0]); // create axes groups
+
+  var xAxisGroup = graph.append('g').attr('class', 'x-axis').attr('transform', "translate(0, ".concat(graphHeight, ")"));
+  var yAxisGroup = graph.append('g').attr('class', 'y-axis'); // set up d3 line graph generator
+  // it will generate a line, based on our data points
+  // it returns a long string that is then used for 'd' attribute of the svg path
+
+  var line = d3.line().x(function (d) {
+    return x(new Date(d.date));
+  }).y(function (d) {
+    return y(d.distance);
+  }); // create line path element
+
+  var path = graph.append('path'); // create dotted line group and append to graph
+
+  var dottedLines = graph.append('g').attr('class', 'lines').style('opacity', 0); // create x dotted line and append to dotted line group
+};
+
+exports.renderPerformanceChart = renderPerformanceChart;
 },{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
@@ -958,6 +1019,8 @@ var _chartOverallView = require("./views/chartOverallView");
 var _tableMonthlyModel = require("./models/tableMonthlyModel");
 
 var _tableProfitableModel = require("./models/tableProfitableModel");
+
+var _chartPerformanceView = require("./views/chartPerformanceView");
 
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
@@ -993,11 +1056,16 @@ var controlOverallRender = function controlOverallRender() {
   (0, _chartOverallView.renderStreaks)((0, _dataModel.passData)('streaks'));
 };
 
+var controlPerformanceRender = function controlPerformanceRender() {
+  (0, _chartPerformanceView.renderPerformanceChart)();
+};
+
 var queryDOM = function queryDOM() {
   (0, _calculatorsView.queryCalcEls)();
   (0, _tableMonthlyView.queryMonthlyEls)();
   (0, _tableProfitableView.queryProfitableEls)();
   (0, _chartOverallView.queryOverallEls)();
+  (0, _chartPerformanceView.queryPerformanceEls)();
 }; // ZONE - event listeners
 
 
@@ -1007,11 +1075,12 @@ window.addEventListener('DOMContentLoaded', function (e) {
   controlMonthlyRender();
   controlProfitableRender();
   controlOverallRender();
+  controlPerformanceRender();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1039,7 +1108,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58423" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49651" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

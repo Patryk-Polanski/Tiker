@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="img/fav-icon.png">
     <link rel="stylesheet" href="scss/style.scss">
-    <script src="js/controller.js"></script>
+    <script src="https://d3js.org/d3.v6.js" defer></script>
+    <script src="js/controller.js" defer></script>
     <title>Tiker</title>
 </head>
 
@@ -254,6 +255,7 @@
                                         class="c-chart-performance__button btn btn--tertiary btn--tertiary--active">day</button>
                                     <button class="c-chart-performance__button btn btn--tertiary">month</button>
                                 </div>
+                                <div class="c-chart-performance__canvas js-performance-canvas"></div>
                             </div>
                             <div class="c-pie-streak js-pie-streak">
                                 <div class="c-pie-streak__total-wrapper">

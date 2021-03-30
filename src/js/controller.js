@@ -23,6 +23,10 @@ import {
 import { queryOverallEls, renderStreaks } from './views/chartOverallView';
 import { computeMonthlyData } from './models/tableMonthlyModel';
 import { checkAgainstLeaders } from './models/tableProfitableModel';
+import {
+  queryPerformanceEls,
+  renderPerformanceChart,
+} from './views/chartPerformanceView';
 
 // ZONE - controllers
 
@@ -61,11 +65,16 @@ const controlOverallRender = function () {
   renderStreaks(passData('streaks'));
 };
 
+const controlPerformanceRender = function () {
+  renderPerformanceChart();
+};
+
 const queryDOM = function () {
   queryCalcEls();
   queryMonthlyEls();
   queryProfitableEls();
   queryOverallEls();
+  queryPerformanceEls();
 };
 
 // ZONE - event listeners
@@ -76,6 +85,7 @@ window.addEventListener('DOMContentLoaded', e => {
   controlMonthlyRender();
   controlProfitableRender();
   controlOverallRender();
+  controlPerformanceRender();
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);
