@@ -4613,6 +4613,47 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.renderWorstBestChart = exports.queryBestWorstEls = void 0;
 var bestWorstEls = {};
+var testData = [{
+  id: '8gW2a5Q',
+  ticker: 'ZM',
+  result: 240,
+  date: '3/4/21'
+}, {
+  id: 'lK2G98Q',
+  ticker: 'MARA',
+  result: 173,
+  date: '3/5/21'
+}, {
+  id: 'K14Ji98',
+  ticker: 'BMBL',
+  result: 166,
+  date: '13/4/21'
+}, {
+  id: 'k98Ck9s',
+  ticker: 'X',
+  result: 130,
+  date: '26/3/21'
+}, {
+  id: '92Kji63',
+  ticker: 'SNAP',
+  result: 122,
+  date: '1/3/21'
+}, {
+  id: '8gW2a5Q',
+  ticker: 'GME',
+  result: 111,
+  date: '2/4/21'
+}, {
+  id: 'Sd8tr32',
+  ticker: 'MSFT',
+  result: 103,
+  date: '5/6/21'
+}, {
+  id: 'pa52Qs4',
+  ticker: 'ROKU',
+  result: 94,
+  date: '16/7/21'
+}];
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -4626,7 +4667,34 @@ var queryBestWorstEls = function queryBestWorstEls() {
 
 exports.queryBestWorstEls = queryBestWorstEls;
 
-var renderWorstBestChart = function renderWorstBestChart() {};
+var renderWorstBestChart = function renderWorstBestChart() {
+  // ZONE - D3
+  var canvasRect = bestWorstEls.bestWorstCanvas.getBoundingClientRect(); // create room for axes
+
+  var margin = {
+    top: 25,
+    right: 20,
+    bottom: 50,
+    left: 50
+  };
+  var graphWidth = canvasRect.width - margin.left - margin.right;
+  var graphHeight = canvasRect.height - margin.top - margin.bottom; // create svg container, specify width & height, translate to create room for axes labels
+
+  var svg = d3.select('.js-performance-canvas').append('svg').attr('class', 'worst-best-canvas').attr('viewBox', "0 0 ".concat(canvasRect.width, " ").concat(canvasRect.height)); // create graph for the elements and append it to our svg
+
+  var graph = svg.append('g').attr('width', graphWidth).attr('height', graphHeight).attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); // create scales
+
+  var y = d3.scaleLinear().range([graphHeight, 0]);
+  var x = d3.scaleBand().range([0, 500]).paddingInner(0.2).paddingOuter(0.2); // create a group for the x and y axis
+
+  var xAxisGroup = graph.append('g').attr('transform', "translate(0, ".concat(graphHeight, ")"));
+  var yAxisGroup = graph.append('g'); // create and call the axes
+
+  var xAxis = d3.axisBottom(x);
+  var yAxis = d3.axisLeft(y).ticks(4).tickFormat(function (d) {
+    return d;
+  });
+};
 
 exports.renderWorstBestChart = renderWorstBestChart;
 },{}],"js/controller.js":[function(require,module,exports) {
