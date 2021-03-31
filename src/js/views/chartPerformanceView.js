@@ -113,6 +113,8 @@ const testData = [
 
 const getElements = function (obj = {}) {
   obj.performanceCanvas = document.querySelector('.js-performance-canvas');
+  obj.performanceDayBtn = document.querySelector('.js-performance-btn-day');
+  obj.performanceMonthBtn = document.querySelector('.js-performance-btn-month');
   return obj;
 };
 
@@ -120,7 +122,29 @@ export const queryPerformanceEls = function () {
   performanceEls = getElements();
 };
 
-export const renderPerformanceChart = function () {
+export const addPerformanceRenderHandler = function (handler) {
+  [
+    performanceEls.performanceDayBtn,
+    performanceEls.performanceMonthBtn,
+  ].forEach(btn =>
+    btn.addEventListener('click', e => {
+      btn.parentElement
+        .querySelectorAll('button')
+        .forEach(b => b.classList.remove('btn--tertiary--active'));
+      e.target.classList.add('btn--tertiary--active');
+      handler(e.target.getAttribute('data-type'));
+    })
+  );
+};
+
+export const addMonthlyRenderHandler = function (handler) {
+  performanceEls.performanceMonthBtn.addEventListener('click', e => {
+    console.log(e.target.getAttribute('data-type'));
+    handler;
+  });
+};
+
+export const renderPerformanceChart = function (type) {
   // ZONE - D3
   performanceEls.performanceCanvas.innerHTML = '';
 

@@ -252,8 +252,11 @@
                                 <h2 class="c-chart-performance__heading">Daily performance</h2>
                                 <div class="c-chart-performance__button-wrapper">
                                     <button
-                                        class="c-chart-performance__button btn btn--tertiary btn--tertiary--active">day</button>
-                                    <button class="c-chart-performance__button btn btn--tertiary">month</button>
+                                        class="c-chart-performance__button btn btn--tertiary btn--tertiary--active js-performance-btn-day"
+                                        data-type='day'>day</button>
+                                    <button
+                                        class="c-chart-performance__button btn btn--tertiary js-performance-btn-month "
+                                        data-type='month'>month</button>
                                 </div>
                                 <div class="c-chart-performance__canvas js-performance-canvas"></div>
                             </div>

@@ -4283,7 +4283,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderPerformanceChart = exports.queryPerformanceEls = void 0;
+exports.renderPerformanceChart = exports.addMonthlyRenderHandler = exports.addPerformanceRenderHandler = exports.queryPerformanceEls = void 0;
 
 var _d3Path = require("d3-path");
 
@@ -4385,6 +4385,8 @@ var testData = [{
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.performanceCanvas = document.querySelector('.js-performance-canvas');
+  obj.performanceDayBtn = document.querySelector('.js-performance-btn-day');
+  obj.performanceMonthBtn = document.querySelector('.js-performance-btn-month');
   return obj;
 };
 
@@ -4394,7 +4396,30 @@ var queryPerformanceEls = function queryPerformanceEls() {
 
 exports.queryPerformanceEls = queryPerformanceEls;
 
-var renderPerformanceChart = function renderPerformanceChart() {
+var addPerformanceRenderHandler = function addPerformanceRenderHandler(handler) {
+  [performanceEls.performanceDayBtn, performanceEls.performanceMonthBtn].forEach(function (btn) {
+    return btn.addEventListener('click', function (e) {
+      btn.parentElement.querySelectorAll('button').forEach(function (b) {
+        return b.classList.remove('btn--tertiary--active');
+      });
+      e.target.classList.add('btn--tertiary--active');
+      handler(e.target.getAttribute('data-type'));
+    });
+  });
+};
+
+exports.addPerformanceRenderHandler = addPerformanceRenderHandler;
+
+var addMonthlyRenderHandler = function addMonthlyRenderHandler(handler) {
+  performanceEls.performanceMonthBtn.addEventListener('click', function (e) {
+    console.log(e.target.getAttribute('data-type'));
+    handler;
+  });
+};
+
+exports.addMonthlyRenderHandler = addMonthlyRenderHandler;
+
+var renderPerformanceChart = function renderPerformanceChart(type) {
   // ZONE - D3
   performanceEls.performanceCanvas.innerHTML = '';
   var canvasRect = performanceEls.performanceCanvas.getBoundingClientRect(); // create room for axes
@@ -4565,7 +4590,10 @@ var controlOverallRender = function controlOverallRender() {
 };
 
 var controlPerformanceRender = function controlPerformanceRender() {
-  (0, _chartPerformanceView.renderPerformanceChart)();
+  var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'day';
+  (0, _chartPerformanceView.renderPerformanceChart)(type);
+  console.log('THIS IS THE TYPE');
+  console.log(type);
 };
 
 var queryDOM = function queryDOM() {
@@ -4587,6 +4615,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
+  (0, _chartPerformanceView.addPerformanceRenderHandler)(controlPerformanceRender);
 });
 var resizeTimer;
 window.addEventListener('resize', function (e) {

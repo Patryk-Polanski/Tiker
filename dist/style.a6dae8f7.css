@@ -264,7 +264,7 @@ input[type=number] {
 }
 
 .performance-graph-line {
-  stroke: #29242a;
+  stroke: #201c20;
   stroke-width: 1;
 }
 
@@ -570,7 +570,7 @@ body {
   line-height: 22px;
 }
 .s-monthly__table th ~ th {
-  border-right: 1px solid #29242a;
+  border-right: 1px solid #201c20;
 }
 .s-monthly__table th:first-child {
   padding-left: 0;
@@ -583,7 +583,7 @@ body {
   color: #189fae;
 }
 .s-monthly__table td {
-  border-right: 1px solid #29242a;
+  border-right: 1px solid #201c20;
 }
 .s-monthly__table td:last-of-type,
 .s-monthly__table th:last-of-type {
@@ -658,14 +658,30 @@ body {
 .btn--primary {
   background-color: #370943;
 }
+.btn--primary:hover {
+  background-color: #762e88;
+  outline: 0;
+}
 .btn--secondary {
-  background-color: #29242a;
+  background-color: #201c20;
+}
+.btn--secondary:hover {
+  background-color: #762e88;
 }
 .btn--tertiary {
   background-color: #0d0d0d;
   width: 80px;
   height: 42px;
   padding: 2px;
+  transition: background-color 0.1s ease-in;
+}
+.btn--tertiary:focus {
+  background-color: #201c20;
+  outline: 0;
+}
+.btn--tertiary:hover {
+  background-color: #201c20;
+  outline: 0;
 }
 .btn--tertiary::before {
   content: "";
@@ -678,9 +694,10 @@ body {
   background-color: #762e88;
   border-radius: 5px;
   z-index: -1;
+  transition: transform 0.2s ease-in;
 }
 .btn--tertiary--active::before {
-  left: -6px;
+  transform: translateX(-6px);
   opacity: 1;
 }
 .btn--nav {
@@ -690,8 +707,13 @@ body {
   height: 75px;
   width: 75px;
 }
+.btn--nav:focus {
+  background-color: #201c20;
+  outline: 0;
+}
 .btn--nav:hover {
-  background-color: rgba(170, 170, 170, 0.15);
+  background-color: #201c20;
+  outline: 0;
 }
 .btn--form-icon {
   border-radius: 0px;
@@ -717,7 +739,7 @@ body {
   height: 28px;
   width: 28px;
   padding: 2px;
-  background-color: #29242a;
+  background-color: #201c20;
   position: relative;
 }
 .btn--pagination::before {
@@ -967,7 +989,7 @@ body {
   border-bottom: 2px solid #370943;
 }
 .c-input-text::placeholder {
-  color: #29242a;
+  color: #201c20;
   opacity: 1;
 }
 .c-input-text--no-border {
@@ -1378,7 +1400,7 @@ body {
   border-bottom: 1px solid #aaaaaa;
 }
 .c-table-profitable__table th ~ th {
-  border-right: 1px solid #29242a;
+  border-right: 1px solid #201c20;
 }
 .c-table-profitable__table th:first-child {
   padding-left: 0;
@@ -1391,7 +1413,7 @@ body {
   color: #189fae;
 }
 .c-table-profitable__table td {
-  border-right: 1px solid #29242a;
+  border-right: 1px solid #201c20;
 }
 .c-table-profitable__table tr:first-of-type {
   line-height: 22px;

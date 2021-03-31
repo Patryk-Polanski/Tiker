@@ -26,6 +26,7 @@ import { checkAgainstLeaders } from './models/tableProfitableModel';
 import {
   queryPerformanceEls,
   renderPerformanceChart,
+  addPerformanceRenderHandler,
 } from './views/chartPerformanceView';
 
 // ZONE - controllers
@@ -65,8 +66,10 @@ const controlOverallRender = function () {
   renderStreaks(passData('streaks'));
 };
 
-const controlPerformanceRender = function () {
-  renderPerformanceChart();
+const controlPerformanceRender = function (type = 'day') {
+  renderPerformanceChart(type);
+  console.log('THIS IS THE TYPE');
+  console.log(type);
 };
 
 const queryDOM = function () {
@@ -89,6 +92,7 @@ window.addEventListener('DOMContentLoaded', e => {
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);
+  addPerformanceRenderHandler(controlPerformanceRender);
 });
 
 let resizeTimer;
