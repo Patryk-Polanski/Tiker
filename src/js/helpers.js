@@ -19,7 +19,7 @@ export const filterNonStrings = arr => {
   return filtered;
 };
 
-export const kFormatter = function (num, decimal) {
+export const kFormatter = function (num, decimal = 999) {
   if (!num) return;
   return Math.abs(num) > decimal
     ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k'

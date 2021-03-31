@@ -276,7 +276,8 @@ var filterNonStrings = function filterNonStrings(arr) {
 
 exports.filterNonStrings = filterNonStrings;
 
-var kFormatter = function kFormatter(num, decimal) {
+var kFormatter = function kFormatter(num) {
+  var decimal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 999;
   if (!num) return;
   return Math.abs(num) > decimal ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k' : Math.sign(num) * Math.abs(num);
 };
@@ -4612,8 +4613,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderWorstBestChart = exports.queryBestWorstEls = void 0;
+
+var _helpers = require("../helpers");
+
 var bestWorstEls = {};
-var testData = [{
+var data = [{
   id: '8gW2a5Q',
   ticker: 'ZM',
   result: 240,
@@ -4678,26 +4682,70 @@ var renderWorstBestChart = function renderWorstBestChart() {
     left: 50
   };
   var graphWidth = canvasRect.width - margin.left - margin.right;
-  var graphHeight = canvasRect.height - margin.top - margin.bottom; // create svg container, specify width & height, translate to create room for axes labels
+  var graphHeight = canvasRect.height - margin.top - margin.bottom;
+  console.log('THIS IS THE GRAPH WIDTH');
+  console.log(graphWidth); // create svg container, specify width & height, translate to create room for axes labels
 
-  var svg = d3.select('.js-performance-canvas').append('svg').attr('class', 'worst-best-canvas').attr('viewBox', "0 0 ".concat(canvasRect.width, " ").concat(canvasRect.height)); // create graph for the elements and append it to our svg
+  var svg = d3.select('.js-worst-best-canvas').append('svg').attr('class', 'worst-best-canvas').attr('viewBox', "0 0 ".concat(canvasRect.width, " ").concat(canvasRect.height)); // create graph for the elements and append it to our svg
 
-  var graph = svg.append('g').attr('width', graphWidth).attr('height', graphHeight).attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); // create scales
+  var graph = svg.append('g').attr('width', '600').attr('height', graphHeight).attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); // create scales
 
   var y = d3.scaleLinear().range([graphHeight, 0]);
-  var x = d3.scaleBand().range([0, 500]).paddingInner(0.2).paddingOuter(0.2); // create a group for the x and y axis
+  var x = d3.scaleBand().range([0, graphWidth]).paddingInner(0.5).paddingOuter(0.5); // create a group for the x and y axis
 
-  var xAxisGroup = graph.append('g').attr('transform', "translate(0, ".concat(graphHeight, ")"));
-  var yAxisGroup = graph.append('g'); // create and call the axes
+  var xAxisGroup = graph.append('g').attr('transform', "translate(0, ".concat(graphHeight, ")")).attr('class', 'worst-best-axis-x');
+  var yAxisGroup = graph.append('g').attr('class', 'worst-best-axis-y'); // create and call the axes
 
-  var xAxis = d3.axisBottom(x);
-  var yAxis = d3.axisLeft(y).ticks(4).tickFormat(function (d) {
+  var xAxis = d3.axisBottom(x).tickFormat(function (d) {
     return d;
   });
+  var yAxis = d3.axisLeft(y).ticks(6).tickFormat(function (d) {
+    return (0, _helpers.kFormatter)(d, 9999);
+  }); // ZONE - update function
+
+  var updateWorstBestChart = function updateWorstBestChart(data) {
+    // sort the data based on result
+    data.sort(function (a, b) {
+      return b.result - a.result;
+    }); // create responsive gap for the chart
+
+    var maxMinVals = d3.extent(data, function (d) {
+      return d.result;
+    });
+    var gap = Math.round((maxMinVals[1] - maxMinVals[0]) / 6); // set scale domains
+
+    y.domain([0, d3.max(data, function (d) {
+      return d.result;
+    }) + gap]);
+    x.domain(data.map(function (item) {
+      return item.ticker;
+    })); // join data to rectangles inside our graph group
+
+    var rects = graph.selectAll('rect').data(data); // remove any unwanted shapes
+
+    rects.exit().remove(); // update already existing rectangles in DOM
+
+    rects.attr('width', x.bandwidth).attr('y', function (d) {
+      return y(total);
+    }).attr('fill', 'orange'); // update and append virtual elements
+
+    rects.enter().append('rect').attr('width', x.bandwidth).attr('height', 0).attr('y', graphHeight).attr('x', function (d) {
+      return x(d.ticker);
+    }).attr('fill', 'orange').attr('height', function (d) {
+      return graphHeight - y(d.result);
+    }).attr('y', function (d) {
+      return y(d.result);
+    }).attr('class', 'worst-best-bars'); // apply axes to axes groups
+
+    xAxisGroup.call(xAxis);
+    yAxisGroup.call(yAxis);
+  };
+
+  updateWorstBestChart(data);
 };
 
 exports.renderWorstBestChart = renderWorstBestChart;
-},{}],"js/controller.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _calculatorsView = require("./views/calculatorsView");

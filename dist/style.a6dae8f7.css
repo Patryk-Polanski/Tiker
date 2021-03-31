@@ -242,8 +242,14 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.worst-best-canvas {
+  width: 100%;
+}
+
 .performance-axis-y,
-.performance-axis-x {
+.performance-axis-x,
+.worst-best-axis-x,
+.worst-best-axis-y {
   font-family: "Roboto", sans-serif;
   color: #aaaaaa;
   font-weight: 400;
@@ -286,6 +292,12 @@ input[type=number] {
   font-weight: 400;
   font-size: 16px;
   fill: #c4456f;
+}
+
+.worst-best-bars {
+  stroke: #762e88;
+  stroke-width: 2px;
+  fill: rgba(55, 9, 67, 0.2);
 }
 
 html {

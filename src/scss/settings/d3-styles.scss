@@ -6,8 +6,14 @@
   //   max-height: 50vh;
 }
 
+.worst-best-canvas {
+  width: 100%;
+}
+
 .performance-axis-y,
-.performance-axis-x {
+.performance-axis-x,
+.worst-best-axis-x,
+.worst-best-axis-y {
   @include ts-numerical;
   font-size: 16px;
 }
@@ -44,4 +50,10 @@
   @include ts-numerical;
   font-size: 16px;
   fill: $red-light;
+}
+
+.worst-best-bars {
+  stroke: $purple-light;
+  stroke-width: 2px;
+  fill: rgba($purple-medium, 0.2);
 }

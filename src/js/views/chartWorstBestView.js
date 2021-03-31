@@ -1,6 +1,8 @@
+import { kFormatter } from '../helpers';
+
 let bestWorstEls = {};
 
-const testData = [
+const data = [
   {
     id: '8gW2a5Q',
     ticker: 'ZM',
@@ -70,9 +72,12 @@ export const renderWorstBestChart = function () {
   const graphWidth = canvasRect.width - margin.left - margin.right;
   const graphHeight = canvasRect.height - margin.top - margin.bottom;
 
+  console.log('THIS IS THE GRAPH WIDTH');
+  console.log(graphWidth);
+
   // create svg container, specify width & height, translate to create room for axes labels
   const svg = d3
-    .select('.js-performance-canvas')
+    .select('.js-worst-best-canvas')
     .append('svg')
     .attr('class', 'worst-best-canvas')
     .attr('viewBox', `0 0 ${canvasRect.width} ${canvasRect.height}`);
@@ -80,24 +85,73 @@ export const renderWorstBestChart = function () {
   // create graph for the elements and append it to our svg
   const graph = svg
     .append('g')
-    .attr('width', graphWidth)
+    .attr('width', '600')
     .attr('height', graphHeight)
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
   // create scales
   const y = d3.scaleLinear().range([graphHeight, 0]);
-  const x = d3.scaleBand().range([0, 500]).paddingInner(0.2).paddingOuter(0.2);
+  const x = d3
+    .scaleBand()
+    .range([0, graphWidth])
+    .paddingInner(0.5)
+    .paddingOuter(0.5);
 
   // create a group for the x and y axis
   const xAxisGroup = graph
     .append('g')
-    .attr('transform', `translate(0, ${graphHeight})`);
-  const yAxisGroup = graph.append('g');
+    .attr('transform', `translate(0, ${graphHeight})`)
+    .attr('class', 'worst-best-axis-x');
+  const yAxisGroup = graph.append('g').attr('class', 'worst-best-axis-y');
 
   // create and call the axes
-  const xAxis = d3.axisBottom(x);
+  const xAxis = d3.axisBottom(x).tickFormat(d => d);
   const yAxis = d3
     .axisLeft(y)
-    .ticks(4)
-    .tickFormat(d => d);
+    .ticks(6)
+    .tickFormat(d => kFormatter(d, 9999));
+
+  // ZONE - update function
+  const updateWorstBestChart = function (data) {
+    // sort the data based on result
+    data.sort((a, b) => b.result - a.result);
+
+    // create responsive gap for the chart
+    const maxMinVals = d3.extent(data, d => d.result);
+    const gap = Math.round((maxMinVals[1] - maxMinVals[0]) / 6);
+
+    // set scale domains
+    y.domain([0, d3.max(data, d => d.result) + gap]);
+    x.domain(data.map(item => item.ticker));
+
+    // join data to rectangles inside our graph group
+    const rects = graph.selectAll('rect').data(data);
+
+    // remove any unwanted shapes
+    rects.exit().remove();
+
+    // update already existing rectangles in DOM
+    rects
+      .attr('width', x.bandwidth)
+      .attr('y', d => y(total))
+      .attr('fill', 'orange');
+
+    // update and append virtual elements
+    rects
+      .enter()
+      .append('rect')
+      .attr('width', x.bandwidth)
+      .attr('height', 0)
+      .attr('y', graphHeight)
+      .attr('x', d => x(d.ticker))
+      .attr('fill', 'orange')
+      .attr('height', d => graphHeight - y(d.result))
+      .attr('y', d => y(d.result))
+      .attr('class', 'worst-best-bars');
+
+    // apply axes to axes groups
+    xAxisGroup.call(xAxis);
+    yAxisGroup.call(yAxis);
+  };
+  updateWorstBestChart(data);
 };

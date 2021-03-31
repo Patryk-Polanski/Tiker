@@ -165,7 +165,8 @@ var filterNonStrings = function filterNonStrings(arr) {
 
 exports.filterNonStrings = filterNonStrings;
 
-var kFormatter = function kFormatter(num, decimal) {
+var kFormatter = function kFormatter(num) {
+  var decimal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 999;
   if (!num) return;
   return Math.abs(num) > decimal ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k' : Math.sign(num) * Math.abs(num);
 };
