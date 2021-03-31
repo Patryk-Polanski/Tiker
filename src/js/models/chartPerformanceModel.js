@@ -131,6 +131,6 @@ const monthlyData = [
 ];
 
 export const formatPerformanceData = function (type) {
-  if (type === 'day') return dailyData;
-  if (type === 'month') return monthlyData;
+  if (type === 'day') return ['Daily', dailyData];
+  if (type === 'month') return ['Monthly', monthlyData];
 };

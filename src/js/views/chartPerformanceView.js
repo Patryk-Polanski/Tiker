@@ -8,6 +8,7 @@ const getElements = function (obj = {}) {
   obj.performanceCanvas = document.querySelector('.js-performance-canvas');
   obj.performanceDayBtn = document.querySelector('.js-performance-btn-day');
   obj.performanceMonthBtn = document.querySelector('.js-performance-btn-month');
+  obj.performanceHeading = document.querySelector('.js-performance-heading');
   return obj;
 };
 
@@ -37,14 +38,24 @@ export const addMonthlyRenderHandler = function (handler) {
   });
 };
 
+const updatePerformanceHeading = function (type) {
+  performanceEls.performanceHeading.querySelector('span').textContent = type;
+};
+
+let chartData;
+
 export const renderPerformanceChart = function (testData) {
   // ZONE - D3
   performanceEls.performanceCanvas.innerHTML = '';
 
+  const [type, data] = testData;
+
+  updatePerformanceHeading(type);
+
   const canvasRect = performanceEls.performanceCanvas.getBoundingClientRect();
 
   // create room for axes
-  const margin = { top: 40, right: 20, bottom: 50, left: 50 };
+  const margin = { top: 25, right: 20, bottom: 50, left: 50 };
   const graphWidth = canvasRect.width - margin.left - margin.right;
   const graphHeight = canvasRect.height - margin.top - margin.bottom;
 
@@ -89,9 +100,15 @@ export const renderPerformanceChart = function (testData) {
   const path = graph.append('path');
 
   // ZONE - update function
-  const updatePerformanceChart = function (data) {
+  const updatePerformanceChart = function (data = chartData) {
+    chartData = data;
+
     // sort the data based on date object
     data.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // create responsive gaps for the chart
+    const maxMinVals = d3.extent(data, d => d.total);
+    const gap = Math.round((maxMinVals[1] - maxMinVals[0]) / 6);
 
     // set scale domains
     // x.domain(d3.extent(data, d => d.position)); // find the lowest and highest dates, return in array format
@@ -100,8 +117,8 @@ export const renderPerformanceChart = function (testData) {
       d3.max(data, d => d.position) + 0.5,
     ]);
     y.domain([
-      d3.min(data, d => d.total) - 250,
-      d3.max(data, d => d.total) + 100,
+      d3.min(data, d => d.total) - gap,
+      d3.max(data, d => d.total) + gap,
     ]); // find the highest value
 
     // update path data
@@ -206,5 +223,5 @@ export const renderPerformanceChart = function (testData) {
       .attr('class', 'performance-axis-odd');
   };
 
-  updatePerformanceChart(testData);
+  updatePerformanceChart(data);
 };

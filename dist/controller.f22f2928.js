@@ -4298,6 +4298,18 @@ var _d3Shape = require("d3-shape");
 
 var _helpers = require("../helpers");
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 var performanceEls = {};
 
 var getElements = function getElements() {
@@ -4305,6 +4317,7 @@ var getElements = function getElements() {
   obj.performanceCanvas = document.querySelector('.js-performance-canvas');
   obj.performanceDayBtn = document.querySelector('.js-performance-btn-day');
   obj.performanceMonthBtn = document.querySelector('.js-performance-btn-month');
+  obj.performanceHeading = document.querySelector('.js-performance-heading');
   return obj;
 };
 
@@ -4337,13 +4350,25 @@ var addMonthlyRenderHandler = function addMonthlyRenderHandler(handler) {
 
 exports.addMonthlyRenderHandler = addMonthlyRenderHandler;
 
+var updatePerformanceHeading = function updatePerformanceHeading(type) {
+  performanceEls.performanceHeading.querySelector('span').textContent = type;
+};
+
+var chartData;
+
 var renderPerformanceChart = function renderPerformanceChart(testData) {
   // ZONE - D3
   performanceEls.performanceCanvas.innerHTML = '';
+
+  var _testData = _slicedToArray(testData, 2),
+      type = _testData[0],
+      data = _testData[1];
+
+  updatePerformanceHeading(type);
   var canvasRect = performanceEls.performanceCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
-    top: 40,
+    top: 25,
     right: 20,
     bottom: 50,
     left: 50
@@ -4371,11 +4396,18 @@ var renderPerformanceChart = function renderPerformanceChart(testData) {
 
   var path = graph.append('path'); // ZONE - update function
 
-  var updatePerformanceChart = function updatePerformanceChart(data) {
-    // sort the data based on date object
+  var updatePerformanceChart = function updatePerformanceChart() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : chartData;
+    chartData = data; // sort the data based on date object
+
     data.sort(function (a, b) {
       return new Date(a.date) - new Date(b.date);
-    }); // set scale domains
+    }); // create responsive gaps for the chart
+
+    var maxMinVals = d3.extent(data, function (d) {
+      return d.total;
+    });
+    var gap = Math.round((maxMinVals[1] - maxMinVals[0]) / 6); // set scale domains
     // x.domain(d3.extent(data, d => d.position)); // find the lowest and highest dates, return in array format
 
     x.domain([d3.min(data, function (d) {
@@ -4385,9 +4417,9 @@ var renderPerformanceChart = function renderPerformanceChart(testData) {
     }) + 0.5]);
     y.domain([d3.min(data, function (d) {
       return d.total;
-    }) - 250, d3.max(data, function (d) {
+    }) - gap, d3.max(data, function (d) {
       return d.total;
-    }) + 100]); // find the highest value
+    }) + gap]); // find the highest value
     // update path data
     // when we are using d3 line, we need to pass the data inside of another array
 
@@ -4439,15 +4471,15 @@ var renderPerformanceChart = function renderPerformanceChart(testData) {
     console.log(pointsCoords);
     var labelsGroup = graph.append('g');
 
-    for (var _i = 0; _i < pointsCoords.length; _i++) {
-      var label = labelsGroup.append('text').text((0, _helpers.kFormatter)(data[_i].total, 9999)).attr('class', "".concat(data[_i].result >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i][0] - 20, ", ").concat(pointsCoords[_i][1] - (data[_i].result >= 0 ? 15 : -25), ")"));
+    for (var _i2 = 0; _i2 < pointsCoords.length; _i2++) {
+      var label = labelsGroup.append('text').text((0, _helpers.kFormatter)(data[_i2].total, 9999)).attr('class', "".concat(data[_i2].result >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i2][0] - 20, ", ").concat(pointsCoords[_i2][1] - (data[_i2].result >= 0 ? 15 : -25), ")"));
     } // select x axis text and translate down every odd text to make space
 
 
     xAxisGroup.selectAll('g.tick:nth-child(odd) text').attr('transform', 'translate(0, 18)').attr('class', 'performance-axis-odd');
   };
 
-  updatePerformanceChart(testData);
+  updatePerformanceChart(data);
 };
 
 exports.renderPerformanceChart = renderPerformanceChart;
@@ -4570,8 +4602,8 @@ var monthlyData = [{
 }];
 
 var formatPerformanceData = function formatPerformanceData(type) {
-  if (type === 'day') return dailyData;
-  if (type === 'month') return monthlyData;
+  if (type === 'day') return ['Daily', dailyData];
+  if (type === 'month') return ['Monthly', monthlyData];
 };
 
 exports.formatPerformanceData = formatPerformanceData;
