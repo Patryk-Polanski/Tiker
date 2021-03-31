@@ -4298,17 +4298,17 @@ var _d3Shape = require("d3-shape");
 
 var _helpers = require("../helpers");
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var performanceEls = {};
 
@@ -4343,7 +4343,6 @@ exports.addPerformanceRenderHandler = addPerformanceRenderHandler;
 
 var addMonthlyRenderHandler = function addMonthlyRenderHandler(handler) {
   performanceEls.performanceMonthBtn.addEventListener('click', function (e) {
-    console.log(e.target.getAttribute('data-type'));
     handler;
   });
 };
@@ -4354,17 +4353,20 @@ var updatePerformanceHeading = function updatePerformanceHeading(type) {
   performanceEls.performanceHeading.querySelector('span').textContent = type;
 };
 
-var chartData;
+var chartData = [];
 
 var renderPerformanceChart = function renderPerformanceChart(testData) {
   // ZONE - D3
   performanceEls.performanceCanvas.innerHTML = '';
+  var type, data;
 
-  var _testData = _slicedToArray(testData, 2),
-      type = _testData[0],
-      data = _testData[1];
+  if (testData) {
+    type = testData[0];
+    data = testData[1];
+    updatePerformanceHeading(type);
+  }
 
-  updatePerformanceHeading(type);
+  if (data) chartData = _toConsumableArray(data);else data = chartData;
   var canvasRect = performanceEls.performanceCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
@@ -4398,8 +4400,7 @@ var renderPerformanceChart = function renderPerformanceChart(testData) {
 
   var updatePerformanceChart = function updatePerformanceChart() {
     var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : chartData;
-    chartData = data; // sort the data based on date object
-
+    // sort the data based on date object
     data.sort(function (a, b) {
       return new Date(a.date) - new Date(b.date);
     }); // create responsive gaps for the chart
@@ -4468,11 +4469,10 @@ var renderPerformanceChart = function renderPerformanceChart(testData) {
     var pointsCoords = points.map(function (point) {
       return [point.getAttribute('cx'), point.getAttribute('cy')];
     });
-    console.log(pointsCoords);
     var labelsGroup = graph.append('g');
 
-    for (var _i2 = 0; _i2 < pointsCoords.length; _i2++) {
-      var label = labelsGroup.append('text').text((0, _helpers.kFormatter)(data[_i2].total, 9999)).attr('class', "".concat(data[_i2].result >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i2][0] - 20, ", ").concat(pointsCoords[_i2][1] - (data[_i2].result >= 0 ? 15 : -25), ")"));
+    for (var _i = 0; _i < pointsCoords.length; _i++) {
+      var label = labelsGroup.append('text').text((0, _helpers.kFormatter)(data[_i].total, 9999)).attr('class', "".concat(data[_i].result >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i][0] - 20, ", ").concat(pointsCoords[_i][1] - (data[_i].result >= 0 ? 15 : -25), ")"));
     } // select x axis text and translate down every odd text to make space
 
 
@@ -4599,6 +4599,12 @@ var monthlyData = [{
   result: -3200,
   shortDate: '5/21',
   position: 3
+}, {
+  date: 'Mon Mar 03 2024 23:12:58 GMT+0000 (Greenwich Mean Time)',
+  total: 110340,
+  result: -10660,
+  shortDate: '5/21',
+  position: 4
 }];
 
 var formatPerformanceData = function formatPerformanceData(type) {

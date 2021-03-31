@@ -15,6 +15,10 @@
     @include ts-heading-2;
     margin-top: 20px;
     flex-grow: 0;
+
+    & span {
+      font-size: 18px;
+    }
   }
 
   &__button-wrapper {

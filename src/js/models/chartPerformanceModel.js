@@ -128,6 +128,13 @@ const monthlyData = [
     shortDate: '5/21',
     position: 3,
   },
+  {
+    date: 'Mon Mar 03 2024 23:12:58 GMT+0000 (Greenwich Mean Time)',
+    total: 110340,
+    result: -10660,
+    shortDate: '5/21',
+    position: 4,
+  },
 ];
 
 export const formatPerformanceData = function (type) {

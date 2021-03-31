@@ -927,6 +927,9 @@ body {
   margin-top: 20px;
   flex-grow: 0;
 }
+.c-chart-performance__heading span {
+  font-size: 18px;
+}
 .c-chart-performance__button-wrapper {
   top: 0;
   right: 0;

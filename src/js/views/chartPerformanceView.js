@@ -33,7 +33,6 @@ export const addPerformanceRenderHandler = function (handler) {
 
 export const addMonthlyRenderHandler = function (handler) {
   performanceEls.performanceMonthBtn.addEventListener('click', e => {
-    console.log(e.target.getAttribute('data-type'));
     handler;
   });
 };
@@ -42,15 +41,20 @@ const updatePerformanceHeading = function (type) {
   performanceEls.performanceHeading.querySelector('span').textContent = type;
 };
 
-let chartData;
+let chartData = [];
 
 export const renderPerformanceChart = function (testData) {
   // ZONE - D3
   performanceEls.performanceCanvas.innerHTML = '';
 
-  const [type, data] = testData;
-
-  updatePerformanceHeading(type);
+  let type, data;
+  if (testData) {
+    type = testData[0];
+    data = testData[1];
+    updatePerformanceHeading(type);
+  }
+  if (data) chartData = [...data];
+  else data = chartData;
 
   const canvasRect = performanceEls.performanceCanvas.getBoundingClientRect();
 
@@ -101,8 +105,6 @@ export const renderPerformanceChart = function (testData) {
 
   // ZONE - update function
   const updatePerformanceChart = function (data = chartData) {
-    chartData = data;
-
     // sort the data based on date object
     data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
@@ -192,7 +194,6 @@ export const renderPerformanceChart = function (testData) {
       point.getAttribute('cx'),
       point.getAttribute('cy'),
     ]);
-    console.log(pointsCoords);
 
     const labelsGroup = graph.append('g');
 
