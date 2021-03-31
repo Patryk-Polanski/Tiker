@@ -28,6 +28,7 @@ import {
   renderPerformanceChart,
   addPerformanceRenderHandler,
 } from './views/chartPerformanceView';
+import { formatPerformanceData } from './models/chartPerformanceModel';
 
 // ZONE - controllers
 
@@ -67,9 +68,7 @@ const controlOverallRender = function () {
 };
 
 const controlPerformanceRender = function (type = 'day') {
-  renderPerformanceChart(type);
-  console.log('THIS IS THE TYPE');
-  console.log(type);
+  renderPerformanceChart(formatPerformanceData(type));
 };
 
 const queryDOM = function () {

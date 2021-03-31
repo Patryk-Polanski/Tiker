@@ -18,3 +18,10 @@ export const filterNonStrings = arr => {
   if (filtered.length < 1) filtered = [0];
   return filtered;
 };
+
+export const kFormatter = function (num, decimal) {
+  if (!num) return;
+  return Math.abs(num) > decimal
+    ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k'
+    : Math.sign(num) * Math.abs(num);
+};

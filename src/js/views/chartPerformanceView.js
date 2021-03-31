@@ -1,115 +1,8 @@
 import { path } from 'd3-path';
 import { curveLinearClosed } from 'd3-shape';
+import { kFormatter } from '../helpers';
 
 let performanceEls = {};
-
-const testData = [
-  {
-    date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 2400,
-    result: 400,
-    shortDate: '1/3/21',
-    position: 1,
-  },
-  {
-    date: 'Mon Mar 02 2021 23:13:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 1200,
-    result: -1200,
-    shortDate: '2/3/21',
-    position: 2,
-  },
-  {
-    date: 'Mon Mar 03 2021 23:12:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 900,
-    result: -300,
-    shortDate: '3/3/21',
-    position: 3,
-  },
-  {
-    date: 'Mon Mar 04 2021 23:11:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 1400,
-    result: 500,
-    shortDate: '4/3/21',
-    position: 4,
-  },
-  {
-    date: 'Mon Mar 05 2021 23:10:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 2200,
-    result: 800,
-    shortDate: '5/3/21',
-    position: 5,
-  },
-  {
-    date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 600,
-    result: -1600,
-    shortDate: '6/3/21',
-    position: 6,
-  },
-  {
-    date: 'Mon Mar 07 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 500,
-    result: -100,
-    shortDate: '7/3/21',
-    position: 7,
-  },
-  {
-    date: 'Mon Mar 12 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 660,
-    result: 160,
-    shortDate: '12/3/21',
-    position: 8,
-  },
-  {
-    date: 'Mon Mar 16 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 990,
-    result: 330,
-    shortDate: '16/3/21',
-    position: 9,
-  },
-  {
-    date: 'Mon Mar 18 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 1300,
-    result: 310,
-    shortDate: '19/3/21',
-    position: 10,
-  },
-  {
-    date: 'Mon Mar 23 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 1348,
-    result: 48,
-    shortDate: '23/3/21',
-    position: 11,
-  },
-  {
-    date: 'Mon Mar 24 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 1450,
-    result: 112,
-    shortDate: '24/3/21',
-    position: 12,
-  },
-  {
-    date: 'Mon Mar 26 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 1300,
-    result: -150,
-    shortDate: '26/3/21',
-    position: 13,
-  },
-  {
-    date: 'Mon Mar 27 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 1423,
-    result: 123,
-    shortDate: '27/3/21',
-    position: 14,
-  },
-  {
-    date: 'Mon Mar 29 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-    distance: 1497,
-    result: 74,
-    shortDate: '29/3/21',
-    position: 15,
-  },
-];
 
 const getElements = function (obj = {}) {
   obj.performanceCanvas = document.querySelector('.js-performance-canvas');
@@ -144,14 +37,14 @@ export const addMonthlyRenderHandler = function (handler) {
   });
 };
 
-export const renderPerformanceChart = function (type) {
+export const renderPerformanceChart = function (testData) {
   // ZONE - D3
   performanceEls.performanceCanvas.innerHTML = '';
 
   const canvasRect = performanceEls.performanceCanvas.getBoundingClientRect();
 
   // create room for axes
-  const margin = { top: 30, right: 20, bottom: 50, left: 50 };
+  const margin = { top: 40, right: 20, bottom: 50, left: 50 };
   const graphWidth = canvasRect.width - margin.left - margin.right;
   const graphHeight = canvasRect.height - margin.top - margin.bottom;
 
@@ -189,7 +82,7 @@ export const renderPerformanceChart = function (type) {
       return x(d.position);
     })
     .y(function (d) {
-      return y(d.distance);
+      return y(d.total);
     });
 
   // create line path element
@@ -207,8 +100,8 @@ export const renderPerformanceChart = function (type) {
       d3.max(data, d => d.position) + 0.5,
     ]);
     y.domain([
-      d3.min(data, d => d.distance) - 250,
-      d3.max(data, d => d.distance) + 100,
+      d3.min(data, d => d.total) - 250,
+      d3.max(data, d => d.total) + 100,
     ]); // find the highest value
 
     // update path data
@@ -228,14 +121,12 @@ export const renderPerformanceChart = function (type) {
       .append('circle')
       .attr('cx', d => x(d.position))
       .attr('cy', d => {
-        return y(d.distance);
+        return y(d.total);
       })
       .attr('class', 'performance-circles');
 
     // update current points
-    circles.attr('cx', d => x(d.position)).attr('cy', d => y(d.distance));
-
-    // circles.append('text').text('haha').attr('color', '#fff');
+    circles.attr('cx', d => x(d.position)).attr('cy', d => y(d.total));
 
     // create axes
     const xAxis = d3
@@ -246,7 +137,7 @@ export const renderPerformanceChart = function (type) {
     const yAxis = d3
       .axisLeft(y)
       .ticks(4)
-      .tickFormat(d => d);
+      .tickFormat(d => kFormatter(d, 999));
 
     // generate all shapes for xAxis and yAxis and place them in axis groups
     xAxisGroup.call(xAxis);
@@ -291,7 +182,7 @@ export const renderPerformanceChart = function (type) {
     for (let i = 0; i < pointsCoords.length; i++) {
       const label = labelsGroup
         .append('text')
-        .text(data[i].distance)
+        .text(kFormatter(data[i].total, 9999))
         .attr(
           'class',
           `${
@@ -303,7 +194,7 @@ export const renderPerformanceChart = function (type) {
         .attr(
           'transform',
           `translate(${pointsCoords[i][0] - 20}, ${
-            pointsCoords[i][1] - (data[i].result >= 0 ? 20 : -25)
+            pointsCoords[i][1] - (data[i].result >= 0 ? 15 : -25)
           })`
         );
     }

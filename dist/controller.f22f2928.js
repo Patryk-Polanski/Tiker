@@ -234,7 +234,7 @@ exports.clearCalcResult = clearCalcResult;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
+exports.kFormatter = exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
 
 var stringifyNum = function stringifyNum(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -275,6 +275,13 @@ var filterNonStrings = function filterNonStrings(arr) {
 };
 
 exports.filterNonStrings = filterNonStrings;
+
+var kFormatter = function kFormatter(num, decimal) {
+  if (!num) return;
+  return Math.abs(num) > decimal ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k' : Math.sign(num) * Math.abs(num);
+};
+
+exports.kFormatter = kFormatter;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -4289,98 +4296,9 @@ var _d3Path = require("d3-path");
 
 var _d3Shape = require("d3-shape");
 
+var _helpers = require("../helpers");
+
 var performanceEls = {};
-var testData = [{
-  date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 2400,
-  result: 400,
-  shortDate: '1/3/21',
-  position: 1
-}, {
-  date: 'Mon Mar 02 2021 23:13:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 1200,
-  result: -1200,
-  shortDate: '2/3/21',
-  position: 2
-}, {
-  date: 'Mon Mar 03 2021 23:12:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 900,
-  result: -300,
-  shortDate: '3/3/21',
-  position: 3
-}, {
-  date: 'Mon Mar 04 2021 23:11:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 1400,
-  result: 500,
-  shortDate: '4/3/21',
-  position: 4
-}, {
-  date: 'Mon Mar 05 2021 23:10:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 2200,
-  result: 800,
-  shortDate: '5/3/21',
-  position: 5
-}, {
-  date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 600,
-  result: -1600,
-  shortDate: '6/3/21',
-  position: 6
-}, {
-  date: 'Mon Mar 07 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 500,
-  result: -100,
-  shortDate: '7/3/21',
-  position: 7
-}, {
-  date: 'Mon Mar 12 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 660,
-  result: 160,
-  shortDate: '12/3/21',
-  position: 8
-}, {
-  date: 'Mon Mar 16 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 990,
-  result: 330,
-  shortDate: '16/3/21',
-  position: 9
-}, {
-  date: 'Mon Mar 18 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 1300,
-  result: 310,
-  shortDate: '19/3/21',
-  position: 10
-}, {
-  date: 'Mon Mar 23 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 1348,
-  result: 48,
-  shortDate: '23/3/21',
-  position: 11
-}, {
-  date: 'Mon Mar 24 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 1450,
-  result: 112,
-  shortDate: '24/3/21',
-  position: 12
-}, {
-  date: 'Mon Mar 26 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 1300,
-  result: -150,
-  shortDate: '26/3/21',
-  position: 13
-}, {
-  date: 'Mon Mar 27 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 1423,
-  result: 123,
-  shortDate: '27/3/21',
-  position: 14
-}, {
-  date: 'Mon Mar 29 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  distance: 1497,
-  result: 74,
-  shortDate: '29/3/21',
-  position: 15
-}];
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -4419,13 +4337,13 @@ var addMonthlyRenderHandler = function addMonthlyRenderHandler(handler) {
 
 exports.addMonthlyRenderHandler = addMonthlyRenderHandler;
 
-var renderPerformanceChart = function renderPerformanceChart(type) {
+var renderPerformanceChart = function renderPerformanceChart(testData) {
   // ZONE - D3
   performanceEls.performanceCanvas.innerHTML = '';
   var canvasRect = performanceEls.performanceCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
-    top: 30,
+    top: 40,
     right: 20,
     bottom: 50,
     left: 50
@@ -4448,7 +4366,7 @@ var renderPerformanceChart = function renderPerformanceChart(type) {
   var line = d3.line().x(function (d) {
     return x(d.position);
   }).y(function (d) {
-    return y(d.distance);
+    return y(d.total);
   }); // create line path element
 
   var path = graph.append('path'); // ZONE - update function
@@ -4466,9 +4384,9 @@ var renderPerformanceChart = function renderPerformanceChart(type) {
       return d.position;
     }) + 0.5]);
     y.domain([d3.min(data, function (d) {
-      return d.distance;
+      return d.total;
     }) - 250, d3.max(data, function (d) {
-      return d.distance;
+      return d.total;
     }) + 100]); // find the highest value
     // update path data
     // when we are using d3 line, we need to pass the data inside of another array
@@ -4483,22 +4401,21 @@ var renderPerformanceChart = function renderPerformanceChart(type) {
     circles.enter().append('circle').attr('cx', function (d) {
       return x(d.position);
     }).attr('cy', function (d) {
-      return y(d.distance);
+      return y(d.total);
     }).attr('class', 'performance-circles'); // update current points
 
     circles.attr('cx', function (d) {
       return x(d.position);
     }).attr('cy', function (d) {
-      return y(d.distance);
-    }); // circles.append('text').text('haha').attr('color', '#fff');
-    // create axes
+      return y(d.total);
+    }); // create axes
 
     var xAxis = d3.axisBottom(x).ticks(data.length).tickFormat(function (d) {
       return data[d - 1] ? data[d - 1].shortDate : '';
     }); // create bottom axis based on our x scale
 
     var yAxis = d3.axisLeft(y).ticks(4).tickFormat(function (d) {
-      return d;
+      return (0, _helpers.kFormatter)(d, 999);
     }); // generate all shapes for xAxis and yAxis and place them in axis groups
 
     xAxisGroup.call(xAxis);
@@ -4523,7 +4440,7 @@ var renderPerformanceChart = function renderPerformanceChart(type) {
     var labelsGroup = graph.append('g');
 
     for (var _i = 0; _i < pointsCoords.length; _i++) {
-      var label = labelsGroup.append('text').text(data[_i].distance).attr('class', "".concat(data[_i].result >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i][0] - 20, ", ").concat(pointsCoords[_i][1] - (data[_i].result >= 0 ? 20 : -25), ")"));
+      var label = labelsGroup.append('text').text((0, _helpers.kFormatter)(data[_i].total, 9999)).attr('class', "".concat(data[_i].result >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i][0] - 20, ", ").concat(pointsCoords[_i][1] - (data[_i].result >= 0 ? 15 : -25), ")"));
     } // select x axis text and translate down every odd text to make space
 
 
@@ -4534,7 +4451,131 @@ var renderPerformanceChart = function renderPerformanceChart(type) {
 };
 
 exports.renderPerformanceChart = renderPerformanceChart;
-},{"d3-path":"../node_modules/d3-path/src/index.js","d3-shape":"../node_modules/d3-shape/src/index.js"}],"js/controller.js":[function(require,module,exports) {
+},{"d3-path":"../node_modules/d3-path/src/index.js","d3-shape":"../node_modules/d3-shape/src/index.js","../helpers":"js/helpers.js"}],"js/models/chartPerformanceModel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.formatPerformanceData = void 0;
+var dailyData = [{
+  date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+  total: 2400,
+  result: 400,
+  shortDate: '1/3/21',
+  position: 1
+}, {
+  date: 'Mon Mar 02 2021 23:13:58 GMT+0000 (Greenwich Mean Time)',
+  total: 1200,
+  result: -1200,
+  shortDate: '2/3/21',
+  position: 2
+}, {
+  date: 'Mon Mar 03 2021 23:12:58 GMT+0000 (Greenwich Mean Time)',
+  total: 900,
+  result: -300,
+  shortDate: '3/3/21',
+  position: 3
+}, {
+  date: 'Mon Mar 04 2021 23:11:58 GMT+0000 (Greenwich Mean Time)',
+  total: 1400,
+  result: 500,
+  shortDate: '4/3/21',
+  position: 4
+}, {
+  date: 'Mon Mar 05 2021 23:10:58 GMT+0000 (Greenwich Mean Time)',
+  total: 2200,
+  result: 800,
+  shortDate: '5/3/21',
+  position: 5
+}, {
+  date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 600,
+  result: -1600,
+  shortDate: '6/3/21',
+  position: 6
+}, {
+  date: 'Mon Mar 07 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 500,
+  result: -100,
+  shortDate: '7/3/21',
+  position: 7
+}, {
+  date: 'Mon Mar 12 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 660,
+  result: 160,
+  shortDate: '12/3/21',
+  position: 8
+}, {
+  date: 'Mon Mar 16 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 990,
+  result: 330,
+  shortDate: '16/3/21',
+  position: 9
+}, {
+  date: 'Mon Mar 18 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 1300,
+  result: 310,
+  shortDate: '19/3/21',
+  position: 10
+}, {
+  date: 'Mon Mar 23 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 1348,
+  result: 48,
+  shortDate: '23/3/21',
+  position: 11
+}, {
+  date: 'Mon Mar 24 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 1450,
+  result: 112,
+  shortDate: '24/3/21',
+  position: 12
+}, {
+  date: 'Mon Mar 26 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 1300,
+  result: -150,
+  shortDate: '26/3/21',
+  position: 13
+}, {
+  date: 'Mon Mar 27 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 1423,
+  result: 123,
+  shortDate: '27/3/21',
+  position: 14
+}, {
+  date: 'Mon Mar 29 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+  total: 1497,
+  result: 74,
+  shortDate: '29/3/21',
+  position: 15
+}];
+var monthlyData = [{
+  date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+  total: 100500,
+  result: 2500,
+  shortDate: '3/21',
+  position: 1
+}, {
+  date: 'Mon Mar 02 2022 23:13:58 GMT+0000 (Greenwich Mean Time)',
+  total: 123260,
+  result: 18260,
+  shortDate: '4/21',
+  position: 2
+}, {
+  date: 'Mon Mar 03 2023 23:12:58 GMT+0000 (Greenwich Mean Time)',
+  total: 120000,
+  result: -3200,
+  shortDate: '5/21',
+  position: 3
+}];
+
+var formatPerformanceData = function formatPerformanceData(type) {
+  if (type === 'day') return dailyData;
+  if (type === 'month') return monthlyData;
+};
+
+exports.formatPerformanceData = formatPerformanceData;
+},{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _calculatorsView = require("./views/calculatorsView");
@@ -4554,6 +4595,8 @@ var _tableMonthlyModel = require("./models/tableMonthlyModel");
 var _tableProfitableModel = require("./models/tableProfitableModel");
 
 var _chartPerformanceView = require("./views/chartPerformanceView");
+
+var _chartPerformanceModel = require("./models/chartPerformanceModel");
 
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
@@ -4591,9 +4634,7 @@ var controlOverallRender = function controlOverallRender() {
 
 var controlPerformanceRender = function controlPerformanceRender() {
   var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'day';
-  (0, _chartPerformanceView.renderPerformanceChart)(type);
-  console.log('THIS IS THE TYPE');
-  console.log(type);
+  (0, _chartPerformanceView.renderPerformanceChart)((0, _chartPerformanceModel.formatPerformanceData)(type));
 };
 
 var queryDOM = function queryDOM() {
@@ -4624,7 +4665,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartPerformanceView.renderPerformanceChart)();
   }, 1000);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -4652,7 +4693,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58953" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57841" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

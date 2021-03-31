@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
+exports.kFormatter = exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
 
 var stringifyNum = function stringifyNum(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -164,6 +164,13 @@ var filterNonStrings = function filterNonStrings(arr) {
 };
 
 exports.filterNonStrings = filterNonStrings;
+
+var kFormatter = function kFormatter(num, decimal) {
+  if (!num) return;
+  return Math.abs(num) > decimal ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k' : Math.sign(num) * Math.abs(num);
+};
+
+exports.kFormatter = kFormatter;
 },{}],"js/views/loginView.js":[function(require,module,exports) {
 "use strict";
 
@@ -229,7 +236,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58953" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57841" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
