@@ -4290,7 +4290,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderPerformanceChart = exports.addMonthlyRenderHandler = exports.addPerformanceRenderHandler = exports.queryPerformanceEls = void 0;
+exports.renderPerformanceChart = exports.addPerformanceRenderHandler = exports.queryPerformanceEls = void 0;
 
 var _d3Path = require("d3-path");
 
@@ -4340,14 +4340,6 @@ var addPerformanceRenderHandler = function addPerformanceRenderHandler(handler) 
 };
 
 exports.addPerformanceRenderHandler = addPerformanceRenderHandler;
-
-var addMonthlyRenderHandler = function addMonthlyRenderHandler(handler) {
-  performanceEls.performanceMonthBtn.addEventListener('click', function (e) {
-    handler;
-  });
-};
-
-exports.addMonthlyRenderHandler = addMonthlyRenderHandler;
 
 var updatePerformanceHeading = function updatePerformanceHeading(type) {
   performanceEls.performanceHeading.querySelector('span').textContent = type;
@@ -4613,6 +4605,30 @@ var formatPerformanceData = function formatPerformanceData(type) {
 };
 
 exports.formatPerformanceData = formatPerformanceData;
+},{}],"js/views/chartWorstBestView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.renderWorstBestChart = exports.queryBestWorstEls = void 0;
+var bestWorstEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.bestWorstCanvas = document.querySelector('.js-worst-best-canvas');
+  return obj;
+};
+
+var queryBestWorstEls = function queryBestWorstEls() {
+  bestWorstEls = getElements();
+};
+
+exports.queryBestWorstEls = queryBestWorstEls;
+
+var renderWorstBestChart = function renderWorstBestChart() {};
+
+exports.renderWorstBestChart = renderWorstBestChart;
 },{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
@@ -4635,6 +4651,8 @@ var _tableProfitableModel = require("./models/tableProfitableModel");
 var _chartPerformanceView = require("./views/chartPerformanceView");
 
 var _chartPerformanceModel = require("./models/chartPerformanceModel");
+
+var _chartWorstBestView = require("./views/chartWorstBestView");
 
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
@@ -4675,12 +4693,17 @@ var controlPerformanceRender = function controlPerformanceRender() {
   (0, _chartPerformanceView.renderPerformanceChart)((0, _chartPerformanceModel.formatPerformanceData)(type));
 };
 
+var controlWorstBestRender = function controlWorstBestRender() {
+  (0, _chartWorstBestView.renderWorstBestChart)();
+};
+
 var queryDOM = function queryDOM() {
   (0, _calculatorsView.queryCalcEls)();
   (0, _tableMonthlyView.queryMonthlyEls)();
   (0, _tableProfitableView.queryProfitableEls)();
   (0, _chartOverallView.queryOverallEls)();
   (0, _chartPerformanceView.queryPerformanceEls)();
+  (0, _chartWorstBestView.queryBestWorstEls)();
 }; // ZONE - event listeners
 
 
@@ -4691,6 +4714,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   controlProfitableRender();
   controlOverallRender();
   controlPerformanceRender();
+  controlWorstBestRender();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
@@ -4703,7 +4727,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartPerformanceView.renderPerformanceChart)();
   }, 1000);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -4731,7 +4755,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57841" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64356" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

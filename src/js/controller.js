@@ -29,6 +29,10 @@ import {
   addPerformanceRenderHandler,
 } from './views/chartPerformanceView';
 import { formatPerformanceData } from './models/chartPerformanceModel';
+import {
+  queryBestWorstEls,
+  renderWorstBestChart,
+} from './views/chartWorstBestView';
 
 // ZONE - controllers
 
@@ -71,12 +75,17 @@ const controlPerformanceRender = function (type = 'day') {
   renderPerformanceChart(formatPerformanceData(type));
 };
 
+const controlWorstBestRender = function () {
+  renderWorstBestChart();
+};
+
 const queryDOM = function () {
   queryCalcEls();
   queryMonthlyEls();
   queryProfitableEls();
   queryOverallEls();
   queryPerformanceEls();
+  queryBestWorstEls();
 };
 
 // ZONE - event listeners
@@ -88,6 +97,7 @@ window.addEventListener('DOMContentLoaded', e => {
   controlProfitableRender();
   controlOverallRender();
   controlPerformanceRender();
+  controlWorstBestRender();
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);

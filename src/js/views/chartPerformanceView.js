@@ -31,12 +31,6 @@ export const addPerformanceRenderHandler = function (handler) {
   );
 };
 
-export const addMonthlyRenderHandler = function (handler) {
-  performanceEls.performanceMonthBtn.addEventListener('click', e => {
-    handler;
-  });
-};
-
 const updatePerformanceHeading = function (type) {
   performanceEls.performanceHeading.querySelector('span').textContent = type;
 };

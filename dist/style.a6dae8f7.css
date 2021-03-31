@@ -954,6 +954,8 @@ body {
   grid-row: 7/-1;
   border-radius: 10px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 @media only screen and (max-width: 75em) {
   .c-chart-worst-best {
@@ -978,6 +980,12 @@ body {
   margin-top: 10px;
   margin-right: 10px;
   position: relative;
+}
+.c-chart-worst-best__canvas {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .c-input-text {
