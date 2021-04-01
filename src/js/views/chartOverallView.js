@@ -2,6 +2,7 @@ let overallEls = {};
 
 const getElements = function (obj = {}) {
   obj.pieStreakCard = document.querySelector('.js-pie-streak');
+  obj.shortLongCanvas = document.querySelector('.js-pie-canvas');
   obj.winStreakDate = obj.pieStreakCard.querySelector('.js-win-streak-date');
   obj.winStreakTotal = obj.pieStreakCard.querySelector('.js-win-streak-total');
   obj.winStreakProfit = obj.pieStreakCard.querySelector(
@@ -37,4 +38,10 @@ export const renderStreaks = function (data) {
   overallEls.lossStreakDate.textContent = `${data.losses.trades[0].date} - ${
     data.losses.trades[data.losses.trades.length - 1].date
   }`;
+};
+
+// ZONE - D3
+export const renderLongShortPie = function (tradesNo) {
+  console.log('THIS IS IT!');
+  console.log(tradesNo);
 };

@@ -20,7 +20,11 @@ import {
   queryProfitableEls,
   renderProfitableTable,
 } from './views/tableProfitableView';
-import { queryOverallEls, renderStreaks } from './views/chartOverallView';
+import {
+  queryOverallEls,
+  renderStreaks,
+  renderLongShortPie,
+} from './views/chartOverallView';
 import { computeMonthlyData } from './models/tableMonthlyModel';
 import { checkAgainstLeaders } from './models/tableProfitableModel';
 import {
@@ -83,6 +87,10 @@ const controlWorstBestRender = function (type = 'worst') {
   renderWorstBestChart(formatWorstBestData(type));
 };
 
+const controlLongShortPie = function () {
+  renderLongShortPie(passData('overall'));
+};
+
 const queryDOM = function () {
   queryCalcEls();
   queryMonthlyEls();
@@ -102,6 +110,7 @@ window.addEventListener('DOMContentLoaded', e => {
   controlOverallRender();
   controlPerformanceRender();
   controlWorstBestRender();
+  controlLongShortPie();
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);

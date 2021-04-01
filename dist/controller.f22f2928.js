@@ -672,6 +672,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderProfitableTable = exports.queryProfitableEls = void 0;
+
+var _helpers = require("../helpers");
+
 var profitableEls = {};
 
 var getElements = function getElements() {
@@ -690,24 +693,25 @@ exports.queryProfitableEls = queryProfitableEls;
 var renderProfitableTable = function renderProfitableTable(tableData) {
   Object.keys(tableData).forEach(function (data) {
     var ticker = tableData[data];
-    var html = "\n        <tr>\n            <th>".concat(data, "</th>\n            <td>").concat(ticker.totalProfit, "</td>\n            <td>").concat(ticker.totalTrades, "</td>\n            <td>").concat(ticker.avgReturn, "</td>\n            <td>").concat(ticker.avgWinPercent, "%</td>\n            <td>").concat(ticker.battingAvgPercent, "%</td>\n            <td>").concat(ticker.winLossRatio, "</td>\n        </tr>\n      ");
+    var html = "\n        <tr>\n            <th>".concat(data, "</th>\n            <td>").concat(ticker.totalProfit, "</td>\n            <td>").concat(ticker.totalTrades, "/").concat((0, _helpers.kFormatter)(ticker.totalShares, 9999), "</td>\n            <td>").concat(ticker.avgReturn, "</td>\n            <td>").concat(ticker.avgWinPercent, "%</td>\n            <td>").concat(ticker.battingAvgPercent, "%</td>\n            <td>").concat(ticker.winLossRatio, "</td>\n        </tr>\n      ");
     profitableEls.profitableTableHead.insertAdjacentHTML('afterend', html);
   });
 };
 
 exports.renderProfitableTable = renderProfitableTable;
-},{}],"js/views/chartOverallView.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/views/chartOverallView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderStreaks = exports.queryOverallEls = void 0;
+exports.renderLongShortPie = exports.renderStreaks = exports.queryOverallEls = void 0;
 var overallEls = {};
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.pieStreakCard = document.querySelector('.js-pie-streak');
+  obj.shortLongCanvas = document.querySelector('.js-pie-canvas');
   obj.winStreakDate = obj.pieStreakCard.querySelector('.js-win-streak-date');
   obj.winStreakTotal = obj.pieStreakCard.querySelector('.js-win-streak-total');
   obj.winStreakProfit = obj.pieStreakCard.querySelector('.js-win-streak-profit');
@@ -738,9 +742,17 @@ var renderStreaks = function renderStreaks(data) {
     return acc + num;
   }, 0);
   overallEls.lossStreakDate.textContent = "".concat(data.losses.trades[0].date, " - ").concat(data.losses.trades[data.losses.trades.length - 1].date);
-};
+}; // ZONE - D3
+
 
 exports.renderStreaks = renderStreaks;
+
+var renderLongShortPie = function renderLongShortPie(tradesNo) {
+  console.log('THIS IS IT!');
+  console.log(tradesNo);
+};
+
+exports.renderLongShortPie = renderLongShortPie;
 },{}],"js/models/tableMonthlyModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -4351,10 +4363,9 @@ var clearPerformanceCanvas = function clearPerformanceCanvas() {
 };
 
 exports.clearPerformanceCanvas = clearPerformanceCanvas;
-var chartData = [];
+var chartData = []; // ZONE - D3
 
 var renderPerformanceChart = function renderPerformanceChart(passedData) {
-  // ZONE - D3
   var type, data;
 
   if (passedData) {
@@ -4634,47 +4645,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var bestWorstEls = {};
-var data = [{
-  id: '8gW2a5Q',
-  ticker: 'ZM',
-  result: 240,
-  date: '3/4/21'
-}, {
-  id: 'lK2G98Q',
-  ticker: 'MARA',
-  result: 173,
-  date: '3/5/21'
-}, {
-  id: 'K14Ji98',
-  ticker: 'BMBL',
-  result: 166,
-  date: '13/4/21'
-}, {
-  id: 'k98Ck9s',
-  ticker: 'X',
-  result: 130,
-  date: '26/3/21'
-}, {
-  id: '92Kji63',
-  ticker: 'SNAP',
-  result: 122,
-  date: '1/3/21'
-}, {
-  id: '8gW2a5Q',
-  ticker: 'GME',
-  result: 111,
-  date: '2/4/21'
-}, {
-  id: 'Sd8tr32',
-  ticker: 'MSFT',
-  result: 103,
-  date: '5/6/21'
-}, {
-  id: 'pa52Qs4',
-  ticker: 'ROKU',
-  result: 94,
-  date: '16/7/21'
-}];
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -4709,10 +4679,9 @@ var addWorstBestRenderHandler = function addWorstBestRenderHandler(handler) {
 };
 
 exports.addWorstBestRenderHandler = addWorstBestRenderHandler;
-var chartData = [];
+var chartData = []; // ZONE - D3
 
 var renderWorstBestChart = function renderWorstBestChart(passedData) {
-  // ZONE - D3
   var type, data;
 
   if (passedData) {
@@ -4984,6 +4953,10 @@ var controlWorstBestRender = function controlWorstBestRender() {
   (0, _chartWorstBestView.renderWorstBestChart)((0, _chartWorstBestModel.formatWorstBestData)(type));
 };
 
+var controlLongShortPie = function controlLongShortPie() {
+  (0, _chartOverallView.renderLongShortPie)((0, _dataModel.passData)('overall'));
+};
+
 var queryDOM = function queryDOM() {
   (0, _calculatorsView.queryCalcEls)();
   (0, _tableMonthlyView.queryMonthlyEls)();
@@ -5002,6 +4975,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   controlOverallRender();
   controlPerformanceRender();
   controlWorstBestRender();
+  controlLongShortPie();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);

@@ -1358,8 +1358,7 @@ body {
   color: #c4456f;
   border: 2px solid #c4456f;
 }
-.c-pie-streak__pie-wrapper {
-  margin-top: 10px;
+.c-pie-streak__canvas {
   height: 140px;
   width: 100%;
   background-color: #080808;

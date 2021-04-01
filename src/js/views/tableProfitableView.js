@@ -1,3 +1,5 @@
+import { kFormatter } from '../helpers';
+
 let profitableEls = {};
 
 const getElements = function (obj = {}) {
@@ -19,7 +21,10 @@ export const renderProfitableTable = function (tableData) {
         <tr>
             <th>${data}</th>
             <td>${ticker.totalProfit}</td>
-            <td>${ticker.totalTrades}</td>
+            <td>${ticker.totalTrades}/${kFormatter(
+      ticker.totalShares,
+      9999
+    )}</td>
             <td>${ticker.avgReturn}</td>
             <td>${ticker.avgWinPercent}%</td>
             <td>${ticker.battingAvgPercent}%</td>

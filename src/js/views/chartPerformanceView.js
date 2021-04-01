@@ -41,9 +41,8 @@ export const clearPerformanceCanvas = function () {
 
 let chartData = [];
 
+// ZONE - D3
 export const renderPerformanceChart = function (passedData) {
-  // ZONE - D3
-
   let type, data;
   if (passedData) {
     type = passedData[0];

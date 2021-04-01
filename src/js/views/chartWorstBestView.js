@@ -2,57 +2,6 @@ import { kFormatter } from '../helpers';
 
 let bestWorstEls = {};
 
-const data = [
-  {
-    id: '8gW2a5Q',
-    ticker: 'ZM',
-    result: 240,
-    date: '3/4/21',
-  },
-  {
-    id: 'lK2G98Q',
-    ticker: 'MARA',
-    result: 173,
-    date: '3/5/21',
-  },
-  {
-    id: 'K14Ji98',
-    ticker: 'BMBL',
-    result: 166,
-    date: '13/4/21',
-  },
-  {
-    id: 'k98Ck9s',
-    ticker: 'X',
-    result: 130,
-    date: '26/3/21',
-  },
-  {
-    id: '92Kji63',
-    ticker: 'SNAP',
-    result: 122,
-    date: '1/3/21',
-  },
-  {
-    id: '8gW2a5Q',
-    ticker: 'GME',
-    result: 111,
-    date: '2/4/21',
-  },
-  {
-    id: 'Sd8tr32',
-    ticker: 'MSFT',
-    result: 103,
-    date: '5/6/21',
-  },
-  {
-    id: 'pa52Qs4',
-    ticker: 'ROKU',
-    result: 94,
-    date: '16/7/21',
-  },
-];
-
 const getElements = function (obj = {}) {
   obj.bestWorstCanvas = document.querySelector('.js-worst-best-canvas');
   obj.worstBtn = document.querySelector('.js-worst-btn');
@@ -82,9 +31,8 @@ export const addWorstBestRenderHandler = function (handler) {
 
 let chartData = [];
 
+// ZONE - D3
 export const renderWorstBestChart = function (passedData) {
-  // ZONE - D3
-
   let type, data;
   if (passedData) {
     type = passedData[0];
