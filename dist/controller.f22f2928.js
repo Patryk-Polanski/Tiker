@@ -4353,13 +4353,13 @@ var clearPerformanceCanvas = function clearPerformanceCanvas() {
 exports.clearPerformanceCanvas = clearPerformanceCanvas;
 var chartData = [];
 
-var renderPerformanceChart = function renderPerformanceChart(testData) {
+var renderPerformanceChart = function renderPerformanceChart(passedData) {
   // ZONE - D3
   var type, data;
 
-  if (testData) {
-    type = testData[0];
-    data = testData[1];
+  if (passedData) {
+    type = passedData[0];
+    data = passedData[1];
     updatePerformanceHeading(type);
   }
 
@@ -4616,7 +4616,7 @@ exports.formatPerformanceData = formatPerformanceData;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderWorstBestChart = exports.clearWorstBestCanvas = exports.queryBestWorstEls = void 0;
+exports.renderWorstBestChart = exports.addWorstBestRenderHandler = exports.clearWorstBestCanvas = exports.queryBestWorstEls = void 0;
 
 var _helpers = require("../helpers");
 
@@ -4666,6 +4666,8 @@ var data = [{
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.bestWorstCanvas = document.querySelector('.js-worst-best-canvas');
+  obj.worstBtn = document.querySelector('.js-worst-btn');
+  obj.bestBtn = document.querySelector('.js-best-btn');
   return obj;
 };
 
@@ -4680,6 +4682,20 @@ var clearWorstBestCanvas = function clearWorstBestCanvas() {
 };
 
 exports.clearWorstBestCanvas = clearWorstBestCanvas;
+
+var addWorstBestRenderHandler = function addWorstBestRenderHandler(handler) {
+  [bestWorstEls.worstBtn, bestWorstEls.bestBtn].forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      btn.parentElement.querySelectorAll('button').forEach(function (b) {
+        return b.classList.remove('btn--tertiary--active');
+      });
+      handler(e.target.getAttribute('data-type'));
+    });
+  });
+};
+
+exports.addWorstBestRenderHandler = addWorstBestRenderHandler;
+var chartData = [];
 
 var renderWorstBestChart = function renderWorstBestChart() {
   // ZONE - D3
@@ -4902,7 +4918,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64356" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57483" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

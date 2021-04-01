@@ -41,13 +41,13 @@ export const clearPerformanceCanvas = function () {
 
 let chartData = [];
 
-export const renderPerformanceChart = function (testData) {
+export const renderPerformanceChart = function (passedData) {
   // ZONE - D3
 
   let type, data;
-  if (testData) {
-    type = testData[0];
-    data = testData[1];
+  if (passedData) {
+    type = passedData[0];
+    data = passedData[1];
     updatePerformanceHeading(type);
   }
   if (data) chartData = [...data];

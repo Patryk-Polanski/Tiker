@@ -55,6 +55,8 @@ const data = [
 
 const getElements = function (obj = {}) {
   obj.bestWorstCanvas = document.querySelector('.js-worst-best-canvas');
+  obj.worstBtn = document.querySelector('.js-worst-btn');
+  obj.bestBtn = document.querySelector('.js-best-btn');
   return obj;
 };
 
@@ -65,6 +67,19 @@ export const queryBestWorstEls = function () {
 export const clearWorstBestCanvas = function () {
   bestWorstEls.bestWorstCanvas.innerHTML = '';
 };
+
+export const addWorstBestRenderHandler = function (handler) {
+  [bestWorstEls.worstBtn, bestWorstEls.bestBtn].forEach(btn => {
+    btn.addEventListener('click', e => {
+      btn.parentElement
+        .querySelectorAll('button')
+        .forEach(b => b.classList.remove('btn--tertiary--active'));
+      handler(e.target.getAttribute('data-type'));
+    });
+  });
+};
+
+let chartData = [];
 
 export const renderWorstBestChart = function () {
   // ZONE - D3

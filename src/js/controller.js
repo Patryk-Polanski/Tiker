@@ -34,6 +34,7 @@ import {
   queryBestWorstEls,
   renderWorstBestChart,
   clearWorstBestCanvas,
+  addWorstBestRenderHandler,
 } from './views/chartWorstBestView';
 
 // ZONE - controllers
