@@ -36,6 +36,7 @@ import {
   clearWorstBestCanvas,
   addWorstBestRenderHandler,
 } from './views/chartWorstBestView';
+import { formatWorstBestData } from './models/chartWorstBestModel';
 
 // ZONE - controllers
 
@@ -78,8 +79,8 @@ const controlPerformanceRender = function (type = 'day') {
   renderPerformanceChart(formatPerformanceData(type));
 };
 
-const controlWorstBestRender = function () {
-  renderWorstBestChart();
+const controlWorstBestRender = function (type = 'worst') {
+  renderWorstBestChart(formatWorstBestData(type));
 };
 
 const queryDOM = function () {
@@ -105,6 +106,7 @@ window.addEventListener('DOMContentLoaded', e => {
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);
   addPerformanceRenderHandler(controlPerformanceRender);
+  addWorstBestRenderHandler(controlWorstBestRender);
 });
 
 let resizeTimer;

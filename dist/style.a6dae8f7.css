@@ -300,12 +300,20 @@ input[type=number] {
   fill: rgba(55, 9, 67, 0.2);
 }
 
-.worst-trades-label {
+.worst-trades-label,
+.best-trades-label {
   font-family: "Roboto", sans-serif;
   color: #aaaaaa;
   font-weight: 400;
   font-size: 16px;
+}
+
+.worst-trades-label {
   fill: #c4456f;
+}
+
+.best-trades-label {
+  fill: #189fae;
 }
 
 .worst-best-date {

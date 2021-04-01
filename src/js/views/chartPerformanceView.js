@@ -49,6 +49,7 @@ export const renderPerformanceChart = function (passedData) {
     type = passedData[0];
     data = passedData[1];
     updatePerformanceHeading(type);
+    clearPerformanceCanvas();
   }
   if (data) chartData = [...data];
   else data = chartData;

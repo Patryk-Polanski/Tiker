@@ -4361,6 +4361,7 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
     type = passedData[0];
     data = passedData[1];
     updatePerformanceHeading(type);
+    clearPerformanceCanvas();
   }
 
   if (data) chartData = _toConsumableArray(data);else data = chartData;
@@ -4620,6 +4621,18 @@ exports.renderWorstBestChart = exports.addWorstBestRenderHandler = exports.clear
 
 var _helpers = require("../helpers");
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 var bestWorstEls = {};
 var data = [{
   id: '8gW2a5Q',
@@ -4686,19 +4699,36 @@ exports.clearWorstBestCanvas = clearWorstBestCanvas;
 var addWorstBestRenderHandler = function addWorstBestRenderHandler(handler) {
   [bestWorstEls.worstBtn, bestWorstEls.bestBtn].forEach(function (btn) {
     btn.addEventListener('click', function (e) {
+      console.log('clicked');
       btn.parentElement.querySelectorAll('button').forEach(function (b) {
         return b.classList.remove('btn--tertiary--active');
       });
+      e.target.classList.add('btn--tertiary--active');
       handler(e.target.getAttribute('data-type'));
     });
   });
 };
 
 exports.addWorstBestRenderHandler = addWorstBestRenderHandler;
+
+var determineSign = function determineSign(data) {
+  if (type === 'worst') return -Math.abs(data);
+  return Math.abs(data);
+};
+
 var chartData = [];
 
-var renderWorstBestChart = function renderWorstBestChart() {
+var renderWorstBestChart = function renderWorstBestChart(passedData) {
   // ZONE - D3
+  var type, data;
+
+  if (passedData) {
+    type = passedData[0];
+    data = passedData[1];
+    clearWorstBestCanvas();
+  }
+
+  if (data) chartData = _toConsumableArray(data);else data = chartData;
   var canvasRect = bestWorstEls.bestWorstCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
@@ -4726,10 +4756,12 @@ var renderWorstBestChart = function renderWorstBestChart() {
     return d;
   });
   var yAxis = d3.axisLeft(y).ticks(6).tickFormat(function (d) {
-    return -Math.abs((0, _helpers.kFormatter)(d, 9999));
+    if (type === 'worst') return -Math.abs((0, _helpers.kFormatter)(d, 9999));
+    if (type === 'best') return Math.abs((0, _helpers.kFormatter)(d, 9999));
   }); // ZONE - update function
 
-  var updateWorstBestChart = function updateWorstBestChart(data) {
+  var updateWorstBestChart = function updateWorstBestChart() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : chartData;
     // sort the data based on result
     data.sort(function (a, b) {
       return b.result - a.result;
@@ -4774,7 +4806,7 @@ var renderWorstBestChart = function renderWorstBestChart() {
     var labelsGroup = graph.append('g');
 
     for (var i = 0; i < barsDimensions.length; i++) {
-      labelsGroup.append('text').text(-(0, _helpers.kFormatter)(data[i].result, 9999)).attr('class', 'worst-trades-label').attr('transform', "translate(".concat(barsDimensions[i][0], ", ").concat(barsDimensions[i][1] - 10, ")"));
+      labelsGroup.append('text').text((0, _helpers.kFormatter)(determineSign(data[i].result), 9999)).attr('class', "".concat(type === 'best' ? 'best' : 'worst', "-trades-label")).attr('transform', "translate(".concat(barsDimensions[i][0], ", ").concat(barsDimensions[i][1] - 10, ")"));
       labelsGroup.append('text').text(data[i].date).attr('class', 'worst-best-date').attr('transform', "translate(".concat(barsDimensions[i][0] - 8, ", ").concat(graphHeight - 10, ") rotate(-90)"));
     } // ZONE - create horizontal line on the x axis to cover the bars borders
 
@@ -4789,7 +4821,103 @@ var renderWorstBestChart = function renderWorstBestChart() {
 };
 
 exports.renderWorstBestChart = renderWorstBestChart;
-},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/models/chartWorstBestModel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.formatWorstBestData = void 0;
+var worstTrades = [{
+  id: '8gW2a5Q',
+  ticker: 'ZM',
+  result: 240,
+  date: '3/4/21'
+}, {
+  id: 'lK2G98Q',
+  ticker: 'MARA',
+  result: 173,
+  date: '3/5/21'
+}, {
+  id: 'K14Ji98',
+  ticker: 'BMBL',
+  result: 166,
+  date: '13/4/21'
+}, {
+  id: 'k98Ck9s',
+  ticker: 'X',
+  result: 130,
+  date: '26/3/21'
+}, {
+  id: '92Kji63',
+  ticker: 'SNAP',
+  result: 122,
+  date: '1/3/21'
+}, {
+  id: '8gW2a5Q',
+  ticker: 'GME',
+  result: 111,
+  date: '2/4/21'
+}, {
+  id: 'Sd8tr32',
+  ticker: 'MSFT',
+  result: 103,
+  date: '5/6/21'
+}, {
+  id: 'pa52Qs4',
+  ticker: 'ROKU',
+  result: 94,
+  date: '16/7/21'
+}];
+var bestTrades = [{
+  id: '8gW2a5Q',
+  ticker: 'ZM',
+  result: 440,
+  date: '30/4/21'
+}, {
+  id: 'lK2G98Q',
+  ticker: 'MARA',
+  result: 373,
+  date: '8/5/21'
+}, {
+  id: 'K14Ji98',
+  ticker: 'BMBL',
+  result: 366,
+  date: '8/4/21'
+}, {
+  id: 'k98Ck9s',
+  ticker: 'X',
+  result: 230,
+  date: '13/3/21'
+}, {
+  id: '92Kji63',
+  ticker: 'SNAP',
+  result: 222,
+  date: '16/3/21'
+}, {
+  id: '8gW2a5Q',
+  ticker: 'GME',
+  result: 117,
+  date: '6/4/21'
+}, {
+  id: 'Sd8tr32',
+  ticker: 'MSFT',
+  result: 109,
+  date: '2/6/21'
+}, {
+  id: 'pa52Qs4',
+  ticker: 'ROKU',
+  result: 104,
+  date: '18/7/21'
+}];
+
+var formatWorstBestData = function formatWorstBestData(type) {
+  if (type === 'worst') return ['worst', worstTrades];
+  if (type === 'best') return ['best', bestTrades];
+};
+
+exports.formatWorstBestData = formatWorstBestData;
+},{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _calculatorsView = require("./views/calculatorsView");
@@ -4813,6 +4941,8 @@ var _chartPerformanceView = require("./views/chartPerformanceView");
 var _chartPerformanceModel = require("./models/chartPerformanceModel");
 
 var _chartWorstBestView = require("./views/chartWorstBestView");
+
+var _chartWorstBestModel = require("./models/chartWorstBestModel");
 
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
@@ -4854,7 +4984,8 @@ var controlPerformanceRender = function controlPerformanceRender() {
 };
 
 var controlWorstBestRender = function controlWorstBestRender() {
-  (0, _chartWorstBestView.renderWorstBestChart)();
+  var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'worst';
+  (0, _chartWorstBestView.renderWorstBestChart)((0, _chartWorstBestModel.formatWorstBestData)(type));
 };
 
 var queryDOM = function queryDOM() {
@@ -4879,6 +5010,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
   (0, _chartPerformanceView.addPerformanceRenderHandler)(controlPerformanceRender);
+  (0, _chartWorstBestView.addWorstBestRenderHandler)(controlWorstBestRender);
 });
 var resizeTimer;
 window.addEventListener('resize', function (e) {
@@ -4890,7 +5022,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartWorstBestView.renderWorstBestChart)();
   }, 1000);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

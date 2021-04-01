@@ -71,18 +71,35 @@ export const clearWorstBestCanvas = function () {
 export const addWorstBestRenderHandler = function (handler) {
   [bestWorstEls.worstBtn, bestWorstEls.bestBtn].forEach(btn => {
     btn.addEventListener('click', e => {
+      console.log('clicked');
       btn.parentElement
         .querySelectorAll('button')
         .forEach(b => b.classList.remove('btn--tertiary--active'));
+      e.target.classList.add('btn--tertiary--active');
       handler(e.target.getAttribute('data-type'));
     });
   });
 };
 
+const determineSign = function (data) {
+  if (type === 'worst') return -Math.abs(data);
+  return Math.abs(data);
+};
+
 let chartData = [];
 
-export const renderWorstBestChart = function () {
+export const renderWorstBestChart = function (passedData) {
   // ZONE - D3
+
+  let type, data;
+  if (passedData) {
+    type = passedData[0];
+    data = passedData[1];
+    clearWorstBestCanvas();
+  }
+
+  if (data) chartData = [...data];
+  else data = chartData;
 
   const canvasRect = bestWorstEls.bestWorstCanvas.getBoundingClientRect();
 
@@ -128,10 +145,13 @@ export const renderWorstBestChart = function () {
   const yAxis = d3
     .axisLeft(y)
     .ticks(6)
-    .tickFormat(d => -Math.abs(kFormatter(d, 9999)));
+    .tickFormat(d => {
+      if (type === 'worst') return -Math.abs(kFormatter(d, 9999));
+      if (type === 'best') return Math.abs(kFormatter(d, 9999));
+    });
 
   // ZONE - update function
-  const updateWorstBestChart = function (data) {
+  const updateWorstBestChart = function (data = chartData) {
     // sort the data based on result
     data.sort((a, b) => b.result - a.result);
 
@@ -189,12 +209,13 @@ export const renderWorstBestChart = function () {
     for (let i = 0; i < barsDimensions.length; i++) {
       labelsGroup
         .append('text')
-        .text(-kFormatter(data[i].result, 9999))
-        .attr('class', 'worst-trades-label')
+        .text(kFormatter(determineSign(data[i].result), 9999))
+        .attr('class', `${type === 'best' ? 'best' : 'worst'}-trades-label`)
         .attr(
           'transform',
           `translate(${barsDimensions[i][0]}, ${barsDimensions[i][1] - 10})`
         );
+
       labelsGroup
         .append('text')
         .text(data[i].date)
