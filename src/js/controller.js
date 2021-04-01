@@ -27,11 +27,13 @@ import {
   queryPerformanceEls,
   renderPerformanceChart,
   addPerformanceRenderHandler,
+  clearPerformanceCanvas,
 } from './views/chartPerformanceView';
 import { formatPerformanceData } from './models/chartPerformanceModel';
 import {
   queryBestWorstEls,
   renderWorstBestChart,
+  clearWorstBestCanvas,
 } from './views/chartWorstBestView';
 
 // ZONE - controllers
@@ -108,6 +110,9 @@ let resizeTimer;
 window.addEventListener('resize', e => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
+    clearPerformanceCanvas();
+    clearWorstBestCanvas();
     renderPerformanceChart();
+    renderWorstBestChart();
   }, 1000);
 });

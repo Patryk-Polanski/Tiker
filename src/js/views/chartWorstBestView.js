@@ -62,6 +62,10 @@ export const queryBestWorstEls = function () {
   bestWorstEls = getElements();
 };
 
+export const clearWorstBestCanvas = function () {
+  bestWorstEls.bestWorstCanvas.innerHTML = '';
+};
+
 export const renderWorstBestChart = function () {
   // ZONE - D3
 
@@ -109,7 +113,7 @@ export const renderWorstBestChart = function () {
   const yAxis = d3
     .axisLeft(y)
     .ticks(6)
-    .tickFormat(d => kFormatter(d, 9999));
+    .tickFormat(d => -Math.abs(kFormatter(d, 9999)));
 
   // ZONE - update function
   const updateWorstBestChart = function (data) {
@@ -152,6 +156,56 @@ export const renderWorstBestChart = function () {
     // apply axes to axes groups
     xAxisGroup.call(xAxis);
     yAxisGroup.call(yAxis);
+
+    // ZONE - create bars labels
+    const bars = Array.from(
+      bestWorstEls.bestWorstCanvas.querySelectorAll('rect.worst-best-bars')
+    );
+    const barsDimensions = bars.map(bar => [
+      bar.getAttribute('x'),
+      bar.getAttribute('y'),
+      bar.getAttribute('width'),
+      bar.getAttribute('height'),
+    ]);
+    console.log(barsDimensions);
+
+    const labelsGroup = graph.append('g');
+
+    for (let i = 0; i < barsDimensions.length; i++) {
+      labelsGroup
+        .append('text')
+        .text(-kFormatter(data[i].result, 9999))
+        .attr('class', 'worst-trades-label')
+        .attr(
+          'transform',
+          `translate(${barsDimensions[i][0]}, ${barsDimensions[i][1] - 10})`
+        );
+      labelsGroup
+        .append('text')
+        .text(data[i].date)
+        .attr('class', 'worst-best-date')
+        .attr(
+          'transform',
+          `translate(${barsDimensions[i][0] - 8}, ${
+            graphHeight - 10
+          }) rotate(-90)`
+        );
+    }
+
+    // ZONE - create horizontal line on the x axis to cover the bars borders
+    const xOverlayLineGroup = graph.append('g');
+    xOverlayLineGroup
+      .append('line')
+      .attr('x1', 0)
+      .attr('x2', graphWidth)
+      .attr('y1', graphHeight)
+      .attr('y2', graphHeight)
+      .attr('class', 'worst-best-overlay-line');
+
+    // select x axis text and translate down every odd text to make space
+    xAxisGroup
+      .selectAll('g.tick:nth-child(odd) text')
+      .attr('transform', 'translate(0, 18)');
   };
   updateWorstBestChart(data);
 };

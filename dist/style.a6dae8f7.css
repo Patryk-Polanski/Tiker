@@ -300,6 +300,27 @@ input[type=number] {
   fill: rgba(55, 9, 67, 0.2);
 }
 
+.worst-trades-label {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+  font-size: 16px;
+  fill: #c4456f;
+}
+
+.worst-best-date {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+  font-size: 16px;
+  fill: #aaaaaa;
+}
+
+.worst-best-overlay-line {
+  stroke: #aaaaaa;
+  stroke-width: 2;
+}
+
 html {
   box-sizing: border-box;
   font-size: 65.5%;

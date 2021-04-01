@@ -57,3 +57,20 @@
   stroke-width: 2px;
   fill: rgba($purple-medium, 0.2);
 }
+
+.worst-trades-label {
+  @include ts-numerical;
+  font-size: 16px;
+  fill: $red-light;
+}
+
+.worst-best-date {
+  @include ts-numerical;
+  font-size: 16px;
+  fill: $grey-light;
+}
+
+.worst-best-overlay-line {
+  stroke: $grey-light;
+  stroke-width: 2;
+}

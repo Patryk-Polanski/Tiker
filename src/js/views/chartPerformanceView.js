@@ -35,11 +35,14 @@ const updatePerformanceHeading = function (type) {
   performanceEls.performanceHeading.querySelector('span').textContent = type;
 };
 
+export const clearPerformanceCanvas = function () {
+  performanceEls.performanceCanvas.innerHTML = '';
+};
+
 let chartData = [];
 
 export const renderPerformanceChart = function (testData) {
   // ZONE - D3
-  performanceEls.performanceCanvas.innerHTML = '';
 
   let type, data;
   if (testData) {

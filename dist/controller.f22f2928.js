@@ -278,7 +278,7 @@ exports.filterNonStrings = filterNonStrings;
 
 var kFormatter = function kFormatter(num) {
   var decimal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 999;
-  if (!num) return;
+  if (!num) return 0;
   return Math.abs(num) > decimal ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k' : Math.sign(num) * Math.abs(num);
 };
 
@@ -4291,7 +4291,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderPerformanceChart = exports.addPerformanceRenderHandler = exports.queryPerformanceEls = void 0;
+exports.renderPerformanceChart = exports.clearPerformanceCanvas = exports.addPerformanceRenderHandler = exports.queryPerformanceEls = void 0;
 
 var _d3Path = require("d3-path");
 
@@ -4346,11 +4346,15 @@ var updatePerformanceHeading = function updatePerformanceHeading(type) {
   performanceEls.performanceHeading.querySelector('span').textContent = type;
 };
 
+var clearPerformanceCanvas = function clearPerformanceCanvas() {
+  performanceEls.performanceCanvas.innerHTML = '';
+};
+
+exports.clearPerformanceCanvas = clearPerformanceCanvas;
 var chartData = [];
 
 var renderPerformanceChart = function renderPerformanceChart(testData) {
   // ZONE - D3
-  performanceEls.performanceCanvas.innerHTML = '';
   var type, data;
 
   if (testData) {
@@ -4612,7 +4616,7 @@ exports.formatPerformanceData = formatPerformanceData;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderWorstBestChart = exports.queryBestWorstEls = void 0;
+exports.renderWorstBestChart = exports.clearWorstBestCanvas = exports.queryBestWorstEls = void 0;
 
 var _helpers = require("../helpers");
 
@@ -4671,6 +4675,12 @@ var queryBestWorstEls = function queryBestWorstEls() {
 
 exports.queryBestWorstEls = queryBestWorstEls;
 
+var clearWorstBestCanvas = function clearWorstBestCanvas() {
+  bestWorstEls.bestWorstCanvas.innerHTML = '';
+};
+
+exports.clearWorstBestCanvas = clearWorstBestCanvas;
+
 var renderWorstBestChart = function renderWorstBestChart() {
   // ZONE - D3
   var canvasRect = bestWorstEls.bestWorstCanvas.getBoundingClientRect(); // create room for axes
@@ -4700,7 +4710,7 @@ var renderWorstBestChart = function renderWorstBestChart() {
     return d;
   });
   var yAxis = d3.axisLeft(y).ticks(6).tickFormat(function (d) {
-    return (0, _helpers.kFormatter)(d, 9999);
+    return -Math.abs((0, _helpers.kFormatter)(d, 9999));
   }); // ZONE - update function
 
   var updateWorstBestChart = function updateWorstBestChart(data) {
@@ -4738,7 +4748,25 @@ var renderWorstBestChart = function renderWorstBestChart() {
     }).attr('class', 'worst-best-bars'); // apply axes to axes groups
 
     xAxisGroup.call(xAxis);
-    yAxisGroup.call(yAxis);
+    yAxisGroup.call(yAxis); // ZONE - create bars labels
+
+    var bars = Array.from(bestWorstEls.bestWorstCanvas.querySelectorAll('rect.worst-best-bars'));
+    var barsDimensions = bars.map(function (bar) {
+      return [bar.getAttribute('x'), bar.getAttribute('y'), bar.getAttribute('width'), bar.getAttribute('height')];
+    });
+    console.log(barsDimensions);
+    var labelsGroup = graph.append('g');
+
+    for (var i = 0; i < barsDimensions.length; i++) {
+      labelsGroup.append('text').text(-(0, _helpers.kFormatter)(data[i].result, 9999)).attr('class', 'worst-trades-label').attr('transform', "translate(".concat(barsDimensions[i][0], ", ").concat(barsDimensions[i][1] - 10, ")"));
+      labelsGroup.append('text').text(data[i].date).attr('class', 'worst-best-date').attr('transform', "translate(".concat(barsDimensions[i][0] - 8, ", ").concat(graphHeight - 10, ") rotate(-90)"));
+    } // ZONE - create horizontal line on the x axis to cover the bars borders
+
+
+    var xOverlayLineGroup = graph.append('g');
+    xOverlayLineGroup.append('line').attr('x1', 0).attr('x2', graphWidth).attr('y1', graphHeight).attr('y2', graphHeight).attr('class', 'worst-best-overlay-line'); // select x axis text and translate down every odd text to make space
+
+    xAxisGroup.selectAll('g.tick:nth-child(odd) text').attr('transform', 'translate(0, 18)');
   };
 
   updateWorstBestChart(data);
@@ -4840,7 +4868,10 @@ var resizeTimer;
 window.addEventListener('resize', function (e) {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(function () {
+    (0, _chartPerformanceView.clearPerformanceCanvas)();
+    (0, _chartWorstBestView.clearWorstBestCanvas)();
     (0, _chartPerformanceView.renderPerformanceChart)();
+    (0, _chartWorstBestView.renderWorstBestChart)();
   }, 1000);
 });
 },{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
