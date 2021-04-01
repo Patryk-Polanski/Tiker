@@ -4699,7 +4699,6 @@ exports.clearWorstBestCanvas = clearWorstBestCanvas;
 var addWorstBestRenderHandler = function addWorstBestRenderHandler(handler) {
   [bestWorstEls.worstBtn, bestWorstEls.bestBtn].forEach(function (btn) {
     btn.addEventListener('click', function (e) {
-      console.log('clicked');
       btn.parentElement.querySelectorAll('button').forEach(function (b) {
         return b.classList.remove('btn--tertiary--active');
       });
@@ -4710,12 +4709,6 @@ var addWorstBestRenderHandler = function addWorstBestRenderHandler(handler) {
 };
 
 exports.addWorstBestRenderHandler = addWorstBestRenderHandler;
-
-var determineSign = function determineSign(data) {
-  if (type === 'worst') return -Math.abs(data);
-  return Math.abs(data);
-};
-
 var chartData = [];
 
 var renderWorstBestChart = function renderWorstBestChart(passedData) {
@@ -4729,6 +4722,12 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
   }
 
   if (data) chartData = _toConsumableArray(data);else data = chartData;
+
+  var determineSign = function determineSign(data) {
+    if (type === 'worst') return -Math.abs(data);
+    return Math.abs(data);
+  };
+
   var canvasRect = bestWorstEls.bestWorstCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
@@ -4738,9 +4737,7 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
     left: 50
   };
   var graphWidth = canvasRect.width - margin.left - margin.right;
-  var graphHeight = canvasRect.height - margin.top - margin.bottom;
-  console.log('THIS IS THE GRAPH WIDTH');
-  console.log(graphWidth); // create svg container, specify width & height, translate to create room for axes labels
+  var graphHeight = canvasRect.height - margin.top - margin.bottom; // create svg container, specify width & height, translate to create room for axes labels
 
   var svg = d3.select('.js-worst-best-canvas').append('svg').attr('class', 'worst-best-canvas').attr('viewBox', "0 0 ".concat(canvasRect.width, " ").concat(canvasRect.height)); // create graph for the elements and append it to our svg
 
@@ -4802,7 +4799,6 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
     var barsDimensions = bars.map(function (bar) {
       return [bar.getAttribute('x'), bar.getAttribute('y'), bar.getAttribute('width'), bar.getAttribute('height')];
     });
-    console.log(barsDimensions);
     var labelsGroup = graph.append('g');
 
     for (var i = 0; i < barsDimensions.length; i++) {
@@ -5050,7 +5046,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57483" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59911" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

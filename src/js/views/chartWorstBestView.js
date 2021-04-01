@@ -71,7 +71,6 @@ export const clearWorstBestCanvas = function () {
 export const addWorstBestRenderHandler = function (handler) {
   [bestWorstEls.worstBtn, bestWorstEls.bestBtn].forEach(btn => {
     btn.addEventListener('click', e => {
-      console.log('clicked');
       btn.parentElement
         .querySelectorAll('button')
         .forEach(b => b.classList.remove('btn--tertiary--active'));
@@ -79,11 +78,6 @@ export const addWorstBestRenderHandler = function (handler) {
       handler(e.target.getAttribute('data-type'));
     });
   });
-};
-
-const determineSign = function (data) {
-  if (type === 'worst') return -Math.abs(data);
-  return Math.abs(data);
 };
 
 let chartData = [];
@@ -101,15 +95,17 @@ export const renderWorstBestChart = function (passedData) {
   if (data) chartData = [...data];
   else data = chartData;
 
+  const determineSign = function (data) {
+    if (type === 'worst') return -Math.abs(data);
+    return Math.abs(data);
+  };
+
   const canvasRect = bestWorstEls.bestWorstCanvas.getBoundingClientRect();
 
   // create room for axes
   const margin = { top: 25, right: 20, bottom: 50, left: 50 };
   const graphWidth = canvasRect.width - margin.left - margin.right;
   const graphHeight = canvasRect.height - margin.top - margin.bottom;
-
-  console.log('THIS IS THE GRAPH WIDTH');
-  console.log(graphWidth);
 
   // create svg container, specify width & height, translate to create room for axes labels
   const svg = d3
@@ -202,7 +198,6 @@ export const renderWorstBestChart = function (passedData) {
       bar.getAttribute('width'),
       bar.getAttribute('height'),
     ]);
-    console.log(barsDimensions);
 
     const labelsGroup = graph.append('g');
 
