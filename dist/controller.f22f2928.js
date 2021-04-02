@@ -710,7 +710,7 @@ exports.renderProfitableTable = renderProfitableTable;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderLongShortPie = exports.renderStreaks = exports.queryOverallEls = void 0;
+exports.renderLongShortPie = exports.renderStreaks = exports.clearLongShortCanvas = exports.queryOverallEls = void 0;
 
 var _helpers = require("../helpers");
 
@@ -735,6 +735,12 @@ var queryOverallEls = function queryOverallEls() {
 
 exports.queryOverallEls = queryOverallEls;
 
+var clearLongShortCanvas = function clearLongShortCanvas() {
+  overallEls.shortLongCanvas.innerHTML = '';
+};
+
+exports.clearLongShortCanvas = clearLongShortCanvas;
+
 var renderStreaks = function renderStreaks(data) {
   overallEls.winStreakTotal.textContent = data.wins.trades.length;
   overallEls.winStreakProfit.textContent = data.wins.trades.map(function (trade) {
@@ -754,8 +760,16 @@ var renderStreaks = function renderStreaks(data) {
 
 
 exports.renderStreaks = renderStreaks;
+var pieData = [];
 
-var renderLongShortPie = function renderLongShortPie(tradesNo) {
+var renderLongShortPie = function renderLongShortPie(passedData) {
+  if (passedData) {
+    pieData = passedData;
+    clearLongShortCanvas();
+  } else {
+    passedData = pieData;
+  }
+
   var canvasRect = overallEls.shortLongCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
@@ -771,20 +785,27 @@ var renderLongShortPie = function renderLongShortPie(tradesNo) {
     x: graphWidth / 2,
     y: graphHeight / 2
   };
-  var totalTrades = tradesNo[0].total + tradesNo[1].total;
+  var totalTrades;
+
+  if (passedData[1]) {
+    totalTrades = passedData[0].total + passedData[1].total;
+  } else {
+    totalTrades = passedData[0];
+  }
+
   var svg = d3.select('.js-pie-canvas').append('svg').attr('width', '100%').attr('height', graphHeight); // create a group to contain all graph elements
 
-  var graph = svg.append('g').attr('transform', "translate(".concat(graphRadius + 5, ", ").concat(graphCenter.y, ")"));
+  var graph = svg.append('g').attr('transform', "translate(".concat(graphCenter.x, ", ").concat(graphCenter.y, ")"));
   var pie = d3.pie().sort(null).value(function (d) {
     return d.total;
   }); // arc generator needs to know the start and end angles, which is why we created the pie function
 
   var arcPath = d3.arc().outerRadius(graphRadius).innerRadius(graphRadius / 4); // ZONE - update function
 
-  var updateLongShortPie = function updateLongShortPie(tradesNo) {
+  var updateLongShortPie = function updateLongShortPie(passedData) {
     // join enhanced pie data to path elements
-    var paths = graph.selectAll('path').data(pie(tradesNo));
-    console.log(tradesNo);
+    var paths = graph.selectAll('path').data(pie(passedData));
+    console.log(passedData);
     console.log(paths.enter()); // remove unwanted paths
 
     paths.exit().remove(); // enter elements
@@ -794,7 +815,7 @@ var renderLongShortPie = function renderLongShortPie(tradesNo) {
     paths.attr('d', arcPath);
   };
 
-  updateLongShortPie(tradesNo);
+  updateLongShortPie(passedData);
 };
 
 exports.renderLongShortPie = renderLongShortPie;
@@ -4727,11 +4748,12 @@ var addWorstBestRenderHandler = function addWorstBestRenderHandler(handler) {
       handler(e.target.getAttribute('data-type'));
     });
   });
-};
+}; // ZONE - D3
+
 
 exports.addWorstBestRenderHandler = addWorstBestRenderHandler;
 var chartData = [];
-var chartType; // ZONE - D3
+var chartType;
 
 var renderWorstBestChart = function renderWorstBestChart(passedData) {
   var type, data;
@@ -5044,8 +5066,10 @@ window.addEventListener('resize', function (e) {
   resizeTimer = setTimeout(function () {
     (0, _chartPerformanceView.clearPerformanceCanvas)();
     (0, _chartWorstBestView.clearWorstBestCanvas)();
+    (0, _chartOverallView.clearLongShortCanvas)();
     (0, _chartPerformanceView.renderPerformanceChart)();
     (0, _chartWorstBestView.renderWorstBestChart)();
+    (0, _chartOverallView.renderLongShortPie)();
   }, 1000);
 });
 },{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {

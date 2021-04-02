@@ -29,10 +29,10 @@ export const addWorstBestRenderHandler = function (handler) {
   });
 };
 
+// ZONE - D3
 let chartData = [];
 let chartType;
 
-// ZONE - D3
 export const renderWorstBestChart = function (passedData) {
   let type, data;
   if (passedData) {

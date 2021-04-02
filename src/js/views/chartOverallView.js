@@ -24,6 +24,10 @@ export const queryOverallEls = function () {
   overallEls = getElements();
 };
 
+export const clearLongShortCanvas = function () {
+  overallEls.shortLongCanvas.innerHTML = '';
+};
+
 export const renderStreaks = function (data) {
   overallEls.winStreakTotal.textContent = data.wins.trades.length;
   overallEls.winStreakProfit.textContent = data.wins.trades
@@ -43,7 +47,16 @@ export const renderStreaks = function (data) {
 };
 
 // ZONE - D3
-export const renderLongShortPie = function (tradesNo) {
+let pieData = [];
+
+export const renderLongShortPie = function (passedData) {
+  if (passedData) {
+    pieData = passedData;
+    clearLongShortCanvas();
+  } else {
+    passedData = pieData;
+  }
+
   const canvasRect = overallEls.shortLongCanvas.getBoundingClientRect();
 
   // create room for axes
@@ -52,7 +65,12 @@ export const renderLongShortPie = function (tradesNo) {
   const graphHeight = canvasRect.height - margin.top - margin.bottom;
   const graphRadius = canvasRect.height / 2.4;
   const graphCenter = { x: graphWidth / 2, y: graphHeight / 2 };
-  const totalTrades = tradesNo[0].total + tradesNo[1].total;
+  let totalTrades;
+  if (passedData[1]) {
+    totalTrades = passedData[0].total + passedData[1].total;
+  } else {
+    totalTrades = passedData[0];
+  }
 
   const svg = d3
     .select('.js-pie-canvas')
@@ -63,7 +81,7 @@ export const renderLongShortPie = function (tradesNo) {
   // create a group to contain all graph elements
   const graph = svg
     .append('g')
-    .attr('transform', `translate(${graphRadius + 5}, ${graphCenter.y})`);
+    .attr('transform', `translate(${graphCenter.x}, ${graphCenter.y})`);
 
   const pie = d3
     .pie()
@@ -77,10 +95,10 @@ export const renderLongShortPie = function (tradesNo) {
     .innerRadius(graphRadius / 4);
 
   // ZONE - update function
-  const updateLongShortPie = function (tradesNo) {
+  const updateLongShortPie = function (passedData) {
     // join enhanced pie data to path elements
-    const paths = graph.selectAll('path').data(pie(tradesNo));
-    console.log(tradesNo);
+    const paths = graph.selectAll('path').data(pie(passedData));
+    console.log(passedData);
     console.log(paths.enter());
 
     // remove unwanted paths
@@ -96,5 +114,5 @@ export const renderLongShortPie = function (tradesNo) {
     // existing DOM elements
     paths.attr('d', arcPath);
   };
-  updateLongShortPie(tradesNo);
+  updateLongShortPie(passedData);
 };

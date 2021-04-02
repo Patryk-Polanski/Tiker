@@ -24,6 +24,7 @@ import {
   queryOverallEls,
   renderStreaks,
   renderLongShortPie,
+  clearLongShortCanvas,
 } from './views/chartOverallView';
 import { computeMonthlyData } from './models/tableMonthlyModel';
 import { checkAgainstLeaders } from './models/tableProfitableModel';
@@ -124,7 +125,9 @@ window.addEventListener('resize', e => {
   resizeTimer = setTimeout(() => {
     clearPerformanceCanvas();
     clearWorstBestCanvas();
+    clearLongShortCanvas();
     renderPerformanceChart();
     renderWorstBestChart();
+    renderLongShortPie();
   }, 1000);
 });
