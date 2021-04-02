@@ -1374,15 +1374,53 @@ body {
   color: #c4456f;
   border: 2px solid #c4456f;
 }
-.c-pie-streak__canvas {
+.c-pie-streak__visualisation-wrapper {
   height: 150px;
-  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+@media only screen and (max-width: 75em) {
+  .c-pie-streak__visualisation-wrapper {
+    flex-direction: column;
+    height: 250px;
+  }
+}
+.c-pie-streak__canvas {
+  height: 100%;
+  width: 50%;
   background-color: #080808;
+  justify-self: flex-start;
 }
 @media only screen and (max-width: 75em) {
   .c-pie-streak__canvas {
-    height: 200px;
+    width: 100%;
   }
+}
+.c-pie-streak__legend-wrapper {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: left;
+  justify-self: flex-end;
+}
+@media only screen and (max-width: 75em) {
+  .c-pie-streak__legend-wrapper {
+    flex-direction: row;
+    width: 100%;
+  }
+}
+.c-pie-streak__legend-long-wrapper, .c-pie-streak__legend-short-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.c-pie-streak__legend-long-label, .c-pie-streak__legend-long-numbers, .c-pie-streak__legend-short-label, .c-pie-streak__legend-short-numbers {
+  font-family: "Roboto", sans-serif;
+  color: #aaaaaa;
+  font-weight: 400;
+}
+.c-pie-streak__legend-long-numbers, .c-pie-streak__legend-short-numbers {
+  margin-top: 10px;
 }
 .c-pie-streak__win-wrapper, .c-pie-streak__loss-wrapper {
   margin-top: 14px;

@@ -95,32 +95,6 @@ export const renderLongShortPie = function (tradesNo) {
 
     // existing DOM elements
     paths.attr('d', arcPath);
-
-    // ZONE - create legend
-    const legendGroup = graph.append('g').attr('class', 'pie-chart-legend');
-
-    let yCoords = 0;
-    for (let i = 0; i < tradesNo.length; i++) {
-      legendGroup
-        .append('text')
-        .text(`${tradesNo[i].side} positions`)
-        .attr('class', 'long-short-pie')
-        .attr('fill', '#fff')
-        .attr('transform', `translate(0, ${yCoords})`);
-      yCoords += 25;
-
-      legendGroup
-        .append('text')
-        .text(
-          `${kFormatter(tradesNo[i].total, 9999)} - ${Math.round(
-            (tradesNo[i].total / totalTrades) * 100
-          )}%`
-        )
-        .attr('class', 'long-short-pie')
-        .attr('fill', '#fff')
-        .attr('transform', `translate(0, ${yCoords})`);
-      yCoords += 40;
-    }
   };
   updateLongShortPie(tradesNo);
 };

@@ -70,14 +70,58 @@
     border: 2px solid $red-light;
   }
 
-  &__canvas {
+  &__visualisation-wrapper {
     height: 150px;
-    width: 100%;
-    background-color: $grey-dark;
+    display: flex;
+    justify-content: flex-start;
 
     @media only screen and (max-width: $bp-large) {
-      height: 200px;
+      flex-direction: column;
+      height: 250px;
     }
+  }
+
+  &__canvas {
+    height: 100%;
+    width: 50%;
+    background-color: $grey-dark;
+    justify-self: flex-start;
+
+    @media only screen and (max-width: $bp-large) {
+      width: 100%;
+    }
+  }
+
+  &__legend-wrapper {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: left;
+    justify-self: flex-end;
+
+    @media only screen and (max-width: $bp-large) {
+      flex-direction: row;
+      width: 100%;
+    }
+  }
+
+  &__legend-long-wrapper,
+  &__legend-short-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__legend-long-label,
+  &__legend-long-numbers,
+  &__legend-short-label,
+  &__legend-short-numbers {
+    @include ts-numerical;
+  }
+
+  &__legend-long-numbers,
+  &__legend-short-numbers {
+    margin-top: 10px;
   }
 
   &__win-wrapper,

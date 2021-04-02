@@ -791,17 +791,7 @@ var renderLongShortPie = function renderLongShortPie(tradesNo) {
 
     paths.enter().append('path').attr('class', 'pie-section').attr('d', arcPath); // existing DOM elements
 
-    paths.attr('d', arcPath); // ZONE - create legend
-
-    var legendGroup = graph.append('g').attr('class', 'pie-chart-legend');
-    var yCoords = 0;
-
-    for (var i = 0; i < tradesNo.length; i++) {
-      legendGroup.append('text').text("".concat(tradesNo[i].side, " positions")).attr('class', 'long-short-pie').attr('fill', '#fff').attr('transform', "translate(0, ".concat(yCoords, ")"));
-      yCoords += 25;
-      legendGroup.append('text').text("".concat((0, _helpers.kFormatter)(tradesNo[i].total, 9999), " - ").concat(Math.round(tradesNo[i].total / totalTrades * 100), "%")).attr('class', 'long-short-pie').attr('fill', '#fff').attr('transform', "translate(0, ".concat(yCoords, ")"));
-      yCoords += 40;
-    }
+    paths.attr('d', arcPath);
   };
 
   updateLongShortPie(tradesNo);
@@ -5086,7 +5076,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63334" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54241" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
