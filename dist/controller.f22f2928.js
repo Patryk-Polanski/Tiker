@@ -4385,7 +4385,8 @@ var clearPerformanceCanvas = function clearPerformanceCanvas() {
 };
 
 exports.clearPerformanceCanvas = clearPerformanceCanvas;
-var chartData = []; // ZONE - D3
+var chartData = [];
+var chartType; // ZONE - D3
 
 var renderPerformanceChart = function renderPerformanceChart(passedData) {
   var type, data;
@@ -4397,7 +4398,14 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
     clearPerformanceCanvas();
   }
 
-  if (data) chartData = _toConsumableArray(data);else data = chartData;
+  if (data) {
+    chartData = _toConsumableArray(data), chartType = type;
+  } else {
+    data = chartData, type = chartType;
+  }
+
+  console.log('THIS IS THE CHART DATA');
+  console.log(chartData);
   var canvasRect = performanceEls.performanceCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
@@ -4701,7 +4709,8 @@ var addWorstBestRenderHandler = function addWorstBestRenderHandler(handler) {
 };
 
 exports.addWorstBestRenderHandler = addWorstBestRenderHandler;
-var chartData = []; // ZONE - D3
+var chartData = [];
+var chartType; // ZONE - D3
 
 var renderWorstBestChart = function renderWorstBestChart(passedData) {
   var type, data;
@@ -4712,7 +4721,11 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
     clearWorstBestCanvas();
   }
 
-  if (data) chartData = _toConsumableArray(data);else data = chartData;
+  if (data) {
+    chartData = _toConsumableArray(data), chartType = type;
+  } else {
+    data = chartData, type = chartType;
+  }
 
   var determineSign = function determineSign(data) {
     if (type === 'worst') return -Math.abs(data);

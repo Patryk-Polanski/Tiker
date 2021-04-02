@@ -40,6 +40,7 @@ export const clearPerformanceCanvas = function () {
 };
 
 let chartData = [];
+let chartType;
 
 // ZONE - D3
 export const renderPerformanceChart = function (passedData) {
@@ -50,8 +51,14 @@ export const renderPerformanceChart = function (passedData) {
     updatePerformanceHeading(type);
     clearPerformanceCanvas();
   }
-  if (data) chartData = [...data];
-  else data = chartData;
+  if (data) {
+    (chartData = [...data]), (chartType = type);
+  } else {
+    (data = chartData), (type = chartType);
+  }
+
+  console.log('THIS IS THE CHART DATA');
+  console.log(chartData);
 
   const canvasRect = performanceEls.performanceCanvas.getBoundingClientRect();
 

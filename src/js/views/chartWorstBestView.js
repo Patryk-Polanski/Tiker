@@ -30,6 +30,7 @@ export const addWorstBestRenderHandler = function (handler) {
 };
 
 let chartData = [];
+let chartType;
 
 // ZONE - D3
 export const renderWorstBestChart = function (passedData) {
@@ -40,8 +41,11 @@ export const renderWorstBestChart = function (passedData) {
     clearWorstBestCanvas();
   }
 
-  if (data) chartData = [...data];
-  else data = chartData;
+  if (data) {
+    (chartData = [...data]), (chartType = type);
+  } else {
+    (data = chartData), (type = chartType);
+  }
 
   const determineSign = function (data) {
     if (type === 'worst') return -Math.abs(data);
