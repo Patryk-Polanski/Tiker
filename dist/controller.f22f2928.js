@@ -311,8 +311,13 @@ var user = {
   capital: 7000,
   overall: {
     total: 723,
-    long: 395,
-    short: 328
+    proportions: [{
+      side: 'long',
+      total: 395
+    }, {
+      side: 'short',
+      total: 328
+    }]
   },
   streaks: {
     wins: {
@@ -750,6 +755,23 @@ exports.renderStreaks = renderStreaks;
 var renderLongShortPie = function renderLongShortPie(tradesNo) {
   console.log('THIS IS IT!');
   console.log(tradesNo);
+  var canvasRect = overallEls.shortLongCanvas.getBoundingClientRect(); // create room for axes
+
+  var margin = {
+    top: 25,
+    right: 20,
+    bottom: 50,
+    left: 50
+  };
+  var graphWidth = canvasRect.width - margin.left - margin.right;
+  var graphHeight = canvasRect.height - margin.top - margin.bottom;
+  var graphRadius = canvasRect.height / 2;
+  var svg = d3.select('.js-pie-canvas').append('svg').attr('width', graphWidth).attr('height', graphHeight); // create a group to contain all graph elements
+
+  var graph = svg.append('g');
+  var pie = d3.pie().sort(null).value(function (d) {
+    return d.total;
+  });
 };
 
 exports.renderLongShortPie = renderLongShortPie;
@@ -4710,7 +4732,7 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
 
   var svg = d3.select('.js-worst-best-canvas').append('svg').attr('class', 'worst-best-canvas').attr('viewBox', "0 0 ".concat(canvasRect.width, " ").concat(canvasRect.height)); // create graph for the elements and append it to our svg
 
-  var graph = svg.append('g').attr('width', '600').attr('height', graphHeight).attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); // create scales
+  var graph = svg.append('g').attr('width', graphWidth).attr('height', graphHeight).attr('transform', "translate(".concat(margin.left, ", ").concat(margin.top, ")")); // create scales
 
   var y = d3.scaleLinear().range([graphHeight, 0]);
   var x = d3.scaleBand().range([0, graphWidth]).paddingInner(0.5).paddingOuter(0.5); // create a group for the x and y axis
@@ -5020,7 +5042,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59911" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63334" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

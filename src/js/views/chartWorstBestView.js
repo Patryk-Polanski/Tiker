@@ -65,7 +65,7 @@ export const renderWorstBestChart = function (passedData) {
   // create graph for the elements and append it to our svg
   const graph = svg
     .append('g')
-    .attr('width', '600')
+    .attr('width', graphWidth)
     .attr('height', graphHeight)
     .attr('transform', `translate(${margin.left}, ${margin.top})`);
 

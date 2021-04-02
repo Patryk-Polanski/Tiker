@@ -4,8 +4,10 @@ const user = {
   capital: 7000,
   overall: {
     total: 723,
-    long: 395,
-    short: 328,
+    proportions: [
+      { side: 'long', total: 395 },
+      { side: 'short', total: 328 },
+    ],
   },
   streaks: {
     wins: {

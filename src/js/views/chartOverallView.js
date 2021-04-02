@@ -44,4 +44,26 @@ export const renderStreaks = function (data) {
 export const renderLongShortPie = function (tradesNo) {
   console.log('THIS IS IT!');
   console.log(tradesNo);
+
+  const canvasRect = overallEls.shortLongCanvas.getBoundingClientRect();
+
+  // create room for axes
+  const margin = { top: 25, right: 20, bottom: 50, left: 50 };
+  const graphWidth = canvasRect.width - margin.left - margin.right;
+  const graphHeight = canvasRect.height - margin.top - margin.bottom;
+  const graphRadius = canvasRect.height / 2;
+
+  const svg = d3
+    .select('.js-pie-canvas')
+    .append('svg')
+    .attr('width', graphWidth)
+    .attr('height', graphHeight);
+
+  // create a group to contain all graph elements
+  const graph = svg.append('g');
+
+  const pie = d3
+    .pie()
+    .sort(null)
+    .value(d => d.total);
 };
