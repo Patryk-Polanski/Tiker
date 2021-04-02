@@ -753,25 +753,44 @@ var renderStreaks = function renderStreaks(data) {
 exports.renderStreaks = renderStreaks;
 
 var renderLongShortPie = function renderLongShortPie(tradesNo) {
-  console.log('THIS IS IT!');
-  console.log(tradesNo);
   var canvasRect = overallEls.shortLongCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
-    top: 25,
-    right: 20,
-    bottom: 50,
-    left: 50
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
   };
   var graphWidth = canvasRect.width - margin.left - margin.right;
   var graphHeight = canvasRect.height - margin.top - margin.bottom;
-  var graphRadius = canvasRect.height / 2;
+  var graphRadius = canvasRect.height / 2.2;
+  var graphCenter = {
+    x: graphWidth / 2,
+    y: graphHeight / 2
+  };
   var svg = d3.select('.js-pie-canvas').append('svg').attr('width', graphWidth).attr('height', graphHeight); // create a group to contain all graph elements
 
-  var graph = svg.append('g');
+  var graph = svg.append('g').attr('transform', "translate(".concat(graphRadius + 5, ", ").concat(graphCenter.y, ")"));
   var pie = d3.pie().sort(null).value(function (d) {
     return d.total;
-  });
+  }); // arc generator needs to know the start and end angles, which is why we created the pie function
+
+  var arcPath = d3.arc().outerRadius(graphRadius).innerRadius(graphRadius / 4); // ZONE - update function
+
+  var updateLongShortPie = function updateLongShortPie(tradesNo) {
+    // join enhanced pie data to path elements
+    var paths = graph.selectAll('path').data(pie(tradesNo));
+    console.log(tradesNo);
+    console.log(paths.enter()); // remove unwanted paths
+
+    paths.exit().remove(); // enter elements
+
+    paths.enter().append('path').attr('class', 'pie-section').attr('d', arcPath).attr('stroke', '#fff').attr('stroke-width', 3).attr('fill', 'pink'); // existing DOM elements
+
+    paths.attr('d', arcPath);
+  };
+
+  updateLongShortPie(tradesNo);
 };
 
 exports.renderLongShortPie = renderLongShortPie;
@@ -4404,8 +4423,6 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
     data = chartData, type = chartType;
   }
 
-  console.log('THIS IS THE CHART DATA');
-  console.log(chartData);
   var canvasRect = performanceEls.performanceCanvas.getBoundingClientRect(); // create room for axes
 
   var margin = {
@@ -4989,7 +5006,7 @@ var controlWorstBestRender = function controlWorstBestRender() {
 };
 
 var controlLongShortPie = function controlLongShortPie() {
-  (0, _chartOverallView.renderLongShortPie)((0, _dataModel.passData)('overall'));
+  (0, _chartOverallView.renderLongShortPie)((0, _dataModel.passData)('overall').proportions);
 };
 
 var queryDOM = function queryDOM() {

@@ -294,7 +294,8 @@ input[type=number] {
   fill: #c4456f;
 }
 
-.worst-best-bars {
+.worst-best-bars,
+.pie-section {
   stroke: #762e88;
   stroke-width: 2px;
   fill: rgba(55, 9, 67, 0.2);

@@ -52,7 +52,8 @@
   fill: $red-light;
 }
 
-.worst-best-bars {
+.worst-best-bars,
+.pie-section {
   stroke: $purple-light;
   stroke-width: 2px;
   fill: rgba($purple-medium, 0.2);

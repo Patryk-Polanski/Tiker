@@ -57,9 +57,6 @@ export const renderPerformanceChart = function (passedData) {
     (data = chartData), (type = chartType);
   }
 
-  console.log('THIS IS THE CHART DATA');
-  console.log(chartData);
-
   const canvasRect = performanceEls.performanceCanvas.getBoundingClientRect();
 
   // create room for axes

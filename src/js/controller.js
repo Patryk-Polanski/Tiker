@@ -88,7 +88,7 @@ const controlWorstBestRender = function (type = 'worst') {
 };
 
 const controlLongShortPie = function () {
-  renderLongShortPie(passData('overall'));
+  renderLongShortPie(passData('overall').proportions);
 };
 
 const queryDOM = function () {
