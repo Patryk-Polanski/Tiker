@@ -98,8 +98,6 @@ export const renderLongShortPie = function (passedData) {
   const updateLongShortPie = function (passedData) {
     // join enhanced pie data to path elements
     const paths = graph.selectAll('path').data(pie(passedData));
-    console.log(passedData);
-    console.log(paths.enter());
 
     // remove unwanted paths
     paths.exit().remove();

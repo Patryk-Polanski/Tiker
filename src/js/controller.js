@@ -42,11 +42,17 @@ import {
   addWorstBestRenderHandler,
 } from './views/chartWorstBestView';
 import { formatWorstBestData } from './models/chartWorstBestModel';
+import {
+  queryDetailsEls,
+  updateCapitalOutput,
+} from './views/accountDetailsView';
 
 // ZONE - controllers
 
 const controlCalcCapital = function (amount, action) {
-  renderCapitalMessage(updateCapital(amount, action));
+  const capitalData = updateCapital(amount, action);
+  renderCapitalMessage(capitalData);
+  updateCapitalOutput(capitalData);
 };
 
 const controlCalcPosition = function (data) {
@@ -99,6 +105,7 @@ const queryDOM = function () {
   queryOverallEls();
   queryPerformanceEls();
   queryBestWorstEls();
+  queryDetailsEls();
 };
 
 // ZONE - event listeners

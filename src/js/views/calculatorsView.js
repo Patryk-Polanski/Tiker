@@ -59,7 +59,6 @@ export const addCalcCapitalHandler = function (handler) {
       </svg>
       `;
       calculatorEls.capitalSign.setAttribute('data-action', 'minus');
-      console.log(calculatorEls.capitalSign);
     } else {
       calculatorEls.capitalSign.innerHTML = `
       <svg class="svg svg--plus" viewBox="0 0 13 13"
@@ -69,7 +68,6 @@ export const addCalcCapitalHandler = function (handler) {
       </svg>
       `;
       calculatorEls.capitalSign.setAttribute('data-action', 'plus');
-      console.log(calculatorEls.capitalSign);
     }
   });
 };

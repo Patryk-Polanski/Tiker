@@ -168,11 +168,9 @@ var addCalcCapitalHandler = function addCalcCapitalHandler(handler) {
     if (e.target.previousElementSibling.getAttribute('data-action') === 'plus') {
       calculatorEls.capitalSign.innerHTML = "\n      <svg class=\"svg svg--minus\" viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\">\n        <rect y=\"5\" width=\"13\" height=\"3\" fill=\"#C4C4C4\"/>\n      </svg>\n      ";
       calculatorEls.capitalSign.setAttribute('data-action', 'minus');
-      console.log(calculatorEls.capitalSign);
     } else {
       calculatorEls.capitalSign.innerHTML = "\n      <svg class=\"svg svg--plus\" viewBox=\"0 0 13 13\"\n        xmlns=\"http://www.w3.org/2000/svg\">\n        <rect y=\"5\" width=\"13\" height=\"3\" fill=\"#C4C4C4\" />\n        <rect x=\"8\" width=\"13\" height=\"3\" transform=\"rotate(90 8 0)\" fill=\"#C4C4C4\" />\n      </svg>\n      ";
       calculatorEls.capitalSign.setAttribute('data-action', 'plus');
-      console.log(calculatorEls.capitalSign);
     }
   });
 };
@@ -551,10 +549,10 @@ var passNestedData = function passNestedData(field, field2) {
 exports.passNestedData = passNestedData;
 
 var updateCapital = function updateCapital(amount, action) {
-  action = Math.abs(action);
   if (action === 'minus') user.capital -= amount;
   if (action === 'plus') user.capital += amount;
   if (user.capital < 0) user.capital = 0;
+  console.log(user);
   return [action, (0, _helpers.stringifyNum)(amount), (0, _helpers.stringifyNum)(user.capital)];
 };
 
@@ -804,9 +802,7 @@ var renderLongShortPie = function renderLongShortPie(passedData) {
 
   var updateLongShortPie = function updateLongShortPie(passedData) {
     // join enhanced pie data to path elements
-    var paths = graph.selectAll('path').data(pie(passedData));
-    console.log(passedData);
-    console.log(paths.enter()); // remove unwanted paths
+    var paths = graph.selectAll('path').data(pie(passedData)); // remove unwanted paths
 
     paths.exit().remove(); // enter elements
 
@@ -4960,6 +4956,50 @@ var formatWorstBestData = function formatWorstBestData(type) {
 };
 
 exports.formatWorstBestData = formatWorstBestData;
+},{}],"js/views/accountDetailsView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.updateCapitalOutput = exports.queryDetailsEls = void 0;
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var detailsEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.capitalOutput = document.querySelector('.js-capital-output span');
+  return obj;
+};
+
+var queryDetailsEls = function queryDetailsEls() {
+  detailsEls = getElements();
+};
+
+exports.queryDetailsEls = queryDetailsEls;
+
+var updateCapitalOutput = function updateCapitalOutput(capitalData) {
+  var _capitalData = _slicedToArray(capitalData, 3),
+      action = _capitalData[0],
+      amount = _capitalData[1],
+      newCapital = _capitalData[2];
+
+  detailsEls.capitalOutput.textContent = newCapital;
+};
+
+exports.updateCapitalOutput = updateCapitalOutput;
 },{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
@@ -4987,9 +5027,13 @@ var _chartWorstBestView = require("./views/chartWorstBestView");
 
 var _chartWorstBestModel = require("./models/chartWorstBestModel");
 
+var _accountDetailsView = require("./views/accountDetailsView");
+
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
-  (0, _calculatorsView.renderCapitalMessage)((0, _dataModel.updateCapital)(amount, action));
+  var capitalData = (0, _dataModel.updateCapital)(amount, action);
+  (0, _calculatorsView.renderCapitalMessage)(capitalData);
+  (0, _accountDetailsView.updateCapitalOutput)(capitalData);
 };
 
 var controlCalcPosition = function controlCalcPosition(data) {
@@ -5042,6 +5086,7 @@ var queryDOM = function queryDOM() {
   (0, _chartOverallView.queryOverallEls)();
   (0, _chartPerformanceView.queryPerformanceEls)();
   (0, _chartWorstBestView.queryBestWorstEls)();
+  (0, _accountDetailsView.queryDetailsEls)();
 }; // ZONE - event listeners
 
 
@@ -5072,7 +5117,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartOverallView.renderLongShortPie)();
   }, 1000);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
