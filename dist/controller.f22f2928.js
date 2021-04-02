@@ -711,6 +711,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderLongShortPie = exports.renderStreaks = exports.queryOverallEls = void 0;
+
+var _helpers = require("../helpers");
+
 var overallEls = {};
 
 var getElements = function getElements() {
@@ -763,12 +766,13 @@ var renderLongShortPie = function renderLongShortPie(tradesNo) {
   };
   var graphWidth = canvasRect.width - margin.left - margin.right;
   var graphHeight = canvasRect.height - margin.top - margin.bottom;
-  var graphRadius = canvasRect.height / 2.2;
+  var graphRadius = canvasRect.height / 2.4;
   var graphCenter = {
     x: graphWidth / 2,
     y: graphHeight / 2
   };
-  var svg = d3.select('.js-pie-canvas').append('svg').attr('width', graphWidth).attr('height', graphHeight); // create a group to contain all graph elements
+  var totalTrades = tradesNo[0].total + tradesNo[1].total;
+  var svg = d3.select('.js-pie-canvas').append('svg').attr('width', '100%').attr('height', graphHeight); // create a group to contain all graph elements
 
   var graph = svg.append('g').attr('transform', "translate(".concat(graphRadius + 5, ", ").concat(graphCenter.y, ")"));
   var pie = d3.pie().sort(null).value(function (d) {
@@ -785,16 +789,26 @@ var renderLongShortPie = function renderLongShortPie(tradesNo) {
 
     paths.exit().remove(); // enter elements
 
-    paths.enter().append('path').attr('class', 'pie-section').attr('d', arcPath).attr('stroke', '#fff').attr('stroke-width', 3).attr('fill', 'pink'); // existing DOM elements
+    paths.enter().append('path').attr('class', 'pie-section').attr('d', arcPath); // existing DOM elements
 
-    paths.attr('d', arcPath);
+    paths.attr('d', arcPath); // ZONE - create legend
+
+    var legendGroup = graph.append('g').attr('class', 'pie-chart-legend');
+    var yCoords = 0;
+
+    for (var i = 0; i < tradesNo.length; i++) {
+      legendGroup.append('text').text("".concat(tradesNo[i].side, " positions")).attr('class', 'long-short-pie').attr('fill', '#fff').attr('transform', "translate(0, ".concat(yCoords, ")"));
+      yCoords += 25;
+      legendGroup.append('text').text("".concat((0, _helpers.kFormatter)(tradesNo[i].total, 9999), " - ").concat(Math.round(tradesNo[i].total / totalTrades * 100), "%")).attr('class', 'long-short-pie').attr('fill', '#fff').attr('transform', "translate(0, ".concat(yCoords, ")"));
+      yCoords += 40;
+    }
   };
 
   updateLongShortPie(tradesNo);
 };
 
 exports.renderLongShortPie = renderLongShortPie;
-},{}],"js/models/tableMonthlyModel.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/models/tableMonthlyModel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

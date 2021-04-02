@@ -73,7 +73,8 @@
   fill: $green-light;
 }
 
-.worst-best-date {
+.worst-best-date,
+.long-short-pie {
   @include ts-numerical;
   font-size: 16px;
   fill: $grey-light;
@@ -82,4 +83,13 @@
 .worst-best-overlay-line {
   stroke: $grey-light;
   stroke-width: 2;
+}
+
+.long-short-pie {
+  // @include ts-heading-3;
+  // @include font-family-one;
+}
+
+.pie-chart-legend {
+  transform: translate(30%, -35px);
 }

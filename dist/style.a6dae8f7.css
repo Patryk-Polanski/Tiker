@@ -317,7 +317,8 @@ input[type=number] {
   fill: #189fae;
 }
 
-.worst-best-date {
+.worst-best-date,
+.long-short-pie {
   font-family: "Roboto", sans-serif;
   color: #aaaaaa;
   font-weight: 400;
@@ -328,6 +329,10 @@ input[type=number] {
 .worst-best-overlay-line {
   stroke: #aaaaaa;
   stroke-width: 2;
+}
+
+.pie-chart-legend {
+  transform: translate(30%, -35px);
 }
 
 html {
@@ -1311,6 +1316,11 @@ body {
   border-radius: 10px;
   padding: 20px;
 }
+@media only screen and (max-width: 87.5em) {
+  .c-pie-streak {
+    padding: 12px;
+  }
+}
 @media only screen and (max-width: 75em) {
   .c-pie-streak {
     grid-column: 4/-1;
@@ -1321,7 +1331,7 @@ body {
   .c-pie-streak h3,
 .c-pie-streak p,
 .c-pie-streak span {
-    margin-top: 18px;
+    margin-top: 10px;
   }
 }
 .c-pie-streak__total-wrapper {
@@ -1338,6 +1348,11 @@ body {
   font-weight: 400;
   color: #aaaaaa;
   text-align: left;
+}
+@media only screen and (max-width: 75em) {
+  .c-pie-streak__heading {
+    margin-top: 8px !important;
+  }
 }
 .c-pie-streak__total, .c-pie-streak__streak-profit-total, .c-pie-streak__streak-loss-total {
   font-family: "Roboto", sans-serif;
@@ -1363,6 +1378,11 @@ body {
   height: 150px;
   width: 100%;
   background-color: #080808;
+}
+@media only screen and (max-width: 75em) {
+  .c-pie-streak__canvas {
+    height: 200px;
+  }
 }
 .c-pie-streak__win-wrapper, .c-pie-streak__loss-wrapper {
   margin-top: 14px;

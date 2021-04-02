@@ -6,6 +6,10 @@
   border-radius: 10px;
   padding: 20px;
 
+  @media only screen and (max-width: $bp-largest) {
+    padding: 12px;
+  }
+
   @media only screen and (max-width: $bp-large) {
     grid-column: 4 / -1;
     grid-row: 7 / -1;
@@ -15,7 +19,7 @@
   p,
   span {
     @media only screen and (max-width: $bp-large) {
-      margin-top: 18px;
+      margin-top: 10px;
     }
   }
 
@@ -36,6 +40,12 @@
   &__streak-loss-heading {
     @include ts-heading-2;
     text-align: left;
+  }
+
+  &__heading {
+    @media only screen and (max-width: $bp-large) {
+      margin-top: 8px !important;
+    }
   }
 
   &__total,
@@ -64,6 +74,10 @@
     height: 150px;
     width: 100%;
     background-color: $grey-dark;
+
+    @media only screen and (max-width: $bp-large) {
+      height: 200px;
+    }
   }
 
   &__win-wrapper,

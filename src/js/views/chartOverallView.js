@@ -1,3 +1,5 @@
+import { kFormatter } from '../helpers';
+
 let overallEls = {};
 
 const getElements = function (obj = {}) {
@@ -48,13 +50,14 @@ export const renderLongShortPie = function (tradesNo) {
   const margin = { top: 0, right: 0, bottom: 0, left: 0 };
   const graphWidth = canvasRect.width - margin.left - margin.right;
   const graphHeight = canvasRect.height - margin.top - margin.bottom;
-  const graphRadius = canvasRect.height / 2.2;
+  const graphRadius = canvasRect.height / 2.4;
   const graphCenter = { x: graphWidth / 2, y: graphHeight / 2 };
+  const totalTrades = tradesNo[0].total + tradesNo[1].total;
 
   const svg = d3
     .select('.js-pie-canvas')
     .append('svg')
-    .attr('width', graphWidth)
+    .attr('width', '100%')
     .attr('height', graphHeight);
 
   // create a group to contain all graph elements
@@ -88,13 +91,36 @@ export const renderLongShortPie = function (tradesNo) {
       .enter()
       .append('path')
       .attr('class', 'pie-section')
-      .attr('d', arcPath)
-      .attr('stroke', '#fff')
-      .attr('stroke-width', 3)
-      .attr('fill', 'pink');
+      .attr('d', arcPath);
 
     // existing DOM elements
     paths.attr('d', arcPath);
+
+    // ZONE - create legend
+    const legendGroup = graph.append('g').attr('class', 'pie-chart-legend');
+
+    let yCoords = 0;
+    for (let i = 0; i < tradesNo.length; i++) {
+      legendGroup
+        .append('text')
+        .text(`${tradesNo[i].side} positions`)
+        .attr('class', 'long-short-pie')
+        .attr('fill', '#fff')
+        .attr('transform', `translate(0, ${yCoords})`);
+      yCoords += 25;
+
+      legendGroup
+        .append('text')
+        .text(
+          `${kFormatter(tradesNo[i].total, 9999)} - ${Math.round(
+            (tradesNo[i].total / totalTrades) * 100
+          )}%`
+        )
+        .attr('class', 'long-short-pie')
+        .attr('fill', '#fff')
+        .attr('transform', `translate(0, ${yCoords})`);
+      yCoords += 40;
+    }
   };
   updateLongShortPie(tradesNo);
 };
