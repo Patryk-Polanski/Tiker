@@ -46,6 +46,11 @@ import {
   queryDetailsEls,
   updateCapitalOutput,
 } from './views/accountDetailsView';
+import {
+  queryJournalEls,
+  renderJournalEntries,
+  renderJournalForm,
+} from './views/journalView';
 
 // ZONE - controllers
 
@@ -94,8 +99,12 @@ const controlWorstBestRender = function (type = 'worst') {
   renderWorstBestChart(formatWorstBestData(type));
 };
 
-const controlLongShortPie = function () {
+const controlLongShortPieRender = function () {
   renderLongShortPie(passData('overall').proportions);
+};
+
+const controlJournalRender = function () {
+  renderJournalEntries(passData('journal'));
 };
 
 const queryDOM = function () {
@@ -106,6 +115,7 @@ const queryDOM = function () {
   queryPerformanceEls();
   queryBestWorstEls();
   queryDetailsEls();
+  queryJournalEls();
 };
 
 // ZONE - event listeners
@@ -118,7 +128,8 @@ window.addEventListener('DOMContentLoaded', e => {
   controlOverallRender();
   controlPerformanceRender();
   controlWorstBestRender();
-  controlLongShortPie();
+  controlLongShortPieRender();
+  controlJournalRender();
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);

@@ -320,12 +320,12 @@ var user = {
   streaks: {
     wins: {
       trades: [{
-        ID: 'ZYRwa5z',
+        id: 'ZYRwa5z',
         ticker: 'NFLX',
         date: '14/06/21',
         profit: 253
       }, {
-        ID: 'Y58P1M',
+        id: 'Y58P1M',
         ticker: 'BMBL',
         date: '15/06/21',
         profit: 312
@@ -333,12 +333,12 @@ var user = {
     },
     losses: {
       trades: [{
-        ID: 'liJ56D3',
+        id: 'liJ56D3',
         ticker: 'AMZN',
         date: '12/08/21',
         loss: -90
       }, {
-        ID: 'Y58P1M',
+        id: 'Y58P1M',
         ticker: 'X',
         date: '21/07/21',
         loss: -112
@@ -346,7 +346,7 @@ var user = {
     },
     current: {
       trades: [{
-        ID: 'ZYRwa5z',
+        id: 'ZYRwa5z',
         ticker: 'NFLX',
         date: '14/06/21',
         profit: 253
@@ -354,23 +354,23 @@ var user = {
     }
   },
   worstTrades: [{
-    ID: 'ZYRwa5z',
+    id: 'ZYRwa5z',
     ticker: 'NFLX',
     date: '14/06/21',
     loss: 253
   }, {
-    ID: 'Y58P1M1',
+    id: 'Y58P1M1',
     ticker: 'BMBL',
     date: '15/06/21',
     loss: 312
   }],
   bestTrades: [{
-    ID: 'ZYRwa5z',
+    id: 'ZYRwa5z',
     ticker: 'NFLX',
     date: '14/06/21',
     loss: 253
   }, {
-    ID: 'Y58P1M1',
+    id: 'Y58P1M1',
     ticker: 'BMBL',
     date: '15/06/21',
     loss: 312
@@ -380,17 +380,17 @@ var user = {
       ticker: 'AAL',
       profitable: 0,
       trades: [{
-        ID: '7Ft7s4w',
+        id: '7Ft7s4w',
         shares: 60,
         result: 121,
         winPercentage: 1.44
       }, {
-        ID: 'p8Hi52N',
+        id: 'p8Hi52N',
         shares: 72,
         result: 118,
         winPercentage: 1.32
       }, {
-        ID: 'Jk6sDew',
+        id: 'Jk6sDew',
         shares: 70,
         result: -82,
         winPercentage: -1
@@ -400,17 +400,17 @@ var user = {
       ticker: 'AAPL',
       profitable: 0,
       trades: [{
-        ID: 'QHnv65t',
+        id: 'QHnv65t',
         shares: 40,
         result: 175,
         winPercentage: 1.54
       }, {
-        ID: 'kG24s8i',
+        id: 'kG24s8i',
         shares: 50,
         result: 125,
         winPercentage: 1.23
       }, {
-        ID: 'Vz9qA1k',
+        id: 'Vz9qA1k',
         shares: 42,
         result: -102,
         winPercentage: -1.1
@@ -437,75 +437,75 @@ var user = {
   monthlyData: {},
   calendarData: {
     jul21: [{
-      ID: 'Kr92fYl',
+      id: 'Kr92fYl',
       side: 'short',
       result: -90,
       resultPercentage: -0.9,
       date: '02/07/21'
     }, {
-      ID: 'P9gHt21',
+      id: 'P9gHt21',
       side: 'long',
       result: -86,
       resultPercentage: -0.84,
       date: '07/07/21'
     }, {
-      ID: 'K88spRl',
+      id: 'K88spRl',
       side: 'long',
       result: 146,
       resultPercentage: 1.46,
       date: '15/07/21'
     }, {
-      ID: 'Mn3z2pl',
+      id: 'Mn3z2pl',
       side: 'short',
       result: 67,
       resultPercentage: 0.63,
       date: '20/07/21'
     }],
     jun21: [{
-      ID: 'OL4stW4',
+      id: 'OL4stW4',
       side: 'long',
       result: 240,
       resultPercentage: 1.83,
       date: '04/06/21'
     }, {
-      ID: 'SLX8f6s',
+      id: 'SLX8f6s',
       side: 'long',
       result: -130,
       resultPercentage: -1.92,
       date: '13/06/21'
     }, {
-      ID: 'SLX8f6a',
+      id: 'SLX8f6a',
       side: 'long',
       result: -130,
       resultPercentage: -1.92,
       date: '19/06/21'
     }, {
-      ID: 'Qr4fG61',
+      id: 'Qr4fG61',
       side: 'short',
       result: 106,
       resultPercentage: 1.02,
       date: '24/06/21'
     }],
     may21: [{
-      ID: 'HR6q2pf',
+      id: 'HR6q2pf',
       side: 'short',
       result: -160,
       resultPercentage: -1.42,
       date: '07/05/21'
     }, {
-      ID: 'Gq9pd4H',
+      id: 'Gq9pd4H',
       side: 'short',
       result: -80,
       resultPercentage: -0.8,
       date: '11/05/21'
     }, {
-      ID: 'Bd99sd1',
+      id: 'Bd99sd1',
       side: 'long',
       result: 213,
       resultPercentage: 2.2,
       date: '19/05/21'
     }, {
-      ID: 'lE59t6A',
+      id: 'lE59t6A',
       side: 'short',
       result: 110,
       resultPercentage: 1.1,
@@ -513,21 +513,44 @@ var user = {
     }]
   },
   journal: [{
-    ID: 'Hf5t3q1',
+    id: 'Hf5t3q1',
     ticker: 'ROKU',
-    date: '28/07/21',
+    shortDate: '28/07/21',
     side: 'short',
+    sharesAmount: 100,
+    avgEntry: 180.84,
+    avgExit: 181.9,
+    return: 112.52,
+    returnPercent: 1.63,
     entries: [[180.75, 40], [180.9, 60]],
     exits: [[181.15, 20], [181.42, 20], [182.69, 60]],
     body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
   }, {
-    ID: 'nC4s97Q',
-    ticker: 'RIOT',
-    date: '28/07/21',
+    id: 'Hf5t3p1',
+    ticker: 'ROKU',
+    shortDate: '28/07/21',
     side: 'short',
-    entries: [[22.31, 80], [22.41, 60]],
-    exits: [[24.11, 40], [24.5, 50], [24.77, 50]],
-    body: 'Quis varius quam quisque id diam vel quam. Vulputate sapien nec sagittis aliquam malesuada bibendum. Et ultrices neque ornare aenean euismod elementum nisi quis. Amet luctus venenatis lectus magna fringilla urna porttitor. In est ante in nibh mauris cursus mattis.'
+    sharesAmount: 100,
+    avgEntry: 180.84,
+    avgExit: 181.9,
+    return: 112.52,
+    returnPercent: 1.63,
+    entries: [[180.75, 40], [180.9, 60]],
+    exits: [[181.15, 20], [181.42, 20], [182.69, 60]],
+    body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
+  }, {
+    id: 'Hf5t3s1',
+    ticker: 'ROKU',
+    shortDate: '28/07/21',
+    side: 'short',
+    sharesAmount: 100,
+    avgEntry: 180.84,
+    avgExit: 181.9,
+    return: 112.52,
+    returnPercent: 1.63,
+    entries: [[180.75, 40], [180.9, 60]],
+    exits: [[181.15, 20], [181.42, 20], [182.69, 60]],
+    body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
   }]
 };
 console.log(user);
@@ -5000,6 +5023,58 @@ var updateCapitalOutput = function updateCapitalOutput(capitalData) {
 };
 
 exports.updateCapitalOutput = updateCapitalOutput;
+},{}],"js/views/journalView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.renderJournalEntries = exports.renderJournalForm = exports.queryJournalEls = void 0;
+var journalEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.entriesContainer = document.querySelector('.js-journal-entries-wrapper');
+  obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
+  obj.journalForm = document.querySelector('.js-journal-form');
+  return obj;
+};
+
+var queryJournalEls = function queryJournalEls() {
+  journalEls = getElements();
+};
+
+exports.queryJournalEls = queryJournalEls;
+
+var selectFirstEntry = function selectFirstEntry() {
+  return journalEls.entriesContainer.querySelector('.c-journal-entry');
+};
+
+var activateEntry = function activateEntry(entryEl) {
+  if (!entryEl) return;
+  entryEl.classList.add('c-journal-entry--active');
+};
+
+var renderJournalPagination = function renderJournalPagination(entriesNumber) {
+  if (entriesNumber < 9) return;
+};
+
+var renderJournalForm = function renderJournalForm() {};
+
+exports.renderJournalForm = renderJournalForm;
+
+var renderJournalEntries = function renderJournalEntries(entriesData) {
+  console.log(entriesData);
+  if (!entriesData) return;
+  entriesData.forEach(function (entry) {
+    var html = "\n    <div class=\"c-journal-entry\" data-id=".concat(entry.id, ">\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n            <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n            <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n            <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "%</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n            <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n        </div>\n        <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n            xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n        </svg>\n    </div>\n    ");
+    journalEls.entriesContainer.insertAdjacentHTML('afterbegin', html);
+  });
+  activateEntry(selectFirstEntry());
+  renderJournalPagination(entriesData.length);
+};
+
+exports.renderJournalEntries = renderJournalEntries;
 },{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
@@ -5028,6 +5103,8 @@ var _chartWorstBestView = require("./views/chartWorstBestView");
 var _chartWorstBestModel = require("./models/chartWorstBestModel");
 
 var _accountDetailsView = require("./views/accountDetailsView");
+
+var _journalView = require("./views/journalView");
 
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
@@ -5075,8 +5152,12 @@ var controlWorstBestRender = function controlWorstBestRender() {
   (0, _chartWorstBestView.renderWorstBestChart)((0, _chartWorstBestModel.formatWorstBestData)(type));
 };
 
-var controlLongShortPie = function controlLongShortPie() {
+var controlLongShortPieRender = function controlLongShortPieRender() {
   (0, _chartOverallView.renderLongShortPie)((0, _dataModel.passData)('overall').proportions);
+};
+
+var controlJournalRender = function controlJournalRender() {
+  (0, _journalView.renderJournalEntries)((0, _dataModel.passData)('journal'));
 };
 
 var queryDOM = function queryDOM() {
@@ -5087,6 +5168,7 @@ var queryDOM = function queryDOM() {
   (0, _chartPerformanceView.queryPerformanceEls)();
   (0, _chartWorstBestView.queryBestWorstEls)();
   (0, _accountDetailsView.queryDetailsEls)();
+  (0, _journalView.queryJournalEls)();
 }; // ZONE - event listeners
 
 
@@ -5098,7 +5180,8 @@ window.addEventListener('DOMContentLoaded', function (e) {
   controlOverallRender();
   controlPerformanceRender();
   controlWorstBestRender();
-  controlLongShortPie();
+  controlLongShortPieRender();
+  controlJournalRender();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
@@ -5117,7 +5200,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartOverallView.renderLongShortPie)();
   }, 1000);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalView":"js/views/journalView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -5145,7 +5228,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54241" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61046" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
