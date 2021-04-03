@@ -37,10 +37,14 @@ export const switchJournalFormModes = function () {
     journalEls.journalFormWrapper.classList.add(
       's-journal__form-wrapper--read-mode'
     );
-    journalEls.entriesExitsDetails.forEach(input => {
-      input.disabled = true;
-    });
+    toggleDisabledState(true);
   }
+};
+
+const toggleDisabledState = function (mode) {
+  journalEls.entriesExitsDetails.forEach(input => {
+    input.disabled = mode;
+  });
 };
 
 export const addJournalFormEventsHandler = function (handler) {

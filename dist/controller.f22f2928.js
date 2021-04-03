@@ -5079,13 +5079,17 @@ var switchJournalFormModes = function switchJournalFormModes() {
   } else if (journalEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--edit-mode')) {
     journalEls.journalFormWrapper.classList.remove('s-journal__form-wrapper--edit-mode');
     journalEls.journalFormWrapper.classList.add('s-journal__form-wrapper--read-mode');
-    journalEls.entriesExitsDetails.forEach(function (input) {
-      input.disabled = true;
-    });
+    toggleDisabledState(true);
   }
 };
 
 exports.switchJournalFormModes = switchJournalFormModes;
+
+var toggleDisabledState = function toggleDisabledState(mode) {
+  journalEls.entriesExitsDetails.forEach(function (input) {
+    input.disabled = mode;
+  });
+};
 
 var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) {
   journalEls.journalFormWrapper.addEventListener('click', function (e) {
