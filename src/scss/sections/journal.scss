@@ -39,6 +39,31 @@
   }
 
   &__form-wrapper {
+    &--read-mode {
+      & .c-journal-form__manual-input {
+      }
+
+      & .c-journal-form__edit-mode-btn {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+
+    &--edit-mode {
+      & .c-journal-form__manual-input {
+        background-color: $grey-medium;
+        border: none;
+        border-bottom: 2px solid $grey-light;
+        color: $grey-light;
+        padding: 8px;
+      }
+
+      & .c-journal-form__edit-mode-btn {
+        opacity: 1;
+        pointer-events: all;
+      }
+    }
+
     @media only screen and (max-width: $bp-large) {
       order: -1;
       margin-bottom: 40px;

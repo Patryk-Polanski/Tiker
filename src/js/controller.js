@@ -49,8 +49,10 @@ import {
 } from './views/accountDetailsView';
 import {
   queryJournalEls,
+  addJournalFormEventsHandler,
   renderJournalEntries,
   renderJournalForm,
+  switchJournalFormModes,
 } from './views/journalView';
 
 // ZONE - controllers
@@ -110,6 +112,10 @@ const controlJournalRender = function () {
   renderJournalForm(findJournalEntry(activeEntryID));
 };
 
+const controlJournalFormEvents = function (action, id = '') {
+  if (action === 'edit' || action === 'cancel') switchJournalFormModes();
+};
+
 const queryDOM = function () {
   queryCalcEls();
   queryMonthlyEls();
@@ -138,6 +144,7 @@ window.addEventListener('DOMContentLoaded', e => {
   addCalcCapitalHandler(controlCalcCapital);
   addPerformanceRenderHandler(controlPerformanceRender);
   addWorstBestRenderHandler(controlWorstBestRender);
+  addJournalFormEventsHandler(controlJournalFormEvents);
 });
 
 let resizeTimer;

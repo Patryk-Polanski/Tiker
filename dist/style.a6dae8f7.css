@@ -519,6 +519,21 @@ body {
     margin: 0 auto;
   }
 }
+.s-journal__form-wrapper--read-mode .c-journal-form__edit-mode-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+.s-journal__form-wrapper--edit-mode .c-journal-form__manual-input {
+  background-color: #0d0d0d;
+  border: none;
+  border-bottom: 2px solid #aaaaaa;
+  color: #aaaaaa;
+  padding: 8px;
+}
+.s-journal__form-wrapper--edit-mode .c-journal-form__edit-mode-btn {
+  opacity: 1;
+  pointer-events: all;
+}
 @media only screen and (max-width: 75em) {
   .s-journal__form-wrapper {
     order: -1;
@@ -1282,6 +1297,10 @@ body {
 }
 .c-journal-form__button-save, .c-journal-form__button-cancel {
   margin: 0 10px;
+}
+.c-journal-form__hidden-el {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .c-journal-pagination {

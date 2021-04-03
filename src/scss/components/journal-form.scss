@@ -126,4 +126,9 @@
   &__button-cancel {
     margin: 0 10px;
   }
+
+  &__hidden-el {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
