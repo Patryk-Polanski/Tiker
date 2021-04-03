@@ -49,6 +49,7 @@ import {
 } from './views/accountDetailsView';
 import {
   queryJournalEls,
+  addJournalFiltersHandler,
   addJournalEntriesHandler,
   addJournalFormEventsHandler,
   renderJournalEntries,
@@ -109,7 +110,6 @@ const controlLongShortPieRender = function () {
 
 const controlJournalRender = function () {
   const activeEntryID = renderJournalEntries(passData('journal'));
-  console.log(activeEntryID);
   renderJournalForm(findJournalEntry(activeEntryID));
 };
 
@@ -124,6 +124,10 @@ const controlJournalFormEvents = function (action, id = '') {
 const controlJournalActiveEntries = function (id = '') {
   if (!id) return;
   renderJournalForm(findJournalEntry(id));
+};
+
+const controlJournalFilters = function () {
+  console.log('THIS IS IT!');
 };
 
 const queryDOM = function () {
@@ -154,6 +158,7 @@ window.addEventListener('DOMContentLoaded', e => {
   addCalcCapitalHandler(controlCalcCapital);
   addPerformanceRenderHandler(controlPerformanceRender);
   addWorstBestRenderHandler(controlWorstBestRender);
+  addJournalFiltersHandler(controlJournalFilters);
   addJournalEntriesHandler(controlJournalActiveEntries);
   addJournalFormEventsHandler(controlJournalFormEvents);
 });

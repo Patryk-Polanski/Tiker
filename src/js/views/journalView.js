@@ -6,6 +6,7 @@ const getElements = function (obj = {}) {
   obj.journalEntriesWrapper = document.querySelector(
     '.js-journal-entries-wrapper'
   );
+  obj.journalFiltersWrapper = document.querySelector('.js-journal-filter');
   return obj;
 };
 
@@ -53,7 +54,6 @@ export const addJournalEntriesHandler = function (handler) {
   journalEls.journalEntriesWrapper.addEventListener('click', e => {
     if (e.target.closest('.c-journal-entry')) {
       const clickedCard = e.target.closest('.c-journal-entry');
-      console.log(clickedCard);
       journalEls.journalEntriesWrapper
         .querySelector('.c-journal-entry--active')
         .classList.remove('c-journal-entry--active');
@@ -77,6 +77,12 @@ export const addJournalFormEventsHandler = function (handler) {
     if (e.target.classList.contains('js-form-cancel-btn')) {
       handler('cancel', journalEls.journalForm.getAttribute('data-id'));
     }
+  });
+};
+
+export const addJournalFiltersHandler = function (handler) {
+  journalEls.journalFiltersWrapper.addEventListener('click', e => {
+    if (e.target.classList.contains('js-new-trade-btn')) handler();
   });
 };
 
@@ -263,7 +269,6 @@ export const renderJournalForm = function (singleEntry) {
 };
 
 export const renderJournalEntries = function (entriesData) {
-  console.log(entriesData);
   if (!entriesData) return;
   entriesData.forEach(entry => {
     const html = `
@@ -294,6 +299,5 @@ export const renderJournalEntries = function (entriesData) {
   });
   activateEntry(selectFirstEntry());
   renderJournalPagination(entriesData.length);
-  console.log(selectFirstEntry().getAttribute('data-id'));
   return selectFirstEntry().getAttribute('data-id');
 };

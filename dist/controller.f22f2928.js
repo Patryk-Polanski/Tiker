@@ -5039,7 +5039,7 @@ exports.updateCapitalOutput = updateCapitalOutput;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalEntries = exports.renderJournalForm = exports.addJournalFormEventsHandler = exports.addJournalEntriesHandler = exports.switchJournalFormModes = exports.queryJournalEls = void 0;
+exports.renderJournalEntries = exports.renderJournalForm = exports.addJournalFiltersHandler = exports.addJournalFormEventsHandler = exports.addJournalEntriesHandler = exports.switchJournalFormModes = exports.queryJournalEls = void 0;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -5060,6 +5060,7 @@ var getElements = function getElements() {
   obj.entriesContainer = document.querySelector('.js-journal-entries-wrapper');
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
   obj.journalEntriesWrapper = document.querySelector('.js-journal-entries-wrapper');
+  obj.journalFiltersWrapper = document.querySelector('.js-journal-filter');
   return obj;
 };
 
@@ -5095,7 +5096,6 @@ var addJournalEntriesHandler = function addJournalEntriesHandler(handler) {
   journalEls.journalEntriesWrapper.addEventListener('click', function (e) {
     if (e.target.closest('.c-journal-entry')) {
       var clickedCard = e.target.closest('.c-journal-entry');
-      console.log(clickedCard);
       journalEls.journalEntriesWrapper.querySelector('.c-journal-entry--active').classList.remove('c-journal-entry--active');
       clickedCard.classList.add('c-journal-entry--active');
       return handler(clickedCard.getAttribute('data-id'));
@@ -5118,6 +5118,14 @@ var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) 
 };
 
 exports.addJournalFormEventsHandler = addJournalFormEventsHandler;
+
+var addJournalFiltersHandler = function addJournalFiltersHandler(handler) {
+  journalEls.journalFiltersWrapper.addEventListener('click', function (e) {
+    if (e.target.classList.contains('js-new-trade-btn')) handler();
+  });
+};
+
+exports.addJournalFiltersHandler = addJournalFiltersHandler;
 
 var selectFirstEntry = function selectFirstEntry() {
   return journalEls.entriesContainer.querySelector('.c-journal-entry');
@@ -5180,7 +5188,6 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
 exports.renderJournalForm = renderJournalForm;
 
 var renderJournalEntries = function renderJournalEntries(entriesData) {
-  console.log(entriesData);
   if (!entriesData) return;
   entriesData.forEach(function (entry) {
     var html = "\n    <div class=\"c-journal-entry\" data-id=".concat(entry.id, ">\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n            <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n            <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n            <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "%</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n            <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n        </div>\n        <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n            xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n        </svg>\n    </div>\n    ");
@@ -5188,7 +5195,6 @@ var renderJournalEntries = function renderJournalEntries(entriesData) {
   });
   activateEntry(selectFirstEntry());
   renderJournalPagination(entriesData.length);
-  console.log(selectFirstEntry().getAttribute('data-id'));
   return selectFirstEntry().getAttribute('data-id');
 };
 
@@ -5276,7 +5282,6 @@ var controlLongShortPieRender = function controlLongShortPieRender() {
 
 var controlJournalRender = function controlJournalRender() {
   var activeEntryID = (0, _journalView.renderJournalEntries)((0, _dataModel.passData)('journal'));
-  console.log(activeEntryID);
   (0, _journalView.renderJournalForm)((0, _dataModel.findJournalEntry)(activeEntryID));
 };
 
@@ -5294,6 +5299,10 @@ var controlJournalActiveEntries = function controlJournalActiveEntries() {
   var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   if (!id) return;
   (0, _journalView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
+};
+
+var controlJournalFilters = function controlJournalFilters() {
+  console.log('THIS IS IT!');
 };
 
 var queryDOM = function queryDOM() {
@@ -5323,6 +5332,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
   (0, _chartPerformanceView.addPerformanceRenderHandler)(controlPerformanceRender);
   (0, _chartWorstBestView.addWorstBestRenderHandler)(controlWorstBestRender);
+  (0, _journalView.addJournalFiltersHandler)(controlJournalFilters);
   (0, _journalView.addJournalEntriesHandler)(controlJournalActiveEntries);
   (0, _journalView.addJournalFormEventsHandler)(controlJournalFormEvents);
 });
