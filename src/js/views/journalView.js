@@ -3,6 +3,9 @@ let journalEls = {};
 const getElements = function (obj = {}) {
   obj.entriesContainer = document.querySelector('.js-journal-entries-wrapper');
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
+  obj.journalEntriesWrapper = document.querySelector(
+    '.js-journal-entries-wrapper'
+  );
   return obj;
 };
 
@@ -43,6 +46,16 @@ export const switchJournalFormModes = function () {
 const toggleDisabledState = function (mode) {
   journalEls.entriesExitsDetails.forEach(input => {
     input.disabled = mode;
+  });
+};
+
+export const addJournalEntriesHandler = function (handler) {
+  journalEls.journalEntriesWrapper.addEventListener('click', e => {
+    if (e.target.closest('.c-journal-entry'))
+      return handler(
+        e.target.closest('.c-journal-entry').getAttribute('data-id')
+      );
+    return;
   });
 };
 

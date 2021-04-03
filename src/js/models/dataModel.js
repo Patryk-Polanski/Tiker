@@ -267,8 +267,8 @@ const user = {
     },
     {
       id: 'Hf5t3p1',
-      ticker: 'ROKU',
-      shortDate: '28/07/21',
+      ticker: 'RIOT',
+      shortDate: '29/07/21',
       side: 'short',
       sharesAmount: 100,
       avgEntry: 180.84,
@@ -289,8 +289,8 @@ const user = {
     },
     {
       id: 'Hf5t3s1',
-      ticker: 'ROKU',
-      shortDate: '28/07/21',
+      ticker: 'MSFT',
+      shortDate: '30/07/21',
       side: 'short',
       sharesAmount: 100,
       avgEntry: 180.84,

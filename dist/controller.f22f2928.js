@@ -527,8 +527,8 @@ var user = {
     body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
   }, {
     id: 'Hf5t3p1',
-    ticker: 'ROKU',
-    shortDate: '28/07/21',
+    ticker: 'RIOT',
+    shortDate: '29/07/21',
     side: 'short',
     sharesAmount: 100,
     avgEntry: 180.84,
@@ -540,8 +540,8 @@ var user = {
     body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
   }, {
     id: 'Hf5t3s1',
-    ticker: 'ROKU',
-    shortDate: '28/07/21',
+    ticker: 'MSFT',
+    shortDate: '30/07/21',
     side: 'short',
     sharesAmount: 100,
     avgEntry: 180.84,
@@ -5039,7 +5039,7 @@ exports.updateCapitalOutput = updateCapitalOutput;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalEntries = exports.renderJournalForm = exports.addJournalFormEventsHandler = exports.switchJournalFormModes = exports.queryJournalEls = void 0;
+exports.renderJournalEntries = exports.renderJournalForm = exports.addJournalFormEventsHandler = exports.addJournalEntriesHandler = exports.switchJournalFormModes = exports.queryJournalEls = void 0;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -5059,6 +5059,7 @@ var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.entriesContainer = document.querySelector('.js-journal-entries-wrapper');
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
+  obj.journalEntriesWrapper = document.querySelector('.js-journal-entries-wrapper');
   return obj;
 };
 
@@ -5089,6 +5090,15 @@ var toggleDisabledState = function toggleDisabledState(mode) {
     input.disabled = mode;
   });
 };
+
+var addJournalEntriesHandler = function addJournalEntriesHandler(handler) {
+  journalEls.journalEntriesWrapper.addEventListener('click', function (e) {
+    if (e.target.closest('.c-journal-entry')) return handler(e.target.closest('.c-journal-entry').getAttribute('data-id'));
+    return;
+  });
+};
+
+exports.addJournalEntriesHandler = addJournalEntriesHandler;
 
 var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) {
   journalEls.journalFormWrapper.addEventListener('click', function (e) {
@@ -5273,6 +5283,12 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
   }
 };
 
+var controlJournalActiveEntries = function controlJournalActiveEntries() {
+  var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  if (!id) return;
+  (0, _journalView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
+};
+
 var queryDOM = function queryDOM() {
   (0, _calculatorsView.queryCalcEls)();
   (0, _tableMonthlyView.queryMonthlyEls)();
@@ -5300,6 +5316,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
   (0, _chartPerformanceView.addPerformanceRenderHandler)(controlPerformanceRender);
   (0, _chartWorstBestView.addWorstBestRenderHandler)(controlWorstBestRender);
+  (0, _journalView.addJournalEntriesHandler)(controlJournalActiveEntries);
   (0, _journalView.addJournalFormEventsHandler)(controlJournalFormEvents);
 });
 var resizeTimer;
@@ -5342,7 +5359,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54086" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55698" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

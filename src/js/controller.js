@@ -49,6 +49,7 @@ import {
 } from './views/accountDetailsView';
 import {
   queryJournalEls,
+  addJournalEntriesHandler,
   addJournalFormEventsHandler,
   renderJournalEntries,
   renderJournalForm,
@@ -120,6 +121,11 @@ const controlJournalFormEvents = function (action, id = '') {
   }
 };
 
+const controlJournalActiveEntries = function (id = '') {
+  if (!id) return;
+  renderJournalForm(findJournalEntry(id));
+};
+
 const queryDOM = function () {
   queryCalcEls();
   queryMonthlyEls();
@@ -148,6 +154,7 @@ window.addEventListener('DOMContentLoaded', e => {
   addCalcCapitalHandler(controlCalcCapital);
   addPerformanceRenderHandler(controlPerformanceRender);
   addWorstBestRenderHandler(controlWorstBestRender);
+  addJournalEntriesHandler(controlJournalActiveEntries);
   addJournalFormEventsHandler(controlJournalFormEvents);
 });
 
