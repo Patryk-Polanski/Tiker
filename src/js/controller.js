@@ -113,7 +113,11 @@ const controlJournalRender = function () {
 };
 
 const controlJournalFormEvents = function (action, id = '') {
-  if (action === 'edit' || action === 'cancel') switchJournalFormModes();
+  if (action === 'edit') switchJournalFormModes();
+  if (action === 'cancel') {
+    switchJournalFormModes();
+    renderJournalForm(findJournalEntry(id));
+  }
 };
 
 const queryDOM = function () {

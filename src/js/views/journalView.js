@@ -3,7 +3,6 @@ let journalEls = {};
 const getElements = function (obj = {}) {
   obj.entriesContainer = document.querySelector('.js-journal-entries-wrapper');
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
-  obj.journalForm = document.querySelector('.js-journal-form');
   return obj;
 };
 
@@ -57,7 +56,9 @@ export const addJournalFormEventsHandler = function (handler) {
     )
       handler('edit');
 
-    if (e.target.classList.contains('js-form-cancel-btn')) handler('cancel');
+    if (e.target.classList.contains('js-form-cancel-btn')) {
+      handler('cancel', journalEls.journalForm.getAttribute('data-id'));
+    }
   });
 };
 
@@ -75,10 +76,11 @@ const renderJournalPagination = function (entriesNumber) {
 };
 
 export const renderJournalForm = function (singleEntry) {
+  journalEls.journalFormWrapper.innerHTML = '';
   [singleEntry] = singleEntry;
 
   const html = `
-  <div class="c-journal-form js-journal-form">
+  <div class="c-journal-form js-journal-form" data-id="${singleEntry.id}">
     <div class="c-journal-form__upper-region">
         <div class="c-journal-form__unit-wrapper">
             <span class="c-journal-form__data">date: <input
@@ -144,10 +146,14 @@ export const renderJournalForm = function (singleEntry) {
             </button>
             <div class="c-journal-form__entries-labels-wrapper">
                 <span class="c-journal-form__entries-label">average: <br><span
-                        class="c-journal-form__entries-label-result">${singleEntry.tradeExits
-                          .map(single => single[0])
-                          .reduce((acc, num) => acc + num, 0)
-                          .toFixed(2)}</span></span>
+                        class="c-journal-form__entries-label-result">${(
+                          singleEntry.tradeEntries
+                            .map(single => single[0] * single[1])
+                            .reduce((acc, num) => acc + num, 0) /
+                          singleEntry.tradeEntries
+                            .map(single => single[1])
+                            .reduce((acc, num) => acc + num, 0)
+                        ).toFixed(2)}</span></span>
                 <span class="c-journal-form__average-entry">shares: <br><span
                         class="c-journal-form__entries-label-result">${singleEntry.tradeEntries
                           .map(single => single[1])
@@ -173,10 +179,14 @@ export const renderJournalForm = function (singleEntry) {
             </button>
             <div class="c-journal-form__exits-labels-wrapper">
                 <span class="c-journal-form__exits-label">average: <br><span
-                        class="c-journal-form__exits-label-result">${singleEntry.tradeExits
-                          .map(single => single[0])
-                          .reduce((acc, num) => acc + num, 0)
-                          .toFixed(2)}</span></span>
+                        class="c-journal-form__exits-label-result">${(
+                          singleEntry.tradeExits
+                            .map(single => single[0] * single[1])
+                            .reduce((acc, num) => acc + num, 0) /
+                          singleEntry.tradeExits
+                            .map(single => single[1])
+                            .reduce((acc, num) => acc + num, 0)
+                        ).toFixed(2)}</span></span>
                 <span class="c-journal-form__average-exit">shares: <br><span
                         class="c-journal-form__exits-label-result">${singleEntry.tradeExits
                           .map(single => single[1])
@@ -198,6 +208,8 @@ export const renderJournalForm = function (singleEntry) {
   `;
 
   journalEls.journalFormWrapper.insertAdjacentHTML('afterbegin', html);
+
+  journalEls.journalForm = document.querySelector('.js-journal-form');
 
   const entriesSection = document.querySelector('.js-entries-wrapper');
   const exitsSection = document.querySelector('.js-exits-wrapper');
