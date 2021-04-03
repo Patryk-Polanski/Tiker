@@ -82,8 +82,18 @@ export const addJournalFormEventsHandler = function (handler) {
 
 export const addJournalFiltersHandler = function (handler) {
   journalEls.journalFiltersWrapper.addEventListener('click', e => {
-    if (e.target.classList.contains('js-new-trade-btn')) handler();
+    if (e.target.classList.contains('js-new-trade-btn')) handler('new');
   });
+};
+
+export const checkFormMode = function () {
+  if (
+    journalEls.journalFormWrapper.classList.contains(
+      's-journal__form-wrapper--read-mode'
+    )
+  ) {
+    switchJournalFormModes();
+  }
 };
 
 const selectFirstEntry = function () {
@@ -92,6 +102,11 @@ const selectFirstEntry = function () {
 
 const activateEntry = function (entryEl) {
   if (!entryEl) return;
+  const previouslyActive = journalEls.journalEntriesWrapper.querySelector(
+    '.c-journal-entry--active'
+  );
+  if (previouslyActive)
+    previouslyActive.classList.remove('c-journal-entry--active');
   entryEl.classList.add('c-journal-entry--active');
 };
 
@@ -124,7 +139,7 @@ export const renderJournalForm = function (singleEntry) {
                 <span class="c-journal-form__data">side: <input
                         class="c-input-text c-input-text--compact c-journal-form__manual-input"
                         type="text" placeholder="${
-                          singleEntry.side
+                          singleEntry.side ? singleEntry.side : 'long'
                         }" disabled></span>
                 <button class="c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn">
                     <svg class="svg svg--swap" viewBox="0 0 17 29"
@@ -170,18 +185,26 @@ export const renderJournalForm = function (singleEntry) {
             </button>
             <div class="c-journal-form__entries-labels-wrapper">
                 <span class="c-journal-form__entries-label">average: <br><span
-                        class="c-journal-form__entries-label-result">${(
-                          singleEntry.tradeEntries
-                            .map(single => single[0] * single[1])
-                            .reduce((acc, num) => acc + num, 0) /
-                          singleEntry.tradeEntries
-                            .map(single => single[1])
-                            .reduce((acc, num) => acc + num, 0)
-                        ).toFixed(2)}</span></span>
+                        class="c-journal-form__entries-label-result">${
+                          singleEntry.tradeEntries[0][0]
+                            ? (
+                                singleEntry.tradeEntries
+                                  .map(single => single[0] * single[1])
+                                  .reduce((acc, num) => acc + num, 0) /
+                                singleEntry.tradeEntries
+                                  .map(single => single[1])
+                                  .reduce((acc, num) => acc + num, 0)
+                              ).toFixed(2)
+                            : ''
+                        }</span></span>
                 <span class="c-journal-form__average-entry">shares: <br><span
-                        class="c-journal-form__entries-label-result">${singleEntry.tradeEntries
-                          .map(single => single[1])
-                          .reduce((acc, num) => acc + num, 0)}</span></span>
+                        class="c-journal-form__entries-label-result">${
+                          singleEntry.tradeExits[0][1]
+                            ? singleEntry.tradeExits
+                                .map(single => single[1])
+                                .reduce((acc, num) => acc + num, 0)
+                            : ''
+                        }</span></span>
             </div>
         </div>
         <div class="c-journal-form__exits-wrapper">
@@ -203,18 +226,26 @@ export const renderJournalForm = function (singleEntry) {
             </button>
             <div class="c-journal-form__exits-labels-wrapper">
                 <span class="c-journal-form__exits-label">average: <br><span
-                        class="c-journal-form__exits-label-result">${(
-                          singleEntry.tradeExits
-                            .map(single => single[0] * single[1])
-                            .reduce((acc, num) => acc + num, 0) /
-                          singleEntry.tradeExits
-                            .map(single => single[1])
-                            .reduce((acc, num) => acc + num, 0)
-                        ).toFixed(2)}</span></span>
+                        class="c-journal-form__exits-label-result">${
+                          singleEntry.tradeExits[0][0]
+                            ? (
+                                singleEntry.tradeExits
+                                  .map(single => single[0] * single[1])
+                                  .reduce((acc, num) => acc + num, 0) /
+                                singleEntry.tradeExits
+                                  .map(single => single[1])
+                                  .reduce((acc, num) => acc + num, 0)
+                              ).toFixed(2)
+                            : ''
+                        }</span></span>
                 <span class="c-journal-form__average-exit">shares: <br><span
-                        class="c-journal-form__exits-label-result">${singleEntry.tradeExits
-                          .map(single => single[1])
-                          .reduce((acc, num) => acc + num, 0)}</span></span>
+                        class="c-journal-form__exits-label-result">${
+                          singleEntry.tradeExits[0][1]
+                            ? singleEntry.tradeExits
+                                .map(single => single[1])
+                                .reduce((acc, num) => acc + num, 0)
+                            : ''
+                        }</span></span>
             </div>
         </div>
 
@@ -272,22 +303,32 @@ export const renderJournalEntries = function (entriesData) {
   if (!entriesData) return;
   entriesData.forEach(entry => {
     const html = `
-    <div class="c-journal-entry" data-id=${entry.id}>
+    <div class="c-journal-entry ${
+      entry.id ? '' : 'c-journal-entry--new'
+    }" data-id=${entry.id}>
         <div class="c-journal-entry__unit-wrapper">
             <span class="c-journal-entry__date">${entry.shortDate}</span>
             <span class="c-journal-entry__data">${entry.ticker}</span>
         </div>
         <div class="c-journal-entry__unit-wrapper">
             <span class="c-journal-entry__data">${entry.side} side</span>
-            <span class="c-journal-entry__data">${entry.sharesAmount} shares</span>
+            <span class="c-journal-entry__data">${
+              entry.sharesAmount
+            } shares</span>
         </div>
         <div class="c-journal-entry__unit-wrapper">
-            <span class="c-journal-entry__data">avg.entry: ${entry.avgEntry}</span>
+            <span class="c-journal-entry__data">avg.entry: ${
+              entry.avgEntry
+            }</span>
             <span class="c-journal-entry__data">return: ${entry.return}%</span>
         </div>
         <div class="c-journal-entry__unit-wrapper">
-            <span class="c-journal-entry__data">avg.exit: ${entry.avgExit}</span>
-            <span class="c-journal-entry__data">% return ${entry.returnPercent}</span>
+            <span class="c-journal-entry__data">avg.exit: ${
+              entry.avgExit
+            }</span>
+            <span class="c-journal-entry__data">% return ${
+              entry.returnPercent
+            }</span>
         </div>
         <svg class="c-journal-entry__chevron svg svg--chevron" viewBox="0 0 31 20"
             xmlns="http://www.w3.org/2000/svg">

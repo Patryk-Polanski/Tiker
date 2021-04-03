@@ -1130,6 +1130,9 @@ body {
 .c-journal-entry--active svg {
   transform: rotateZ(-90deg);
 }
+.c-journal-entry--new span {
+  opacity: 0;
+}
 .c-journal-entry__unit-wrapper {
   display: flex;
   flex-direction: column;

@@ -310,6 +310,22 @@ const user = {
         'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.',
     },
   ],
+  dummyJournal: [
+    {
+      id: '',
+      ticker: '',
+      shortDate: '',
+      side: '',
+      sharesAmount: '',
+      avgEntry: '',
+      avgExit: '',
+      return: '',
+      returnPercent: '',
+      tradeEntries: [['', '']],
+      tradeExits: [['', '']],
+      body: '',
+    },
+  ],
 };
 
 console.log(user);

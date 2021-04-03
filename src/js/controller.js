@@ -55,6 +55,7 @@ import {
   renderJournalEntries,
   renderJournalForm,
   switchJournalFormModes,
+  checkFormMode,
 } from './views/journalView';
 
 // ZONE - controllers
@@ -126,8 +127,12 @@ const controlJournalActiveEntries = function (id = '') {
   renderJournalForm(findJournalEntry(id));
 };
 
-const controlJournalFilters = function () {
-  console.log('THIS IS IT!');
+const controlJournalFilters = function (action, id = '') {
+  if (action === 'new') {
+    renderJournalEntries(passData('dummyJournal'));
+    renderJournalForm(passData('dummyJournal'));
+    checkFormMode();
+  }
 };
 
 const queryDOM = function () {

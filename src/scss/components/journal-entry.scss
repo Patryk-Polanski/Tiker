@@ -47,6 +47,10 @@
     }
   }
 
+  &--new span {
+    opacity: 0;
+  }
+
   &__unit-wrapper {
     display: flex;
     flex-direction: column;
