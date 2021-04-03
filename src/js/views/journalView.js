@@ -51,10 +51,15 @@ const toggleDisabledState = function (mode) {
 
 export const addJournalEntriesHandler = function (handler) {
   journalEls.journalEntriesWrapper.addEventListener('click', e => {
-    if (e.target.closest('.c-journal-entry'))
-      return handler(
-        e.target.closest('.c-journal-entry').getAttribute('data-id')
-      );
+    if (e.target.closest('.c-journal-entry')) {
+      const clickedCard = e.target.closest('.c-journal-entry');
+      console.log(clickedCard);
+      journalEls.journalEntriesWrapper
+        .querySelector('.c-journal-entry--active')
+        .classList.remove('c-journal-entry--active');
+      clickedCard.classList.add('c-journal-entry--active');
+      return handler(clickedCard.getAttribute('data-id'));
+    }
     return;
   });
 };

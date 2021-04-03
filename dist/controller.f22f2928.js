@@ -5093,7 +5093,14 @@ var toggleDisabledState = function toggleDisabledState(mode) {
 
 var addJournalEntriesHandler = function addJournalEntriesHandler(handler) {
   journalEls.journalEntriesWrapper.addEventListener('click', function (e) {
-    if (e.target.closest('.c-journal-entry')) return handler(e.target.closest('.c-journal-entry').getAttribute('data-id'));
+    if (e.target.closest('.c-journal-entry')) {
+      var clickedCard = e.target.closest('.c-journal-entry');
+      console.log(clickedCard);
+      journalEls.journalEntriesWrapper.querySelector('.c-journal-entry--active').classList.remove('c-journal-entry--active');
+      clickedCard.classList.add('c-journal-entry--active');
+      return handler(clickedCard.getAttribute('data-id'));
+    }
+
     return;
   });
 };
