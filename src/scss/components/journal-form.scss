@@ -37,12 +37,14 @@
 
   &__data,
   &__entry,
+  &__exit,
   &__size,
   &__entries-label,
   &__entries-label-result,
   &__exits-label,
   &__exits-label-result,
-  &__average-entry {
+  &__average-entry,
+  &__average-exit {
     @include ts-numerical;
   }
 
@@ -52,7 +54,8 @@
     margin-top: 10px;
   }
 
-  &__entry {
+  &__entry,
+  &__exit {
     margin-right: 5px;
   }
 
@@ -80,7 +83,8 @@
     justify-content: space-around;
   }
 
-  &__entries-inner-wrapper {
+  &__entries-inner-wrapper,
+  &__exits-inner-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;

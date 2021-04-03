@@ -24,7 +24,159 @@ const renderJournalPagination = function (entriesNumber) {
   if (entriesNumber < 9) return;
 };
 
-export const renderJournalForm = function () {};
+export const renderJournalForm = function (singleEntry) {
+  [singleEntry] = singleEntry;
+
+  const html = `
+  <div class="c-journal-form js-journal-form">
+    <div class="c-journal-form__upper-region">
+        <div class="c-journal-form__unit-wrapper">
+            <span class="c-journal-form__data">date: <input
+                    class="c-input-text c-input-text--compact c-input-text--activated"
+                    type="number" placeholder="${
+                      singleEntry.shortDate
+                    }" disabled>
+            </span>
+            <span class="c-journal-form__data">stock: <input
+                    class="c-input-text c-input-text--compact c-input-text--activated"
+                    type="text" placeholder="${
+                      singleEntry.ticker
+                    }" disabled></span>
+        </div>
+        <div class="c-journal-form__unit-wrapper">
+            <div class="c-journal-form__trade-side-wrapper">
+                <span class="c-journal-form__data">side: <input
+                        class="c-input-text c-input-text--compact c-input-text--activated"
+                        type="text" placeholder="${
+                          singleEntry.side
+                        }" disabled></span>
+                <button class="c-journal-form__swap btn btn--form-icon">
+                    <svg class="svg svg--swap" viewBox="0 0 17 29"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z"
+                            fill="#C4C4C4" />
+                        <path d="M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z"
+                            fill="#C4C4C4" />
+                    </svg>
+
+                </button>
+            </div>
+            <span class="c-journal-form__data">%return: <input
+                    class="c-input-text c-input-text--compact" type="number"
+                    placeholder="${singleEntry.returnPercent}%" disabled></span>
+        </div>
+        <div class="c-journal-form__unit-wrapper">
+            <span class="c-journal-form__data">shares: <input
+                    class="c-input-text c-input-text--compact" type="number"
+                    placeholder="${singleEntry.sharesAmount}" disabled></span>
+            <span class="c-journal-form__data">return: <input
+                    class="c-input-text c-input-text--compact" type="number"
+                    placeholder="${singleEntry.return}" disabled></span>
+        </div>
+    </div>
+    <div class="c-journal-form__middle-region">
+        <div class="c-journal-form__entries-wrapper">
+            <div class="c-journal-form__entries-labels-wrapper">
+                <span class="c-journal-form__entries-label">entries</span>
+                <span class="c-journal-form__entries-label">shares</span>
+            </div>
+            <div class="c-journal-form__entries-inner-wrapper js-entries-wrapper">
+                // ZONE - exits
+            </div>
+            <button class="c-journal-form__plus-entry btn btn--icon">
+                <svg class="svg svg--plus-circle" viewBox="0 0 17 17"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8.5" cy="8.5" r="8.5" fill="#29242A" />
+                    <path d="M14 7H3V10H14V7Z" fill="#C4C4C4" />
+                    <path d="M10 14V3H7L7 14H10Z" fill="#C4C4C4" />
+                </svg>
+
+            </button>
+            <div class="c-journal-form__entries-labels-wrapper">
+                <span class="c-journal-form__entries-label">average: <br><span
+                        class="c-journal-form__entries-label-result">${singleEntry.tradeExits
+                          .map(single => single[0])
+                          .reduce((acc, num) => acc + num, 0)
+                          .toFixed(2)}</span></span>
+                <span class="c-journal-form__average-entry">shares: <br><span
+                        class="c-journal-form__entries-label-result">${singleEntry.tradeEntries
+                          .map(single => single[1])
+                          .reduce((acc, num) => acc + num, 0)}</span></span>
+            </div>
+        </div>
+        <div class="c-journal-form__exits-wrapper">
+            <div class="c-journal-form__exits-labels-wrapper">
+                <span class="c-journal-form__exits-label">exits</span>
+                <span class="c-journal-form__exits-label">shares</span>
+            </div>
+            <div class="c-journal-form__exits-inner-wrapper js-exits-wrapper">
+               // ZONE - exits
+            </div>
+            <button class="c-journal-form__plus-exit btn btn--icon">
+                <svg class="svg svg--plus-circle" viewBox="0 0 17 17"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="8.5" cy="8.5" r="8.5" fill="#29242A" />
+                    <path d="M14 7H3V10H14V7Z" fill="#C4C4C4" />
+                    <path d="M10 14V3H7L7 14H10Z" fill="#C4C4C4" />
+                </svg>
+
+            </button>
+            <div class="c-journal-form__exits-labels-wrapper">
+                <span class="c-journal-form__exits-label">average: <br><span
+                        class="c-journal-form__exits-label-result">${singleEntry.tradeExits
+                          .map(single => single[0])
+                          .reduce((acc, num) => acc + num, 0)
+                          .toFixed(2)}</span></span>
+                <span class="c-journal-form__average-exit">shares: <br><span
+                        class="c-journal-form__exits-label-result">${singleEntry.tradeExits
+                          .map(single => single[1])
+                          .reduce((acc, num) => acc + num, 0)}</span></span>
+            </div>
+        </div>
+
+    </div>
+  <textarea class="c-journal-form__text-area" name="" id="" rows="10"></textarea>
+  </div>
+  <div class="c-journal-form__buttons-wrapper">
+      <button class="c-journal-from__button-delete btn btn--secondary">delete</button>
+      <div class="c-journal-form__buttons-inner-wrapper">
+          <button class="c-journal-form__button-cancel btn btn--secondary">cancel</button>
+          <button class="c-journal-form__button-save btn btn--primary">save</button>
+      </div>
+      <button class="c-journal-form__button-edit btn btn--primary">edit</button>
+  </div>
+  `;
+
+  journalEls.journalFormWrapper.insertAdjacentHTML('afterbegin', html);
+
+  const entriesSection = document.querySelector('.js-entries-wrapper');
+  const exitsSection = document.querySelector('.js-exits-wrapper');
+  singleEntry.tradeEntries.forEach(transaction => {
+    entriesSection.innerHTML += `
+        <div class="c-journal-form__entry-size-wrapper">
+            <input type="number"
+            class="c-journal-form__entry c-input-text c-input-text--compact c-input-text--activated"
+            placeholder="${transaction[0]}">
+            <input type="number"
+            class="c-journal-form__size c-input-text c-input-text--compact c-input-text--activated"
+            placeholder="${transaction[1]}">
+        </div>
+      `;
+  });
+
+  singleEntry.tradeExits.forEach(transaction => {
+    exitsSection.innerHTML += `
+        <div class="c-journal-form__entry-size-wrapper">
+            <input type="number"
+            class="c-journal-form__entry c-input-text c-input-text--compact c-input-text--activated"
+            placeholder="${transaction[0]}">
+            <input type="number"
+            class="c-journal-form__size c-input-text c-input-text--compact c-input-text--activated"
+            placeholder="${transaction[1]}">
+        </div>
+      `;
+  });
+};
 
 export const renderJournalEntries = function (entriesData) {
   console.log(entriesData);
@@ -58,4 +210,6 @@ export const renderJournalEntries = function (entriesData) {
   });
   activateEntry(selectFirstEntry());
   renderJournalPagination(entriesData.length);
+  console.log(selectFirstEntry().getAttribute('data-id'));
+  return selectFirstEntry().getAttribute('data-id');
 };

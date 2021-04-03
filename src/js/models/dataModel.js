@@ -253,11 +253,11 @@ const user = {
       avgExit: 181.9,
       return: 112.52,
       returnPercent: 1.63,
-      entries: [
+      tradeEntries: [
         [180.75, 40],
         [180.9, 60],
       ],
-      exits: [
+      tradeExits: [
         [181.15, 20],
         [181.42, 20],
         [182.69, 60],
@@ -275,11 +275,11 @@ const user = {
       avgExit: 181.9,
       return: 112.52,
       returnPercent: 1.63,
-      entries: [
+      tradeEntries: [
         [180.75, 40],
         [180.9, 60],
       ],
-      exits: [
+      tradeExits: [
         [181.15, 20],
         [181.42, 20],
         [182.69, 60],
@@ -297,11 +297,11 @@ const user = {
       avgExit: 181.9,
       return: 112.52,
       returnPercent: 1.63,
-      entries: [
-        [180.75, 40],
+      tradeEntries: [
+        [180.75, 50],
         [180.9, 60],
       ],
-      exits: [
+      tradeExits: [
         [181.15, 20],
         [181.42, 20],
         [182.69, 60],
@@ -351,4 +351,10 @@ export const updateProfitableData = function (items) {
     }
   });
   return user.profitable;
+};
+
+export const findJournalEntry = function (id) {
+  if (!id) return;
+  return user.journal.filter(entry => entry.id === id);
+  s;
 };

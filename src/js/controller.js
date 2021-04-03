@@ -13,6 +13,7 @@ import {
   updateCapital,
   updateMonthlyData,
   updateProfitableData,
+  findJournalEntry,
 } from './models/dataModel';
 import { calcPositionResult, calcRatioResult } from './models/calculatorsModel';
 import { queryMonthlyEls, renderMonthlyTable } from './views/tableMonthlyView';
@@ -104,7 +105,9 @@ const controlLongShortPieRender = function () {
 };
 
 const controlJournalRender = function () {
-  renderJournalEntries(passData('journal'));
+  const activeEntryID = renderJournalEntries(passData('journal'));
+  console.log(activeEntryID);
+  renderJournalForm(findJournalEntry(activeEntryID));
 };
 
 const queryDOM = function () {
