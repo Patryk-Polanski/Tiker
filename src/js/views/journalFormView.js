@@ -7,6 +7,10 @@ const getElements = function (obj = {}) {
   obj.journalEntriesWrapper = document.querySelector(
     '.js-journal-entries-wrapper'
   );
+  obj.detailsEntryPriceAvg;
+  obj.detailsExitPriceAvg;
+  obj.detailsEntrySharesTotal;
+  obj.detailsExitSharesTotal;
   return obj;
 };
 
@@ -16,8 +20,84 @@ const toggleDisabledState = function (mode) {
   });
 };
 
-const calculateDetailsOutput = function () {
-  console.log('polski');
+const calculateDetailsOutput = function (focusedEl) {
+  if (focusedEl.classList.contains('c-journal-form__entry')) {
+    const inputsArr = Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll(
+        '.c-journal-form__entry'
+      )
+    );
+
+    const weightedResultsArr = inputsArr.map(
+      input => +input.value * +input.nextElementSibling.value
+    );
+
+    const allShares = Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll(
+        '.c-journal-form__entry-size'
+      )
+    )
+      .map(input => +input.value)
+      .reduce((acc, num) => acc + num, 0);
+
+    const filteredWeightedResultsArr = weightedResultsArr.filter(
+      num => num !== 0
+    );
+
+    journalFormEls.detailsEntryPriceAvg.textContent = (
+      filteredWeightedResultsArr.reduce((acc, num) => acc + num, 0) / allShares
+    ).toFixed(2);
+  }
+
+  if (focusedEl.classList.contains('c-journal-form__entry-size')) {
+    const result = Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll(
+        '.c-journal-form__entry-size'
+      )
+    )
+      .map(input => +input.value)
+      .reduce((acc, num) => acc + num, 0);
+    journalFormEls.detailsEntrySharesTotal.textContent = result;
+  }
+
+  if (focusedEl.classList.contains('c-journal-form__exit')) {
+    const inputsArr = Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll(
+        '.c-journal-form__exit'
+      )
+    );
+
+    const weightedResultsArr = inputsArr.map(
+      input => +input.value * +input.nextElementSibling.value
+    );
+
+    const allShares = Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll(
+        '.c-journal-form__exit-size'
+      )
+    )
+      .map(input => +input.value)
+      .reduce((acc, num) => acc + num, 0);
+
+    const filteredWeightedResultsArr = weightedResultsArr.filter(
+      num => num !== 0
+    );
+
+    journalFormEls.detailsExitPriceAvg.textContent = (
+      filteredWeightedResultsArr.reduce((acc, num) => acc + num, 0) / allShares
+    ).toFixed(2);
+  }
+
+  if (focusedEl.classList.contains('c-journal-form__exit-size')) {
+    const result = Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll(
+        '.c-journal-form__exit-size'
+      )
+    )
+      .map(input => +input.value)
+      .reduce((acc, num) => acc + num, 0);
+    journalFormEls.detailsExitSharesTotal.textContent = result;
+  }
 };
 
 const addKeyEventToDetailsInputs = function () {
@@ -25,7 +105,9 @@ const addKeyEventToDetailsInputs = function () {
     .querySelectorAll('.js-form-details-input')
     .forEach(input => {
       input.addEventListener('keyup', e => {
-        calculateDetailsOutput();
+        setTimeout(() => {
+          calculateDetailsOutput(e.target);
+        }, 2000);
       });
     });
 };
@@ -200,7 +282,7 @@ export const renderJournalForm = function (singleEntry) {
               </button>
               <div class="c-journal-form__entries-labels-wrapper">
                   <span class="c-journal-form__entries-label">average: <br><span
-                          class="c-journal-form__entries-label-result">${
+                          class="c-journal-form__entries-label-result js-details-entry-price-average">${
                             singleEntry.tradeEntries[0][0]
                               ? (
                                   singleEntry.tradeEntries
@@ -213,7 +295,7 @@ export const renderJournalForm = function (singleEntry) {
                               : ''
                           }</span></span>
                   <span class="c-journal-form__average-entry">shares: <br><span
-                          class="c-journal-form__entries-label-result">${
+                          class="c-journal-form__entries-label-result js-details-entry-shares-result">${
                             singleEntry.tradeExits[0][1]
                               ? singleEntry.tradeExits
                                   .map(single => single[1])
@@ -241,7 +323,7 @@ export const renderJournalForm = function (singleEntry) {
               </button>
               <div class="c-journal-form__exits-labels-wrapper">
                   <span class="c-journal-form__exits-label">average: <br><span
-                          class="c-journal-form__exits-label-result">${
+                          class="c-journal-form__exits-label-result js-details-exit-price-average">${
                             singleEntry.tradeExits[0][0]
                               ? (
                                   singleEntry.tradeExits
@@ -254,7 +336,7 @@ export const renderJournalForm = function (singleEntry) {
                               : ''
                           }</span></span>
                   <span class="c-journal-form__average-exit">shares: <br><span
-                          class="c-journal-form__exits-label-result">${
+                          class="c-journal-form__exits-label-result js-details-exit-shares-result">${
                             singleEntry.tradeExits[0][1]
                               ? singleEntry.tradeExits
                                   .map(single => single[1])
@@ -314,6 +396,19 @@ export const renderJournalForm = function (singleEntry) {
   );
   journalFormEls.manualInputs = journalFormEls.journalFormWrapper.querySelectorAll(
     '.c-journal-form__manual-input'
+  );
+
+  journalFormEls.detailsExitPriceAvg = journalFormEls.journalFormWrapper.querySelector(
+    '.js-details-exit-price-average'
+  );
+  journalFormEls.detailsExitSharesTotal = journalFormEls.journalFormWrapper.querySelector(
+    '.js-details-exit-shares-result'
+  );
+  journalFormEls.detailsEntryPriceAvg = journalFormEls.journalFormWrapper.querySelector(
+    '.js-details-entry-price-average'
+  );
+  journalFormEls.detailsEntrySharesTotal = journalFormEls.journalFormWrapper.querySelector(
+    '.js-details-entry-shares-result'
   );
   addKeyEventToDetailsInputs();
 };
