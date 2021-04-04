@@ -150,6 +150,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
 const controlJournalActiveEntries = function (id = '') {
   if (!id) return;
   removeEmptyJournalCard();
+  switchJournalFormModes('read-only');
   renderJournalForm(findJournalEntry(id));
 };
 

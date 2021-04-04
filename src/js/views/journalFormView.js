@@ -11,7 +11,7 @@ const getElements = function (obj = {}) {
 };
 
 const toggleDisabledState = function (mode) {
-  journalFormEls.entriesExitsDetails.forEach(input => {
+  journalFormEls.manualInputs.forEach(input => {
     input.disabled = mode;
   });
 };
@@ -63,7 +63,16 @@ export const addJournalFormEventsHandler = function (handler) {
   });
 };
 
-export const switchJournalFormModes = function () {
+export const switchJournalFormModes = function (instruction = '') {
+  if (instruction === 'read-only') {
+    journalFormEls.journalFormWrapper.classList.remove(
+      's-journal__form-wrapper--edit-mode'
+    );
+    journalFormEls.journalFormWrapper.classList.add(
+      's-journal__form-wrapper--read-mode'
+    );
+    return;
+  }
   if (
     journalFormEls.journalFormWrapper.classList.contains(
       's-journal__form-wrapper--read-mode'
@@ -75,7 +84,7 @@ export const switchJournalFormModes = function () {
     journalFormEls.journalFormWrapper.classList.add(
       's-journal__form-wrapper--edit-mode'
     );
-    journalFormEls.entriesExitsDetails.forEach(input => {
+    journalFormEls.manualInputs.forEach(input => {
       input.disabled = false;
     });
   } else if (
@@ -302,7 +311,7 @@ export const renderJournalForm = function (singleEntry) {
   journalFormEls.swapBtn = journalFormEls.journalFormWrapper.querySelector(
     '.js-form-swap-btn'
   );
-  journalFormEls.entriesExitsDetails = journalFormEls.journalFormWrapper.querySelectorAll(
+  journalFormEls.manualInputs = journalFormEls.journalFormWrapper.querySelectorAll(
     '.c-journal-form__manual-input'
   );
   addKeyEventToDetailsInputs();

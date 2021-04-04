@@ -4,6 +4,7 @@ const getElements = function (obj = {}) {
   obj.journalEntriesWrapper = document.querySelector(
     '.js-journal-entries-wrapper'
   );
+  obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
   return obj;
 };
 

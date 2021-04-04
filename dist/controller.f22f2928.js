@@ -5084,6 +5084,7 @@ var journalEntriesEls = {};
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.journalEntriesWrapper = document.querySelector('.js-journal-entries-wrapper');
+  obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
   return obj;
 };
 
@@ -5208,7 +5209,7 @@ var getElements = function getElements() {
 };
 
 var toggleDisabledState = function toggleDisabledState(mode) {
-  journalFormEls.entriesExitsDetails.forEach(function (input) {
+  journalFormEls.manualInputs.forEach(function (input) {
     input.disabled = mode;
   });
 };
@@ -5251,10 +5252,18 @@ var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) 
 exports.addJournalFormEventsHandler = addJournalFormEventsHandler;
 
 var switchJournalFormModes = function switchJournalFormModes() {
+  var instruction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+  if (instruction === 'read-only') {
+    journalFormEls.journalFormWrapper.classList.remove('s-journal__form-wrapper--edit-mode');
+    journalFormEls.journalFormWrapper.classList.add('s-journal__form-wrapper--read-mode');
+    return;
+  }
+
   if (journalFormEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--read-mode')) {
     journalFormEls.journalFormWrapper.classList.remove('s-journal__form-wrapper--read-mode');
     journalFormEls.journalFormWrapper.classList.add('s-journal__form-wrapper--edit-mode');
-    journalFormEls.entriesExitsDetails.forEach(function (input) {
+    journalFormEls.manualInputs.forEach(function (input) {
       input.disabled = false;
     });
   } else if (journalFormEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--edit-mode')) {
@@ -5334,7 +5343,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
     exitsSection.innerHTML += "\n          <div class=\"c-journal-form__exit-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input\"\n              placeholder=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              placeholder=\"").concat(transaction[1], "\" disabled>\n          </div>\n        ");
   });
   journalFormEls.swapBtn = journalFormEls.journalFormWrapper.querySelector('.js-form-swap-btn');
-  journalFormEls.entriesExitsDetails = journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__manual-input');
+  journalFormEls.manualInputs = journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__manual-input');
   addKeyEventToDetailsInputs();
 };
 
@@ -5461,6 +5470,7 @@ var controlJournalActiveEntries = function controlJournalActiveEntries() {
   var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   if (!id) return;
   (0, _journalEntriesView.removeEmptyJournalCard)();
+  (0, _journalFormView.switchJournalFormModes)('read-only');
   (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
 };
 
