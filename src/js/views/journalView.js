@@ -50,6 +50,13 @@ const toggleDisabledState = function (mode) {
   });
 };
 
+export const removeEmptyJournalCard = function () {
+  const emptyCard = journalEls.journalEntriesWrapper.querySelector(
+    '.c-journal-entry--new'
+  );
+  if (emptyCard) emptyCard.remove();
+};
+
 export const addJournalEntriesHandler = function (handler) {
   journalEls.journalEntriesWrapper.addEventListener('click', e => {
     if (e.target.closest('.c-journal-entry')) {

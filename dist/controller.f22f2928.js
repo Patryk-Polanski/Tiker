@@ -5053,7 +5053,7 @@ exports.updateCapitalOutput = updateCapitalOutput;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalEntries = exports.renderJournalForm = exports.switchPositionSide = exports.checkFormMode = exports.addJournalFiltersHandler = exports.addJournalFormEventsHandler = exports.addJournalEntriesHandler = exports.switchJournalFormModes = exports.queryJournalEls = void 0;
+exports.renderJournalEntries = exports.renderJournalForm = exports.switchPositionSide = exports.checkFormMode = exports.addJournalFiltersHandler = exports.addJournalFormEventsHandler = exports.addJournalEntriesHandler = exports.removeEmptyJournalCard = exports.switchJournalFormModes = exports.queryJournalEls = void 0;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -5105,6 +5105,13 @@ var toggleDisabledState = function toggleDisabledState(mode) {
     input.disabled = mode;
   });
 };
+
+var removeEmptyJournalCard = function removeEmptyJournalCard() {
+  var emptyCard = journalEls.journalEntriesWrapper.querySelector('.c-journal-entry--new');
+  if (emptyCard) emptyCard.remove();
+};
+
+exports.removeEmptyJournalCard = removeEmptyJournalCard;
 
 var addJournalEntriesHandler = function addJournalEntriesHandler(handler) {
   journalEls.journalEntriesWrapper.addEventListener('click', function (e) {
@@ -5346,6 +5353,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
 var controlJournalActiveEntries = function controlJournalActiveEntries() {
   var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   if (!id) return;
+  (0, _journalView.removeEmptyJournalCard)();
   (0, _journalView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
 };
 
