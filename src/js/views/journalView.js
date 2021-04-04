@@ -54,7 +54,10 @@ export const removeEmptyJournalCard = function () {
   const emptyCard = journalEls.journalEntriesWrapper.querySelector(
     '.c-journal-entry--new'
   );
-  if (emptyCard) emptyCard.remove();
+  if (emptyCard) {
+    emptyCard.remove();
+    activateEntry(selectFirstEntry());
+  }
 };
 
 export const addJournalEntriesHandler = function (handler) {
@@ -73,7 +76,6 @@ export const addJournalEntriesHandler = function (handler) {
 
 export const addJournalFormEventsHandler = function (handler) {
   journalEls.journalFormWrapper.addEventListener('click', e => {
-    console.log(e.target);
     if (
       e.target.classList.contains('js-form-edit-btn') &&
       journalEls.journalFormWrapper.classList.contains(
@@ -83,7 +85,17 @@ export const addJournalFormEventsHandler = function (handler) {
       handler('edit');
 
     if (e.target.classList.contains('js-form-cancel-btn')) {
-      handler('cancel', journalEls.journalForm.getAttribute('data-id'));
+      const formId = journalEls.journalForm.getAttribute('data-id');
+      if (formId) {
+        handler('cancel', formId);
+      } else {
+        handler(
+          'cancel',
+          journalEls.journalEntriesWrapper
+            .querySelector('.c-journal-entry')
+            .nextElementSibling.getAttribute('data-id')
+        );
+      }
     }
 
     if (e.target.classList.contains('js-form-swap-btn')) handler('swap');

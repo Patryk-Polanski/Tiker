@@ -120,6 +120,7 @@ const controlJournalRender = function () {
 const controlJournalFormEvents = function (action, id = '', targetEl = '') {
   if (action === 'edit') switchJournalFormModes();
   if (action === 'cancel') {
+    removeEmptyJournalCard();
     switchJournalFormModes();
     renderJournalForm(findJournalEntry(id));
   }

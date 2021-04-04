@@ -5108,7 +5108,11 @@ var toggleDisabledState = function toggleDisabledState(mode) {
 
 var removeEmptyJournalCard = function removeEmptyJournalCard() {
   var emptyCard = journalEls.journalEntriesWrapper.querySelector('.c-journal-entry--new');
-  if (emptyCard) emptyCard.remove();
+
+  if (emptyCard) {
+    emptyCard.remove();
+    activateEntry(selectFirstEntry());
+  }
 };
 
 exports.removeEmptyJournalCard = removeEmptyJournalCard;
@@ -5130,11 +5134,16 @@ exports.addJournalEntriesHandler = addJournalEntriesHandler;
 
 var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) {
   journalEls.journalFormWrapper.addEventListener('click', function (e) {
-    console.log(e.target);
     if (e.target.classList.contains('js-form-edit-btn') && journalEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--read-mode')) handler('edit');
 
     if (e.target.classList.contains('js-form-cancel-btn')) {
-      handler('cancel', journalEls.journalForm.getAttribute('data-id'));
+      var formId = journalEls.journalForm.getAttribute('data-id');
+
+      if (formId) {
+        handler('cancel', formId);
+      } else {
+        handler('cancel', journalEls.journalEntriesWrapper.querySelector('.c-journal-entry').nextElementSibling.getAttribute('data-id'));
+      }
     }
 
     if (e.target.classList.contains('js-form-swap-btn')) handler('swap');
@@ -5366,6 +5375,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
   if (action === 'edit') (0, _journalView.switchJournalFormModes)();
 
   if (action === 'cancel') {
+    (0, _journalView.removeEmptyJournalCard)();
     (0, _journalView.switchJournalFormModes)();
     (0, _journalView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
   }
