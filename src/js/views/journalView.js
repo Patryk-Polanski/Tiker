@@ -77,6 +77,8 @@ export const addJournalFormEventsHandler = function (handler) {
     if (e.target.classList.contains('js-form-cancel-btn')) {
       handler('cancel', journalEls.journalForm.getAttribute('data-id'));
     }
+
+    if (e.target.classList.contains('js-form-swap-btn')) handler('swap');
   });
 };
 
@@ -100,6 +102,14 @@ export const checkFormMode = function () {
   }
 };
 
+export const switchPositionSide = function () {
+  const sideValueEl =
+    journalEls.swapBtn.previousElementSibling.firstElementChild;
+  sideValueEl.value === 'long'
+    ? (sideValueEl.value = 'short')
+    : (sideValueEl.value = 'long');
+};
+
 const selectFirstEntry = function () {
   return journalEls.entriesContainer.querySelector('.c-journal-entry');
 };
@@ -119,7 +129,6 @@ const renderJournalPagination = function (entriesNumber) {
 };
 
 const getTodayShortDate = function () {
-  const todayDate = new Date();
   const [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
   const joinedDate = date + '/' + month + '/' + year;
   return joinedDate;
@@ -152,7 +161,7 @@ export const renderJournalForm = function (singleEntry) {
                         type="text" value="${
                           singleEntry.side ? singleEntry.side : 'long'
                         }" disabled></span>
-                <button class="c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn">
+                <button class="c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn">
                     <svg class="svg svg--swap" viewBox="0 0 17 29"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z"
@@ -305,6 +314,9 @@ export const renderJournalForm = function (singleEntry) {
       `;
   });
 
+  journalEls.swapBtn = journalEls.journalFormWrapper.querySelector(
+    '.js-form-swap-btn'
+  );
   journalEls.entriesExitsDetails = journalEls.journalFormWrapper.querySelectorAll(
     '.c-journal-form__manual-input'
   );

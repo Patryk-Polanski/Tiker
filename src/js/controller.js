@@ -56,6 +56,7 @@ import {
   renderJournalForm,
   switchJournalFormModes,
   checkFormMode,
+  switchPositionSide,
 } from './views/journalView';
 
 // ZONE - controllers
@@ -120,6 +121,7 @@ const controlJournalFormEvents = function (action, id = '') {
     switchJournalFormModes();
     renderJournalForm(findJournalEntry(id));
   }
+  if (action === 'swap') switchPositionSide();
 };
 
 const controlJournalActiveEntries = function (id = '') {
