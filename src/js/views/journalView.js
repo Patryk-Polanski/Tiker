@@ -97,7 +97,7 @@ export const renderExtraDetailsRows = function (targetEl) {
   const lastRow = targetEl.previousElementSibling;
   const rowClone = lastRow.cloneNode(true);
   lastRow.insertAdjacentElement('afterend', rowClone);
-  console.log(targetEl);
+  addKeyEventToDetailsInputs();
 };
 
 export const addJournalFiltersHandler = function (handler) {
@@ -150,6 +150,18 @@ const getTodayShortDate = function () {
   const [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
   const joinedDate = date + '/' + month + '/' + year;
   return joinedDate;
+};
+
+const addKeyEventToDetailsInputs = function () {
+  journalEls.journalForm
+    .querySelectorAll('.js-form-details-input')
+    .forEach(input => {
+      if (input.getAttribute('data-input-event') === 'active') return;
+      input.addEventListener('keyup', e => {
+        e.target.setAttribute('data-input-event', 'active');
+        console.log('EVENT LISTENER ADDED');
+      });
+    });
 };
 
 export const renderJournalForm = function (singleEntry) {
@@ -310,10 +322,10 @@ export const renderJournalForm = function (singleEntry) {
     entriesSection.innerHTML += `
         <div class="c-journal-form__entry-size-wrapper">
             <input type="number"
-            class="c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input"
+            class="c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input"
             value="${transaction[0]}" disabled>
             <input type="number"
-            class="c-journal-form__size c-input-text c-input-text--compact c-journal-form__manual-input"
+            class="c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input"
             value="${transaction[1]}" disabled>
         </div>
       `;
@@ -321,12 +333,12 @@ export const renderJournalForm = function (singleEntry) {
 
   singleEntry.tradeExits.forEach(transaction => {
     exitsSection.innerHTML += `
-        <div class="c-journal-form__entry-size-wrapper">
+        <div class="c-journal-form__exit-size-wrapper">
             <input type="number"
-            class="c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input"
+            class="c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input"
             placeholder="${transaction[0]}" disabled>
             <input type="number"
-            class="c-journal-form__size c-input-text c-input-text--compact c-journal-form__manual-input"
+            class="c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input"
             placeholder="${transaction[1]}" disabled>
         </div>
       `;
@@ -338,6 +350,7 @@ export const renderJournalForm = function (singleEntry) {
   journalEls.entriesExitsDetails = journalEls.journalFormWrapper.querySelectorAll(
     '.c-journal-form__manual-input'
   );
+  addKeyEventToDetailsInputs();
 };
 
 export const renderJournalEntries = function (entriesData) {

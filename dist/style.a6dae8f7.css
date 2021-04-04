@@ -1236,7 +1236,7 @@ body {
 .c-journal-form__unit-wrapper span:last-child {
   margin-top: 10px;
 }
-.c-journal-form__data, .c-journal-form__entry, .c-journal-form__exit, .c-journal-form__size, .c-journal-form__entries-label, .c-journal-form__entries-label-result, .c-journal-form__exits-label, .c-journal-form__exits-label-result, .c-journal-form__average-entry, .c-journal-form__average-exit {
+.c-journal-form__data, .c-journal-form__entry, .c-journal-form__exit, .c-journal-form__entry-size, .c-journal-form__exit-size, .c-journal-form__entries-label, .c-journal-form__entries-label-result, .c-journal-form__exits-label, .c-journal-form__exits-label-result, .c-journal-form__average-entry, .c-journal-form__average-exit {
   font-family: "Roboto", sans-serif;
   color: #aaaaaa;
   font-weight: 400;
@@ -1248,7 +1248,7 @@ body {
 .c-journal-form__entry, .c-journal-form__exit {
   margin-right: 5px;
 }
-.c-journal-form__size {
+.c-journal-form__entry-size, .c-journal-form__exit-size {
   margin-left: 5px;
 }
 .c-journal-form__date {

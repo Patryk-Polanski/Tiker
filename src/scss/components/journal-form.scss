@@ -38,7 +38,8 @@
   &__data,
   &__entry,
   &__exit,
-  &__size,
+  &__entry-size,
+  &__exit-size,
   &__entries-label,
   &__entries-label-result,
   &__exits-label,
@@ -59,7 +60,8 @@
     margin-right: 5px;
   }
 
-  &__size {
+  &__entry-size,
+  &__exit-size {
     margin-left: 5px;
   }
 

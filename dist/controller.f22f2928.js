@@ -5148,7 +5148,7 @@ var renderExtraDetailsRows = function renderExtraDetailsRows(targetEl) {
   var lastRow = targetEl.previousElementSibling;
   var rowClone = lastRow.cloneNode(true);
   lastRow.insertAdjacentElement('afterend', rowClone);
-  console.log(targetEl);
+  addKeyEventToDetailsInputs();
 };
 
 exports.renderExtraDetailsRows = renderExtraDetailsRows;
@@ -5203,6 +5203,16 @@ var getTodayShortDate = function getTodayShortDate() {
   return joinedDate;
 };
 
+var addKeyEventToDetailsInputs = function addKeyEventToDetailsInputs() {
+  journalEls.journalForm.querySelectorAll('.js-form-details-input').forEach(function (input) {
+    if (input.getAttribute('data-input-event') === 'active') return;
+    input.addEventListener('keyup', function (e) {
+      e.target.setAttribute('data-input-event', 'active');
+      console.log('EVENT LISTENER ADDED');
+    });
+  });
+};
+
 var renderJournalForm = function renderJournalForm(singleEntry) {
   journalEls.journalFormWrapper.innerHTML = '';
   var _singleEntry = singleEntry;
@@ -5240,13 +5250,14 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
   var entriesSection = document.querySelector('.js-entries-wrapper');
   var exitsSection = document.querySelector('.js-exits-wrapper');
   singleEntry.tradeEntries.forEach(function (transaction) {
-    entriesSection.innerHTML += "\n        <div class=\"c-journal-form__entry-size-wrapper\">\n            <input type=\"number\"\n            class=\"c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input\"\n            value=\"".concat(transaction[0], "\" disabled>\n            <input type=\"number\"\n            class=\"c-journal-form__size c-input-text c-input-text--compact c-journal-form__manual-input\"\n            value=\"").concat(transaction[1], "\" disabled>\n        </div>\n      ");
+    entriesSection.innerHTML += "\n        <div class=\"c-journal-form__entry-size-wrapper\">\n            <input type=\"number\"\n            class=\"c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n            value=\"".concat(transaction[0], "\" disabled>\n            <input type=\"number\"\n            class=\"c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n            value=\"").concat(transaction[1], "\" disabled>\n        </div>\n      ");
   });
   singleEntry.tradeExits.forEach(function (transaction) {
-    exitsSection.innerHTML += "\n        <div class=\"c-journal-form__entry-size-wrapper\">\n            <input type=\"number\"\n            class=\"c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input\"\n            placeholder=\"".concat(transaction[0], "\" disabled>\n            <input type=\"number\"\n            class=\"c-journal-form__size c-input-text c-input-text--compact c-journal-form__manual-input\"\n            placeholder=\"").concat(transaction[1], "\" disabled>\n        </div>\n      ");
+    exitsSection.innerHTML += "\n        <div class=\"c-journal-form__exit-size-wrapper\">\n            <input type=\"number\"\n            class=\"c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input\"\n            placeholder=\"".concat(transaction[0], "\" disabled>\n            <input type=\"number\"\n            class=\"c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n            placeholder=\"").concat(transaction[1], "\" disabled>\n        </div>\n      ");
   });
   journalEls.swapBtn = journalEls.journalFormWrapper.querySelector('.js-form-swap-btn');
   journalEls.entriesExitsDetails = journalEls.journalFormWrapper.querySelectorAll('.c-journal-form__manual-input');
+  addKeyEventToDetailsInputs();
 };
 
 exports.renderJournalForm = renderJournalForm;
