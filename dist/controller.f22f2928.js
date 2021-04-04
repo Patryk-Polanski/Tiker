@@ -5218,64 +5218,49 @@ var toggleDisabledState = function toggleDisabledState(mode) {
   });
 };
 
+var recalculateDetailsPrice = function recalculateDetailsPrice(targetElClass, siblingElClass) {
+  var inputsArr = Array.from(journalFormEls.journalFormWrapper.querySelectorAll(targetElClass));
+  var weightedResultsArr = inputsArr.map(function (input) {
+    return +input.value * +input.nextElementSibling.value;
+  });
+  var allShares = Array.from(journalFormEls.journalFormWrapper.querySelectorAll(siblingElClass)).map(function (input) {
+    return +input.value;
+  }).reduce(function (acc, num) {
+    return acc + num;
+  }, 0);
+  var filteredWeightedResultsArr = weightedResultsArr.filter(function (num) {
+    return num !== 0;
+  });
+  return (filteredWeightedResultsArr.reduce(function (acc, num) {
+    return acc + num;
+  }, 0) / allShares).toFixed(2);
+};
+
+var recalculateDetailsShares = function recalculateDetailsShares(targetElClass) {
+  return Array.from(journalFormEls.journalFormWrapper.querySelectorAll(targetElClass)).map(function (input) {
+    return +input.value;
+  }).reduce(function (acc, num) {
+    return acc + num;
+  }, 0);
+};
+
 var calculateDetailsOutput = function calculateDetailsOutput(focusedEl) {
   if (focusedEl.classList.contains('c-journal-form__entry')) {
-    var inputsArr = Array.from(journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__entry'));
-    var weightedResultsArr = inputsArr.map(function (input) {
-      return +input.value * +input.nextElementSibling.value;
-    });
-    var allShares = Array.from(journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__entry-size')).map(function (input) {
-      return +input.value;
-    }).reduce(function (acc, num) {
-      return acc + num;
-    }, 0);
-    var filteredWeightedResultsArr = weightedResultsArr.filter(function (num) {
-      return num !== 0;
-    });
-    journalFormEls.detailsEntryPriceAvg.textContent = (filteredWeightedResultsArr.reduce(function (acc, num) {
-      return acc + num;
-    }, 0) / allShares).toFixed(2);
+    journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__entry', '.c-journal-form__entry-size');
   }
 
   if (focusedEl.classList.contains('c-journal-form__entry-size')) {
-    var result = Array.from(journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__entry-size')).map(function (input) {
-      return +input.value;
-    }).reduce(function (acc, num) {
-      return acc + num;
-    }, 0);
-    journalFormEls.detailsEntrySharesTotal.textContent = result;
+    journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares('.c-journal-form__entry-size');
+    journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__entry', '.c-journal-form__entry-size');
   }
 
   if (focusedEl.classList.contains('c-journal-form__exit')) {
-    var _inputsArr = Array.from(journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__exit'));
-
-    var _weightedResultsArr = _inputsArr.map(function (input) {
-      return +input.value * +input.nextElementSibling.value;
-    });
-
-    var _allShares = Array.from(journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__exit-size')).map(function (input) {
-      return +input.value;
-    }).reduce(function (acc, num) {
-      return acc + num;
-    }, 0);
-
-    var _filteredWeightedResultsArr = _weightedResultsArr.filter(function (num) {
-      return num !== 0;
-    });
-
-    journalFormEls.detailsExitPriceAvg.textContent = (_filteredWeightedResultsArr.reduce(function (acc, num) {
-      return acc + num;
-    }, 0) / _allShares).toFixed(2);
+    journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__exit', '.c-journal-form__exit-size');
   }
 
   if (focusedEl.classList.contains('c-journal-form__exit-size')) {
-    var _result = Array.from(journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__exit-size')).map(function (input) {
-      return +input.value;
-    }).reduce(function (acc, num) {
-      return acc + num;
-    }, 0);
-
-    journalFormEls.detailsExitSharesTotal.textContent = _result;
+    journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares('.c-journal-form__exit-size');
+    journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__exit', '.c-journal-form__exit-size');
   }
 };
 
@@ -5625,7 +5610,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50283" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56910" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

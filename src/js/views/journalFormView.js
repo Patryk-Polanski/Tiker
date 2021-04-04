@@ -20,83 +20,71 @@ const toggleDisabledState = function (mode) {
   });
 };
 
+const recalculateDetailsPrice = function (targetElClass, siblingElClass) {
+  const inputsArr = Array.from(
+    journalFormEls.journalFormWrapper.querySelectorAll(targetElClass)
+  );
+
+  const weightedResultsArr = inputsArr.map(
+    input => +input.value * +input.nextElementSibling.value
+  );
+
+  const allShares = Array.from(
+    journalFormEls.journalFormWrapper.querySelectorAll(siblingElClass)
+  )
+    .map(input => +input.value)
+    .reduce((acc, num) => acc + num, 0);
+
+  const filteredWeightedResultsArr = weightedResultsArr.filter(
+    num => num !== 0
+  );
+
+  return (
+    filteredWeightedResultsArr.reduce((acc, num) => acc + num, 0) / allShares
+  ).toFixed(2);
+};
+
+const recalculateDetailsShares = function (targetElClass) {
+  return Array.from(
+    journalFormEls.journalFormWrapper.querySelectorAll(targetElClass)
+  )
+    .map(input => +input.value)
+    .reduce((acc, num) => acc + num, 0);
+};
+
 const calculateDetailsOutput = function (focusedEl) {
   if (focusedEl.classList.contains('c-journal-form__entry')) {
-    const inputsArr = Array.from(
-      journalFormEls.journalFormWrapper.querySelectorAll(
-        '.c-journal-form__entry'
-      )
+    journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice(
+      '.c-journal-form__entry',
+      '.c-journal-form__entry-size'
     );
-
-    const weightedResultsArr = inputsArr.map(
-      input => +input.value * +input.nextElementSibling.value
-    );
-
-    const allShares = Array.from(
-      journalFormEls.journalFormWrapper.querySelectorAll(
-        '.c-journal-form__entry-size'
-      )
-    )
-      .map(input => +input.value)
-      .reduce((acc, num) => acc + num, 0);
-
-    const filteredWeightedResultsArr = weightedResultsArr.filter(
-      num => num !== 0
-    );
-
-    journalFormEls.detailsEntryPriceAvg.textContent = (
-      filteredWeightedResultsArr.reduce((acc, num) => acc + num, 0) / allShares
-    ).toFixed(2);
   }
 
   if (focusedEl.classList.contains('c-journal-form__entry-size')) {
-    const result = Array.from(
-      journalFormEls.journalFormWrapper.querySelectorAll(
-        '.c-journal-form__entry-size'
-      )
-    )
-      .map(input => +input.value)
-      .reduce((acc, num) => acc + num, 0);
-    journalFormEls.detailsEntrySharesTotal.textContent = result;
+    journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares(
+      '.c-journal-form__entry-size'
+    );
+    journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice(
+      '.c-journal-form__entry',
+      '.c-journal-form__entry-size'
+    );
   }
 
   if (focusedEl.classList.contains('c-journal-form__exit')) {
-    const inputsArr = Array.from(
-      journalFormEls.journalFormWrapper.querySelectorAll(
-        '.c-journal-form__exit'
-      )
+    journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice(
+      '.c-journal-form__exit',
+      '.c-journal-form__exit-size'
     );
-
-    const weightedResultsArr = inputsArr.map(
-      input => +input.value * +input.nextElementSibling.value
-    );
-
-    const allShares = Array.from(
-      journalFormEls.journalFormWrapper.querySelectorAll(
-        '.c-journal-form__exit-size'
-      )
-    )
-      .map(input => +input.value)
-      .reduce((acc, num) => acc + num, 0);
-
-    const filteredWeightedResultsArr = weightedResultsArr.filter(
-      num => num !== 0
-    );
-
-    journalFormEls.detailsExitPriceAvg.textContent = (
-      filteredWeightedResultsArr.reduce((acc, num) => acc + num, 0) / allShares
-    ).toFixed(2);
   }
 
   if (focusedEl.classList.contains('c-journal-form__exit-size')) {
-    const result = Array.from(
-      journalFormEls.journalFormWrapper.querySelectorAll(
-        '.c-journal-form__exit-size'
-      )
-    )
-      .map(input => +input.value)
-      .reduce((acc, num) => acc + num, 0);
-    journalFormEls.detailsExitSharesTotal.textContent = result;
+    journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares(
+      '.c-journal-form__exit-size'
+    );
+    journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice(
+      '.c-journal-form__exit',
+      '.c-journal-form__exit-size'
+    );
   }
 };
 
