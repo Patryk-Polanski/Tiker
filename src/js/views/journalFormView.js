@@ -16,14 +16,16 @@ const toggleDisabledState = function (mode) {
   });
 };
 
+const calculateDetailsOutput = function () {
+  console.log('polski');
+};
+
 const addKeyEventToDetailsInputs = function () {
   journalFormEls.journalForm
     .querySelectorAll('.js-form-details-input')
     .forEach(input => {
-      if (input.getAttribute('data-input-event') === 'active') return;
       input.addEventListener('keyup', e => {
-        e.target.setAttribute('data-input-event', 'active');
-        console.log('EVENT LISTENER ADDED');
+        calculateDetailsOutput();
       });
     });
 };
@@ -104,7 +106,6 @@ export const switchJournalFormModes = function (instruction = '') {
 
 export const renderExtraDetailsRows = function (targetEl) {
   const lastRow = targetEl.previousElementSibling.lastElementChild;
-  console.log(lastRow);
   const rowClone = lastRow.cloneNode(true);
   lastRow.insertAdjacentElement('afterend', rowClone);
   addKeyEventToDetailsInputs();
@@ -300,10 +301,10 @@ export const renderJournalForm = function (singleEntry) {
           <div class="c-journal-form__exit-size-wrapper">
               <input type="number"
               class="c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input"
-              placeholder="${transaction[0]}" disabled>
+              value="${transaction[0]}" disabled>
               <input type="number"
               class="c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input"
-              placeholder="${transaction[1]}" disabled>
+              value="${transaction[1]}" disabled>
           </div>
         `;
   });

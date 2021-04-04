@@ -5214,12 +5214,14 @@ var toggleDisabledState = function toggleDisabledState(mode) {
   });
 };
 
+var calculateDetailsOutput = function calculateDetailsOutput() {
+  console.log('polski');
+};
+
 var addKeyEventToDetailsInputs = function addKeyEventToDetailsInputs() {
   journalFormEls.journalForm.querySelectorAll('.js-form-details-input').forEach(function (input) {
-    if (input.getAttribute('data-input-event') === 'active') return;
     input.addEventListener('keyup', function (e) {
-      e.target.setAttribute('data-input-event', 'active');
-      console.log('EVENT LISTENER ADDED');
+      calculateDetailsOutput();
     });
   });
 };
@@ -5277,7 +5279,6 @@ exports.switchJournalFormModes = switchJournalFormModes;
 
 var renderExtraDetailsRows = function renderExtraDetailsRows(targetEl) {
   var lastRow = targetEl.previousElementSibling.lastElementChild;
-  console.log(lastRow);
   var rowClone = lastRow.cloneNode(true);
   lastRow.insertAdjacentElement('afterend', rowClone);
   addKeyEventToDetailsInputs();
@@ -5340,7 +5341,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
     entriesSection.innerHTML += "\n          <div class=\"c-journal-form__entry-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"").concat(transaction[1], "\" disabled>\n          </div>\n        ");
   });
   singleEntry.tradeExits.forEach(function (transaction) {
-    exitsSection.innerHTML += "\n          <div class=\"c-journal-form__exit-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input\"\n              placeholder=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              placeholder=\"").concat(transaction[1], "\" disabled>\n          </div>\n        ");
+    exitsSection.innerHTML += "\n          <div class=\"c-journal-form__exit-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input\"\n              value=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"").concat(transaction[1], "\" disabled>\n          </div>\n        ");
   });
   journalFormEls.swapBtn = journalFormEls.journalFormWrapper.querySelector('.js-form-swap-btn');
   journalFormEls.manualInputs = journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__manual-input');
