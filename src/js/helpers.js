@@ -25,3 +25,9 @@ export const kFormatter = function (num, decimal = 999) {
     ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k'
     : Math.sign(num) * Math.abs(num);
 };
+
+export const getTodayShortDate = function () {
+  const [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
+  const joinedDate = date + '/' + month + '/' + year;
+  return joinedDate;
+};

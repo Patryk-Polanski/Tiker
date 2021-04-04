@@ -1,3 +1,5 @@
+import { getTodayShortDate } from '../helpers';
+
 let journalFormEls = {};
 
 const getElements = function (obj = {}) {
@@ -12,12 +14,6 @@ const toggleDisabledState = function (mode) {
   journalFormEls.entriesExitsDetails.forEach(input => {
     input.disabled = mode;
   });
-};
-
-const getTodayShortDate = function () {
-  const [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
-  const joinedDate = date + '/' + month + '/' + year;
-  return joinedDate;
 };
 
 const addKeyEventToDetailsInputs = function () {
@@ -98,7 +94,8 @@ export const switchJournalFormModes = function () {
 };
 
 export const renderExtraDetailsRows = function (targetEl) {
-  const lastRow = targetEl.previousElementSibling;
+  const lastRow = targetEl.previousElementSibling.lastElementChild;
+  console.log(lastRow);
   const rowClone = lastRow.cloneNode(true);
   lastRow.insertAdjacentElement('afterend', rowClone);
   addKeyEventToDetailsInputs();
