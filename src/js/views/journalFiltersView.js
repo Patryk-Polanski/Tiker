@@ -1,17 +1,20 @@
-let journalFiltersEls = {};
+let journalFilterEls = {};
 
 const getElements = function (obj = {}) {
   obj.journalFiltersWrapper = document.querySelector('.js-journal-filter');
+  obj.journalEntriesWrapper = document.querySelector(
+    '.js-journal-entries-wrapper'
+  );
   return obj;
 };
 
 export const queryJournalFilterEls = function () {
-  journalFiltersEls = getElements();
+  journalFilterEls = getElements();
 };
 
 export const addJournalFiltersHandler = function (handler) {
-  journalEls.journalFiltersWrapper.addEventListener('click', e => {
-    const existingNewEntry = journalEls.journalEntriesWrapper.querySelector(
+  journalFilterEls.journalFiltersWrapper.addEventListener('click', e => {
+    const existingNewEntry = journalFilterEls.journalEntriesWrapper.querySelector(
       '.c-journal-entry--new'
     );
     if (e.target.classList.contains('js-new-trade-btn') && !existingNewEntry)

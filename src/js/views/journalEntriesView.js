@@ -12,10 +12,10 @@ export const queryJournalEntriesEls = function () {
 };
 
 export const addJournalEntriesHandler = function (handler) {
-  journalEls.journalEntriesWrapper.addEventListener('click', e => {
+  journalEntriesEls.journalEntriesWrapper.addEventListener('click', e => {
     if (e.target.closest('.c-journal-entry')) {
       const clickedCard = e.target.closest('.c-journal-entry');
-      journalEls.journalEntriesWrapper
+      journalEntriesEls.journalEntriesWrapper
         .querySelector('.c-journal-entry--active')
         .classList.remove('c-journal-entry--active');
       clickedCard.classList.add('c-journal-entry--active');
@@ -26,7 +26,7 @@ export const addJournalEntriesHandler = function (handler) {
 };
 
 export const removeEmptyJournalCard = function () {
-  const emptyCard = journalEls.journalEntriesWrapper.querySelector(
+  const emptyCard = journalEntriesEls.journalEntriesWrapper.querySelector(
     '.c-journal-entry--new'
   );
   if (emptyCard) {
@@ -36,12 +36,14 @@ export const removeEmptyJournalCard = function () {
 };
 
 const selectFirstEntry = function () {
-  return journalEls.journalEntriesWrapper.querySelector('.c-journal-entry');
+  return journalEntriesEls.journalEntriesWrapper.querySelector(
+    '.c-journal-entry'
+  );
 };
 
 const activateEntry = function (entryEl) {
   if (!entryEl) return;
-  const previouslyActive = journalEls.journalEntriesWrapper.querySelector(
+  const previouslyActive = journalEntriesEls.journalEntriesWrapper.querySelector(
     '.c-journal-entry--active'
   );
   if (previouslyActive)
@@ -92,7 +94,10 @@ export const renderJournalEntries = function (entriesData) {
           </svg>
       </div>
       `;
-    journalEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
+    journalEntriesEls.journalEntriesWrapper.insertAdjacentHTML(
+      'afterbegin',
+      html
+    );
   });
   activateEntry(selectFirstEntry());
   renderJournalPagination(entriesData.length);

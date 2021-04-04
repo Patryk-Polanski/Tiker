@@ -47,19 +47,38 @@ import {
   queryDetailsEls,
   updateCapitalOutput,
 } from './views/accountDetailsView';
+// import {
+//   queryJournalEls,
+//   addJournalFiltersHandler,
+//   addJournalEntriesHandler,
+//   addJournalFormEventsHandler,
+//   renderJournalEntries,
+//   renderJournalForm,
+//   switchJournalFormModes,
+//   checkFormMode,
+//   switchPositionSide,
+//   removeEmptyJournalCard,
+//   renderExtraDetailsRows,
+// } from './views/journalView';
 import {
-  queryJournalEls,
-  addJournalFiltersHandler,
+  queryJournalEntriesEls,
   addJournalEntriesHandler,
-  addJournalFormEventsHandler,
   renderJournalEntries,
+  removeEmptyJournalCard,
+} from './views/journalEntriesView';
+import {
+  queryJournalFilterEls,
+  addJournalFiltersHandler,
+} from './views/journalFiltersView';
+import {
+  queryJournalFormEls,
+  addJournalFormEventsHandler,
   renderJournalForm,
   switchJournalFormModes,
   checkFormMode,
   switchPositionSide,
-  removeEmptyJournalCard,
   renderExtraDetailsRows,
-} from './views/journalView';
+} from './views/journalFormView';
 
 // ZONE - controllers
 
@@ -150,7 +169,10 @@ const queryDOM = function () {
   queryPerformanceEls();
   queryBestWorstEls();
   queryDetailsEls();
-  queryJournalEls();
+  queryJournalEntriesEls();
+  queryJournalFilterEls();
+  queryJournalFormEls();
+  // queryJournalEls();
 };
 
 // ZONE - event listeners

@@ -2,11 +2,14 @@ let journalFormEls = {};
 
 const getElements = function (obj = {}) {
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
+  obj.journalEntriesWrapper = document.querySelector(
+    '.js-journal-entries-wrapper'
+  );
   return obj;
 };
 
 const toggleDisabledState = function (mode) {
-  journalEls.entriesExitsDetails.forEach(input => {
+  journalFormEls.entriesExitsDetails.forEach(input => {
     input.disabled = mode;
   });
 };
@@ -18,7 +21,7 @@ const getTodayShortDate = function () {
 };
 
 const addKeyEventToDetailsInputs = function () {
-  journalEls.journalForm
+  journalFormEls.journalForm
     .querySelectorAll('.js-form-details-input')
     .forEach(input => {
       if (input.getAttribute('data-input-event') === 'active') return;
@@ -34,23 +37,23 @@ export const queryJournalFormEls = function () {
 };
 
 export const addJournalFormEventsHandler = function (handler) {
-  journalEls.journalFormWrapper.addEventListener('click', e => {
+  journalFormEls.journalFormWrapper.addEventListener('click', e => {
     if (
       e.target.classList.contains('js-form-edit-btn') &&
-      journalEls.journalFormWrapper.classList.contains(
+      journalFormEls.journalFormWrapper.classList.contains(
         's-journal__form-wrapper--read-mode'
       )
     )
       handler('edit');
 
     if (e.target.classList.contains('js-form-cancel-btn')) {
-      const formId = journalEls.journalForm.getAttribute('data-id');
+      const formId = journalFormEls.journalForm.getAttribute('data-id');
       if (formId) {
         handler('cancel', formId);
       } else {
         handler(
           'cancel',
-          journalEls.journalEntriesWrapper
+          journalFormEls.journalEntriesWrapper
             .querySelector('.c-journal-entry')
             .nextElementSibling.getAttribute('data-id')
         );
@@ -66,28 +69,28 @@ export const addJournalFormEventsHandler = function (handler) {
 
 export const switchJournalFormModes = function () {
   if (
-    journalEls.journalFormWrapper.classList.contains(
+    journalFormEls.journalFormWrapper.classList.contains(
       's-journal__form-wrapper--read-mode'
     )
   ) {
-    journalEls.journalFormWrapper.classList.remove(
+    journalFormEls.journalFormWrapper.classList.remove(
       's-journal__form-wrapper--read-mode'
     );
-    journalEls.journalFormWrapper.classList.add(
+    journalFormEls.journalFormWrapper.classList.add(
       's-journal__form-wrapper--edit-mode'
     );
-    journalEls.entriesExitsDetails.forEach(input => {
+    journalFormEls.entriesExitsDetails.forEach(input => {
       input.disabled = false;
     });
   } else if (
-    journalEls.journalFormWrapper.classList.contains(
+    journalFormEls.journalFormWrapper.classList.contains(
       's-journal__form-wrapper--edit-mode'
     )
   ) {
-    journalEls.journalFormWrapper.classList.remove(
+    journalFormEls.journalFormWrapper.classList.remove(
       's-journal__form-wrapper--edit-mode'
     );
-    journalEls.journalFormWrapper.classList.add(
+    journalFormEls.journalFormWrapper.classList.add(
       's-journal__form-wrapper--read-mode'
     );
     toggleDisabledState(true);
@@ -103,7 +106,7 @@ export const renderExtraDetailsRows = function (targetEl) {
 
 export const checkFormMode = function () {
   if (
-    journalEls.journalFormWrapper.classList.contains(
+    journalFormEls.journalFormWrapper.classList.contains(
       's-journal__form-wrapper--read-mode'
     )
   ) {
@@ -113,14 +116,14 @@ export const checkFormMode = function () {
 
 export const switchPositionSide = function () {
   const sideValueEl =
-    journalEls.swapBtn.previousElementSibling.firstElementChild;
+    journalFormEls.swapBtn.previousElementSibling.firstElementChild;
   sideValueEl.value === 'long'
     ? (sideValueEl.value = 'short')
     : (sideValueEl.value = 'long');
 };
 
 export const renderJournalForm = function (singleEntry) {
-  journalEls.journalFormWrapper.innerHTML = '';
+  journalFormEls.journalFormWrapper.innerHTML = '';
   [singleEntry] = singleEntry;
 
   const html = `
@@ -267,9 +270,9 @@ export const renderJournalForm = function (singleEntry) {
     </div>
     `;
 
-  journalEls.journalFormWrapper.insertAdjacentHTML('afterbegin', html);
+  journalFormEls.journalFormWrapper.insertAdjacentHTML('afterbegin', html);
 
-  journalEls.journalForm = document.querySelector('.js-journal-form');
+  journalFormEls.journalForm = document.querySelector('.js-journal-form');
 
   const entriesSection = document.querySelector('.js-entries-wrapper');
   const exitsSection = document.querySelector('.js-exits-wrapper');
@@ -299,10 +302,10 @@ export const renderJournalForm = function (singleEntry) {
         `;
   });
 
-  journalEls.swapBtn = journalEls.journalFormWrapper.querySelector(
+  journalFormEls.swapBtn = journalFormEls.journalFormWrapper.querySelector(
     '.js-form-swap-btn'
   );
-  journalEls.entriesExitsDetails = journalEls.journalFormWrapper.querySelectorAll(
+  journalFormEls.entriesExitsDetails = journalFormEls.journalFormWrapper.querySelectorAll(
     '.c-journal-form__manual-input'
   );
   addKeyEventToDetailsInputs();

@@ -5047,13 +5047,117 @@ var updateCapitalOutput = function updateCapitalOutput(capitalData) {
 };
 
 exports.updateCapitalOutput = updateCapitalOutput;
-},{}],"js/views/journalView.js":[function(require,module,exports) {
+},{}],"js/views/journalEntriesView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalEntries = exports.renderJournalForm = exports.switchPositionSide = exports.checkFormMode = exports.addJournalFiltersHandler = exports.renderExtraDetailsRows = exports.addJournalFormEventsHandler = exports.addJournalEntriesHandler = exports.removeEmptyJournalCard = exports.switchJournalFormModes = exports.queryJournalEls = void 0;
+exports.renderJournalEntries = exports.removeEmptyJournalCard = exports.addJournalEntriesHandler = exports.queryJournalEntriesEls = void 0;
+var journalEntriesEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.journalEntriesWrapper = document.querySelector('.js-journal-entries-wrapper');
+  return obj;
+};
+
+var queryJournalEntriesEls = function queryJournalEntriesEls() {
+  journalEntriesEls = getElements();
+};
+
+exports.queryJournalEntriesEls = queryJournalEntriesEls;
+
+var addJournalEntriesHandler = function addJournalEntriesHandler(handler) {
+  journalEntriesEls.journalEntriesWrapper.addEventListener('click', function (e) {
+    if (e.target.closest('.c-journal-entry')) {
+      var clickedCard = e.target.closest('.c-journal-entry');
+      journalEntriesEls.journalEntriesWrapper.querySelector('.c-journal-entry--active').classList.remove('c-journal-entry--active');
+      clickedCard.classList.add('c-journal-entry--active');
+      return handler(clickedCard.getAttribute('data-id'));
+    }
+
+    return;
+  });
+};
+
+exports.addJournalEntriesHandler = addJournalEntriesHandler;
+
+var removeEmptyJournalCard = function removeEmptyJournalCard() {
+  var emptyCard = journalEntriesEls.journalEntriesWrapper.querySelector('.c-journal-entry--new');
+
+  if (emptyCard) {
+    emptyCard.remove();
+    activateEntry(selectFirstEntry());
+  }
+};
+
+exports.removeEmptyJournalCard = removeEmptyJournalCard;
+
+var selectFirstEntry = function selectFirstEntry() {
+  return journalEntriesEls.journalEntriesWrapper.querySelector('.c-journal-entry');
+};
+
+var activateEntry = function activateEntry(entryEl) {
+  if (!entryEl) return;
+  var previouslyActive = journalEntriesEls.journalEntriesWrapper.querySelector('.c-journal-entry--active');
+  if (previouslyActive) previouslyActive.classList.remove('c-journal-entry--active');
+  entryEl.classList.add('c-journal-entry--active');
+};
+
+var renderJournalPagination = function renderJournalPagination(entriesNumber) {
+  if (entriesNumber < 9) return;
+};
+
+var renderJournalEntries = function renderJournalEntries(entriesData) {
+  if (!entriesData) return;
+  entriesData.forEach(function (entry) {
+    var html = "\n      <div class=\"c-journal-entry ".concat(entry.id ? '' : 'c-journal-entry--new', "\" data-id=").concat(entry.id, ">\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n              <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "%</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n              <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n          </div>\n          <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n              xmlns=\"http://www.w3.org/2000/svg\">\n              <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n          </svg>\n      </div>\n      ");
+    journalEntriesEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
+  });
+  activateEntry(selectFirstEntry());
+  renderJournalPagination(entriesData.length);
+  return selectFirstEntry().getAttribute('data-id');
+};
+
+exports.renderJournalEntries = renderJournalEntries;
+},{}],"js/views/journalFiltersView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addJournalFiltersHandler = exports.queryJournalFilterEls = void 0;
+var journalFilterEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.journalFiltersWrapper = document.querySelector('.js-journal-filter');
+  obj.journalEntriesWrapper = document.querySelector('.js-journal-entries-wrapper');
+  return obj;
+};
+
+var queryJournalFilterEls = function queryJournalFilterEls() {
+  journalFilterEls = getElements();
+};
+
+exports.queryJournalFilterEls = queryJournalFilterEls;
+
+var addJournalFiltersHandler = function addJournalFiltersHandler(handler) {
+  journalFilterEls.journalFiltersWrapper.addEventListener('click', function (e) {
+    var existingNewEntry = journalFilterEls.journalEntriesWrapper.querySelector('.c-journal-entry--new');
+    if (e.target.classList.contains('js-new-trade-btn') && !existingNewEntry) handler('new');
+  });
+};
+
+exports.addJournalFiltersHandler = addJournalFiltersHandler;
+},{}],"js/views/journalFormView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.renderJournalForm = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -5067,137 +5171,19 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var journalEls = {};
+var journalFormEls = {};
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
   obj.journalEntriesWrapper = document.querySelector('.js-journal-entries-wrapper');
-  obj.journalFiltersWrapper = document.querySelector('.js-journal-filter');
   return obj;
 };
 
-var queryJournalEls = function queryJournalEls() {
-  journalEls = getElements();
-};
-
-exports.queryJournalEls = queryJournalEls;
-
-var switchJournalFormModes = function switchJournalFormModes() {
-  if (journalEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--read-mode')) {
-    journalEls.journalFormWrapper.classList.remove('s-journal__form-wrapper--read-mode');
-    journalEls.journalFormWrapper.classList.add('s-journal__form-wrapper--edit-mode');
-    journalEls.entriesExitsDetails.forEach(function (input) {
-      input.disabled = false;
-    });
-  } else if (journalEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--edit-mode')) {
-    journalEls.journalFormWrapper.classList.remove('s-journal__form-wrapper--edit-mode');
-    journalEls.journalFormWrapper.classList.add('s-journal__form-wrapper--read-mode');
-    toggleDisabledState(true);
-  }
-};
-
-exports.switchJournalFormModes = switchJournalFormModes;
-
 var toggleDisabledState = function toggleDisabledState(mode) {
-  journalEls.entriesExitsDetails.forEach(function (input) {
+  journalFormEls.entriesExitsDetails.forEach(function (input) {
     input.disabled = mode;
   });
-};
-
-var removeEmptyJournalCard = function removeEmptyJournalCard() {
-  var emptyCard = journalEls.journalEntriesWrapper.querySelector('.c-journal-entry--new');
-
-  if (emptyCard) {
-    emptyCard.remove();
-    activateEntry(selectFirstEntry());
-  }
-};
-
-exports.removeEmptyJournalCard = removeEmptyJournalCard;
-
-var addJournalEntriesHandler = function addJournalEntriesHandler(handler) {
-  journalEls.journalEntriesWrapper.addEventListener('click', function (e) {
-    if (e.target.closest('.c-journal-entry')) {
-      var clickedCard = e.target.closest('.c-journal-entry');
-      journalEls.journalEntriesWrapper.querySelector('.c-journal-entry--active').classList.remove('c-journal-entry--active');
-      clickedCard.classList.add('c-journal-entry--active');
-      return handler(clickedCard.getAttribute('data-id'));
-    }
-
-    return;
-  });
-};
-
-exports.addJournalEntriesHandler = addJournalEntriesHandler;
-
-var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) {
-  journalEls.journalFormWrapper.addEventListener('click', function (e) {
-    if (e.target.classList.contains('js-form-edit-btn') && journalEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--read-mode')) handler('edit');
-
-    if (e.target.classList.contains('js-form-cancel-btn')) {
-      var formId = journalEls.journalForm.getAttribute('data-id');
-
-      if (formId) {
-        handler('cancel', formId);
-      } else {
-        handler('cancel', journalEls.journalEntriesWrapper.querySelector('.c-journal-entry').nextElementSibling.getAttribute('data-id'));
-      }
-    }
-
-    if (e.target.classList.contains('js-form-swap-btn')) handler('swap');
-    if (e.target.classList.contains('js-form-plus-btn')) handler('extra', '', e.target);
-  });
-};
-
-exports.addJournalFormEventsHandler = addJournalFormEventsHandler;
-
-var renderExtraDetailsRows = function renderExtraDetailsRows(targetEl) {
-  var lastRow = targetEl.previousElementSibling;
-  var rowClone = lastRow.cloneNode(true);
-  lastRow.insertAdjacentElement('afterend', rowClone);
-  addKeyEventToDetailsInputs();
-};
-
-exports.renderExtraDetailsRows = renderExtraDetailsRows;
-
-var addJournalFiltersHandler = function addJournalFiltersHandler(handler) {
-  journalEls.journalFiltersWrapper.addEventListener('click', function (e) {
-    var existingNewEntry = journalEls.journalEntriesWrapper.querySelector('.c-journal-entry--new');
-    if (e.target.classList.contains('js-new-trade-btn') && !existingNewEntry) handler('new');
-  });
-};
-
-exports.addJournalFiltersHandler = addJournalFiltersHandler;
-
-var checkFormMode = function checkFormMode() {
-  if (journalEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--read-mode')) {
-    switchJournalFormModes();
-  }
-};
-
-exports.checkFormMode = checkFormMode;
-
-var switchPositionSide = function switchPositionSide() {
-  var sideValueEl = journalEls.swapBtn.previousElementSibling.firstElementChild;
-  sideValueEl.value === 'long' ? sideValueEl.value = 'short' : sideValueEl.value = 'long';
-};
-
-exports.switchPositionSide = switchPositionSide;
-
-var selectFirstEntry = function selectFirstEntry() {
-  return journalEls.journalEntriesWrapper.querySelector('.c-journal-entry');
-};
-
-var activateEntry = function activateEntry(entryEl) {
-  if (!entryEl) return;
-  var previouslyActive = journalEls.journalEntriesWrapper.querySelector('.c-journal-entry--active');
-  if (previouslyActive) previouslyActive.classList.remove('c-journal-entry--active');
-  entryEl.classList.add('c-journal-entry--active');
-};
-
-var renderJournalPagination = function renderJournalPagination(entriesNumber) {
-  if (entriesNumber < 9) return;
 };
 
 var getTodayShortDate = function getTodayShortDate() {
@@ -5212,7 +5198,7 @@ var getTodayShortDate = function getTodayShortDate() {
 };
 
 var addKeyEventToDetailsInputs = function addKeyEventToDetailsInputs() {
-  journalEls.journalForm.querySelectorAll('.js-form-details-input').forEach(function (input) {
+  journalFormEls.journalForm.querySelectorAll('.js-form-details-input').forEach(function (input) {
     if (input.getAttribute('data-input-event') === 'active') return;
     input.addEventListener('keyup', function (e) {
       e.target.setAttribute('data-input-event', 'active');
@@ -5221,14 +5207,81 @@ var addKeyEventToDetailsInputs = function addKeyEventToDetailsInputs() {
   });
 };
 
+var queryJournalFormEls = function queryJournalFormEls() {
+  journalFormEls = getElements();
+};
+
+exports.queryJournalFormEls = queryJournalFormEls;
+
+var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) {
+  journalFormEls.journalFormWrapper.addEventListener('click', function (e) {
+    if (e.target.classList.contains('js-form-edit-btn') && journalFormEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--read-mode')) handler('edit');
+
+    if (e.target.classList.contains('js-form-cancel-btn')) {
+      var formId = journalFormEls.journalForm.getAttribute('data-id');
+
+      if (formId) {
+        handler('cancel', formId);
+      } else {
+        handler('cancel', journalFormEls.journalEntriesWrapper.querySelector('.c-journal-entry').nextElementSibling.getAttribute('data-id'));
+      }
+    }
+
+    if (e.target.classList.contains('js-form-swap-btn')) handler('swap');
+    if (e.target.classList.contains('js-form-plus-btn')) handler('extra', '', e.target);
+  });
+};
+
+exports.addJournalFormEventsHandler = addJournalFormEventsHandler;
+
+var switchJournalFormModes = function switchJournalFormModes() {
+  if (journalFormEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--read-mode')) {
+    journalFormEls.journalFormWrapper.classList.remove('s-journal__form-wrapper--read-mode');
+    journalFormEls.journalFormWrapper.classList.add('s-journal__form-wrapper--edit-mode');
+    journalFormEls.entriesExitsDetails.forEach(function (input) {
+      input.disabled = false;
+    });
+  } else if (journalFormEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--edit-mode')) {
+    journalFormEls.journalFormWrapper.classList.remove('s-journal__form-wrapper--edit-mode');
+    journalFormEls.journalFormWrapper.classList.add('s-journal__form-wrapper--read-mode');
+    toggleDisabledState(true);
+  }
+};
+
+exports.switchJournalFormModes = switchJournalFormModes;
+
+var renderExtraDetailsRows = function renderExtraDetailsRows(targetEl) {
+  var lastRow = targetEl.previousElementSibling;
+  var rowClone = lastRow.cloneNode(true);
+  lastRow.insertAdjacentElement('afterend', rowClone);
+  addKeyEventToDetailsInputs();
+};
+
+exports.renderExtraDetailsRows = renderExtraDetailsRows;
+
+var checkFormMode = function checkFormMode() {
+  if (journalFormEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--read-mode')) {
+    switchJournalFormModes();
+  }
+};
+
+exports.checkFormMode = checkFormMode;
+
+var switchPositionSide = function switchPositionSide() {
+  var sideValueEl = journalFormEls.swapBtn.previousElementSibling.firstElementChild;
+  sideValueEl.value === 'long' ? sideValueEl.value = 'short' : sideValueEl.value = 'long';
+};
+
+exports.switchPositionSide = switchPositionSide;
+
 var renderJournalForm = function renderJournalForm(singleEntry) {
-  journalEls.journalFormWrapper.innerHTML = '';
+  journalFormEls.journalFormWrapper.innerHTML = '';
   var _singleEntry = singleEntry;
 
   var _singleEntry2 = _slicedToArray(_singleEntry, 1);
 
   singleEntry = _singleEntry2[0];
-  var html = "\n  <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n    <div class=\"c-journal-form__upper-region\">\n        <div class=\"c-journal-form__unit-wrapper\">\n            <span class=\"c-journal-form__data\">date: <input\n                    class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                     value=\"").concat(singleEntry.shortDate ? singleEntry.shortDate : getTodayShortDate(), "\" disabled>\n            </span>\n            <span class=\"c-journal-form__data\">stock: <input\n                    class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                    type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n        </div>\n        <div class=\"c-journal-form__unit-wrapper\">\n            <div class=\"c-journal-form__trade-side-wrapper\">\n                <span class=\"c-journal-form__data\">side: <input\n                        class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                        type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                    <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                        xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                            fill=\"#C4C4C4\" />\n                        <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                            fill=\"#C4C4C4\" />\n                    </svg>\n\n                </button>\n            </div>\n            <span class=\"c-journal-form__data\">%return: <input\n                    class=\"c-input-text c-input-text--compact\" type=\"number\"\n                    value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n        </div>\n        <div class=\"c-journal-form__unit-wrapper\">\n            <span class=\"c-journal-form__data\">shares: <input\n                    class=\"c-input-text c-input-text--compact\" type=\"number\"\n                    value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n            <span class=\"c-journal-form__data\">return: <input\n                    class=\"c-input-text c-input-text--compact\" type=\"number\"\n                    value=\"").concat(singleEntry.return, "\" disabled></span>\n        </div>\n    </div>\n    <div class=\"c-journal-form__middle-region\">\n        <div class=\"c-journal-form__entries-wrapper\">\n            <div class=\"c-journal-form__entries-labels-wrapper\">\n                <span class=\"c-journal-form__entries-label\">entries</span>\n                <span class=\"c-journal-form__entries-label\">shares</span>\n            </div>\n            <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                \n            </div>\n            <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                    xmlns=\"http://www.w3.org/2000/svg\">\n                    <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                    <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                    <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                </svg>\n\n            </button>\n            <div class=\"c-journal-form__entries-labels-wrapper\">\n                <span class=\"c-journal-form__entries-label\">average: <br><span\n                        class=\"c-journal-form__entries-label-result\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
+  var html = "\n    <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n      <div class=\"c-journal-form__upper-region\">\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">date: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                       value=\"").concat(singleEntry.shortDate ? singleEntry.shortDate : getTodayShortDate(), "\" disabled>\n              </span>\n              <span class=\"c-journal-form__data\">stock: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                      type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <div class=\"c-journal-form__trade-side-wrapper\">\n                  <span class=\"c-journal-form__data\">side: <input\n                          class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                          type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                  <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                      <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                          xmlns=\"http://www.w3.org/2000/svg\">\n                          <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                              fill=\"#C4C4C4\" />\n                          <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                              fill=\"#C4C4C4\" />\n                      </svg>\n  \n                  </button>\n              </div>\n              <span class=\"c-journal-form__data\">%return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">shares: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n              <span class=\"c-journal-form__data\">return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.return, "\" disabled></span>\n          </div>\n      </div>\n      <div class=\"c-journal-form__middle-region\">\n          <div class=\"c-journal-form__entries-wrapper\">\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">entries</span>\n                  <span class=\"c-journal-form__entries-label\">shares</span>\n              </div>\n              <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                  \n              </div>\n              <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                  <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                      xmlns=\"http://www.w3.org/2000/svg\">\n                      <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                      <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                      <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                  </svg>\n  \n              </button>\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">average: <br><span\n                          class=\"c-journal-form__entries-label-result\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
     return single[0] * single[1];
   }).reduce(function (acc, num) {
     return acc + num;
@@ -5236,11 +5289,11 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
     return single[1];
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0)).toFixed(2) : '', "</span></span>\n                <span class=\"c-journal-form__average-entry\">shares: <br><span\n                        class=\"c-journal-form__entries-label-result\">").concat(singleEntry.tradeExits[0][1] ? singleEntry.tradeExits.map(function (single) {
+  }, 0)).toFixed(2) : '', "</span></span>\n                  <span class=\"c-journal-form__average-entry\">shares: <br><span\n                          class=\"c-journal-form__entries-label-result\">").concat(singleEntry.tradeExits[0][1] ? singleEntry.tradeExits.map(function (single) {
     return single[1];
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0) : '', "</span></span>\n            </div>\n        </div>\n        <div class=\"c-journal-form__exits-wrapper\">\n            <div class=\"c-journal-form__exits-labels-wrapper\">\n                <span class=\"c-journal-form__exits-label\">exits</span>\n                <span class=\"c-journal-form__exits-label\">shares</span>\n            </div>\n            <div class=\"c-journal-form__exits-inner-wrapper js-exits-wrapper\">\n              \n            </div>\n            <button class=\"c-journal-form__plus-exit btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                    xmlns=\"http://www.w3.org/2000/svg\">\n                    <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                    <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                    <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                </svg>\n\n            </button>\n            <div class=\"c-journal-form__exits-labels-wrapper\">\n                <span class=\"c-journal-form__exits-label\">average: <br><span\n                        class=\"c-journal-form__exits-label-result\">").concat(singleEntry.tradeExits[0][0] ? (singleEntry.tradeExits.map(function (single) {
+  }, 0) : '', "</span></span>\n              </div>\n          </div>\n          <div class=\"c-journal-form__exits-wrapper\">\n              <div class=\"c-journal-form__exits-labels-wrapper\">\n                  <span class=\"c-journal-form__exits-label\">exits</span>\n                  <span class=\"c-journal-form__exits-label\">shares</span>\n              </div>\n              <div class=\"c-journal-form__exits-inner-wrapper js-exits-wrapper\">\n                \n              </div>\n              <button class=\"c-journal-form__plus-exit btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                  <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                      xmlns=\"http://www.w3.org/2000/svg\">\n                      <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                      <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                      <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                  </svg>\n  \n              </button>\n              <div class=\"c-journal-form__exits-labels-wrapper\">\n                  <span class=\"c-journal-form__exits-label\">average: <br><span\n                          class=\"c-journal-form__exits-label-result\">").concat(singleEntry.tradeExits[0][0] ? (singleEntry.tradeExits.map(function (single) {
     return single[0] * single[1];
   }).reduce(function (acc, num) {
     return acc + num;
@@ -5248,40 +5301,27 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
     return single[1];
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0)).toFixed(2) : '', "</span></span>\n                <span class=\"c-journal-form__average-exit\">shares: <br><span\n                        class=\"c-journal-form__exits-label-result\">").concat(singleEntry.tradeExits[0][1] ? singleEntry.tradeExits.map(function (single) {
+  }, 0)).toFixed(2) : '', "</span></span>\n                  <span class=\"c-journal-form__average-exit\">shares: <br><span\n                          class=\"c-journal-form__exits-label-result\">").concat(singleEntry.tradeExits[0][1] ? singleEntry.tradeExits.map(function (single) {
     return single[1];
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0) : '', "</span></span>\n            </div>\n        </div>\n\n    </div>\n  <textarea class=\"c-journal-form__text-area\" name=\"\" id=\"\" rows=\"10\"></textarea>\n  </div>\n  <div class=\"c-journal-form__buttons-wrapper\">\n      <button class=\"c-journal-from__button-delete btn btn--secondary\">delete</button>\n      <div class=\"c-journal-form__buttons-inner-wrapper\">\n          <button class=\"c-journal-form__button-cancel btn btn--secondary c-journal-form__edit-mode-btn js-form-cancel-btn\">cancel</button>\n          <button class=\"c-journal-form__button-save btn btn--primary c-journal-form__edit-mode-btn\">save</button>\n      </div>\n      <button class=\"c-journal-form__button-edit btn btn--primary js-form-edit-btn\">edit</button>\n  </div>\n  ");
-  journalEls.journalFormWrapper.insertAdjacentHTML('afterbegin', html);
-  journalEls.journalForm = document.querySelector('.js-journal-form');
+  }, 0) : '', "</span></span>\n              </div>\n          </div>\n  \n      </div>\n    <textarea class=\"c-journal-form__text-area\" name=\"\" id=\"\" rows=\"10\"></textarea>\n    </div>\n    <div class=\"c-journal-form__buttons-wrapper\">\n        <button class=\"c-journal-from__button-delete btn btn--secondary\">delete</button>\n        <div class=\"c-journal-form__buttons-inner-wrapper\">\n            <button class=\"c-journal-form__button-cancel btn btn--secondary c-journal-form__edit-mode-btn js-form-cancel-btn\">cancel</button>\n            <button class=\"c-journal-form__button-save btn btn--primary c-journal-form__edit-mode-btn\">save</button>\n        </div>\n        <button class=\"c-journal-form__button-edit btn btn--primary js-form-edit-btn\">edit</button>\n    </div>\n    ");
+  journalFormEls.journalFormWrapper.insertAdjacentHTML('afterbegin', html);
+  journalFormEls.journalForm = document.querySelector('.js-journal-form');
   var entriesSection = document.querySelector('.js-entries-wrapper');
   var exitsSection = document.querySelector('.js-exits-wrapper');
   singleEntry.tradeEntries.forEach(function (transaction) {
-    entriesSection.innerHTML += "\n        <div class=\"c-journal-form__entry-size-wrapper\">\n            <input type=\"number\"\n            class=\"c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n            value=\"".concat(transaction[0], "\" disabled>\n            <input type=\"number\"\n            class=\"c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n            value=\"").concat(transaction[1], "\" disabled>\n        </div>\n      ");
+    entriesSection.innerHTML += "\n          <div class=\"c-journal-form__entry-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"").concat(transaction[1], "\" disabled>\n          </div>\n        ");
   });
   singleEntry.tradeExits.forEach(function (transaction) {
-    exitsSection.innerHTML += "\n        <div class=\"c-journal-form__exit-size-wrapper\">\n            <input type=\"number\"\n            class=\"c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input\"\n            placeholder=\"".concat(transaction[0], "\" disabled>\n            <input type=\"number\"\n            class=\"c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n            placeholder=\"").concat(transaction[1], "\" disabled>\n        </div>\n      ");
+    exitsSection.innerHTML += "\n          <div class=\"c-journal-form__exit-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input\"\n              placeholder=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              placeholder=\"").concat(transaction[1], "\" disabled>\n          </div>\n        ");
   });
-  journalEls.swapBtn = journalEls.journalFormWrapper.querySelector('.js-form-swap-btn');
-  journalEls.entriesExitsDetails = journalEls.journalFormWrapper.querySelectorAll('.c-journal-form__manual-input');
+  journalFormEls.swapBtn = journalFormEls.journalFormWrapper.querySelector('.js-form-swap-btn');
+  journalFormEls.entriesExitsDetails = journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__manual-input');
   addKeyEventToDetailsInputs();
 };
 
 exports.renderJournalForm = renderJournalForm;
-
-var renderJournalEntries = function renderJournalEntries(entriesData) {
-  if (!entriesData) return;
-  entriesData.forEach(function (entry) {
-    var html = "\n    <div class=\"c-journal-entry ".concat(entry.id ? '' : 'c-journal-entry--new', "\" data-id=").concat(entry.id, ">\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n            <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n            <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n            <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "%</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n            <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n        </div>\n        <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n            xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n        </svg>\n    </div>\n    ");
-    journalEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
-  });
-  activateEntry(selectFirstEntry());
-  renderJournalPagination(entriesData.length);
-  return selectFirstEntry().getAttribute('data-id');
-};
-
-exports.renderJournalEntries = renderJournalEntries;
 },{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
@@ -5311,8 +5351,25 @@ var _chartWorstBestModel = require("./models/chartWorstBestModel");
 
 var _accountDetailsView = require("./views/accountDetailsView");
 
-var _journalView = require("./views/journalView");
+var _journalEntriesView = require("./views/journalEntriesView");
 
+var _journalFiltersView = require("./views/journalFiltersView");
+
+var _journalFormView = require("./views/journalFormView");
+
+// import {
+//   queryJournalEls,
+//   addJournalFiltersHandler,
+//   addJournalEntriesHandler,
+//   addJournalFormEventsHandler,
+//   renderJournalEntries,
+//   renderJournalForm,
+//   switchJournalFormModes,
+//   checkFormMode,
+//   switchPositionSide,
+//   removeEmptyJournalCard,
+//   renderExtraDetailsRows,
+// } from './views/journalView';
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
   var capitalData = (0, _dataModel.updateCapital)(amount, action);
@@ -5364,39 +5421,39 @@ var controlLongShortPieRender = function controlLongShortPieRender() {
 };
 
 var controlJournalRender = function controlJournalRender() {
-  var activeEntryID = (0, _journalView.renderJournalEntries)((0, _dataModel.passData)('journal'));
-  (0, _journalView.renderJournalForm)((0, _dataModel.findJournalEntry)(activeEntryID));
+  var activeEntryID = (0, _journalEntriesView.renderJournalEntries)((0, _dataModel.passData)('journal'));
+  (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(activeEntryID));
 };
 
 var controlJournalFormEvents = function controlJournalFormEvents(action) {
   var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   var targetEl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  if (action === 'edit') (0, _journalView.switchJournalFormModes)();
+  if (action === 'edit') (0, _journalFormView.switchJournalFormModes)();
 
   if (action === 'cancel') {
-    (0, _journalView.removeEmptyJournalCard)();
-    (0, _journalView.switchJournalFormModes)();
-    (0, _journalView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
+    (0, _journalEntriesView.removeEmptyJournalCard)();
+    (0, _journalFormView.switchJournalFormModes)();
+    (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
   }
 
-  if (action === 'swap') (0, _journalView.switchPositionSide)();
-  if (action === 'extra') (0, _journalView.renderExtraDetailsRows)(targetEl);
+  if (action === 'swap') (0, _journalFormView.switchPositionSide)();
+  if (action === 'extra') (0, _journalFormView.renderExtraDetailsRows)(targetEl);
 };
 
 var controlJournalActiveEntries = function controlJournalActiveEntries() {
   var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   if (!id) return;
-  (0, _journalView.removeEmptyJournalCard)();
-  (0, _journalView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
+  (0, _journalEntriesView.removeEmptyJournalCard)();
+  (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
 };
 
 var controlJournalFilters = function controlJournalFilters(action) {
   var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
   if (action === 'new') {
-    (0, _journalView.renderJournalEntries)((0, _dataModel.passData)('dummyJournal'));
-    (0, _journalView.renderJournalForm)((0, _dataModel.passData)('dummyJournal'));
-    (0, _journalView.checkFormMode)();
+    (0, _journalEntriesView.renderJournalEntries)((0, _dataModel.passData)('dummyJournal'));
+    (0, _journalFormView.renderJournalForm)((0, _dataModel.passData)('dummyJournal'));
+    (0, _journalFormView.checkFormMode)();
   }
 };
 
@@ -5408,7 +5465,9 @@ var queryDOM = function queryDOM() {
   (0, _chartPerformanceView.queryPerformanceEls)();
   (0, _chartWorstBestView.queryBestWorstEls)();
   (0, _accountDetailsView.queryDetailsEls)();
-  (0, _journalView.queryJournalEls)();
+  (0, _journalEntriesView.queryJournalEntriesEls)();
+  (0, _journalFiltersView.queryJournalFilterEls)();
+  (0, _journalFormView.queryJournalFormEls)(); // queryJournalEls();
 }; // ZONE - event listeners
 
 
@@ -5427,9 +5486,9 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
   (0, _chartPerformanceView.addPerformanceRenderHandler)(controlPerformanceRender);
   (0, _chartWorstBestView.addWorstBestRenderHandler)(controlWorstBestRender);
-  (0, _journalView.addJournalFiltersHandler)(controlJournalFilters);
-  (0, _journalView.addJournalEntriesHandler)(controlJournalActiveEntries);
-  (0, _journalView.addJournalFormEventsHandler)(controlJournalFormEvents);
+  (0, _journalFiltersView.addJournalFiltersHandler)(controlJournalFilters);
+  (0, _journalEntriesView.addJournalEntriesHandler)(controlJournalActiveEntries);
+  (0, _journalFormView.addJournalFormEventsHandler)(controlJournalFormEvents);
 });
 var resizeTimer;
 window.addEventListener('resize', function (e) {
@@ -5443,7 +5502,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartOverallView.renderLongShortPie)();
   }, 1000);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalView":"js/views/journalView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalEntriesView":"js/views/journalEntriesView.js","./views/journalFiltersView":"js/views/journalFiltersView.js","./views/journalFormView":"js/views/journalFormView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
