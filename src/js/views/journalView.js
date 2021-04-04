@@ -118,6 +118,13 @@ const renderJournalPagination = function (entriesNumber) {
   if (entriesNumber < 9) return;
 };
 
+const getTodayShortDate = function () {
+  const todayDate = new Date();
+  const [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
+  const joinedDate = date + '/' + month + '/' + year;
+  return joinedDate;
+};
+
 export const renderJournalForm = function (singleEntry) {
   journalEls.journalFormWrapper.innerHTML = '';
   [singleEntry] = singleEntry;
@@ -128,7 +135,11 @@ export const renderJournalForm = function (singleEntry) {
         <div class="c-journal-form__unit-wrapper">
             <span class="c-journal-form__data">date: <input
                     class="c-input-text c-input-text--compact c-journal-form__manual-input"
-                     value="${singleEntry.shortDate}" disabled>
+                     value="${
+                       singleEntry.shortDate
+                         ? singleEntry.shortDate
+                         : getTodayShortDate()
+                     }" disabled>
             </span>
             <span class="c-journal-form__data">stock: <input
                     class="c-input-text c-input-text--compact c-journal-form__manual-input"
