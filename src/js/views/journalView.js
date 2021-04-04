@@ -1,7 +1,6 @@
 let journalEls = {};
 
 const getElements = function (obj = {}) {
-  obj.entriesContainer = document.querySelector('.js-journal-entries-wrapper');
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
   obj.journalEntriesWrapper = document.querySelector(
     '.js-journal-entries-wrapper'
@@ -141,7 +140,7 @@ export const switchPositionSide = function () {
 };
 
 const selectFirstEntry = function () {
-  return journalEls.entriesContainer.querySelector('.c-journal-entry');
+  return journalEls.journalEntriesWrapper.querySelector('.c-journal-entry');
 };
 
 const activateEntry = function (entryEl) {
@@ -402,7 +401,7 @@ export const renderJournalEntries = function (entriesData) {
         </svg>
     </div>
     `;
-    journalEls.entriesContainer.insertAdjacentHTML('afterbegin', html);
+    journalEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
   });
   activateEntry(selectFirstEntry());
   renderJournalPagination(entriesData.length);

@@ -5071,7 +5071,6 @@ var journalEls = {};
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  obj.entriesContainer = document.querySelector('.js-journal-entries-wrapper');
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
   obj.journalEntriesWrapper = document.querySelector('.js-journal-entries-wrapper');
   obj.journalFiltersWrapper = document.querySelector('.js-journal-filter');
@@ -5187,7 +5186,7 @@ var switchPositionSide = function switchPositionSide() {
 exports.switchPositionSide = switchPositionSide;
 
 var selectFirstEntry = function selectFirstEntry() {
-  return journalEls.entriesContainer.querySelector('.c-journal-entry');
+  return journalEls.journalEntriesWrapper.querySelector('.c-journal-entry');
 };
 
 var activateEntry = function activateEntry(entryEl) {
@@ -5275,7 +5274,7 @@ var renderJournalEntries = function renderJournalEntries(entriesData) {
   if (!entriesData) return;
   entriesData.forEach(function (entry) {
     var html = "\n    <div class=\"c-journal-entry ".concat(entry.id ? '' : 'c-journal-entry--new', "\" data-id=").concat(entry.id, ">\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n            <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n            <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n            <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "%</span>\n        </div>\n        <div class=\"c-journal-entry__unit-wrapper\">\n            <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n            <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n        </div>\n        <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n            xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n        </svg>\n    </div>\n    ");
-    journalEls.entriesContainer.insertAdjacentHTML('afterbegin', html);
+    journalEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
   });
   activateEntry(selectFirstEntry());
   renderJournalPagination(entriesData.length);
@@ -5472,7 +5471,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62763" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50283" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
