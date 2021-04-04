@@ -82,7 +82,11 @@ export const addJournalFormEventsHandler = function (handler) {
 
 export const addJournalFiltersHandler = function (handler) {
   journalEls.journalFiltersWrapper.addEventListener('click', e => {
-    if (e.target.classList.contains('js-new-trade-btn')) handler('new');
+    const existingNewEntry = journalEls.journalEntriesWrapper.querySelector(
+      '.c-journal-entry--new'
+    );
+    if (e.target.classList.contains('js-new-trade-btn') && !existingNewEntry)
+      handler('new');
   });
 };
 
@@ -124,21 +128,17 @@ export const renderJournalForm = function (singleEntry) {
         <div class="c-journal-form__unit-wrapper">
             <span class="c-journal-form__data">date: <input
                     class="c-input-text c-input-text--compact c-journal-form__manual-input"
-                    type="number" placeholder="${
-                      singleEntry.shortDate
-                    }" disabled>
+                     value="${singleEntry.shortDate}" disabled>
             </span>
             <span class="c-journal-form__data">stock: <input
                     class="c-input-text c-input-text--compact c-journal-form__manual-input"
-                    type="text" placeholder="${
-                      singleEntry.ticker
-                    }" disabled></span>
+                    type="text" value="${singleEntry.ticker}" disabled></span>
         </div>
         <div class="c-journal-form__unit-wrapper">
             <div class="c-journal-form__trade-side-wrapper">
                 <span class="c-journal-form__data">side: <input
                         class="c-input-text c-input-text--compact c-journal-form__manual-input"
-                        type="text" placeholder="${
+                        type="text" value="${
                           singleEntry.side ? singleEntry.side : 'long'
                         }" disabled></span>
                 <button class="c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn">
@@ -154,15 +154,15 @@ export const renderJournalForm = function (singleEntry) {
             </div>
             <span class="c-journal-form__data">%return: <input
                     class="c-input-text c-input-text--compact" type="number"
-                    placeholder="${singleEntry.returnPercent}%" disabled></span>
+                    value="${singleEntry.returnPercent}" disabled></span>
         </div>
         <div class="c-journal-form__unit-wrapper">
             <span class="c-journal-form__data">shares: <input
                     class="c-input-text c-input-text--compact" type="number"
-                    placeholder="${singleEntry.sharesAmount}" disabled></span>
+                    value="${singleEntry.sharesAmount}" disabled></span>
             <span class="c-journal-form__data">return: <input
                     class="c-input-text c-input-text--compact" type="number"
-                    placeholder="${singleEntry.return}" disabled></span>
+                    value="${singleEntry.return}" disabled></span>
         </div>
     </div>
     <div class="c-journal-form__middle-region">
@@ -273,10 +273,10 @@ export const renderJournalForm = function (singleEntry) {
         <div class="c-journal-form__entry-size-wrapper">
             <input type="number"
             class="c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input"
-            placeholder="${transaction[0]}" disabled>
+            value="${transaction[0]}" disabled>
             <input type="number"
             class="c-journal-form__size c-input-text c-input-text--compact c-journal-form__manual-input"
-            placeholder="${transaction[1]}" disabled>
+            value="${transaction[1]}" disabled>
         </div>
       `;
   });
