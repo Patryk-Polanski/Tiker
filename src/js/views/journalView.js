@@ -73,6 +73,7 @@ export const addJournalEntriesHandler = function (handler) {
 
 export const addJournalFormEventsHandler = function (handler) {
   journalEls.journalFormWrapper.addEventListener('click', e => {
+    console.log(e.target);
     if (
       e.target.classList.contains('js-form-edit-btn') &&
       journalEls.journalFormWrapper.classList.contains(
@@ -86,7 +87,17 @@ export const addJournalFormEventsHandler = function (handler) {
     }
 
     if (e.target.classList.contains('js-form-swap-btn')) handler('swap');
+
+    if (e.target.classList.contains('js-form-plus-btn'))
+      handler('extra', '', e.target);
   });
+};
+
+export const renderExtraDetailsRows = function (targetEl) {
+  const lastRow = targetEl.previousElementSibling;
+  const rowClone = lastRow.cloneNode(true);
+  lastRow.insertAdjacentElement('afterend', rowClone);
+  console.log(targetEl);
 };
 
 export const addJournalFiltersHandler = function (handler) {
@@ -201,7 +212,7 @@ export const renderJournalForm = function (singleEntry) {
             <div class="c-journal-form__entries-inner-wrapper js-entries-wrapper">
                 
             </div>
-            <button class="c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn">
+            <button class="c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn">
                 <svg class="svg svg--plus-circle" viewBox="0 0 17 17"
                     xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8.5" cy="8.5" r="8.5" fill="#29242A" />
@@ -242,7 +253,7 @@ export const renderJournalForm = function (singleEntry) {
             <div class="c-journal-form__exits-inner-wrapper js-exits-wrapper">
               
             </div>
-            <button class="c-journal-form__plus-exit btn btn--icon c-journal-form__edit-mode-btn">
+            <button class="c-journal-form__plus-exit btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn">
                 <svg class="svg svg--plus-circle" viewBox="0 0 17 17"
                     xmlns="http://www.w3.org/2000/svg">
                     <circle cx="8.5" cy="8.5" r="8.5" fill="#29242A" />

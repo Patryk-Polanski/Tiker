@@ -5053,7 +5053,7 @@ exports.updateCapitalOutput = updateCapitalOutput;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalEntries = exports.renderJournalForm = exports.switchPositionSide = exports.checkFormMode = exports.addJournalFiltersHandler = exports.addJournalFormEventsHandler = exports.addJournalEntriesHandler = exports.removeEmptyJournalCard = exports.switchJournalFormModes = exports.queryJournalEls = void 0;
+exports.renderJournalEntries = exports.renderJournalForm = exports.switchPositionSide = exports.checkFormMode = exports.addJournalFiltersHandler = exports.renderExtraDetailsRows = exports.addJournalFormEventsHandler = exports.addJournalEntriesHandler = exports.removeEmptyJournalCard = exports.switchJournalFormModes = exports.queryJournalEls = void 0;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -5130,6 +5130,7 @@ exports.addJournalEntriesHandler = addJournalEntriesHandler;
 
 var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) {
   journalEls.journalFormWrapper.addEventListener('click', function (e) {
+    console.log(e.target);
     if (e.target.classList.contains('js-form-edit-btn') && journalEls.journalFormWrapper.classList.contains('s-journal__form-wrapper--read-mode')) handler('edit');
 
     if (e.target.classList.contains('js-form-cancel-btn')) {
@@ -5137,10 +5138,20 @@ var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) 
     }
 
     if (e.target.classList.contains('js-form-swap-btn')) handler('swap');
+    if (e.target.classList.contains('js-form-plus-btn')) handler('extra', '', e.target);
   });
 };
 
 exports.addJournalFormEventsHandler = addJournalFormEventsHandler;
+
+var renderExtraDetailsRows = function renderExtraDetailsRows(targetEl) {
+  var lastRow = targetEl.previousElementSibling;
+  var rowClone = lastRow.cloneNode(true);
+  lastRow.insertAdjacentElement('afterend', rowClone);
+  console.log(targetEl);
+};
+
+exports.renderExtraDetailsRows = renderExtraDetailsRows;
 
 var addJournalFiltersHandler = function addJournalFiltersHandler(handler) {
   journalEls.journalFiltersWrapper.addEventListener('click', function (e) {
@@ -5199,7 +5210,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
   var _singleEntry2 = _slicedToArray(_singleEntry, 1);
 
   singleEntry = _singleEntry2[0];
-  var html = "\n  <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n    <div class=\"c-journal-form__upper-region\">\n        <div class=\"c-journal-form__unit-wrapper\">\n            <span class=\"c-journal-form__data\">date: <input\n                    class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                     value=\"").concat(singleEntry.shortDate ? singleEntry.shortDate : getTodayShortDate(), "\" disabled>\n            </span>\n            <span class=\"c-journal-form__data\">stock: <input\n                    class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                    type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n        </div>\n        <div class=\"c-journal-form__unit-wrapper\">\n            <div class=\"c-journal-form__trade-side-wrapper\">\n                <span class=\"c-journal-form__data\">side: <input\n                        class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                        type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                    <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                        xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                            fill=\"#C4C4C4\" />\n                        <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                            fill=\"#C4C4C4\" />\n                    </svg>\n\n                </button>\n            </div>\n            <span class=\"c-journal-form__data\">%return: <input\n                    class=\"c-input-text c-input-text--compact\" type=\"number\"\n                    value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n        </div>\n        <div class=\"c-journal-form__unit-wrapper\">\n            <span class=\"c-journal-form__data\">shares: <input\n                    class=\"c-input-text c-input-text--compact\" type=\"number\"\n                    value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n            <span class=\"c-journal-form__data\">return: <input\n                    class=\"c-input-text c-input-text--compact\" type=\"number\"\n                    value=\"").concat(singleEntry.return, "\" disabled></span>\n        </div>\n    </div>\n    <div class=\"c-journal-form__middle-region\">\n        <div class=\"c-journal-form__entries-wrapper\">\n            <div class=\"c-journal-form__entries-labels-wrapper\">\n                <span class=\"c-journal-form__entries-label\">entries</span>\n                <span class=\"c-journal-form__entries-label\">shares</span>\n            </div>\n            <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                \n            </div>\n            <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn\">\n                <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                    xmlns=\"http://www.w3.org/2000/svg\">\n                    <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                    <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                    <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                </svg>\n\n            </button>\n            <div class=\"c-journal-form__entries-labels-wrapper\">\n                <span class=\"c-journal-form__entries-label\">average: <br><span\n                        class=\"c-journal-form__entries-label-result\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
+  var html = "\n  <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n    <div class=\"c-journal-form__upper-region\">\n        <div class=\"c-journal-form__unit-wrapper\">\n            <span class=\"c-journal-form__data\">date: <input\n                    class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                     value=\"").concat(singleEntry.shortDate ? singleEntry.shortDate : getTodayShortDate(), "\" disabled>\n            </span>\n            <span class=\"c-journal-form__data\">stock: <input\n                    class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                    type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n        </div>\n        <div class=\"c-journal-form__unit-wrapper\">\n            <div class=\"c-journal-form__trade-side-wrapper\">\n                <span class=\"c-journal-form__data\">side: <input\n                        class=\"c-input-text c-input-text--compact c-journal-form__manual-input\"\n                        type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                    <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                        xmlns=\"http://www.w3.org/2000/svg\">\n                        <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                            fill=\"#C4C4C4\" />\n                        <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                            fill=\"#C4C4C4\" />\n                    </svg>\n\n                </button>\n            </div>\n            <span class=\"c-journal-form__data\">%return: <input\n                    class=\"c-input-text c-input-text--compact\" type=\"number\"\n                    value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n        </div>\n        <div class=\"c-journal-form__unit-wrapper\">\n            <span class=\"c-journal-form__data\">shares: <input\n                    class=\"c-input-text c-input-text--compact\" type=\"number\"\n                    value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n            <span class=\"c-journal-form__data\">return: <input\n                    class=\"c-input-text c-input-text--compact\" type=\"number\"\n                    value=\"").concat(singleEntry.return, "\" disabled></span>\n        </div>\n    </div>\n    <div class=\"c-journal-form__middle-region\">\n        <div class=\"c-journal-form__entries-wrapper\">\n            <div class=\"c-journal-form__entries-labels-wrapper\">\n                <span class=\"c-journal-form__entries-label\">entries</span>\n                <span class=\"c-journal-form__entries-label\">shares</span>\n            </div>\n            <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                \n            </div>\n            <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                    xmlns=\"http://www.w3.org/2000/svg\">\n                    <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                    <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                    <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                </svg>\n\n            </button>\n            <div class=\"c-journal-form__entries-labels-wrapper\">\n                <span class=\"c-journal-form__entries-label\">average: <br><span\n                        class=\"c-journal-form__entries-label-result\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
     return single[0] * single[1];
   }).reduce(function (acc, num) {
     return acc + num;
@@ -5211,7 +5222,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
     return single[1];
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0) : '', "</span></span>\n            </div>\n        </div>\n        <div class=\"c-journal-form__exits-wrapper\">\n            <div class=\"c-journal-form__exits-labels-wrapper\">\n                <span class=\"c-journal-form__exits-label\">exits</span>\n                <span class=\"c-journal-form__exits-label\">shares</span>\n            </div>\n            <div class=\"c-journal-form__exits-inner-wrapper js-exits-wrapper\">\n              \n            </div>\n            <button class=\"c-journal-form__plus-exit btn btn--icon c-journal-form__edit-mode-btn\">\n                <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                    xmlns=\"http://www.w3.org/2000/svg\">\n                    <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                    <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                    <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                </svg>\n\n            </button>\n            <div class=\"c-journal-form__exits-labels-wrapper\">\n                <span class=\"c-journal-form__exits-label\">average: <br><span\n                        class=\"c-journal-form__exits-label-result\">").concat(singleEntry.tradeExits[0][0] ? (singleEntry.tradeExits.map(function (single) {
+  }, 0) : '', "</span></span>\n            </div>\n        </div>\n        <div class=\"c-journal-form__exits-wrapper\">\n            <div class=\"c-journal-form__exits-labels-wrapper\">\n                <span class=\"c-journal-form__exits-label\">exits</span>\n                <span class=\"c-journal-form__exits-label\">shares</span>\n            </div>\n            <div class=\"c-journal-form__exits-inner-wrapper js-exits-wrapper\">\n              \n            </div>\n            <button class=\"c-journal-form__plus-exit btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                    xmlns=\"http://www.w3.org/2000/svg\">\n                    <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                    <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                    <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                </svg>\n\n            </button>\n            <div class=\"c-journal-form__exits-labels-wrapper\">\n                <span class=\"c-journal-form__exits-label\">average: <br><span\n                        class=\"c-journal-form__exits-label-result\">").concat(singleEntry.tradeExits[0][0] ? (singleEntry.tradeExits.map(function (single) {
     return single[0] * single[1];
   }).reduce(function (acc, num) {
     return acc + num;
@@ -5340,6 +5351,7 @@ var controlJournalRender = function controlJournalRender() {
 
 var controlJournalFormEvents = function controlJournalFormEvents(action) {
   var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var targetEl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
   if (action === 'edit') (0, _journalView.switchJournalFormModes)();
 
   if (action === 'cancel') {
@@ -5348,6 +5360,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
   }
 
   if (action === 'swap') (0, _journalView.switchPositionSide)();
+  if (action === 'extra') (0, _journalView.renderExtraDetailsRows)(targetEl);
 };
 
 var controlJournalActiveEntries = function controlJournalActiveEntries() {

@@ -58,6 +58,7 @@ import {
   checkFormMode,
   switchPositionSide,
   removeEmptyJournalCard,
+  renderExtraDetailsRows,
 } from './views/journalView';
 
 // ZONE - controllers
@@ -116,13 +117,14 @@ const controlJournalRender = function () {
   renderJournalForm(findJournalEntry(activeEntryID));
 };
 
-const controlJournalFormEvents = function (action, id = '') {
+const controlJournalFormEvents = function (action, id = '', targetEl = '') {
   if (action === 'edit') switchJournalFormModes();
   if (action === 'cancel') {
     switchJournalFormModes();
     renderJournalForm(findJournalEntry(id));
   }
   if (action === 'swap') switchPositionSide();
+  if (action === 'extra') renderExtraDetailsRows(targetEl);
 };
 
 const controlJournalActiveEntries = function (id = '') {

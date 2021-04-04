@@ -228,6 +228,7 @@ span {
 .svg--plus-circle {
   height: 30px;
   width: 30px;
+  pointer-events: none;
 }
 
 /* Chrome, Safari, Edge, Opera */
