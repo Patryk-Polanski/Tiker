@@ -152,10 +152,11 @@ const controlJournalFilters = function (action, id = '') {
   }
 };
 
-const controlJournalPagination = function (paginationBtn) {
+const controlJournalPagination = function (paginationBtn, clickedEl) {
   const activeEntryID = renderJournalEntries(
     passData('journal'),
-    paginationBtn
+    paginationBtn,
+    clickedEl
   );
   renderJournalForm(findJournalEntry(activeEntryID));
 };

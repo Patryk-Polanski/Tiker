@@ -5125,7 +5125,7 @@ exports.addJournalEntriesHandler = addJournalEntriesHandler;
 var addJournalPaginationHandler = function addJournalPaginationHandler(handler) {
   journalEntriesEls.journalPaginationWrapper.addEventListener('click', function (e) {
     if (e.target.classList.contains('js-journal-pagination-btn')) {
-      handler(+e.target.getAttribute('data-pagination-btn'));
+      handler(+e.target.getAttribute('data-pagination-btn'), e.target);
     }
   });
 };
@@ -5154,7 +5154,13 @@ var activateEntry = function activateEntry(entryEl) {
   entryEl.classList.add('c-journal-entry--active');
 };
 
-var renderJournalPagination = function renderJournalPagination(entriesNumber) {
+var makePaginationBtnActive = function makePaginationBtnActive(paginationPage) {
+  var priorPagination = journalEntriesEls.journalEntriesWrapper.querySelector('.btn--pagination--active');
+  if (priorPagination) priorPagination.classList.remove('btn--pagination--active');
+  journalEntriesEls.journalEntriesWrapper.querySelectorAll('.btn--pagination')[paginationPage - 1].classList.add('btn--pagination--active');
+};
+
+var renderJournalPagination = function renderJournalPagination(entriesNumber, paginationPage) {
   journalEntriesEls.journalPaginationWrapper.innerHTML = '';
   var html = '';
   var buttonsNumber = Math.ceil(entriesNumber / _config.ENTRIES_PER_PAGE);
@@ -5164,16 +5170,16 @@ var renderJournalPagination = function renderJournalPagination(entriesNumber) {
   }
 
   journalEntriesEls.journalPaginationWrapper.insertAdjacentHTML('afterbegin', html);
-  if (entriesNumber < 9) return;
+  makePaginationBtnActive(paginationPage);
 };
 
 var renderJournalEntries = function renderJournalEntries(entriesData) {
   var paginationPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var clickedEl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
   var existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll('.c-journal-entry');
   if (existingEls) existingEls.forEach(function (el) {
     return el.remove();
   });
-  console.log(paginationPage);
   var entriesRange = paginationPage !== 1 ? [paginationPage * -_config.ENTRIES_PER_PAGE, paginationPage * -_config.ENTRIES_PER_PAGE + _config.ENTRIES_PER_PAGE] : [-_config.ENTRIES_PER_PAGE];
   if (!entriesData) return;
   entriesData.slice.apply(entriesData, entriesRange).forEach(function (entry) {
@@ -5181,7 +5187,7 @@ var renderJournalEntries = function renderJournalEntries(entriesData) {
     journalEntriesEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
   });
   activateEntry(selectFirstEntry());
-  renderJournalPagination(entriesData.length);
+  renderJournalPagination(entriesData.length, paginationPage);
   return selectFirstEntry().getAttribute('data-id');
 };
 
@@ -5583,8 +5589,8 @@ var controlJournalFilters = function controlJournalFilters(action) {
   }
 };
 
-var controlJournalPagination = function controlJournalPagination(paginationBtn) {
-  var activeEntryID = (0, _journalEntriesView.renderJournalEntries)((0, _dataModel.passData)('journal'), paginationBtn);
+var controlJournalPagination = function controlJournalPagination(paginationBtn, clickedEl) {
+  var activeEntryID = (0, _journalEntriesView.renderJournalEntries)((0, _dataModel.passData)('journal'), paginationBtn, clickedEl);
   (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(activeEntryID));
 };
 
@@ -5662,7 +5668,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49744" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52191" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

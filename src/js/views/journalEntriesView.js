@@ -35,7 +35,7 @@ export const addJournalEntriesHandler = function (handler) {
 export const addJournalPaginationHandler = function (handler) {
   journalEntriesEls.journalPaginationWrapper.addEventListener('click', e => {
     if (e.target.classList.contains('js-journal-pagination-btn')) {
-      handler(+e.target.getAttribute('data-pagination-btn'));
+      handler(+e.target.getAttribute('data-pagination-btn'), e.target);
     }
   });
 };
@@ -66,7 +66,19 @@ const activateEntry = function (entryEl) {
   entryEl.classList.add('c-journal-entry--active');
 };
 
-const renderJournalPagination = function (entriesNumber) {
+const makePaginationBtnActive = function (paginationPage) {
+  const priorPagination = journalEntriesEls.journalEntriesWrapper.querySelector(
+    '.btn--pagination--active'
+  );
+  if (priorPagination)
+    priorPagination.classList.remove('btn--pagination--active');
+
+  journalEntriesEls.journalEntriesWrapper
+    .querySelectorAll('.btn--pagination')
+    [paginationPage - 1].classList.add('btn--pagination--active');
+};
+
+const renderJournalPagination = function (entriesNumber, paginationPage) {
   journalEntriesEls.journalPaginationWrapper.innerHTML = '';
 
   let html = '';
@@ -80,16 +92,18 @@ const renderJournalPagination = function (entriesNumber) {
     'afterbegin',
     html
   );
-  if (entriesNumber < 9) return;
+  makePaginationBtnActive(paginationPage);
 };
 
-export const renderJournalEntries = function (entriesData, paginationPage = 1) {
+export const renderJournalEntries = function (
+  entriesData,
+  paginationPage = 1,
+  clickedEl = ''
+) {
   const existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll(
     '.c-journal-entry'
   );
   if (existingEls) existingEls.forEach(el => el.remove());
-
-  console.log(paginationPage);
 
   const entriesRange =
     paginationPage !== 1
@@ -141,6 +155,6 @@ export const renderJournalEntries = function (entriesData, paginationPage = 1) {
     );
   });
   activateEntry(selectFirstEntry());
-  renderJournalPagination(entriesData.length);
+  renderJournalPagination(entriesData.length, paginationPage);
   return selectFirstEntry().getAttribute('data-id');
 };
