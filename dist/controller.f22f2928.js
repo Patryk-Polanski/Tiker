@@ -5072,6 +5072,15 @@ var updateCapitalOutput = function updateCapitalOutput(capitalData) {
 };
 
 exports.updateCapitalOutput = updateCapitalOutput;
+},{}],"js/config.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ENTRIES_PER_PAGE = void 0;
+var ENTRIES_PER_PAGE = 2;
+exports.ENTRIES_PER_PAGE = ENTRIES_PER_PAGE;
 },{}],"js/views/journalEntriesView.js":[function(require,module,exports) {
 "use strict";
 
@@ -5079,11 +5088,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderJournalEntries = exports.removeEmptyJournalCard = exports.addJournalEntriesHandler = exports.queryJournalEntriesEls = void 0;
+
+var _config = require("../config");
+
 var journalEntriesEls = {};
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.journalEntriesWrapper = document.querySelector('.js-journal-entries-wrapper');
+  obj.journalPaginationWrapper = document.querySelector('.js-journal-pagination');
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
   return obj;
 };
@@ -5132,12 +5145,20 @@ var activateEntry = function activateEntry(entryEl) {
 };
 
 var renderJournalPagination = function renderJournalPagination(entriesNumber) {
+  var html = '';
+  var buttonsNumber = Math.ceil(entriesNumber / _config.ENTRIES_PER_PAGE);
+
+  for (var i = 1; i <= buttonsNumber; i++) {
+    html += "\n        <button class=\"c-journal-pagination__button btn btn--pagination\" data-pagination-btn=\"".concat(i, "\">").concat(i, "</button>\n    ");
+  }
+
+  journalEntriesEls.journalPaginationWrapper.insertAdjacentHTML('afterbegin', html);
   if (entriesNumber < 9) return;
 };
 
 var renderJournalEntries = function renderJournalEntries(entriesData) {
   if (!entriesData) return;
-  entriesData.forEach(function (entry) {
+  entriesData.slice(-2, -1).forEach(function (entry) {
     var html = "\n      <div class=\"c-journal-entry ".concat(entry.id ? '' : 'c-journal-entry--new', "\" data-id=").concat(entry.id, ">\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n              <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n              <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n          </div>\n          <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n              xmlns=\"http://www.w3.org/2000/svg\">\n              <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n          </svg>\n      </div>\n      ");
     journalEntriesEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
   });
@@ -5147,7 +5168,7 @@ var renderJournalEntries = function renderJournalEntries(entriesData) {
 };
 
 exports.renderJournalEntries = renderJournalEntries;
-},{}],"js/views/journalFiltersView.js":[function(require,module,exports) {
+},{"../config":"js/config.js"}],"js/views/journalFiltersView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5455,19 +5476,6 @@ var _journalFiltersView = require("./views/journalFiltersView");
 
 var _journalFormView = require("./views/journalFormView");
 
-// import {
-//   queryJournalEls,
-//   addJournalFiltersHandler,
-//   addJournalEntriesHandler,
-//   addJournalFormEventsHandler,
-//   renderJournalEntries,
-//   renderJournalForm,
-//   switchJournalFormModes,
-//   checkFormMode,
-//   switchPositionSide,
-//   removeEmptyJournalCard,
-//   renderExtraDetailsRows,
-// } from './views/journalView';
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
   var capitalData = (0, _dataModel.updateCapital)(amount, action);
@@ -5567,7 +5575,7 @@ var queryDOM = function queryDOM() {
   (0, _accountDetailsView.queryDetailsEls)();
   (0, _journalEntriesView.queryJournalEntriesEls)();
   (0, _journalFiltersView.queryJournalFilterEls)();
-  (0, _journalFormView.queryJournalFormEls)(); // queryJournalEls();
+  (0, _journalFormView.queryJournalFormEls)();
 }; // ZONE - event listeners
 
 
@@ -5630,7 +5638,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56910" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62596" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

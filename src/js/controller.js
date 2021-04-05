@@ -47,19 +47,6 @@ import {
   queryDetailsEls,
   updateCapitalOutput,
 } from './views/accountDetailsView';
-// import {
-//   queryJournalEls,
-//   addJournalFiltersHandler,
-//   addJournalEntriesHandler,
-//   addJournalFormEventsHandler,
-//   renderJournalEntries,
-//   renderJournalForm,
-//   switchJournalFormModes,
-//   checkFormMode,
-//   switchPositionSide,
-//   removeEmptyJournalCard,
-//   renderExtraDetailsRows,
-// } from './views/journalView';
 import {
   queryJournalEntriesEls,
   addJournalEntriesHandler,
@@ -175,7 +162,6 @@ const queryDOM = function () {
   queryJournalEntriesEls();
   queryJournalFilterEls();
   queryJournalFormEls();
-  // queryJournalEls();
 };
 
 // ZONE - event listeners

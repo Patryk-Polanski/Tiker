@@ -1,8 +1,13 @@
+import { ENTRIES_PER_PAGE } from '../config';
+
 let journalEntriesEls = {};
 
 const getElements = function (obj = {}) {
   obj.journalEntriesWrapper = document.querySelector(
     '.js-journal-entries-wrapper'
+  );
+  obj.journalPaginationWrapper = document.querySelector(
+    '.js-journal-pagination'
   );
   obj.journalFormWrapper = document.querySelector('.js-journal-form-wrapper');
   return obj;
@@ -53,12 +58,23 @@ const activateEntry = function (entryEl) {
 };
 
 const renderJournalPagination = function (entriesNumber) {
+  let html = '';
+  const buttonsNumber = Math.ceil(entriesNumber / ENTRIES_PER_PAGE);
+  for (let i = 1; i <= buttonsNumber; i++) {
+    html += `
+        <button class="c-journal-pagination__button btn btn--pagination" data-pagination-btn="${i}">${i}</button>
+    `;
+  }
+  journalEntriesEls.journalPaginationWrapper.insertAdjacentHTML(
+    'afterbegin',
+    html
+  );
   if (entriesNumber < 9) return;
 };
 
 export const renderJournalEntries = function (entriesData) {
   if (!entriesData) return;
-  entriesData.forEach(entry => {
+  entriesData.slice(-2, -1).forEach(entry => {
     const html = `
       <div class="c-journal-entry ${
         entry.id ? '' : 'c-journal-entry--new'
