@@ -77,9 +77,7 @@ export const renderJournalEntries = function (entriesData) {
               <span class="c-journal-entry__data">avg.entry: ${
                 entry.avgEntry
               }</span>
-              <span class="c-journal-entry__data">return: ${
-                entry.return
-              }%</span>
+              <span class="c-journal-entry__data">return: ${entry.return}</span>
           </div>
           <div class="c-journal-entry__unit-wrapper">
               <span class="c-journal-entry__data">avg.exit: ${

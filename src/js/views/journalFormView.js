@@ -100,6 +100,19 @@ const addKeyEventToDetailsInputs = function () {
     });
 };
 
+const removeFirstCrossInstances = function () {
+  journalFormEls.journalFormWrapper
+    .querySelector(
+      '.c-journal-form__entry-size-wrapper .js-form-remove-details-row-btn'
+    )
+    .classList.add('c-journal-form__entry-size-remove-wrapper--disabled');
+  journalFormEls.journalFormWrapper
+    .querySelector(
+      '.c-journal-form__exit-size-wrapper .js-form-remove-details-row-btn'
+    )
+    .classList.add('c-journal-form__exit-size-remove-wrapper--disabled');
+};
+
 export const queryJournalFormEls = function () {
   journalFormEls = getElements();
 };
@@ -132,7 +145,30 @@ export const addJournalFormEventsHandler = function (handler) {
 
     if (e.target.classList.contains('js-form-plus-btn'))
       handler('extra', '', e.target);
+
+    if (e.target.classList.contains('js-form-remove-details-row-btn'))
+      handler('pop', '', e.target);
   });
+};
+
+export const removeJournalFormDetailsRow = function (el) {
+  el.previousElementSibling.previousElementSibling.remove();
+  el.previousElementSibling.remove();
+  el.remove();
+  journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares(
+    '.c-journal-form__entry-size'
+  );
+  journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares(
+    '.c-journal-form__exit-size'
+  );
+  journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice(
+    '.c-journal-form__entry',
+    '.c-journal-form__entry-size'
+  );
+  journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice(
+    '.c-journal-form__exit',
+    '.c-journal-form__exit-size'
+  );
 };
 
 export const switchJournalFormModes = function (instruction = '') {
@@ -362,6 +398,9 @@ export const renderJournalForm = function (singleEntry) {
               <input type="number"
               class="c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input"
               value="${transaction[1]}" disabled>
+              <div class="c-journal-form__entry-size-remove-wrapper c-journal-form__edit-mode-btn js-form-remove-details-row-btn">
+                <span class="c-journal-form__entry-size-remove-btn">x</span>
+              </div>
           </div>
         `;
   });
@@ -375,6 +414,9 @@ export const renderJournalForm = function (singleEntry) {
               <input type="number"
               class="c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input"
               value="${transaction[1]}" disabled>
+              <div class="c-journal-form__exit-size-remove-wrapper c-journal-form__edit-mode-btn js-form-remove-details-row-btn">
+              <span class="c-journal-form__exit-size-remove-btn">x</span>
+            </div>
           </div>
         `;
   });
@@ -399,4 +441,5 @@ export const renderJournalForm = function (singleEntry) {
     '.js-details-entry-shares-result'
   );
   addKeyEventToDetailsInputs();
+  removeFirstCrossInstances();
 };

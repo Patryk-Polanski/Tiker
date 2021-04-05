@@ -568,13 +568,13 @@ var user = {
     ticker: 'MSFT',
     shortDate: '30/07/21',
     side: 'short',
-    sharesAmount: 100,
+    sharesAmount: 110,
     avgEntry: 180.84,
     avgExit: 181.9,
     return: 112.52,
     returnPercent: 1.63,
     tradeEntries: [[180.75, 50], [180.9, 60]],
-    tradeExits: [[181.15, 20], [181.42, 20], [182.69, 60]],
+    tradeExits: [[181.15, 20], [181.42, 20], [182.69, 70]],
     body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
   }],
   dummyJournal: [{
@@ -5138,7 +5138,7 @@ var renderJournalPagination = function renderJournalPagination(entriesNumber) {
 var renderJournalEntries = function renderJournalEntries(entriesData) {
   if (!entriesData) return;
   entriesData.forEach(function (entry) {
-    var html = "\n      <div class=\"c-journal-entry ".concat(entry.id ? '' : 'c-journal-entry--new', "\" data-id=").concat(entry.id, ">\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n              <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "%</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n              <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n          </div>\n          <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n              xmlns=\"http://www.w3.org/2000/svg\">\n              <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n          </svg>\n      </div>\n      ");
+    var html = "\n      <div class=\"c-journal-entry ".concat(entry.id ? '' : 'c-journal-entry--new', "\" data-id=").concat(entry.id, ">\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n              <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n              <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n          </div>\n          <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n              xmlns=\"http://www.w3.org/2000/svg\">\n              <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n          </svg>\n      </div>\n      ");
     journalEntriesEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
   });
   activateEntry(selectFirstEntry());
@@ -5183,7 +5183,7 @@ exports.addJournalFiltersHandler = addJournalFiltersHandler;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalForm = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
+exports.renderJournalForm = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
 
 var _helpers = require("../helpers");
 
@@ -5274,6 +5274,11 @@ var addKeyEventToDetailsInputs = function addKeyEventToDetailsInputs() {
   });
 };
 
+var removeFirstCrossInstances = function removeFirstCrossInstances() {
+  journalFormEls.journalFormWrapper.querySelector('.c-journal-form__entry-size-wrapper .js-form-remove-details-row-btn').classList.add('c-journal-form__entry-size-remove-wrapper--disabled');
+  journalFormEls.journalFormWrapper.querySelector('.c-journal-form__exit-size-wrapper .js-form-remove-details-row-btn').classList.add('c-journal-form__exit-size-remove-wrapper--disabled');
+};
+
 var queryJournalFormEls = function queryJournalFormEls() {
   journalFormEls = getElements();
 };
@@ -5296,10 +5301,23 @@ var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) 
 
     if (e.target.classList.contains('js-form-swap-btn')) handler('swap');
     if (e.target.classList.contains('js-form-plus-btn')) handler('extra', '', e.target);
+    if (e.target.classList.contains('js-form-remove-details-row-btn')) handler('pop', '', e.target);
   });
 };
 
 exports.addJournalFormEventsHandler = addJournalFormEventsHandler;
+
+var removeJournalFormDetailsRow = function removeJournalFormDetailsRow(el) {
+  el.previousElementSibling.previousElementSibling.remove();
+  el.previousElementSibling.remove();
+  el.remove();
+  journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares('.c-journal-form__entry-size');
+  journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares('.c-journal-form__exit-size');
+  journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__entry', '.c-journal-form__entry-size');
+  journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__exit', '.c-journal-form__exit-size');
+};
+
+exports.removeJournalFormDetailsRow = removeJournalFormDetailsRow;
 
 var switchJournalFormModes = function switchJournalFormModes() {
   var instruction = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -5386,10 +5404,10 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
   var entriesSection = document.querySelector('.js-entries-wrapper');
   var exitsSection = document.querySelector('.js-exits-wrapper');
   singleEntry.tradeEntries.forEach(function (transaction) {
-    entriesSection.innerHTML += "\n          <div class=\"c-journal-form__entry-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"").concat(transaction[1], "\" disabled>\n          </div>\n        ");
+    entriesSection.innerHTML += "\n          <div class=\"c-journal-form__entry-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"").concat(transaction[1], "\" disabled>\n              <div class=\"c-journal-form__entry-size-remove-wrapper c-journal-form__edit-mode-btn js-form-remove-details-row-btn\">\n                <span class=\"c-journal-form__entry-size-remove-btn\">x</span>\n              </div>\n          </div>\n        ");
   });
   singleEntry.tradeExits.forEach(function (transaction) {
-    exitsSection.innerHTML += "\n          <div class=\"c-journal-form__exit-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input\"\n              value=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"").concat(transaction[1], "\" disabled>\n          </div>\n        ");
+    exitsSection.innerHTML += "\n          <div class=\"c-journal-form__exit-size-wrapper\">\n              <input type=\"number\"\n              class=\"c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input\"\n              value=\"".concat(transaction[0], "\" disabled>\n              <input type=\"number\"\n              class=\"c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input\"\n              value=\"").concat(transaction[1], "\" disabled>\n              <div class=\"c-journal-form__exit-size-remove-wrapper c-journal-form__edit-mode-btn js-form-remove-details-row-btn\">\n              <span class=\"c-journal-form__exit-size-remove-btn\">x</span>\n            </div>\n          </div>\n        ");
   });
   journalFormEls.swapBtn = journalFormEls.journalFormWrapper.querySelector('.js-form-swap-btn');
   journalFormEls.manualInputs = journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__manual-input');
@@ -5398,6 +5416,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
   journalFormEls.detailsEntryPriceAvg = journalFormEls.journalFormWrapper.querySelector('.js-details-entry-price-average');
   journalFormEls.detailsEntrySharesTotal = journalFormEls.journalFormWrapper.querySelector('.js-details-entry-shares-result');
   addKeyEventToDetailsInputs();
+  removeFirstCrossInstances();
 };
 
 exports.renderJournalForm = renderJournalForm;
@@ -5517,6 +5536,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
 
   if (action === 'swap') (0, _journalFormView.switchPositionSide)();
   if (action === 'extra') (0, _journalFormView.renderExtraDetailsRows)(targetEl);
+  if (action === 'pop') (0, _journalFormView.removeJournalFormDetailsRow)(targetEl);
 };
 
 var controlJournalActiveEntries = function controlJournalActiveEntries() {

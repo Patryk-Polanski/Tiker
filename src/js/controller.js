@@ -78,6 +78,7 @@ import {
   checkFormMode,
   switchPositionSide,
   renderExtraDetailsRows,
+  removeJournalFormDetailsRow,
 } from './views/journalFormView';
 
 // ZONE - controllers
@@ -145,6 +146,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
   }
   if (action === 'swap') switchPositionSide();
   if (action === 'extra') renderExtraDetailsRows(targetEl);
+  if (action === 'pop') removeJournalFormDetailsRow(targetEl);
 };
 
 const controlJournalActiveEntries = function (id = '') {

@@ -292,7 +292,7 @@ const user = {
       ticker: 'MSFT',
       shortDate: '30/07/21',
       side: 'short',
-      sharesAmount: 100,
+      sharesAmount: 110,
       avgEntry: 180.84,
       avgExit: 181.9,
       return: 112.52,
@@ -304,7 +304,7 @@ const user = {
       tradeExits: [
         [181.15, 20],
         [181.42, 20],
-        [182.69, 60],
+        [182.69, 70],
       ],
       body:
         'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.',
