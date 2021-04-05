@@ -5087,7 +5087,7 @@ exports.ENTRIES_PER_PAGE = ENTRIES_PER_PAGE;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalEntries = exports.removeEmptyJournalCard = exports.addJournalEntriesHandler = exports.queryJournalEntriesEls = void 0;
+exports.renderJournalEntries = exports.removeEmptyJournalCard = exports.addJournalPaginationHandler = exports.addJournalEntriesHandler = exports.queryJournalEntriesEls = void 0;
 
 var _config = require("../config");
 
@@ -5122,6 +5122,16 @@ var addJournalEntriesHandler = function addJournalEntriesHandler(handler) {
 
 exports.addJournalEntriesHandler = addJournalEntriesHandler;
 
+var addJournalPaginationHandler = function addJournalPaginationHandler(handler) {
+  journalEntriesEls.journalPaginationWrapper.addEventListener('click', function (e) {
+    if (e.target.classList.contains('js-journal-pagination-btn')) {
+      handler(+e.target.getAttribute('data-pagination-btn'));
+    }
+  });
+};
+
+exports.addJournalPaginationHandler = addJournalPaginationHandler;
+
 var removeEmptyJournalCard = function removeEmptyJournalCard() {
   var emptyCard = journalEntriesEls.journalEntriesWrapper.querySelector('.c-journal-entry--new');
 
@@ -5145,11 +5155,12 @@ var activateEntry = function activateEntry(entryEl) {
 };
 
 var renderJournalPagination = function renderJournalPagination(entriesNumber) {
+  journalEntriesEls.journalPaginationWrapper.innerHTML = '';
   var html = '';
   var buttonsNumber = Math.ceil(entriesNumber / _config.ENTRIES_PER_PAGE);
 
   for (var i = 1; i <= buttonsNumber; i++) {
-    html += "\n        <button class=\"c-journal-pagination__button btn btn--pagination\" data-pagination-btn=\"".concat(i, "\">").concat(i, "</button>\n    ");
+    html += "\n        <button class=\"c-journal-pagination__button btn btn--pagination js-journal-pagination-btn\" data-pagination-btn=\"".concat(i, "\">").concat(i, "</button>\n    ");
   }
 
   journalEntriesEls.journalPaginationWrapper.insertAdjacentHTML('afterbegin', html);
@@ -5157,8 +5168,15 @@ var renderJournalPagination = function renderJournalPagination(entriesNumber) {
 };
 
 var renderJournalEntries = function renderJournalEntries(entriesData) {
+  var paginationPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll('.c-journal-entry');
+  if (existingEls) existingEls.forEach(function (el) {
+    return el.remove();
+  });
+  console.log(paginationPage);
+  var entriesRange = paginationPage !== 1 ? [paginationPage * -_config.ENTRIES_PER_PAGE, paginationPage * -_config.ENTRIES_PER_PAGE + _config.ENTRIES_PER_PAGE] : [-_config.ENTRIES_PER_PAGE];
   if (!entriesData) return;
-  entriesData.slice(-2, -1).forEach(function (entry) {
+  entriesData.slice.apply(entriesData, entriesRange).forEach(function (entry) {
     var html = "\n      <div class=\"c-journal-entry ".concat(entry.id ? '' : 'c-journal-entry--new', "\" data-id=").concat(entry.id, ">\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n              <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n              <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n          </div>\n          <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n              xmlns=\"http://www.w3.org/2000/svg\">\n              <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n          </svg>\n      </div>\n      ");
     journalEntriesEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
   });
@@ -5565,6 +5583,11 @@ var controlJournalFilters = function controlJournalFilters(action) {
   }
 };
 
+var controlJournalPagination = function controlJournalPagination(paginationBtn) {
+  var activeEntryID = (0, _journalEntriesView.renderJournalEntries)((0, _dataModel.passData)('journal'), paginationBtn);
+  (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(activeEntryID));
+};
+
 var queryDOM = function queryDOM() {
   (0, _calculatorsView.queryCalcEls)();
   (0, _tableMonthlyView.queryMonthlyEls)();
@@ -5597,6 +5620,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _journalFiltersView.addJournalFiltersHandler)(controlJournalFilters);
   (0, _journalEntriesView.addJournalEntriesHandler)(controlJournalActiveEntries);
   (0, _journalFormView.addJournalFormEventsHandler)(controlJournalFormEvents);
+  (0, _journalEntriesView.addJournalPaginationHandler)(controlJournalPagination);
 });
 var resizeTimer;
 window.addEventListener('resize', function (e) {
@@ -5638,7 +5662,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62596" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49744" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

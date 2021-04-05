@@ -27,7 +27,16 @@ export const addJournalEntriesHandler = function (handler) {
       clickedCard.classList.add('c-journal-entry--active');
       return handler(clickedCard.getAttribute('data-id'));
     }
+
     return;
+  });
+};
+
+export const addJournalPaginationHandler = function (handler) {
+  journalEntriesEls.journalPaginationWrapper.addEventListener('click', e => {
+    if (e.target.classList.contains('js-journal-pagination-btn')) {
+      handler(+e.target.getAttribute('data-pagination-btn'));
+    }
   });
 };
 
@@ -58,11 +67,13 @@ const activateEntry = function (entryEl) {
 };
 
 const renderJournalPagination = function (entriesNumber) {
+  journalEntriesEls.journalPaginationWrapper.innerHTML = '';
+
   let html = '';
   const buttonsNumber = Math.ceil(entriesNumber / ENTRIES_PER_PAGE);
   for (let i = 1; i <= buttonsNumber; i++) {
     html += `
-        <button class="c-journal-pagination__button btn btn--pagination" data-pagination-btn="${i}">${i}</button>
+        <button class="c-journal-pagination__button btn btn--pagination js-journal-pagination-btn" data-pagination-btn="${i}">${i}</button>
     `;
   }
   journalEntriesEls.journalPaginationWrapper.insertAdjacentHTML(
@@ -72,9 +83,24 @@ const renderJournalPagination = function (entriesNumber) {
   if (entriesNumber < 9) return;
 };
 
-export const renderJournalEntries = function (entriesData) {
+export const renderJournalEntries = function (entriesData, paginationPage = 1) {
+  const existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll(
+    '.c-journal-entry'
+  );
+  if (existingEls) existingEls.forEach(el => el.remove());
+
+  console.log(paginationPage);
+
+  const entriesRange =
+    paginationPage !== 1
+      ? [
+          paginationPage * -ENTRIES_PER_PAGE,
+          paginationPage * -ENTRIES_PER_PAGE + ENTRIES_PER_PAGE,
+        ]
+      : [-ENTRIES_PER_PAGE];
+
   if (!entriesData) return;
-  entriesData.slice(-2, -1).forEach(entry => {
+  entriesData.slice(...entriesRange).forEach(entry => {
     const html = `
       <div class="c-journal-entry ${
         entry.id ? '' : 'c-journal-entry--new'

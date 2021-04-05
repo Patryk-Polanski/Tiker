@@ -52,6 +52,7 @@ import {
   addJournalEntriesHandler,
   renderJournalEntries,
   removeEmptyJournalCard,
+  addJournalPaginationHandler,
 } from './views/journalEntriesView';
 import {
   queryJournalFilterEls,
@@ -151,6 +152,14 @@ const controlJournalFilters = function (action, id = '') {
   }
 };
 
+const controlJournalPagination = function (paginationBtn) {
+  const activeEntryID = renderJournalEntries(
+    passData('journal'),
+    paginationBtn
+  );
+  renderJournalForm(findJournalEntry(activeEntryID));
+};
+
 const queryDOM = function () {
   queryCalcEls();
   queryMonthlyEls();
@@ -184,6 +193,7 @@ window.addEventListener('DOMContentLoaded', e => {
   addJournalFiltersHandler(controlJournalFilters);
   addJournalEntriesHandler(controlJournalActiveEntries);
   addJournalFormEventsHandler(controlJournalFormEvents);
+  addJournalPaginationHandler(controlJournalPagination);
 });
 
 let resizeTimer;
