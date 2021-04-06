@@ -162,6 +162,11 @@
     margin: 0 10px;
   }
 
+  &__error-message {
+    margin-top: 30px;
+    color: $red-light;
+  }
+
   &__hidden-el {
     opacity: 0;
     pointer-events: none;

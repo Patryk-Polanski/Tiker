@@ -148,6 +148,8 @@ export const addJournalFormEventsHandler = function (handler) {
 
     if (e.target.classList.contains('js-form-remove-details-row-btn'))
       handler('pop', '', e.target);
+
+    if (e.target.classList.contains('js-form-save-btn')) handler('save');
   });
 };
 
@@ -235,6 +237,35 @@ export const switchPositionSide = function () {
     : (sideValueEl.value = 'long');
 };
 
+export const grabAllUserInputs = function () {
+  const formInputs = {
+    date: journalFormEls.journalFormWrapper.querySelector('.js-form-date-input')
+      .value,
+    stock: journalFormEls.journalFormWrapper.querySelector(
+      '.js-form-stock-input'
+    ).value,
+    side: journalFormEls.journalFormWrapper.querySelector('.js-form-stock-side')
+      .value,
+    entriesPrices: Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll('.js-form-entry-input')
+    ).map(el => el.value),
+    entriesShares: Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll(
+        '.js-form-entry-shares-input'
+      )
+    ).map(el => el.value),
+    exitsPrices: Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll('.js-form-exit-input')
+    ).map(el => el.value),
+    exitsShares: Array.from(
+      journalFormEls.journalFormWrapper.querySelectorAll(
+        '.js-form-exit-shares-input'
+      )
+    ).map(el => el.value),
+  };
+  return formInputs;
+};
+
 export const renderJournalForm = function (singleEntry) {
   journalFormEls.journalFormWrapper.innerHTML = '';
   [singleEntry] = singleEntry;
@@ -244,7 +275,7 @@ export const renderJournalForm = function (singleEntry) {
       <div class="c-journal-form__upper-region">
           <div class="c-journal-form__unit-wrapper">
               <span class="c-journal-form__data">date: <input
-                      class="c-input-text c-input-text--compact c-journal-form__manual-input"
+                      class="c-input-text c-input-text--compact c-journal-form__manual-input js-form-date-input"
                        value="${
                          singleEntry.shortDate
                            ? singleEntry.shortDate
@@ -252,13 +283,13 @@ export const renderJournalForm = function (singleEntry) {
                        }" disabled>
               </span>
               <span class="c-journal-form__data">stock: <input
-                      class="c-input-text c-input-text--compact c-journal-form__manual-input"
+                      class="c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-input"
                       type="text" value="${singleEntry.ticker}" disabled></span>
           </div>
           <div class="c-journal-form__unit-wrapper">
               <div class="c-journal-form__trade-side-wrapper">
                   <span class="c-journal-form__data">side: <input
-                          class="c-input-text c-input-text--compact c-journal-form__manual-input"
+                          class="c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-side"
                           type="text" value="${
                             singleEntry.side ? singleEntry.side : 'long'
                           }" disabled></span>
@@ -371,13 +402,14 @@ export const renderJournalForm = function (singleEntry) {
           </div>
   
       </div>
+      <p class="c-journal-form__error-message js-form-error-message">This is an error message due to failed validation</p>
     <textarea class="c-journal-form__text-area" name="" id="" rows="10"></textarea>
     </div>
     <div class="c-journal-form__buttons-wrapper">
         <button class="c-journal-from__button-delete btn btn--secondary">delete</button>
         <div class="c-journal-form__buttons-inner-wrapper">
             <button class="c-journal-form__button-cancel btn btn--secondary c-journal-form__edit-mode-btn js-form-cancel-btn">cancel</button>
-            <button class="c-journal-form__button-save btn btn--primary c-journal-form__edit-mode-btn">save</button>
+            <button class="c-journal-form__button-save btn btn--primary c-journal-form__edit-mode-btn js-form-save-btn">save</button>
         </div>
         <button class="c-journal-form__button-edit btn btn--primary js-form-edit-btn">edit</button>
     </div>
@@ -386,6 +418,9 @@ export const renderJournalForm = function (singleEntry) {
   journalFormEls.journalFormWrapper.insertAdjacentHTML('afterbegin', html);
 
   journalFormEls.journalForm = document.querySelector('.js-journal-form');
+  journalFormEls.formValidationError = document.querySelector(
+    '.js-form-error-message'
+  );
 
   const entriesSection = document.querySelector('.js-entries-wrapper');
   const exitsSection = document.querySelector('.js-exits-wrapper');
@@ -393,10 +428,10 @@ export const renderJournalForm = function (singleEntry) {
     entriesSection.innerHTML += `
           <div class="c-journal-form__entry-size-wrapper">
               <input type="number"
-              class="c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input"
+              class="c-journal-form__entry c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input js-form-entry-input"
               value="${transaction[0]}" disabled>
               <input type="number"
-              class="c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input"
+              class="c-journal-form__entry-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input js-form-entry-shares-input"
               value="${transaction[1]}" disabled>
               <div class="c-journal-form__entry-size-remove-wrapper c-journal-form__edit-mode-btn js-form-remove-details-row-btn">
                 <span class="c-journal-form__entry-size-remove-btn">x</span>
@@ -409,10 +444,10 @@ export const renderJournalForm = function (singleEntry) {
     exitsSection.innerHTML += `
           <div class="c-journal-form__exit-size-wrapper">
               <input type="number"
-              class="c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input"
+              class="c-journal-form__exit c-input-text c-input-text--compact c-journal-form__manual-input js-form-details-input js-form-exit-input"
               value="${transaction[0]}" disabled>
               <input type="number"
-              class="c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input"
+              class="c-journal-form__exit-size c-input-text c-input-text--compact c-journal-form__manual-input  js-form-details-input js-form-exit-shares-input"
               value="${transaction[1]}" disabled>
               <div class="c-journal-form__exit-size-remove-wrapper c-journal-form__edit-mode-btn js-form-remove-details-row-btn">
               <span class="c-journal-form__exit-size-remove-btn">x</span>

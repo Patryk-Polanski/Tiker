@@ -67,7 +67,9 @@ import {
   switchPositionSide,
   renderExtraDetailsRows,
   removeJournalFormDetailsRow,
+  grabAllUserInputs,
 } from './views/journalFormView';
+import { validateJournalForm } from './models/journalFormModel';
 
 // ZONE - controllers
 
@@ -135,6 +137,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
   if (action === 'swap') switchPositionSide();
   if (action === 'extra') renderExtraDetailsRows(targetEl);
   if (action === 'pop') removeJournalFormDetailsRow(targetEl);
+  if (action === 'save') validateJournalForm(grabAllUserInputs());
 };
 
 const controlJournalActiveEntries = function (id = '') {
@@ -146,6 +149,7 @@ const controlJournalActiveEntries = function (id = '') {
 
 const controlJournalFilters = function (action, id = '') {
   if (action === 'new') {
+    switchJournalFormModes('read-only');
     renderJournalEntries(passData('dummyJournal'), '', false);
     renderJournalForm(passData('dummyJournal'));
     checkFormMode();

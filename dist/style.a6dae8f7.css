@@ -1328,6 +1328,10 @@ body {
 .c-journal-form__button-save, .c-journal-form__button-cancel {
   margin: 0 10px;
 }
+.c-journal-form__error-message {
+  margin-top: 30px;
+  color: #c4456f;
+}
 .c-journal-form__hidden-el {
   opacity: 0;
   pointer-events: none;
