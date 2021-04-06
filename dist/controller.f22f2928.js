@@ -5272,7 +5272,7 @@ exports.addJournalFiltersHandler = addJournalFiltersHandler;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalForm = exports.updateFormValidationError = exports.grabAllUserInputs = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
+exports.renderJournalForm = exports.clearFormValidationError = exports.updateFormValidationError = exports.grabAllUserInputs = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
 
 var _helpers = require("../helpers");
 
@@ -5487,6 +5487,12 @@ var updateFormValidationError = function updateFormValidationError() {
 
 exports.updateFormValidationError = updateFormValidationError;
 
+var clearFormValidationError = function clearFormValidationError() {
+  journalFormEls.formValidationError.textContent = '';
+};
+
+exports.clearFormValidationError = clearFormValidationError;
+
 var renderJournalForm = function renderJournalForm(singleEntry) {
   journalFormEls.journalFormWrapper.innerHTML = '';
   var _singleEntry = singleEntry;
@@ -5558,11 +5564,46 @@ var validateJournalForm = function validateJournalForm(inputData) {
 
   if (dateFull === 'ERROR') return ['ERROR', 'date must be in the format of dd/mm/yy'];
   var dateShort = (0, _helpers.createShortDate)(dateFull); // stock ticker validation
-  // trade details validation
 
+  var tickerRegex = /^[a-zA-Z]+$/;
+  var stock;
+  if (tickerRegex.test(inputData.stock)) stock = inputData.stock; // trade side
+
+  var side = inputData.side; // id
+
+  var id = Date.now(); // validating trade details
+
+  if (!inputData.entriesPrices || !inputData.entriesShares || !inputData.exitsPrices || !inputData.exitsShares) return ['ERROR', 'All entries, exits and shares rows must be filled in or deleted'];
+  var entriesPrices = inputData.entriesPrices.map(function (entry) {
+    return +entry;
+  });
+  var entriesShares = inputData.entriesShares.map(function (entry) {
+    return +entry;
+  });
+  var exitsPrices = inputData.exitsPrices.map(function (exit) {
+    return +exit;
+  });
+  var exitsShares = inputData.exitsShares.map(function (exit) {
+    return +exit;
+  }); // check if the number of entry shares equals the number of exit shares
+
+  var sharesAmount = entriesShares.reduce(function (acc, num) {
+    return acc + num;
+  }, 0);
+  if (sharesAmount !== exitsShares.reduce(function (acc, num) {
+    return acc + num;
+  }, 0)) return ['ERROR', 'Entry shares must be equal to exit shares'];
   var entryObj = {
+    id: id,
     dateFull: dateFull,
-    dateShort: dateShort
+    dateShort: dateShort,
+    stock: stock,
+    side: side,
+    entriesPrices: entriesPrices,
+    entriesShares: entriesShares,
+    exitsPrices: exitsPrices,
+    exitsShares: exitsShares,
+    sharesAmount: sharesAmount
   }; // all validation checks passed
 
   console.log(entryObj);
@@ -5680,7 +5721,11 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
   if (action === 'save') {
     var validationOutcome = (0, _journalFormModel.validateJournalForm)((0, _journalFormView.grabAllUserInputs)());
     if (validationOutcome[0] === 'ERROR') (0, _journalFormView.updateFormValidationError)(validationOutcome[1]);
-    if (validationOutcome[0] === 'PASS') console.log('test has been passed');
+
+    if (validationOutcome[0] === 'PASS') {
+      console.log('test has been passed');
+      (0, _journalFormView.clearFormValidationError)();
+    }
   }
 };
 
@@ -5783,7 +5828,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58268" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49374" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

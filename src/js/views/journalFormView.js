@@ -270,6 +270,10 @@ export const updateFormValidationError = function (message = 'fail') {
   journalFormEls.formValidationError.textContent = message;
 };
 
+export const clearFormValidationError = function () {
+  journalFormEls.formValidationError.textContent = '';
+};
+
 export const renderJournalForm = function (singleEntry) {
   journalFormEls.journalFormWrapper.innerHTML = '';
   [singleEntry] = singleEntry;
