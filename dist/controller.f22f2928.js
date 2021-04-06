@@ -305,7 +305,7 @@ var createShortDate = function createShortDate() {
         date = _Date$toLocaleDateStr2[1],
         year = _Date$toLocaleDateStr2[2];
 
-    joinedDate = date + '/' + month + '/' + year;
+    joinedDate = date + '/' + month + '/' + year.slice(-2);
   } else {
     var _Date$toLocaleDateStr3 = new Date().toLocaleDateString('en-US').split('/'),
         _Date$toLocaleDateStr4 = _slicedToArray(_Date$toLocaleDateStr3, 3),
@@ -313,7 +313,7 @@ var createShortDate = function createShortDate() {
         _date = _Date$toLocaleDateStr4[1],
         _year = _Date$toLocaleDateStr4[2];
 
-    joinedDate = _date + '/' + _month + '/' + _year;
+    joinedDate = _date + '/' + _month + '/' + _year.slice(-2);
   }
 
   return joinedDate;
@@ -355,7 +355,7 @@ exports.createLongDate = createLongDate;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.findJournalEntry = exports.updateProfitableData = exports.updateMonthlyData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
+exports.findJournalEntry = exports.updateJournalData = exports.updateProfitableData = exports.updateMonthlyData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
 
 var _helpers = require("./../helpers");
 
@@ -583,7 +583,7 @@ var user = {
   journal: [{
     id: 'Hf5t3q1',
     ticker: 'ROKU',
-    shortDate: '28/07/21',
+    dateShort: '28/07/21',
     side: 'short',
     sharesAmount: 100,
     avgEntry: 180.84,
@@ -596,7 +596,7 @@ var user = {
   }, {
     id: 'Hf5t3p1',
     ticker: 'RIOT',
-    shortDate: '29/07/21',
+    dateShort: '29/07/21',
     side: 'short',
     sharesAmount: 100,
     avgEntry: 180.84,
@@ -609,7 +609,7 @@ var user = {
   }, {
     id: 'Hf5t3s1',
     ticker: 'MSFT',
-    shortDate: '30/07/21',
+    dateShort: '30/07/21',
     side: 'short',
     sharesAmount: 110,
     avgEntry: 180.84,
@@ -623,7 +623,7 @@ var user = {
   dummyJournal: [{
     id: '',
     ticker: '',
-    shortDate: '',
+    dateShort: '',
     side: '',
     sharesAmount: '',
     avgEntry: '',
@@ -689,6 +689,14 @@ var updateProfitableData = function updateProfitableData(items) {
 };
 
 exports.updateProfitableData = updateProfitableData;
+
+var updateJournalData = function updateJournalData(newEntry) {
+  user.journal.push(newEntry);
+  console.log('UPDATED USER OBJECT');
+  console.log(user);
+};
+
+exports.updateJournalData = updateJournalData;
 
 var findJournalEntry = function findJournalEntry(id) {
   if (!id) return;
@@ -5226,7 +5234,7 @@ var renderJournalEntries = function renderJournalEntries(entriesData) {
   var entriesRange = paginationPage !== 1 ? [paginationPage * -_config.ENTRIES_PER_PAGE, paginationPage * -_config.ENTRIES_PER_PAGE + _config.ENTRIES_PER_PAGE] : [-_config.ENTRIES_PER_PAGE];
   if (!entriesData) return;
   entriesData.slice.apply(entriesData, entriesRange).forEach(function (entry) {
-    var html = "\n      <div class=\"c-journal-entry ".concat(entry.id ? '' : 'c-journal-entry--new', "\" data-id=").concat(entry.id, ">\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__date\">").concat(entry.shortDate, "</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n              <span class=\"c-journal-entry__data\">return: ").concat(entry.return, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n              <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n          </div>\n          <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n              xmlns=\"http://www.w3.org/2000/svg\">\n              <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n          </svg>\n      </div>\n      ");
+    var html = "\n      <div class=\"c-journal-entry ".concat(entry.id ? '' : 'c-journal-entry--new', "\" data-id=").concat(entry.id, ">\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__date\">").concat(entry.dateShort, "</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.ticker, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">").concat(entry.side, " side</span>\n              <span class=\"c-journal-entry__data\">").concat(entry.sharesAmount, " shares</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.entry: ").concat(entry.avgEntry, "</span>\n              <span class=\"c-journal-entry__data\">return: ").concat(entry.returnCash, "</span>\n          </div>\n          <div class=\"c-journal-entry__unit-wrapper\">\n              <span class=\"c-journal-entry__data\">avg.exit: ").concat(entry.avgExit, "</span>\n              <span class=\"c-journal-entry__data\">% return ").concat(entry.returnPercent, "</span>\n          </div>\n          <svg class=\"c-journal-entry__chevron svg svg--chevron\" viewBox=\"0 0 31 20\"\n              xmlns=\"http://www.w3.org/2000/svg\">\n              <path d=\"M1.5 1.5L15.5 16.5L29.5 1.5\" stroke=\"#AAAAAA\" stroke-width=\"4\" />\n          </svg>\n      </div>\n      ");
     journalEntriesEls.journalEntriesWrapper.insertAdjacentHTML('afterbegin', html);
   });
   var entriesLength = clear ? entriesData.length : journalEntriesEls.journalEntriesWrapper.querySelector('.c-journal-entry').length;
@@ -5501,7 +5509,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
   var _singleEntry2 = _slicedToArray(_singleEntry, 1);
 
   singleEntry = _singleEntry2[0];
-  var html = "\n    <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n      <div class=\"c-journal-form__upper-region\">\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">date: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-date-input\"\n                       value=\"").concat(singleEntry.shortDate ? singleEntry.shortDate : (0, _helpers.createShortDate)(), "\" disabled>\n              </span>\n              <span class=\"c-journal-form__data\">stock: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-input\"\n                      type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <div class=\"c-journal-form__trade-side-wrapper\">\n                  <span class=\"c-journal-form__data\">side: <input\n                          class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-side\"\n                          type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                  <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                      <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                          xmlns=\"http://www.w3.org/2000/svg\">\n                          <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                              fill=\"#C4C4C4\" />\n                          <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                              fill=\"#C4C4C4\" />\n                      </svg>\n  \n                  </button>\n              </div>\n              <span class=\"c-journal-form__data\">%return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">shares: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n              <span class=\"c-journal-form__data\">return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnCash, "\" disabled></span>\n          </div>\n      </div>\n      <div class=\"c-journal-form__middle-region\">\n          <div class=\"c-journal-form__entries-wrapper\">\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">entries</span>\n                  <span class=\"c-journal-form__entries-label\">shares</span>\n              </div>\n              <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                  \n              </div>\n              <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                  <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                      xmlns=\"http://www.w3.org/2000/svg\">\n                      <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                      <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                      <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                  </svg>\n  \n              </button>\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">average: <br><span\n                          class=\"c-journal-form__entries-label-result js-details-entry-price-average\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
+  var html = "\n    <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n      <div class=\"c-journal-form__upper-region\">\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">date: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-date-input\"\n                       value=\"").concat(singleEntry.dateShort ? singleEntry.dateShort : (0, _helpers.createShortDate)(), "\" disabled>\n              </span>\n              <span class=\"c-journal-form__data\">stock: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-input\"\n                      type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <div class=\"c-journal-form__trade-side-wrapper\">\n                  <span class=\"c-journal-form__data\">side: <input\n                          class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-side\"\n                          type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                  <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                      <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                          xmlns=\"http://www.w3.org/2000/svg\">\n                          <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                              fill=\"#C4C4C4\" />\n                          <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                              fill=\"#C4C4C4\" />\n                      </svg>\n  \n                  </button>\n              </div>\n              <span class=\"c-journal-form__data\">%return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">shares: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n              <span class=\"c-journal-form__data\">return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnCash, "\" disabled></span>\n          </div>\n      </div>\n      <div class=\"c-journal-form__middle-region\">\n          <div class=\"c-journal-form__entries-wrapper\">\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">entries</span>\n                  <span class=\"c-journal-form__entries-label\">shares</span>\n              </div>\n              <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                  \n              </div>\n              <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                  <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                      xmlns=\"http://www.w3.org/2000/svg\">\n                      <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                      <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                      <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                  </svg>\n  \n              </button>\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">average: <br><span\n                          class=\"c-journal-form__entries-label-result js-details-entry-price-average\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
     return single[0] * single[1];
   }).reduce(function (acc, num) {
     return acc + num;
@@ -5539,7 +5547,6 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
   });
   journalFormEls.swapBtn = journalFormEls.journalFormWrapper.querySelector('.js-form-swap-btn');
   journalFormEls.manualInputs = journalFormEls.journalFormWrapper.querySelectorAll('.c-journal-form__manual-input');
-  console.log(journalFormEls.manualInputs);
   journalFormEls.detailsExitPriceAvg = journalFormEls.journalFormWrapper.querySelector('.js-details-exit-price-average');
   journalFormEls.detailsExitSharesTotal = journalFormEls.journalFormWrapper.querySelector('.js-details-exit-shares-result');
   journalFormEls.detailsEntryPriceAvg = journalFormEls.journalFormWrapper.querySelector('.js-details-entry-price-average');
@@ -5564,20 +5571,24 @@ var validateJournalForm = function validateJournalForm(inputData) {
   if (accountCapital < 1) return ['ERROR', 'Account capital needs to be above zero'];
   console.log(inputData);
   console.log('~@~@~@~@~@~@~@~@~@~');
+  var dateRegex = /^[0-9\/]+$/;
+  console.log(dateRegex.test(inputData.date));
   var dateFull = (0, _helpers.createLongDate)(inputData.date); // dates validation
 
   if (dateFull === 'ERROR') return ['ERROR', 'date must be in the format of dd/mm/yy'];
   var dateShort = (0, _helpers.createShortDate)(dateFull); // stock ticker validation
 
   var tickerRegex = /^[a-zA-Z]+$/;
-  var stock;
-  if (tickerRegex.test(inputData.stock)) stock = inputData.stock; // trade side
+  var ticker;
+  if (!tickerRegex.test(inputData.stock)) return ['ERROR', 'Stock ticker field only accepts letters'];
+  ticker = inputData.stock; // trade side
 
   var side = inputData.side; // id
 
-  var id = Date.now(); // validating trade details
+  var id = Date.now() + ''; // validating trade details
 
   if (!inputData.entriesPrices || !inputData.entriesShares || !inputData.exitsPrices || !inputData.exitsShares) return ['ERROR', 'All entries, exits and shares rows must be filled in or deleted'];
+  console.log([inputData.entriesPrices, inputData.entriesShares, inputData.exitsPrices, inputData.exitShares].flat());
   var entriesPrices = inputData.entriesPrices.map(function (entry) {
     return +entry;
   });
@@ -5632,7 +5643,7 @@ var validateJournalForm = function validateJournalForm(inputData) {
     id: id,
     dateFull: dateFull,
     dateShort: dateShort,
-    stock: stock,
+    ticker: ticker,
     side: side,
     tradeEntries: tradeEntries,
     tradeExits: tradeExits,
@@ -5646,7 +5657,7 @@ var validateJournalForm = function validateJournalForm(inputData) {
   }; // all validation checks passed
 
   console.log(entryObj);
-  return ['PASS', 'THIS WILL BE THE OBJECT'];
+  return ['PASS', entryObj];
 };
 
 exports.validateJournalForm = validateJournalForm;
@@ -5745,7 +5756,11 @@ var controlJournalRender = function controlJournalRender() {
 var controlJournalFormEvents = function controlJournalFormEvents(action) {
   var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   var targetEl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  if (action === 'edit') (0, _journalFormView.switchJournalFormModes)();
+
+  if (action === 'edit') {
+    (0, _journalFormView.clearFormValidationError)();
+    (0, _journalFormView.switchJournalFormModes)();
+  }
 
   if (action === 'cancel') {
     (0, _journalEntriesView.removeEmptyJournalCard)();
@@ -5758,12 +5773,15 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
   if (action === 'pop') (0, _journalFormView.removeJournalFormDetailsRow)(targetEl);
 
   if (action === 'save') {
+    (0, _journalFormView.clearFormValidationError)();
     var validationOutcome = (0, _journalFormModel.validateJournalForm)((0, _journalFormView.grabAllUserInputs)(), (0, _dataModel.passData)('capital'));
     if (validationOutcome[0] === 'ERROR') (0, _journalFormView.updateFormValidationError)(validationOutcome[1]);
 
     if (validationOutcome[0] === 'PASS') {
       console.log('test has been passed');
       (0, _journalFormView.clearFormValidationError)();
+      (0, _dataModel.updateJournalData)(validationOutcome[1]);
+      controlJournalRender();
     }
   }
 };
@@ -5867,7 +5885,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49374" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54942" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

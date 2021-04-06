@@ -14,6 +14,7 @@ import {
   updateMonthlyData,
   updateProfitableData,
   findJournalEntry,
+  updateJournalData,
 } from './models/dataModel';
 import { calcPositionResult, calcRatioResult } from './models/calculatorsModel';
 import { queryMonthlyEls, renderMonthlyTable } from './views/tableMonthlyView';
@@ -130,7 +131,10 @@ const controlJournalRender = function () {
 };
 
 const controlJournalFormEvents = function (action, id = '', targetEl = '') {
-  if (action === 'edit') switchJournalFormModes();
+  if (action === 'edit') {
+    clearFormValidationError();
+    switchJournalFormModes();
+  }
   if (action === 'cancel') {
     removeEmptyJournalCard();
     switchJournalFormModes();
@@ -140,6 +144,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
   if (action === 'extra') renderExtraDetailsRows(targetEl);
   if (action === 'pop') removeJournalFormDetailsRow(targetEl);
   if (action === 'save') {
+    clearFormValidationError();
     const validationOutcome = validateJournalForm(
       grabAllUserInputs(),
       passData('capital')
@@ -149,6 +154,8 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
     if (validationOutcome[0] === 'PASS') {
       console.log('test has been passed');
       clearFormValidationError();
+      updateJournalData(validationOutcome[1]);
+      controlJournalRender();
     }
   }
 };

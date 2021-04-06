@@ -120,7 +120,7 @@ export const renderJournalEntries = function (
         entry.id ? '' : 'c-journal-entry--new'
       }" data-id=${entry.id}>
           <div class="c-journal-entry__unit-wrapper">
-              <span class="c-journal-entry__date">${entry.shortDate}</span>
+              <span class="c-journal-entry__date">${entry.dateShort}</span>
               <span class="c-journal-entry__data">${entry.ticker}</span>
           </div>
           <div class="c-journal-entry__unit-wrapper">
@@ -133,7 +133,9 @@ export const renderJournalEntries = function (
               <span class="c-journal-entry__data">avg.entry: ${
                 entry.avgEntry
               }</span>
-              <span class="c-journal-entry__data">return: ${entry.return}</span>
+              <span class="c-journal-entry__data">return: ${
+                entry.returnCash
+              }</span>
           </div>
           <div class="c-journal-entry__unit-wrapper">
               <span class="c-journal-entry__data">avg.exit: ${

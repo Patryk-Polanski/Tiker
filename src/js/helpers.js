@@ -32,12 +32,12 @@ export const createShortDate = function (specifiedDate = '') {
     const [month, date, year] = new Date(specifiedDate)
       .toLocaleDateString('en-US')
       .split('/');
-    joinedDate = date + '/' + month + '/' + year;
+    joinedDate = date + '/' + month + '/' + year.slice(-2);
   } else {
     const [month, date, year] = new Date()
       .toLocaleDateString('en-US')
       .split('/');
-    joinedDate = date + '/' + month + '/' + year;
+    joinedDate = date + '/' + month + '/' + year.slice(-2);
   }
   return joinedDate;
 };

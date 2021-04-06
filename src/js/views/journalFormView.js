@@ -287,8 +287,8 @@ export const renderJournalForm = function (singleEntry) {
               <span class="c-journal-form__data">date: <input
                       class="c-input-text c-input-text--compact c-journal-form__manual-input js-form-date-input"
                        value="${
-                         singleEntry.shortDate
-                           ? singleEntry.shortDate
+                         singleEntry.dateShort
+                           ? singleEntry.dateShort
                            : createShortDate()
                        }" disabled>
               </span>
@@ -474,7 +474,6 @@ export const renderJournalForm = function (singleEntry) {
   journalFormEls.manualInputs = journalFormEls.journalFormWrapper.querySelectorAll(
     '.c-journal-form__manual-input'
   );
-  console.log(journalFormEls.manualInputs);
 
   journalFormEls.detailsExitPriceAvg = journalFormEls.journalFormWrapper.querySelector(
     '.js-details-exit-price-average'

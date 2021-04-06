@@ -5,6 +5,10 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
     return ['ERROR', 'Account capital needs to be above zero'];
   console.log(inputData);
   console.log('~@~@~@~@~@~@~@~@~@~');
+
+  let dateRegex = /^[0-9\/]+$/;
+  console.log(dateRegex.test(inputData.date));
+
   const dateFull = createLongDate(inputData.date);
 
   // dates validation
@@ -15,14 +19,16 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
 
   // stock ticker validation
   let tickerRegex = /^[a-zA-Z]+$/;
-  let stock;
-  if (tickerRegex.test(inputData.stock)) stock = inputData.stock;
+  let ticker;
+  if (!tickerRegex.test(inputData.stock))
+    return ['ERROR', 'Stock ticker field only accepts letters'];
+  ticker = inputData.stock;
 
   // trade side
   const side = inputData.side;
 
   // id
-  const id = Date.now();
+  const id = Date.now() + '';
 
   // validating trade details
   if (
@@ -35,6 +41,16 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
       'ERROR',
       'All entries, exits and shares rows must be filled in or deleted',
     ];
+
+  console.log(
+    [
+      inputData.entriesPrices,
+      inputData.entriesShares,
+      inputData.exitsPrices,
+      inputData.exitShares,
+    ].flat()
+  );
+
   const entriesPrices = inputData.entriesPrices.map(entry => +entry);
   const entriesShares = inputData.entriesShares
     .map(entry => +entry)
@@ -96,7 +112,7 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
     id,
     dateFull,
     dateShort,
-    stock,
+    ticker,
     side,
     tradeEntries,
     tradeExits,
@@ -111,5 +127,5 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
 
   // all validation checks passed
   console.log(entryObj);
-  return ['PASS', 'THIS WILL BE THE OBJECT'];
+  return ['PASS', entryObj];
 };

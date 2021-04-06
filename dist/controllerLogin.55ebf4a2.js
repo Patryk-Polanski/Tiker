@@ -196,7 +196,7 @@ var createShortDate = function createShortDate() {
         date = _Date$toLocaleDateStr2[1],
         year = _Date$toLocaleDateStr2[2];
 
-    joinedDate = date + '/' + month + '/' + year;
+    joinedDate = date + '/' + month + '/' + year.slice(-2);
   } else {
     var _Date$toLocaleDateStr3 = new Date().toLocaleDateString('en-US').split('/'),
         _Date$toLocaleDateStr4 = _slicedToArray(_Date$toLocaleDateStr3, 3),
@@ -204,7 +204,7 @@ var createShortDate = function createShortDate() {
         _date = _Date$toLocaleDateStr4[1],
         _year = _Date$toLocaleDateStr4[2];
 
-    joinedDate = _date + '/' + _month + '/' + _year;
+    joinedDate = _date + '/' + _month + '/' + _year.slice(-2);
   }
 
   return joinedDate;
@@ -305,7 +305,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49374" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54942" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

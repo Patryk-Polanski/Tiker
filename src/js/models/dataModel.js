@@ -246,7 +246,7 @@ const user = {
     {
       id: 'Hf5t3q1',
       ticker: 'ROKU',
-      shortDate: '28/07/21',
+      dateShort: '28/07/21',
       side: 'short',
       sharesAmount: 100,
       avgEntry: 180.84,
@@ -268,7 +268,7 @@ const user = {
     {
       id: 'Hf5t3p1',
       ticker: 'RIOT',
-      shortDate: '29/07/21',
+      dateShort: '29/07/21',
       side: 'short',
       sharesAmount: 100,
       avgEntry: 180.84,
@@ -290,7 +290,7 @@ const user = {
     {
       id: 'Hf5t3s1',
       ticker: 'MSFT',
-      shortDate: '30/07/21',
+      dateShort: '30/07/21',
       side: 'short',
       sharesAmount: 110,
       avgEntry: 180.84,
@@ -314,7 +314,7 @@ const user = {
     {
       id: '',
       ticker: '',
-      shortDate: '',
+      dateShort: '',
       side: '',
       sharesAmount: '',
       avgEntry: '',
@@ -367,6 +367,12 @@ export const updateProfitableData = function (items) {
     }
   });
   return user.profitable;
+};
+
+export const updateJournalData = function (newEntry) {
+  user.journal.push(newEntry);
+  console.log('UPDATED USER OBJECT');
+  console.log(user);
 };
 
 export const findJournalEntry = function (id) {
