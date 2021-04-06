@@ -146,18 +146,18 @@ const controlJournalActiveEntries = function (id = '') {
 
 const controlJournalFilters = function (action, id = '') {
   if (action === 'new') {
-    renderJournalEntries(passData('dummyJournal'));
+    renderJournalEntries(passData('dummyJournal'), '', false);
     renderJournalForm(passData('dummyJournal'));
     checkFormMode();
   }
 };
 
-const controlJournalPagination = function (paginationBtn, clickedEl) {
+const controlJournalPagination = function (paginationBtn) {
   const activeEntryID = renderJournalEntries(
     passData('journal'),
-    paginationBtn,
-    clickedEl
+    paginationBtn
   );
+  switchJournalFormModes('read-only');
   renderJournalForm(findJournalEntry(activeEntryID));
 };
 

@@ -35,7 +35,7 @@ export const addJournalEntriesHandler = function (handler) {
 export const addJournalPaginationHandler = function (handler) {
   journalEntriesEls.journalPaginationWrapper.addEventListener('click', e => {
     if (e.target.classList.contains('js-journal-pagination-btn')) {
-      handler(+e.target.getAttribute('data-pagination-btn'), e.target);
+      handler(+e.target.getAttribute('data-pagination-btn'));
     }
   });
 };
@@ -98,12 +98,12 @@ const renderJournalPagination = function (entriesNumber, paginationPage) {
 export const renderJournalEntries = function (
   entriesData,
   paginationPage = 1,
-  clickedEl = ''
+  clear = true
 ) {
   const existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll(
     '.c-journal-entry'
   );
-  if (existingEls) existingEls.forEach(el => el.remove());
+  if (existingEls && clear) existingEls.forEach(el => el.remove());
 
   const entriesRange =
     paginationPage !== 1
@@ -154,7 +154,11 @@ export const renderJournalEntries = function (
       html
     );
   });
+  const entriesLength = clear
+    ? entriesData.length
+    : journalEntriesEls.journalEntriesWrapper.querySelector('.c-journal-entry')
+        .length;
   activateEntry(selectFirstEntry());
-  renderJournalPagination(entriesData.length, paginationPage);
+  if (clear) renderJournalPagination(entriesLength, paginationPage);
   return selectFirstEntry().getAttribute('data-id');
 };
