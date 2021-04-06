@@ -1,4 +1,4 @@
-import { getTodayShortDate } from '../helpers';
+import { createShortDate } from '../helpers';
 
 let journalFormEls = {};
 
@@ -266,6 +266,10 @@ export const grabAllUserInputs = function () {
   return formInputs;
 };
 
+export const updateFormValidationError = function (message = 'fail') {
+  journalFormEls.formValidationError.textContent = message;
+};
+
 export const renderJournalForm = function (singleEntry) {
   journalFormEls.journalFormWrapper.innerHTML = '';
   [singleEntry] = singleEntry;
@@ -279,7 +283,7 @@ export const renderJournalForm = function (singleEntry) {
                        value="${
                          singleEntry.shortDate
                            ? singleEntry.shortDate
-                           : getTodayShortDate()
+                           : createShortDate()
                        }" disabled>
               </span>
               <span class="c-journal-form__data">stock: <input
@@ -402,7 +406,7 @@ export const renderJournalForm = function (singleEntry) {
           </div>
   
       </div>
-      <p class="c-journal-form__error-message js-form-error-message">This is an error message due to failed validation</p>
+      <p class="c-journal-form__error-message js-form-error-message"></p>
     <textarea class="c-journal-form__text-area" name="" id="" rows="10"></textarea>
     </div>
     <div class="c-journal-form__buttons-wrapper">

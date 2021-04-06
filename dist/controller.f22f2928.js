@@ -232,7 +232,7 @@ exports.clearCalcResult = clearCalcResult;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getTodayShortDate = exports.kFormatter = exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
+exports.createLongDate = exports.createShortDate = exports.kFormatter = exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -294,18 +294,61 @@ var kFormatter = function kFormatter(num) {
 
 exports.kFormatter = kFormatter;
 
-var getTodayShortDate = function getTodayShortDate() {
-  var _Date$toLocaleDateStr = new Date().toLocaleDateString('en-US').split('/'),
-      _Date$toLocaleDateStr2 = _slicedToArray(_Date$toLocaleDateStr, 3),
-      month = _Date$toLocaleDateStr2[0],
-      date = _Date$toLocaleDateStr2[1],
-      year = _Date$toLocaleDateStr2[2];
+var createShortDate = function createShortDate() {
+  var specifiedDate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var joinedDate;
 
-  var joinedDate = date + '/' + month + '/' + year;
+  if (specifiedDate) {
+    var _Date$toLocaleDateStr = new Date(specifiedDate).toLocaleDateString('en-US').split('/'),
+        _Date$toLocaleDateStr2 = _slicedToArray(_Date$toLocaleDateStr, 3),
+        month = _Date$toLocaleDateStr2[0],
+        date = _Date$toLocaleDateStr2[1],
+        year = _Date$toLocaleDateStr2[2];
+
+    joinedDate = date + '/' + month + '/' + year;
+  } else {
+    var _Date$toLocaleDateStr3 = new Date().toLocaleDateString('en-US').split('/'),
+        _Date$toLocaleDateStr4 = _slicedToArray(_Date$toLocaleDateStr3, 3),
+        _month = _Date$toLocaleDateStr4[0],
+        _date = _Date$toLocaleDateStr4[1],
+        _year = _Date$toLocaleDateStr4[2];
+
+    joinedDate = _date + '/' + _month + '/' + _year;
+  }
+
   return joinedDate;
 };
 
-exports.getTodayShortDate = getTodayShortDate;
+exports.createShortDate = createShortDate;
+
+var createLongDate = function createLongDate(shortDate) {
+  var _ref;
+
+  var _shortDate$split$reve = shortDate.split('/').reverse(),
+      _shortDate$split$reve2 = _slicedToArray(_shortDate$split$reve, 3),
+      year = _shortDate$split$reve2[0],
+      month = _shortDate$split$reve2[1],
+      day = _shortDate$split$reve2[2]; // check if each data has the correct length
+
+
+  if (year.length !== 2 || month.length > 2 && month.length < 1 || day.length > 2 || day.length < 1) return 'ERROR'; // coerce the string into numbers
+
+  year = +('20' + year);
+  month = +month;
+  day = +day; // check if day, month or year failed the coercion due to incorrect format
+
+  if (!year || !month || !day) return 'ERROR'; // get current year
+
+  var currentYear = new Date().getFullYear(); // run year, day and month range validation
+
+  if ((_ref = year < 2010) !== null && _ref !== void 0 ? _ref : year > currentYear) return 'ERROR';
+  if (month < 0 || month > 12) return 'ERROR';
+  if (day < 1 || day > 31) return 'ERROR';
+  var fullDate = new Date(year, month - 1, day);
+  return String(fullDate);
+};
+
+exports.createLongDate = createLongDate;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -5229,7 +5272,7 @@ exports.addJournalFiltersHandler = addJournalFiltersHandler;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalForm = exports.grabAllUserInputs = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
+exports.renderJournalForm = exports.updateFormValidationError = exports.grabAllUserInputs = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
 
 var _helpers = require("../helpers");
 
@@ -5437,6 +5480,13 @@ var grabAllUserInputs = function grabAllUserInputs() {
 
 exports.grabAllUserInputs = grabAllUserInputs;
 
+var updateFormValidationError = function updateFormValidationError() {
+  var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'fail';
+  journalFormEls.formValidationError.textContent = message;
+};
+
+exports.updateFormValidationError = updateFormValidationError;
+
 var renderJournalForm = function renderJournalForm(singleEntry) {
   journalFormEls.journalFormWrapper.innerHTML = '';
   var _singleEntry = singleEntry;
@@ -5444,7 +5494,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
   var _singleEntry2 = _slicedToArray(_singleEntry, 1);
 
   singleEntry = _singleEntry2[0];
-  var html = "\n    <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n      <div class=\"c-journal-form__upper-region\">\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">date: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-date-input\"\n                       value=\"").concat(singleEntry.shortDate ? singleEntry.shortDate : (0, _helpers.getTodayShortDate)(), "\" disabled>\n              </span>\n              <span class=\"c-journal-form__data\">stock: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-input\"\n                      type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <div class=\"c-journal-form__trade-side-wrapper\">\n                  <span class=\"c-journal-form__data\">side: <input\n                          class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-side\"\n                          type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                  <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                      <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                          xmlns=\"http://www.w3.org/2000/svg\">\n                          <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                              fill=\"#C4C4C4\" />\n                          <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                              fill=\"#C4C4C4\" />\n                      </svg>\n  \n                  </button>\n              </div>\n              <span class=\"c-journal-form__data\">%return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">shares: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n              <span class=\"c-journal-form__data\">return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.return, "\" disabled></span>\n          </div>\n      </div>\n      <div class=\"c-journal-form__middle-region\">\n          <div class=\"c-journal-form__entries-wrapper\">\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">entries</span>\n                  <span class=\"c-journal-form__entries-label\">shares</span>\n              </div>\n              <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                  \n              </div>\n              <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                  <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                      xmlns=\"http://www.w3.org/2000/svg\">\n                      <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                      <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                      <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                  </svg>\n  \n              </button>\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">average: <br><span\n                          class=\"c-journal-form__entries-label-result js-details-entry-price-average\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
+  var html = "\n    <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n      <div class=\"c-journal-form__upper-region\">\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">date: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-date-input\"\n                       value=\"").concat(singleEntry.shortDate ? singleEntry.shortDate : (0, _helpers.createShortDate)(), "\" disabled>\n              </span>\n              <span class=\"c-journal-form__data\">stock: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-input\"\n                      type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <div class=\"c-journal-form__trade-side-wrapper\">\n                  <span class=\"c-journal-form__data\">side: <input\n                          class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-side\"\n                          type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                  <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                      <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                          xmlns=\"http://www.w3.org/2000/svg\">\n                          <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                              fill=\"#C4C4C4\" />\n                          <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                              fill=\"#C4C4C4\" />\n                      </svg>\n  \n                  </button>\n              </div>\n              <span class=\"c-journal-form__data\">%return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">shares: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n              <span class=\"c-journal-form__data\">return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.return, "\" disabled></span>\n          </div>\n      </div>\n      <div class=\"c-journal-form__middle-region\">\n          <div class=\"c-journal-form__entries-wrapper\">\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">entries</span>\n                  <span class=\"c-journal-form__entries-label\">shares</span>\n              </div>\n              <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                  \n              </div>\n              <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                  <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                      xmlns=\"http://www.w3.org/2000/svg\">\n                      <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                      <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                      <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                  </svg>\n  \n              </button>\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">average: <br><span\n                          class=\"c-journal-form__entries-label-result js-details-entry-price-average\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
     return single[0] * single[1];
   }).reduce(function (acc, num) {
     return acc + num;
@@ -5468,7 +5518,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
     return single[1];
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0) : '', "</span></span>\n              </div>\n          </div>\n  \n      </div>\n      <p class=\"c-journal-form__error-message js-form-error-message\">This is an error message due to failed validation</p>\n    <textarea class=\"c-journal-form__text-area\" name=\"\" id=\"\" rows=\"10\"></textarea>\n    </div>\n    <div class=\"c-journal-form__buttons-wrapper\">\n        <button class=\"c-journal-from__button-delete btn btn--secondary\">delete</button>\n        <div class=\"c-journal-form__buttons-inner-wrapper\">\n            <button class=\"c-journal-form__button-cancel btn btn--secondary c-journal-form__edit-mode-btn js-form-cancel-btn\">cancel</button>\n            <button class=\"c-journal-form__button-save btn btn--primary c-journal-form__edit-mode-btn js-form-save-btn\">save</button>\n        </div>\n        <button class=\"c-journal-form__button-edit btn btn--primary js-form-edit-btn\">edit</button>\n    </div>\n    ");
+  }, 0) : '', "</span></span>\n              </div>\n          </div>\n  \n      </div>\n      <p class=\"c-journal-form__error-message js-form-error-message\"></p>\n    <textarea class=\"c-journal-form__text-area\" name=\"\" id=\"\" rows=\"10\"></textarea>\n    </div>\n    <div class=\"c-journal-form__buttons-wrapper\">\n        <button class=\"c-journal-from__button-delete btn btn--secondary\">delete</button>\n        <div class=\"c-journal-form__buttons-inner-wrapper\">\n            <button class=\"c-journal-form__button-cancel btn btn--secondary c-journal-form__edit-mode-btn js-form-cancel-btn\">cancel</button>\n            <button class=\"c-journal-form__button-save btn btn--primary c-journal-form__edit-mode-btn js-form-save-btn\">save</button>\n        </div>\n        <button class=\"c-journal-form__button-edit btn btn--primary js-form-edit-btn\">edit</button>\n    </div>\n    ");
   journalFormEls.journalFormWrapper.insertAdjacentHTML('afterbegin', html);
   journalFormEls.journalForm = document.querySelector('.js-journal-form');
   journalFormEls.formValidationError = document.querySelector('.js-form-error-message');
@@ -5499,12 +5549,28 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.validateJournalForm = void 0;
 
+var _helpers = require("../helpers");
+
 var validateJournalForm = function validateJournalForm(inputData) {
   console.log(inputData);
+  console.log('~@~@~@~@~@~@~@~@~@~');
+  var dateFull = (0, _helpers.createLongDate)(inputData.date); // dates validation
+
+  if (dateFull === 'ERROR') return ['ERROR', 'date must be in the format of dd/mm/yy'];
+  var dateShort = (0, _helpers.createShortDate)(dateFull); // stock ticker validation
+  // trade details validation
+
+  var entryObj = {
+    dateFull: dateFull,
+    dateShort: dateShort
+  }; // all validation checks passed
+
+  console.log(entryObj);
+  return ['PASS', 'THIS WILL BE THE OBJECT'];
 };
 
 exports.validateJournalForm = validateJournalForm;
-},{}],"js/controller.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _calculatorsView = require("./views/calculatorsView");
@@ -5610,7 +5676,12 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
   if (action === 'swap') (0, _journalFormView.switchPositionSide)();
   if (action === 'extra') (0, _journalFormView.renderExtraDetailsRows)(targetEl);
   if (action === 'pop') (0, _journalFormView.removeJournalFormDetailsRow)(targetEl);
-  if (action === 'save') (0, _journalFormModel.validateJournalForm)((0, _journalFormView.grabAllUserInputs)());
+
+  if (action === 'save') {
+    var validationOutcome = (0, _journalFormModel.validateJournalForm)((0, _journalFormView.grabAllUserInputs)());
+    if (validationOutcome[0] === 'ERROR') (0, _journalFormView.updateFormValidationError)(validationOutcome[1]);
+    if (validationOutcome[0] === 'PASS') console.log('test has been passed');
+  }
 };
 
 var controlJournalActiveEntries = function controlJournalActiveEntries() {

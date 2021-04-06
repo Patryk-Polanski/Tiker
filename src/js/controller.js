@@ -68,6 +68,7 @@ import {
   renderExtraDetailsRows,
   removeJournalFormDetailsRow,
   grabAllUserInputs,
+  updateFormValidationError,
 } from './views/journalFormView';
 import { validateJournalForm } from './models/journalFormModel';
 
@@ -137,7 +138,12 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
   if (action === 'swap') switchPositionSide();
   if (action === 'extra') renderExtraDetailsRows(targetEl);
   if (action === 'pop') removeJournalFormDetailsRow(targetEl);
-  if (action === 'save') validateJournalForm(grabAllUserInputs());
+  if (action === 'save') {
+    const validationOutcome = validateJournalForm(grabAllUserInputs());
+    if (validationOutcome[0] === 'ERROR')
+      updateFormValidationError(validationOutcome[1]);
+    if (validationOutcome[0] === 'PASS') console.log('test has been passed');
+  }
 };
 
 const controlJournalActiveEntries = function (id = '') {

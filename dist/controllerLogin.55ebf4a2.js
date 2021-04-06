@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getTodayShortDate = exports.kFormatter = exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
+exports.createLongDate = exports.createShortDate = exports.kFormatter = exports.filterNonStrings = exports.crunchData = exports.reduceData = exports.makeAbsolute = exports.stringifyNum = void 0;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -185,18 +185,61 @@ var kFormatter = function kFormatter(num) {
 
 exports.kFormatter = kFormatter;
 
-var getTodayShortDate = function getTodayShortDate() {
-  var _Date$toLocaleDateStr = new Date().toLocaleDateString('en-US').split('/'),
-      _Date$toLocaleDateStr2 = _slicedToArray(_Date$toLocaleDateStr, 3),
-      month = _Date$toLocaleDateStr2[0],
-      date = _Date$toLocaleDateStr2[1],
-      year = _Date$toLocaleDateStr2[2];
+var createShortDate = function createShortDate() {
+  var specifiedDate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var joinedDate;
 
-  var joinedDate = date + '/' + month + '/' + year;
+  if (specifiedDate) {
+    var _Date$toLocaleDateStr = new Date(specifiedDate).toLocaleDateString('en-US').split('/'),
+        _Date$toLocaleDateStr2 = _slicedToArray(_Date$toLocaleDateStr, 3),
+        month = _Date$toLocaleDateStr2[0],
+        date = _Date$toLocaleDateStr2[1],
+        year = _Date$toLocaleDateStr2[2];
+
+    joinedDate = date + '/' + month + '/' + year;
+  } else {
+    var _Date$toLocaleDateStr3 = new Date().toLocaleDateString('en-US').split('/'),
+        _Date$toLocaleDateStr4 = _slicedToArray(_Date$toLocaleDateStr3, 3),
+        _month = _Date$toLocaleDateStr4[0],
+        _date = _Date$toLocaleDateStr4[1],
+        _year = _Date$toLocaleDateStr4[2];
+
+    joinedDate = _date + '/' + _month + '/' + _year;
+  }
+
   return joinedDate;
 };
 
-exports.getTodayShortDate = getTodayShortDate;
+exports.createShortDate = createShortDate;
+
+var createLongDate = function createLongDate(shortDate) {
+  var _ref;
+
+  var _shortDate$split$reve = shortDate.split('/').reverse(),
+      _shortDate$split$reve2 = _slicedToArray(_shortDate$split$reve, 3),
+      year = _shortDate$split$reve2[0],
+      month = _shortDate$split$reve2[1],
+      day = _shortDate$split$reve2[2]; // check if each data has the correct length
+
+
+  if (year.length !== 2 || month.length > 2 && month.length < 1 || day.length > 2 || day.length < 1) return 'ERROR'; // coerce the string into numbers
+
+  year = +('20' + year);
+  month = +month;
+  day = +day; // check if day, month or year failed the coercion due to incorrect format
+
+  if (!year || !month || !day) return 'ERROR'; // get current year
+
+  var currentYear = new Date().getFullYear(); // run year, day and month range validation
+
+  if ((_ref = year < 2010) !== null && _ref !== void 0 ? _ref : year > currentYear) return 'ERROR';
+  if (month < 0 || month > 12) return 'ERROR';
+  if (day < 1 || day > 31) return 'ERROR';
+  var fullDate = new Date(year, month - 1, day);
+  return String(fullDate);
+};
+
+exports.createLongDate = createLongDate;
 },{}],"js/views/loginView.js":[function(require,module,exports) {
 "use strict";
 

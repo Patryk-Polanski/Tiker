@@ -26,8 +26,50 @@ export const kFormatter = function (num, decimal = 999) {
     : Math.sign(num) * Math.abs(num);
 };
 
-export const getTodayShortDate = function () {
-  const [month, date, year] = new Date().toLocaleDateString('en-US').split('/');
-  const joinedDate = date + '/' + month + '/' + year;
+export const createShortDate = function (specifiedDate = '') {
+  let joinedDate;
+  if (specifiedDate) {
+    const [month, date, year] = new Date(specifiedDate)
+      .toLocaleDateString('en-US')
+      .split('/');
+    joinedDate = date + '/' + month + '/' + year;
+  } else {
+    const [month, date, year] = new Date()
+      .toLocaleDateString('en-US')
+      .split('/');
+    joinedDate = date + '/' + month + '/' + year;
+  }
   return joinedDate;
+};
+
+export const createLongDate = function (shortDate) {
+  let [year, month, day] = shortDate.split('/').reverse();
+
+  // check if each data has the correct length
+  if (
+    year.length !== 2 ||
+    (month.length > 2 && month.length < 1) ||
+    day.length > 2 ||
+    day.length < 1
+  )
+    return 'ERROR';
+
+  // coerce the string into numbers
+  year = +('20' + year);
+  month = +month;
+  day = +day;
+
+  // check if day, month or year failed the coercion due to incorrect format
+  if (!year || !month || !day) return 'ERROR';
+
+  // get current year
+  const currentYear = new Date().getFullYear();
+
+  // run year, day and month range validation
+  if (year < 2010 ?? year > currentYear) return 'ERROR';
+  if (month < 0 || month > 12) return 'ERROR';
+  if (day < 1 || day > 31) return 'ERROR';
+
+  const fullDate = new Date(year, month - 1, day);
+  return String(fullDate);
 };
