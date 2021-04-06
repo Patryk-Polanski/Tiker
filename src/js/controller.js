@@ -140,7 +140,10 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
   if (action === 'extra') renderExtraDetailsRows(targetEl);
   if (action === 'pop') removeJournalFormDetailsRow(targetEl);
   if (action === 'save') {
-    const validationOutcome = validateJournalForm(grabAllUserInputs());
+    const validationOutcome = validateJournalForm(
+      grabAllUserInputs(),
+      passData('capital')
+    );
     if (validationOutcome[0] === 'ERROR')
       updateFormValidationError(validationOutcome[1]);
     if (validationOutcome[0] === 'PASS') {

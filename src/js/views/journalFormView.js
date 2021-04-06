@@ -262,6 +262,8 @@ export const grabAllUserInputs = function () {
         '.js-form-exit-shares-input'
       )
     ).map(el => el.value),
+    body: journalFormEls.journalFormWrapper.querySelector('.js-form-body-input')
+      .value,
   };
   return formInputs;
 };
@@ -322,7 +324,7 @@ export const renderJournalForm = function (singleEntry) {
                       value="${singleEntry.sharesAmount}" disabled></span>
               <span class="c-journal-form__data">return: <input
                       class="c-input-text c-input-text--compact" type="number"
-                      value="${singleEntry.return}" disabled></span>
+                      value="${singleEntry.returnCash}" disabled></span>
           </div>
       </div>
       <div class="c-journal-form__middle-region">
@@ -411,7 +413,9 @@ export const renderJournalForm = function (singleEntry) {
   
       </div>
       <p class="c-journal-form__error-message js-form-error-message"></p>
-    <textarea class="c-journal-form__text-area" name="" id="" rows="10"></textarea>
+    <textarea class="c-journal-form__text-area c-journal-form__manual-input js-form-body-input" rows="10" disabled>${
+      singleEntry.body
+    }</textarea>
     </div>
     <div class="c-journal-form__buttons-wrapper">
         <button class="c-journal-from__button-delete btn btn--secondary">delete</button>
@@ -470,6 +474,7 @@ export const renderJournalForm = function (singleEntry) {
   journalFormEls.manualInputs = journalFormEls.journalFormWrapper.querySelectorAll(
     '.c-journal-form__manual-input'
   );
+  console.log(journalFormEls.manualInputs);
 
   journalFormEls.detailsExitPriceAvg = journalFormEls.journalFormWrapper.querySelector(
     '.js-details-exit-price-average'

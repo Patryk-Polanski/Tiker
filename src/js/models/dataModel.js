@@ -251,7 +251,7 @@ const user = {
       sharesAmount: 100,
       avgEntry: 180.84,
       avgExit: 181.9,
-      return: 112.52,
+      returnCash: 112.52,
       returnPercent: 1.63,
       tradeEntries: [
         [180.75, 40],
@@ -273,7 +273,7 @@ const user = {
       sharesAmount: 100,
       avgEntry: 180.84,
       avgExit: 181.9,
-      return: 112.52,
+      returnCash: 112.52,
       returnPercent: 1.63,
       tradeEntries: [
         [180.75, 40],
@@ -295,7 +295,7 @@ const user = {
       sharesAmount: 110,
       avgEntry: 180.84,
       avgExit: 181.9,
-      return: 112.52,
+      returnCash: 112.52,
       returnPercent: 1.63,
       tradeEntries: [
         [180.75, 50],
@@ -307,7 +307,7 @@ const user = {
         [182.69, 70],
       ],
       body:
-        'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.',
+        'In hac habitasse platea dictumst. Diam donec adipiscing tristique risus. Velit scelerisque in dictum non consectetur. Vel pretium lectus quam id leo in vitae. Urna porttitor rhoncus dolor purus. Ultrices gravida dictum fusce ut placerat. Vel quam elementum pulvinar etiam non quam lacus suspendisse. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Luctus accumsan tortor posuere ac ut consequat.',
     },
   ],
   dummyJournal: [
@@ -319,7 +319,7 @@ const user = {
       sharesAmount: '',
       avgEntry: '',
       avgExit: '',
-      return: '',
+      returnCash: '',
       returnPercent: '',
       tradeEntries: [['', '']],
       tradeExits: [['', '']],

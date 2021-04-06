@@ -531,6 +531,9 @@ body {
   color: #aaaaaa;
   padding: 8px;
 }
+.s-journal__form-wrapper--edit-mode textarea.c-journal-form__manual-input {
+  border: none;
+}
 .s-journal__form-wrapper--edit-mode .c-journal-form__edit-mode-btn {
   opacity: 1;
   pointer-events: all;

@@ -58,6 +58,10 @@
         padding: 8px;
       }
 
+      & textarea.c-journal-form__manual-input {
+        border: none;
+      }
+
       & .c-journal-form__edit-mode-btn {
         opacity: 1;
         pointer-events: all;
