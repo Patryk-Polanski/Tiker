@@ -581,7 +581,7 @@ var user = {
     }]
   },
   journal: [{
-    id: 'Hf5t3q1',
+    id: 115,
     ticker: 'ROKU',
     dateShort: '28/07/21',
     side: 'short',
@@ -594,10 +594,10 @@ var user = {
     tradeExits: [[181.15, 20], [181.42, 20], [182.69, 60]],
     body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
   }, {
-    id: 'Hf5t3p1',
+    id: 11500,
     ticker: 'RIOT',
     dateShort: '29/07/21',
-    side: 'short',
+    side: 'long',
     sharesAmount: 100,
     avgEntry: 180.84,
     avgExit: 181.9,
@@ -607,7 +607,7 @@ var user = {
     tradeExits: [[181.15, 20], [181.42, 20], [182.69, 60]],
     body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
   }, {
-    id: 'Hf5t3s1',
+    id: 1150,
     ticker: 'MSFT',
     dateShort: '30/07/21',
     side: 'short',
@@ -636,6 +636,12 @@ var user = {
   }]
 };
 console.log(user);
+
+var sortJournal = function sortJournal(data) {
+  return data.sort(function (a, b) {
+    return a.id - b.id;
+  });
+};
 
 var passData = function passData(field) {
   return user[field];
@@ -699,12 +705,15 @@ var updateJournalData = function updateJournalData(newEntry) {
   if (newEntryIndex > -1) {
     updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
     user.journal[newEntryIndex] = newEntry;
+    updateCapital(newEntry.returnCash, 'plus');
   } // newEntryIndex is -1, meaning the jounal entry is new
 
 
   if (newEntryIndex === -1) {
     updateCapital(newEntry.returnCash, 'plus');
     user.journal.push(newEntry); // sort the data
+
+    sortJournal(user.journal);
   }
 
   console.log('UPDATED USER OBJECT');
@@ -5238,7 +5247,7 @@ var renderJournalEntries = function renderJournalEntries(entriesData) {
   var entriesLength = clear ? entriesData.length : journalEntriesEls.journalEntriesWrapper.querySelector('.c-journal-entry').length;
   activateEntry(selectFirstEntry());
   if (clear) renderJournalPagination(entriesLength, paginationPage);
-  return selectFirstEntry().getAttribute('data-id');
+  return +selectFirstEntry().getAttribute('data-id');
 };
 
 exports.renderJournalEntries = renderJournalEntries;
@@ -7823,6 +7832,7 @@ exports.switchPositionSide = switchPositionSide;
 
 var grabAllUserInputs = function grabAllUserInputs() {
   var formInputs = {
+    id: journalFormEls.journalForm.getAttribute('data-id'),
     date: journalFormEls.journalFormWrapper.querySelector('.js-form-date-input').value,
     stock: journalFormEls.journalFormWrapper.querySelector('.js-form-stock-input').value,
     side: journalFormEls.journalFormWrapper.querySelector('.js-form-stock-side').value,
@@ -7941,7 +7951,7 @@ var validateJournalForm = function validateJournalForm(inputData) {
 
   var side = inputData.side; // id
 
-  var id = Date.now() + ''; // validating trade details
+  var id = inputData.id ? +inputData.id : Date.now(); // validating trade details
 
   if (!inputData.entriesPrices || !inputData.entriesShares || !inputData.exitsPrices || !inputData.exitsShares) return ['ERROR', 'All entries, exits and shares rows must be filled in or deleted'];
   console.log([inputData.entriesPrices, inputData.entriesShares, inputData.exitsPrices, inputData.exitShares].flat());
@@ -8123,7 +8133,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
   if (action === 'cancel') {
     (0, _journalEntriesView.removeEmptyJournalCard)();
     (0, _journalFormView.switchJournalFormModes)();
-    (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
+    (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(+id));
   }
 
   if (action === 'swap') (0, _journalFormView.switchPositionSide)();
@@ -8151,7 +8161,7 @@ var controlJournalActiveEntries = function controlJournalActiveEntries() {
   if (!id) return;
   (0, _journalEntriesView.removeEmptyJournalCard)();
   (0, _journalFormView.switchJournalFormModes)('read-only');
-  (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(id));
+  (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(+id));
 };
 
 var controlJournalFilters = function controlJournalFilters(action) {

@@ -265,6 +265,7 @@ export const switchPositionSide = function () {
 
 export const grabAllUserInputs = function () {
   const formInputs = {
+    id: journalFormEls.journalForm.getAttribute('data-id'),
     date: journalFormEls.journalFormWrapper.querySelector('.js-form-date-input')
       .value,
     stock: journalFormEls.journalFormWrapper.querySelector(

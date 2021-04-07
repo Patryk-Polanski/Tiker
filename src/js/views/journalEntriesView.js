@@ -162,5 +162,5 @@ export const renderJournalEntries = function (
         .length;
   activateEntry(selectFirstEntry());
   if (clear) renderJournalPagination(entriesLength, paginationPage);
-  return selectFirstEntry().getAttribute('data-id');
+  return +selectFirstEntry().getAttribute('data-id');
 };

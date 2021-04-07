@@ -28,7 +28,7 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
   const side = inputData.side;
 
   // id
-  const id = Date.now() + '';
+  const id = inputData.id ? +inputData.id : Date.now();
 
   // validating trade details
   if (

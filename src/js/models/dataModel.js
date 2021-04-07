@@ -244,7 +244,7 @@ const user = {
   },
   journal: [
     {
-      id: 'Hf5t3q1',
+      id: 115,
       ticker: 'ROKU',
       dateShort: '28/07/21',
       side: 'short',
@@ -266,10 +266,10 @@ const user = {
         'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.',
     },
     {
-      id: 'Hf5t3p1',
+      id: 11500,
       ticker: 'RIOT',
       dateShort: '29/07/21',
-      side: 'short',
+      side: 'long',
       sharesAmount: 100,
       avgEntry: 180.84,
       avgExit: 181.9,
@@ -288,7 +288,7 @@ const user = {
         'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.',
     },
     {
-      id: 'Hf5t3s1',
+      id: 1150,
       ticker: 'MSFT',
       dateShort: '30/07/21',
       side: 'short',
@@ -329,6 +329,8 @@ const user = {
 };
 
 console.log(user);
+
+const sortJournal = data => data.sort((a, b) => a.id - b.id);
 
 export const passData = function (field) {
   return user[field];
@@ -376,6 +378,7 @@ export const updateJournalData = function (newEntry) {
   if (newEntryIndex > -1) {
     updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
     user.journal[newEntryIndex] = newEntry;
+    updateCapital(newEntry.returnCash, 'plus');
   }
 
   // newEntryIndex is -1, meaning the jounal entry is new
@@ -383,6 +386,7 @@ export const updateJournalData = function (newEntry) {
     updateCapital(newEntry.returnCash, 'plus');
     user.journal.push(newEntry);
     // sort the data
+    sortJournal(user.journal);
   }
 
   console.log('UPDATED USER OBJECT');

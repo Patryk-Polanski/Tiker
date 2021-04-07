@@ -138,7 +138,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
   if (action === 'cancel') {
     removeEmptyJournalCard();
     switchJournalFormModes();
-    renderJournalForm(findJournalEntry(id));
+    renderJournalForm(findJournalEntry(+id));
   }
   if (action === 'swap') switchPositionSide();
   if (action === 'extra') renderExtraDetailsRows(targetEl);
@@ -166,7 +166,7 @@ const controlJournalActiveEntries = function (id = '') {
   if (!id) return;
   removeEmptyJournalCard();
   switchJournalFormModes('read-only');
-  renderJournalForm(findJournalEntry(id));
+  renderJournalForm(findJournalEntry(+id));
 };
 
 const controlJournalFilters = function (action, id = '') {
