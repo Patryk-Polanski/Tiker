@@ -1,3 +1,4 @@
+import { cross } from 'd3-array';
 import { createShortDate } from '../helpers';
 
 let journalFormEls = {};
@@ -117,6 +118,27 @@ const removeFirstCrossInstances = function () {
     .classList.add('c-journal-form__exit-size-remove-wrapper--disabled');
 };
 
+const addCrossIconToExtraRows = function (targetEl) {
+  const crossBtn =
+    targetEl.previousElementSibling.lastElementChild.lastElementChild;
+  if (
+    crossBtn.classList.contains(
+      'c-journal-form__entry-size-remove-wrapper--disabled'
+    )
+  )
+    crossBtn.classList.remove(
+      'c-journal-form__entry-size-remove-wrapper--disabled'
+    );
+  if (
+    crossBtn.classList.contains(
+      'c-journal-form__exit-size-remove-wrapper--disabled'
+    )
+  )
+    crossBtn.classList.remove(
+      'c-journal-form__exit-size-remove-wrapper--disabled'
+    );
+};
+
 export const queryJournalFormEls = function () {
   journalFormEls = getElements();
 };
@@ -158,8 +180,7 @@ export const addJournalFormEventsHandler = function (handler) {
 };
 
 export const removeJournalFormDetailsRow = function (el) {
-  el.previousElementSibling.previousElementSibling.remove();
-  el.previousElementSibling.remove();
+  el.parentElement.remove();
   el.remove();
   journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares(
     '.c-journal-form__entry-size'
@@ -221,6 +242,7 @@ export const renderExtraDetailsRows = function (targetEl) {
   const rowClone = lastRow.cloneNode(true);
   lastRow.insertAdjacentElement('afterend', rowClone);
   addKeyEventToDetailsInputs();
+  addCrossIconToExtraRows(targetEl);
 };
 
 export const checkFormMode = function () {

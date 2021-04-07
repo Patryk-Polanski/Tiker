@@ -5272,13 +5272,2363 @@ var addJournalFiltersHandler = function addJournalFiltersHandler(handler) {
 };
 
 exports.addJournalFiltersHandler = addJournalFiltersHandler;
-},{}],"js/views/journalFormView.js":[function(require,module,exports) {
+},{}],"../node_modules/d3-array/src/ascending.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(a, b) {
+  return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
+}
+},{}],"../node_modules/d3-array/src/bisector.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default(f) {
+  let delta = f;
+  let compare = f;
+
+  if (f.length === 1) {
+    delta = (d, x) => f(d) - x;
+
+    compare = ascendingComparator(f);
+  }
+
+  function left(a, x, lo, hi) {
+    if (lo == null) lo = 0;
+    if (hi == null) hi = a.length;
+
+    while (lo < hi) {
+      const mid = lo + hi >>> 1;
+      if (compare(a[mid], x) < 0) lo = mid + 1;else hi = mid;
+    }
+
+    return lo;
+  }
+
+  function right(a, x, lo, hi) {
+    if (lo == null) lo = 0;
+    if (hi == null) hi = a.length;
+
+    while (lo < hi) {
+      const mid = lo + hi >>> 1;
+      if (compare(a[mid], x) > 0) hi = mid;else lo = mid + 1;
+    }
+
+    return lo;
+  }
+
+  function center(a, x, lo, hi) {
+    if (lo == null) lo = 0;
+    if (hi == null) hi = a.length;
+    const i = left(a, x, lo, hi - 1);
+    return i > lo && delta(a[i - 1], x) > -delta(a[i], x) ? i - 1 : i;
+  }
+
+  return {
+    left,
+    center,
+    right
+  };
+}
+
+function ascendingComparator(f) {
+  return (d, x) => (0, _ascending.default)(f(d), x);
+}
+},{"./ascending.js":"../node_modules/d3-array/src/ascending.js"}],"../node_modules/d3-array/src/number.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+exports.numbers = numbers;
+
+function _default(x) {
+  return x === null ? NaN : +x;
+}
+
+function* numbers(values, valueof) {
+  if (valueof === undefined) {
+    for (let value of values) {
+      if (value != null && (value = +value) >= value) {
+        yield value;
+      }
+    }
+  } else {
+    let index = -1;
+
+    for (let value of values) {
+      if ((value = valueof(value, ++index, values)) != null && (value = +value) >= value) {
+        yield value;
+      }
+    }
+  }
+}
+},{}],"../node_modules/d3-array/src/bisect.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.bisectCenter = exports.bisectLeft = exports.bisectRight = void 0;
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+var _bisector = _interopRequireDefault(require("./bisector.js"));
+
+var _number = _interopRequireDefault(require("./number.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const ascendingBisect = (0, _bisector.default)(_ascending.default);
+const bisectRight = ascendingBisect.right;
+exports.bisectRight = bisectRight;
+const bisectLeft = ascendingBisect.left;
+exports.bisectLeft = bisectLeft;
+const bisectCenter = (0, _bisector.default)(_number.default).center;
+exports.bisectCenter = bisectCenter;
+var _default = bisectRight;
+exports.default = _default;
+},{"./ascending.js":"../node_modules/d3-array/src/ascending.js","./bisector.js":"../node_modules/d3-array/src/bisector.js","./number.js":"../node_modules/d3-array/src/number.js"}],"../node_modules/d3-array/src/count.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = count;
+
+function count(values, valueof) {
+  let count = 0;
+
+  if (valueof === undefined) {
+    for (let value of values) {
+      if (value != null && (value = +value) >= value) {
+        ++count;
+      }
+    }
+  } else {
+    let index = -1;
+
+    for (let value of values) {
+      if ((value = valueof(value, ++index, values)) != null && (value = +value) >= value) {
+        ++count;
+      }
+    }
+  }
+
+  return count;
+}
+},{}],"../node_modules/d3-array/src/cross.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = cross;
+
+function length(array) {
+  return array.length | 0;
+}
+
+function empty(length) {
+  return !(length > 0);
+}
+
+function arrayify(values) {
+  return typeof values !== "object" || "length" in values ? values : Array.from(values);
+}
+
+function reducer(reduce) {
+  return values => reduce(...values);
+}
+
+function cross(...values) {
+  const reduce = typeof values[values.length - 1] === "function" && reducer(values.pop());
+  values = values.map(arrayify);
+  const lengths = values.map(length);
+  const j = values.length - 1;
+  const index = new Array(j + 1).fill(0);
+  const product = [];
+  if (j < 0 || lengths.some(empty)) return product;
+
+  while (true) {
+    product.push(index.map((j, i) => values[i][j]));
+    let i = j;
+
+    while (++index[i] === lengths[i]) {
+      if (i === 0) return reduce ? product.map(reduce) : product;
+      index[i--] = 0;
+    }
+  }
+}
+},{}],"../node_modules/d3-array/src/cumsum.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = cumsum;
+
+function cumsum(values, valueof) {
+  var sum = 0,
+      index = 0;
+  return Float64Array.from(values, valueof === undefined ? v => sum += +v || 0 : v => sum += +valueof(v, index++, values) || 0);
+}
+},{}],"../node_modules/d3-array/src/descending.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(a, b) {
+  return b < a ? -1 : b > a ? 1 : b >= a ? 0 : NaN;
+}
+},{}],"../node_modules/d3-array/src/variance.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = variance;
+
+function variance(values, valueof) {
+  let count = 0;
+  let delta;
+  let mean = 0;
+  let sum = 0;
+
+  if (valueof === undefined) {
+    for (let value of values) {
+      if (value != null && (value = +value) >= value) {
+        delta = value - mean;
+        mean += delta / ++count;
+        sum += delta * (value - mean);
+      }
+    }
+  } else {
+    let index = -1;
+
+    for (let value of values) {
+      if ((value = valueof(value, ++index, values)) != null && (value = +value) >= value) {
+        delta = value - mean;
+        mean += delta / ++count;
+        sum += delta * (value - mean);
+      }
+    }
+  }
+
+  if (count > 1) return sum / (count - 1);
+}
+},{}],"../node_modules/d3-array/src/deviation.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = deviation;
+
+var _variance = _interopRequireDefault(require("./variance.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function deviation(values, valueof) {
+  const v = (0, _variance.default)(values, valueof);
+  return v ? Math.sqrt(v) : v;
+}
+},{"./variance.js":"../node_modules/d3-array/src/variance.js"}],"../node_modules/d3-array/src/extent.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(values, valueof) {
+  let min;
+  let max;
+
+  if (valueof === undefined) {
+    for (const value of values) {
+      if (value != null) {
+        if (min === undefined) {
+          if (value >= value) min = max = value;
+        } else {
+          if (min > value) min = value;
+          if (max < value) max = value;
+        }
+      }
+    }
+  } else {
+    let index = -1;
+
+    for (let value of values) {
+      if ((value = valueof(value, ++index, values)) != null) {
+        if (min === undefined) {
+          if (value >= value) min = max = value;
+        } else {
+          if (min > value) min = value;
+          if (max < value) max = value;
+        }
+      }
+    }
+  }
+
+  return [min, max];
+}
+},{}],"../node_modules/d3-array/src/fsum.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fsum = fsum;
+exports.fcumsum = fcumsum;
+exports.Adder = void 0;
+
+// https://github.com/python/cpython/blob/a74eea238f5baba15797e2e8b570d153bc8690a7/Modules/mathmodule.c#L1423
+class Adder {
+  constructor() {
+    this._partials = new Float64Array(32);
+    this._n = 0;
+  }
+
+  add(x) {
+    const p = this._partials;
+    let i = 0;
+
+    for (let j = 0; j < this._n && j < 32; j++) {
+      const y = p[j],
+            hi = x + y,
+            lo = Math.abs(x) < Math.abs(y) ? x - (hi - y) : y - (hi - x);
+      if (lo) p[i++] = lo;
+      x = hi;
+    }
+
+    p[i] = x;
+    this._n = i + 1;
+    return this;
+  }
+
+  valueOf() {
+    const p = this._partials;
+    let n = this._n,
+        x,
+        y,
+        lo,
+        hi = 0;
+
+    if (n > 0) {
+      hi = p[--n];
+
+      while (n > 0) {
+        x = hi;
+        y = p[--n];
+        hi = x + y;
+        lo = y - (hi - x);
+        if (lo) break;
+      }
+
+      if (n > 0 && (lo < 0 && p[n - 1] < 0 || lo > 0 && p[n - 1] > 0)) {
+        y = lo * 2;
+        x = hi + y;
+        if (y == x - hi) hi = x;
+      }
+    }
+
+    return hi;
+  }
+
+}
+
+exports.Adder = Adder;
+
+function fsum(values, valueof) {
+  const adder = new Adder();
+
+  if (valueof === undefined) {
+    for (let value of values) {
+      if (value = +value) {
+        adder.add(value);
+      }
+    }
+  } else {
+    let index = -1;
+
+    for (let value of values) {
+      if (value = +valueof(value, ++index, values)) {
+        adder.add(value);
+      }
+    }
+  }
+
+  return +adder;
+}
+
+function fcumsum(values, valueof) {
+  const adder = new Adder();
+  let index = -1;
+  return Float64Array.from(values, valueof === undefined ? v => adder.add(+v || 0) : v => adder.add(+valueof(v, ++index, values) || 0));
+}
+},{}],"../node_modules/internmap/src/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.InternSet = exports.InternMap = void 0;
+
+class InternMap extends Map {
+  constructor(entries, key = keyof) {
+    super();
+    Object.defineProperties(this, {
+      _intern: {
+        value: new Map()
+      },
+      _key: {
+        value: key
+      }
+    });
+    if (entries != null) for (const [key, value] of entries) this.set(key, value);
+  }
+
+  get(key) {
+    return super.get(intern_get(this, key));
+  }
+
+  has(key) {
+    return super.has(intern_get(this, key));
+  }
+
+  set(key, value) {
+    return super.set(intern_set(this, key), value);
+  }
+
+  delete(key) {
+    return super.delete(intern_delete(this, key));
+  }
+
+}
+
+exports.InternMap = InternMap;
+
+class InternSet extends Set {
+  constructor(values, key = keyof) {
+    super();
+    Object.defineProperties(this, {
+      _intern: {
+        value: new Map()
+      },
+      _key: {
+        value: key
+      }
+    });
+    if (values != null) for (const value of values) this.add(value);
+  }
+
+  has(value) {
+    return super.has(intern_get(this, value));
+  }
+
+  add(value) {
+    return super.add(intern_set(this, value));
+  }
+
+  delete(value) {
+    return super.delete(intern_delete(this, value));
+  }
+
+}
+
+exports.InternSet = InternSet;
+
+function intern_get({
+  _intern,
+  _key
+}, value) {
+  const key = _key(value);
+
+  return _intern.has(key) ? _intern.get(key) : value;
+}
+
+function intern_set({
+  _intern,
+  _key
+}, value) {
+  const key = _key(value);
+
+  if (_intern.has(key)) return _intern.get(key);
+
+  _intern.set(key, value);
+
+  return value;
+}
+
+function intern_delete({
+  _intern,
+  _key
+}, value) {
+  const key = _key(value);
+
+  if (_intern.has(key)) {
+    value = _intern.get(value);
+
+    _intern.delete(key);
+  }
+
+  return value;
+}
+
+function keyof(value) {
+  return value !== null && typeof value === "object" ? value.valueOf() : value;
+}
+},{}],"../node_modules/d3-array/src/identity.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(x) {
+  return x;
+}
+},{}],"../node_modules/d3-array/src/group.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = group;
+exports.groups = groups;
+exports.rollup = rollup;
+exports.rollups = rollups;
+exports.index = index;
+exports.indexes = indexes;
+
+var _internmap = require("internmap");
+
+var _identity = _interopRequireDefault(require("./identity.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function group(values, ...keys) {
+  return nest(values, _identity.default, _identity.default, keys);
+}
+
+function groups(values, ...keys) {
+  return nest(values, Array.from, _identity.default, keys);
+}
+
+function rollup(values, reduce, ...keys) {
+  return nest(values, _identity.default, reduce, keys);
+}
+
+function rollups(values, reduce, ...keys) {
+  return nest(values, Array.from, reduce, keys);
+}
+
+function index(values, ...keys) {
+  return nest(values, _identity.default, unique, keys);
+}
+
+function indexes(values, ...keys) {
+  return nest(values, Array.from, unique, keys);
+}
+
+function unique(values) {
+  if (values.length !== 1) throw new Error("duplicate key");
+  return values[0];
+}
+
+function nest(values, map, reduce, keys) {
+  return function regroup(values, i) {
+    if (i >= keys.length) return reduce(values);
+    const groups = new _internmap.InternMap();
+    const keyof = keys[i++];
+    let index = -1;
+
+    for (const value of values) {
+      const key = keyof(value, ++index, values);
+      const group = groups.get(key);
+      if (group) group.push(value);else groups.set(key, [value]);
+    }
+
+    for (const [key, values] of groups) {
+      groups.set(key, regroup(values, i));
+    }
+
+    return map(groups);
+  }(values, 0);
+}
+},{"internmap":"../node_modules/internmap/src/index.js","./identity.js":"../node_modules/d3-array/src/identity.js"}],"../node_modules/d3-array/src/permute.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(source, keys) {
+  return Array.from(keys, key => source[key]);
+}
+},{}],"../node_modules/d3-array/src/sort.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = sort;
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+var _permute = _interopRequireDefault(require("./permute.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function sort(values, ...F) {
+  if (typeof values[Symbol.iterator] !== "function") throw new TypeError("values is not iterable");
+  values = Array.from(values);
+  let [f = _ascending.default] = F;
+
+  if (f.length === 1 || F.length > 1) {
+    const index = Uint32Array.from(values, (d, i) => i);
+
+    if (F.length > 1) {
+      F = F.map(f => values.map(f));
+      index.sort((i, j) => {
+        for (const f of F) {
+          const c = (0, _ascending.default)(f[i], f[j]);
+          if (c) return c;
+        }
+      });
+    } else {
+      f = values.map(f);
+      index.sort((i, j) => (0, _ascending.default)(f[i], f[j]));
+    }
+
+    return (0, _permute.default)(values, index);
+  }
+
+  return values.sort(f);
+}
+},{"./ascending.js":"../node_modules/d3-array/src/ascending.js","./permute.js":"../node_modules/d3-array/src/permute.js"}],"../node_modules/d3-array/src/groupSort.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = groupSort;
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+var _group = _interopRequireWildcard(require("./group.js"));
+
+var _sort = _interopRequireDefault(require("./sort.js"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function groupSort(values, reduce, key) {
+  return (reduce.length === 1 ? (0, _sort.default)((0, _group.rollup)(values, reduce, key), ([ak, av], [bk, bv]) => (0, _ascending.default)(av, bv) || (0, _ascending.default)(ak, bk)) : (0, _sort.default)((0, _group.default)(values, key), ([ak, av], [bk, bv]) => reduce(av, bv) || (0, _ascending.default)(ak, bk))).map(([key]) => key);
+}
+},{"./ascending.js":"../node_modules/d3-array/src/ascending.js","./group.js":"../node_modules/d3-array/src/group.js","./sort.js":"../node_modules/d3-array/src/sort.js"}],"../node_modules/d3-array/src/array.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.map = exports.slice = void 0;
+var array = Array.prototype;
+var slice = array.slice;
+exports.slice = slice;
+var map = array.map;
+exports.map = map;
+},{}],"../node_modules/d3-array/src/constant.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(x) {
+  return function () {
+    return x;
+  };
+}
+},{}],"../node_modules/d3-array/src/ticks.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+exports.tickIncrement = tickIncrement;
+exports.tickStep = tickStep;
+var e10 = Math.sqrt(50),
+    e5 = Math.sqrt(10),
+    e2 = Math.sqrt(2);
+
+function _default(start, stop, count) {
+  var reverse,
+      i = -1,
+      n,
+      ticks,
+      step;
+  stop = +stop, start = +start, count = +count;
+  if (start === stop && count > 0) return [start];
+  if (reverse = stop < start) n = start, start = stop, stop = n;
+  if ((step = tickIncrement(start, stop, count)) === 0 || !isFinite(step)) return [];
+
+  if (step > 0) {
+    start = Math.ceil(start / step);
+    stop = Math.floor(stop / step);
+    ticks = new Array(n = Math.ceil(stop - start + 1));
+
+    while (++i < n) ticks[i] = (start + i) * step;
+  } else {
+    step = -step;
+    start = Math.ceil(start * step);
+    stop = Math.floor(stop * step);
+    ticks = new Array(n = Math.ceil(stop - start + 1));
+
+    while (++i < n) ticks[i] = (start + i) / step;
+  }
+
+  if (reverse) ticks.reverse();
+  return ticks;
+}
+
+function tickIncrement(start, stop, count) {
+  var step = (stop - start) / Math.max(0, count),
+      power = Math.floor(Math.log(step) / Math.LN10),
+      error = step / Math.pow(10, power);
+  return power >= 0 ? (error >= e10 ? 10 : error >= e5 ? 5 : error >= e2 ? 2 : 1) * Math.pow(10, power) : -Math.pow(10, -power) / (error >= e10 ? 10 : error >= e5 ? 5 : error >= e2 ? 2 : 1);
+}
+
+function tickStep(start, stop, count) {
+  var step0 = Math.abs(stop - start) / Math.max(0, count),
+      step1 = Math.pow(10, Math.floor(Math.log(step0) / Math.LN10)),
+      error = step0 / step1;
+  if (error >= e10) step1 *= 10;else if (error >= e5) step1 *= 5;else if (error >= e2) step1 *= 2;
+  return stop < start ? -step1 : step1;
+}
+},{}],"../node_modules/d3-array/src/nice.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = nice;
+
+var _ticks = require("./ticks.js");
+
+function nice(start, stop, count) {
+  let prestep;
+
+  while (true) {
+    const step = (0, _ticks.tickIncrement)(start, stop, count);
+
+    if (step === prestep || step === 0 || !isFinite(step)) {
+      return [start, stop];
+    } else if (step > 0) {
+      start = Math.floor(start / step) * step;
+      stop = Math.ceil(stop / step) * step;
+    } else if (step < 0) {
+      start = Math.ceil(start * step) / step;
+      stop = Math.floor(stop * step) / step;
+    }
+
+    prestep = step;
+  }
+}
+},{"./ticks.js":"../node_modules/d3-array/src/ticks.js"}],"../node_modules/d3-array/src/threshold/sturges.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _count = _interopRequireDefault(require("../count.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default(values) {
+  return Math.ceil(Math.log((0, _count.default)(values)) / Math.LN2) + 1;
+}
+},{"../count.js":"../node_modules/d3-array/src/count.js"}],"../node_modules/d3-array/src/bin.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _array = require("./array.js");
+
+var _bisect = _interopRequireDefault(require("./bisect.js"));
+
+var _constant = _interopRequireDefault(require("./constant.js"));
+
+var _extent = _interopRequireDefault(require("./extent.js"));
+
+var _identity = _interopRequireDefault(require("./identity.js"));
+
+var _nice = _interopRequireDefault(require("./nice.js"));
+
+var _ticks = _interopRequireWildcard(require("./ticks.js"));
+
+var _sturges = _interopRequireDefault(require("./threshold/sturges.js"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default() {
+  var value = _identity.default,
+      domain = _extent.default,
+      threshold = _sturges.default;
+
+  function histogram(data) {
+    if (!Array.isArray(data)) data = Array.from(data);
+    var i,
+        n = data.length,
+        x,
+        values = new Array(n);
+
+    for (i = 0; i < n; ++i) {
+      values[i] = value(data[i], i, data);
+    }
+
+    var xz = domain(values),
+        x0 = xz[0],
+        x1 = xz[1],
+        tz = threshold(values, x0, x1); // Convert number of thresholds into uniform thresholds, and nice the
+    // default domain accordingly.
+
+    if (!Array.isArray(tz)) {
+      const max = x1,
+            tn = +tz;
+      if (domain === _extent.default) [x0, x1] = (0, _nice.default)(x0, x1, tn);
+      tz = (0, _ticks.default)(x0, x1, tn); // If the last threshold is coincident with the domain’s upper bound, the
+      // last bin will be zero-width. If the default domain is used, and this
+      // last threshold is coincident with the maximum input value, we can
+      // extend the niced upper bound by one tick to ensure uniform bin widths;
+      // otherwise, we simply remove the last threshold. Note that we don’t
+      // coerce values or the domain to numbers, and thus must be careful to
+      // compare order (>=) rather than strict equality (===)!
+
+      if (tz[tz.length - 1] >= x1) {
+        if (max >= x1 && domain === _extent.default) {
+          const step = (0, _ticks.tickIncrement)(x0, x1, tn);
+
+          if (isFinite(step)) {
+            if (step > 0) {
+              x1 = (Math.floor(x1 / step) + 1) * step;
+            } else if (step < 0) {
+              x1 = (Math.ceil(x1 * -step) + 1) / -step;
+            }
+          }
+        } else {
+          tz.pop();
+        }
+      }
+    } // Remove any thresholds outside the domain.
+
+
+    var m = tz.length;
+
+    while (tz[0] <= x0) tz.shift(), --m;
+
+    while (tz[m - 1] > x1) tz.pop(), --m;
+
+    var bins = new Array(m + 1),
+        bin; // Initialize bins.
+
+    for (i = 0; i <= m; ++i) {
+      bin = bins[i] = [];
+      bin.x0 = i > 0 ? tz[i - 1] : x0;
+      bin.x1 = i < m ? tz[i] : x1;
+    } // Assign data to bins by value, ignoring any outside the domain.
+
+
+    for (i = 0; i < n; ++i) {
+      x = values[i];
+
+      if (x0 <= x && x <= x1) {
+        bins[(0, _bisect.default)(tz, x, 0, m)].push(data[i]);
+      }
+    }
+
+    return bins;
+  }
+
+  histogram.value = function (_) {
+    return arguments.length ? (value = typeof _ === "function" ? _ : (0, _constant.default)(_), histogram) : value;
+  };
+
+  histogram.domain = function (_) {
+    return arguments.length ? (domain = typeof _ === "function" ? _ : (0, _constant.default)([_[0], _[1]]), histogram) : domain;
+  };
+
+  histogram.thresholds = function (_) {
+    return arguments.length ? (threshold = typeof _ === "function" ? _ : Array.isArray(_) ? (0, _constant.default)(_array.slice.call(_)) : (0, _constant.default)(_), histogram) : threshold;
+  };
+
+  return histogram;
+}
+},{"./array.js":"../node_modules/d3-array/src/array.js","./bisect.js":"../node_modules/d3-array/src/bisect.js","./constant.js":"../node_modules/d3-array/src/constant.js","./extent.js":"../node_modules/d3-array/src/extent.js","./identity.js":"../node_modules/d3-array/src/identity.js","./nice.js":"../node_modules/d3-array/src/nice.js","./ticks.js":"../node_modules/d3-array/src/ticks.js","./threshold/sturges.js":"../node_modules/d3-array/src/threshold/sturges.js"}],"../node_modules/d3-array/src/max.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = max;
+
+function max(values, valueof) {
+  let max;
+
+  if (valueof === undefined) {
+    for (const value of values) {
+      if (value != null && (max < value || max === undefined && value >= value)) {
+        max = value;
+      }
+    }
+  } else {
+    let index = -1;
+
+    for (let value of values) {
+      if ((value = valueof(value, ++index, values)) != null && (max < value || max === undefined && value >= value)) {
+        max = value;
+      }
+    }
+  }
+
+  return max;
+}
+},{}],"../node_modules/d3-array/src/min.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = min;
+
+function min(values, valueof) {
+  let min;
+
+  if (valueof === undefined) {
+    for (const value of values) {
+      if (value != null && (min > value || min === undefined && value >= value)) {
+        min = value;
+      }
+    }
+  } else {
+    let index = -1;
+
+    for (let value of values) {
+      if ((value = valueof(value, ++index, values)) != null && (min > value || min === undefined && value >= value)) {
+        min = value;
+      }
+    }
+  }
+
+  return min;
+}
+},{}],"../node_modules/d3-array/src/quickselect.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = quickselect;
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Based on https://github.com/mourner/quickselect
+// ISC license, Copyright 2018 Vladimir Agafonkin.
+function quickselect(array, k, left = 0, right = array.length - 1, compare = _ascending.default) {
+  while (right > left) {
+    if (right - left > 600) {
+      const n = right - left + 1;
+      const m = k - left + 1;
+      const z = Math.log(n);
+      const s = 0.5 * Math.exp(2 * z / 3);
+      const sd = 0.5 * Math.sqrt(z * s * (n - s) / n) * (m - n / 2 < 0 ? -1 : 1);
+      const newLeft = Math.max(left, Math.floor(k - m * s / n + sd));
+      const newRight = Math.min(right, Math.floor(k + (n - m) * s / n + sd));
+      quickselect(array, k, newLeft, newRight, compare);
+    }
+
+    const t = array[k];
+    let i = left;
+    let j = right;
+    swap(array, left, k);
+    if (compare(array[right], t) > 0) swap(array, left, right);
+
+    while (i < j) {
+      swap(array, i, j), ++i, --j;
+
+      while (compare(array[i], t) < 0) ++i;
+
+      while (compare(array[j], t) > 0) --j;
+    }
+
+    if (compare(array[left], t) === 0) swap(array, left, j);else ++j, swap(array, j, right);
+    if (j <= k) left = j + 1;
+    if (k <= j) right = j - 1;
+  }
+
+  return array;
+}
+
+function swap(array, i, j) {
+  const t = array[i];
+  array[i] = array[j];
+  array[j] = t;
+}
+},{"./ascending.js":"../node_modules/d3-array/src/ascending.js"}],"../node_modules/d3-array/src/quantile.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = quantile;
+exports.quantileSorted = quantileSorted;
+
+var _max = _interopRequireDefault(require("./max.js"));
+
+var _min = _interopRequireDefault(require("./min.js"));
+
+var _quickselect = _interopRequireDefault(require("./quickselect.js"));
+
+var _number = _interopRequireWildcard(require("./number.js"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function quantile(values, p, valueof) {
+  values = Float64Array.from((0, _number.numbers)(values, valueof));
+  if (!(n = values.length)) return;
+  if ((p = +p) <= 0 || n < 2) return (0, _min.default)(values);
+  if (p >= 1) return (0, _max.default)(values);
+  var n,
+      i = (n - 1) * p,
+      i0 = Math.floor(i),
+      value0 = (0, _max.default)((0, _quickselect.default)(values, i0).subarray(0, i0 + 1)),
+      value1 = (0, _min.default)(values.subarray(i0 + 1));
+  return value0 + (value1 - value0) * (i - i0);
+}
+
+function quantileSorted(values, p, valueof = _number.default) {
+  if (!(n = values.length)) return;
+  if ((p = +p) <= 0 || n < 2) return +valueof(values[0], 0, values);
+  if (p >= 1) return +valueof(values[n - 1], n - 1, values);
+  var n,
+      i = (n - 1) * p,
+      i0 = Math.floor(i),
+      value0 = +valueof(values[i0], i0, values),
+      value1 = +valueof(values[i0 + 1], i0 + 1, values);
+  return value0 + (value1 - value0) * (i - i0);
+}
+},{"./max.js":"../node_modules/d3-array/src/max.js","./min.js":"../node_modules/d3-array/src/min.js","./quickselect.js":"../node_modules/d3-array/src/quickselect.js","./number.js":"../node_modules/d3-array/src/number.js"}],"../node_modules/d3-array/src/threshold/freedmanDiaconis.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _count = _interopRequireDefault(require("../count.js"));
+
+var _quantile = _interopRequireDefault(require("../quantile.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default(values, min, max) {
+  return Math.ceil((max - min) / (2 * ((0, _quantile.default)(values, 0.75) - (0, _quantile.default)(values, 0.25)) * Math.pow((0, _count.default)(values), -1 / 3)));
+}
+},{"../count.js":"../node_modules/d3-array/src/count.js","../quantile.js":"../node_modules/d3-array/src/quantile.js"}],"../node_modules/d3-array/src/threshold/scott.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _count = _interopRequireDefault(require("../count.js"));
+
+var _deviation = _interopRequireDefault(require("../deviation.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default(values, min, max) {
+  return Math.ceil((max - min) / (3.5 * (0, _deviation.default)(values) * Math.pow((0, _count.default)(values), -1 / 3)));
+}
+},{"../count.js":"../node_modules/d3-array/src/count.js","../deviation.js":"../node_modules/d3-array/src/deviation.js"}],"../node_modules/d3-array/src/maxIndex.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = maxIndex;
+
+function maxIndex(values, valueof) {
+  let max;
+  let maxIndex = -1;
+  let index = -1;
+
+  if (valueof === undefined) {
+    for (const value of values) {
+      ++index;
+
+      if (value != null && (max < value || max === undefined && value >= value)) {
+        max = value, maxIndex = index;
+      }
+    }
+  } else {
+    for (let value of values) {
+      if ((value = valueof(value, ++index, values)) != null && (max < value || max === undefined && value >= value)) {
+        max = value, maxIndex = index;
+      }
+    }
+  }
+
+  return maxIndex;
+}
+},{}],"../node_modules/d3-array/src/mean.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = mean;
+
+function mean(values, valueof) {
+  let count = 0;
+  let sum = 0;
+
+  if (valueof === undefined) {
+    for (let value of values) {
+      if (value != null && (value = +value) >= value) {
+        ++count, sum += value;
+      }
+    }
+  } else {
+    let index = -1;
+
+    for (let value of values) {
+      if ((value = valueof(value, ++index, values)) != null && (value = +value) >= value) {
+        ++count, sum += value;
+      }
+    }
+  }
+
+  if (count) return sum / count;
+}
+},{}],"../node_modules/d3-array/src/median.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _quantile = _interopRequireDefault(require("./quantile.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default(values, valueof) {
+  return (0, _quantile.default)(values, 0.5, valueof);
+}
+},{"./quantile.js":"../node_modules/d3-array/src/quantile.js"}],"../node_modules/d3-array/src/merge.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = merge;
+
+function* flatten(arrays) {
+  for (const array of arrays) {
+    yield* array;
+  }
+}
+
+function merge(arrays) {
+  return Array.from(flatten(arrays));
+}
+},{}],"../node_modules/d3-array/src/minIndex.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = minIndex;
+
+function minIndex(values, valueof) {
+  let min;
+  let minIndex = -1;
+  let index = -1;
+
+  if (valueof === undefined) {
+    for (const value of values) {
+      ++index;
+
+      if (value != null && (min > value || min === undefined && value >= value)) {
+        min = value, minIndex = index;
+      }
+    }
+  } else {
+    for (let value of values) {
+      if ((value = valueof(value, ++index, values)) != null && (min > value || min === undefined && value >= value)) {
+        min = value, minIndex = index;
+      }
+    }
+  }
+
+  return minIndex;
+}
+},{}],"../node_modules/d3-array/src/pairs.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = pairs;
+exports.pair = pair;
+
+function pairs(values, pairof = pair) {
+  const pairs = [];
+  let previous;
+  let first = false;
+
+  for (const value of values) {
+    if (first) pairs.push(pairof(previous, value));
+    previous = value;
+    first = true;
+  }
+
+  return pairs;
+}
+
+function pair(a, b) {
+  return [a, b];
+}
+},{}],"../node_modules/d3-array/src/range.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+function _default(start, stop, step) {
+  start = +start, stop = +stop, step = (n = arguments.length) < 2 ? (stop = start, start = 0, 1) : n < 3 ? 1 : +step;
+  var i = -1,
+      n = Math.max(0, Math.ceil((stop - start) / step)) | 0,
+      range = new Array(n);
+
+  while (++i < n) {
+    range[i] = start + i * step;
+  }
+
+  return range;
+}
+},{}],"../node_modules/d3-array/src/least.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = least;
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function least(values, compare = _ascending.default) {
+  let min;
+  let defined = false;
+
+  if (compare.length === 1) {
+    let minValue;
+
+    for (const element of values) {
+      const value = compare(element);
+
+      if (defined ? (0, _ascending.default)(value, minValue) < 0 : (0, _ascending.default)(value, value) === 0) {
+        min = element;
+        minValue = value;
+        defined = true;
+      }
+    }
+  } else {
+    for (const value of values) {
+      if (defined ? compare(value, min) < 0 : compare(value, value) === 0) {
+        min = value;
+        defined = true;
+      }
+    }
+  }
+
+  return min;
+}
+},{"./ascending.js":"../node_modules/d3-array/src/ascending.js"}],"../node_modules/d3-array/src/leastIndex.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = leastIndex;
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+var _minIndex = _interopRequireDefault(require("./minIndex.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function leastIndex(values, compare = _ascending.default) {
+  if (compare.length === 1) return (0, _minIndex.default)(values, compare);
+  let minValue;
+  let min = -1;
+  let index = -1;
+
+  for (const value of values) {
+    ++index;
+
+    if (min < 0 ? compare(value, value) === 0 : compare(value, minValue) < 0) {
+      minValue = value;
+      min = index;
+    }
+  }
+
+  return min;
+}
+},{"./ascending.js":"../node_modules/d3-array/src/ascending.js","./minIndex.js":"../node_modules/d3-array/src/minIndex.js"}],"../node_modules/d3-array/src/greatest.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = greatest;
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function greatest(values, compare = _ascending.default) {
+  let max;
+  let defined = false;
+
+  if (compare.length === 1) {
+    let maxValue;
+
+    for (const element of values) {
+      const value = compare(element);
+
+      if (defined ? (0, _ascending.default)(value, maxValue) > 0 : (0, _ascending.default)(value, value) === 0) {
+        max = element;
+        maxValue = value;
+        defined = true;
+      }
+    }
+  } else {
+    for (const value of values) {
+      if (defined ? compare(value, max) > 0 : compare(value, value) === 0) {
+        max = value;
+        defined = true;
+      }
+    }
+  }
+
+  return max;
+}
+},{"./ascending.js":"../node_modules/d3-array/src/ascending.js"}],"../node_modules/d3-array/src/greatestIndex.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = greatestIndex;
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+var _maxIndex = _interopRequireDefault(require("./maxIndex.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function greatestIndex(values, compare = _ascending.default) {
+  if (compare.length === 1) return (0, _maxIndex.default)(values, compare);
+  let maxValue;
+  let max = -1;
+  let index = -1;
+
+  for (const value of values) {
+    ++index;
+
+    if (max < 0 ? compare(value, value) === 0 : compare(value, maxValue) > 0) {
+      maxValue = value;
+      max = index;
+    }
+  }
+
+  return max;
+}
+},{"./ascending.js":"../node_modules/d3-array/src/ascending.js","./maxIndex.js":"../node_modules/d3-array/src/maxIndex.js"}],"../node_modules/d3-array/src/scan.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = scan;
+
+var _leastIndex = _interopRequireDefault(require("./leastIndex.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function scan(values, compare) {
+  const index = (0, _leastIndex.default)(values, compare);
+  return index < 0 ? undefined : index;
+}
+},{"./leastIndex.js":"../node_modules/d3-array/src/leastIndex.js"}],"../node_modules/d3-array/src/shuffle.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.shuffler = shuffler;
+exports.default = void 0;
+
+var _default = shuffler(Math.random);
+
+exports.default = _default;
+
+function shuffler(random) {
+  return function shuffle(array, i0 = 0, i1 = array.length) {
+    let m = i1 - (i0 = +i0);
+
+    while (m) {
+      const i = random() * m-- | 0,
+            t = array[m + i0];
+      array[m + i0] = array[i + i0];
+      array[i + i0] = t;
+    }
+
+    return array;
+  };
+}
+},{}],"../node_modules/d3-array/src/sum.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = sum;
+
+function sum(values, valueof) {
+  let sum = 0;
+
+  if (valueof === undefined) {
+    for (let value of values) {
+      if (value = +value) {
+        sum += value;
+      }
+    }
+  } else {
+    let index = -1;
+
+    for (let value of values) {
+      if (value = +valueof(value, ++index, values)) {
+        sum += value;
+      }
+    }
+  }
+
+  return sum;
+}
+},{}],"../node_modules/d3-array/src/transpose.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _min = _interopRequireDefault(require("./min.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default(matrix) {
+  if (!(n = matrix.length)) return [];
+
+  for (var i = -1, m = (0, _min.default)(matrix, length), transpose = new Array(m); ++i < m;) {
+    for (var j = -1, n, row = transpose[i] = new Array(n); ++j < n;) {
+      row[j] = matrix[j][i];
+    }
+  }
+
+  return transpose;
+}
+
+function length(d) {
+  return d.length;
+}
+},{"./min.js":"../node_modules/d3-array/src/min.js"}],"../node_modules/d3-array/src/zip.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = _default;
+
+var _transpose = _interopRequireDefault(require("./transpose.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default() {
+  return (0, _transpose.default)(arguments);
+}
+},{"./transpose.js":"../node_modules/d3-array/src/transpose.js"}],"../node_modules/d3-array/src/every.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = every;
+
+function every(values, test) {
+  if (typeof test !== "function") throw new TypeError("test is not a function");
+  let index = -1;
+
+  for (const value of values) {
+    if (!test(value, ++index, values)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+},{}],"../node_modules/d3-array/src/some.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = some;
+
+function some(values, test) {
+  if (typeof test !== "function") throw new TypeError("test is not a function");
+  let index = -1;
+
+  for (const value of values) {
+    if (test(value, ++index, values)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+},{}],"../node_modules/d3-array/src/filter.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = filter;
+
+function filter(values, test) {
+  if (typeof test !== "function") throw new TypeError("test is not a function");
+  const array = [];
+  let index = -1;
+
+  for (const value of values) {
+    if (test(value, ++index, values)) {
+      array.push(value);
+    }
+  }
+
+  return array;
+}
+},{}],"../node_modules/d3-array/src/map.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = map;
+
+function map(values, mapper) {
+  if (typeof values[Symbol.iterator] !== "function") throw new TypeError("values is not iterable");
+  if (typeof mapper !== "function") throw new TypeError("mapper is not a function");
+  return Array.from(values, (value, index) => mapper(value, index, values));
+}
+},{}],"../node_modules/d3-array/src/reduce.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = reduce;
+
+function reduce(values, reducer, value) {
+  if (typeof reducer !== "function") throw new TypeError("reducer is not a function");
+  const iterator = values[Symbol.iterator]();
+  let done,
+      next,
+      index = -1;
+
+  if (arguments.length < 3) {
+    ({
+      done,
+      value
+    } = iterator.next());
+    if (done) return;
+    ++index;
+  }
+
+  while (({
+    done,
+    value: next
+  } = iterator.next()), !done) {
+    value = reducer(value, next, ++index, values);
+  }
+
+  return value;
+}
+},{}],"../node_modules/d3-array/src/reverse.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = reverse;
+
+function reverse(values) {
+  if (typeof values[Symbol.iterator] !== "function") throw new TypeError("values is not iterable");
+  return Array.from(values).reverse();
+}
+},{}],"../node_modules/d3-array/src/difference.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = difference;
+
+function difference(values, ...others) {
+  values = new Set(values);
+
+  for (const other of others) {
+    for (const value of other) {
+      values.delete(value);
+    }
+  }
+
+  return values;
+}
+},{}],"../node_modules/d3-array/src/disjoint.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = disjoint;
+
+function disjoint(values, other) {
+  const iterator = other[Symbol.iterator](),
+        set = new Set();
+
+  for (const v of values) {
+    if (set.has(v)) return false;
+    let value, done;
+
+    while (({
+      value,
+      done
+    } = iterator.next())) {
+      if (done) break;
+      if (Object.is(v, value)) return false;
+      set.add(value);
+    }
+  }
+
+  return true;
+}
+},{}],"../node_modules/d3-array/src/set.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = set;
+
+function set(values) {
+  return values instanceof Set ? values : new Set(values);
+}
+},{}],"../node_modules/d3-array/src/intersection.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = intersection;
+
+var _set = _interopRequireDefault(require("./set.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function intersection(values, ...others) {
+  values = new Set(values);
+  others = others.map(_set.default);
+
+  out: for (const value of values) {
+    for (const other of others) {
+      if (!other.has(value)) {
+        values.delete(value);
+        continue out;
+      }
+    }
+  }
+
+  return values;
+}
+},{"./set.js":"../node_modules/d3-array/src/set.js"}],"../node_modules/d3-array/src/superset.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = superset;
+
+function superset(values, other) {
+  const iterator = values[Symbol.iterator](),
+        set = new Set();
+
+  for (const o of other) {
+    if (set.has(o)) continue;
+    let value, done;
+
+    while (({
+      value,
+      done
+    } = iterator.next())) {
+      if (done) return false;
+      set.add(value);
+      if (Object.is(o, value)) break;
+    }
+  }
+
+  return true;
+}
+},{}],"../node_modules/d3-array/src/subset.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = subset;
+
+var _superset = _interopRequireDefault(require("./superset.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function subset(values, other) {
+  return (0, _superset.default)(other, values);
+}
+},{"./superset.js":"../node_modules/d3-array/src/superset.js"}],"../node_modules/d3-array/src/union.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = union;
+
+function union(...others) {
+  const set = new Set();
+
+  for (const other of others) {
+    for (const o of other) {
+      set.add(o);
+    }
+  }
+
+  return set;
+}
+},{}],"../node_modules/d3-array/src/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "bisect", {
+  enumerable: true,
+  get: function () {
+    return _bisect.default;
+  }
+});
+Object.defineProperty(exports, "bisectRight", {
+  enumerable: true,
+  get: function () {
+    return _bisect.bisectRight;
+  }
+});
+Object.defineProperty(exports, "bisectLeft", {
+  enumerable: true,
+  get: function () {
+    return _bisect.bisectLeft;
+  }
+});
+Object.defineProperty(exports, "bisectCenter", {
+  enumerable: true,
+  get: function () {
+    return _bisect.bisectCenter;
+  }
+});
+Object.defineProperty(exports, "ascending", {
+  enumerable: true,
+  get: function () {
+    return _ascending.default;
+  }
+});
+Object.defineProperty(exports, "bisector", {
+  enumerable: true,
+  get: function () {
+    return _bisector.default;
+  }
+});
+Object.defineProperty(exports, "count", {
+  enumerable: true,
+  get: function () {
+    return _count.default;
+  }
+});
+Object.defineProperty(exports, "cross", {
+  enumerable: true,
+  get: function () {
+    return _cross.default;
+  }
+});
+Object.defineProperty(exports, "cumsum", {
+  enumerable: true,
+  get: function () {
+    return _cumsum.default;
+  }
+});
+Object.defineProperty(exports, "descending", {
+  enumerable: true,
+  get: function () {
+    return _descending.default;
+  }
+});
+Object.defineProperty(exports, "deviation", {
+  enumerable: true,
+  get: function () {
+    return _deviation.default;
+  }
+});
+Object.defineProperty(exports, "extent", {
+  enumerable: true,
+  get: function () {
+    return _extent.default;
+  }
+});
+Object.defineProperty(exports, "Adder", {
+  enumerable: true,
+  get: function () {
+    return _fsum.Adder;
+  }
+});
+Object.defineProperty(exports, "fsum", {
+  enumerable: true,
+  get: function () {
+    return _fsum.fsum;
+  }
+});
+Object.defineProperty(exports, "fcumsum", {
+  enumerable: true,
+  get: function () {
+    return _fsum.fcumsum;
+  }
+});
+Object.defineProperty(exports, "group", {
+  enumerable: true,
+  get: function () {
+    return _group.default;
+  }
+});
+Object.defineProperty(exports, "groups", {
+  enumerable: true,
+  get: function () {
+    return _group.groups;
+  }
+});
+Object.defineProperty(exports, "index", {
+  enumerable: true,
+  get: function () {
+    return _group.index;
+  }
+});
+Object.defineProperty(exports, "indexes", {
+  enumerable: true,
+  get: function () {
+    return _group.indexes;
+  }
+});
+Object.defineProperty(exports, "rollup", {
+  enumerable: true,
+  get: function () {
+    return _group.rollup;
+  }
+});
+Object.defineProperty(exports, "rollups", {
+  enumerable: true,
+  get: function () {
+    return _group.rollups;
+  }
+});
+Object.defineProperty(exports, "groupSort", {
+  enumerable: true,
+  get: function () {
+    return _groupSort.default;
+  }
+});
+Object.defineProperty(exports, "bin", {
+  enumerable: true,
+  get: function () {
+    return _bin.default;
+  }
+});
+Object.defineProperty(exports, "histogram", {
+  enumerable: true,
+  get: function () {
+    return _bin.default;
+  }
+});
+Object.defineProperty(exports, "thresholdFreedmanDiaconis", {
+  enumerable: true,
+  get: function () {
+    return _freedmanDiaconis.default;
+  }
+});
+Object.defineProperty(exports, "thresholdScott", {
+  enumerable: true,
+  get: function () {
+    return _scott.default;
+  }
+});
+Object.defineProperty(exports, "thresholdSturges", {
+  enumerable: true,
+  get: function () {
+    return _sturges.default;
+  }
+});
+Object.defineProperty(exports, "max", {
+  enumerable: true,
+  get: function () {
+    return _max.default;
+  }
+});
+Object.defineProperty(exports, "maxIndex", {
+  enumerable: true,
+  get: function () {
+    return _maxIndex.default;
+  }
+});
+Object.defineProperty(exports, "mean", {
+  enumerable: true,
+  get: function () {
+    return _mean.default;
+  }
+});
+Object.defineProperty(exports, "median", {
+  enumerable: true,
+  get: function () {
+    return _median.default;
+  }
+});
+Object.defineProperty(exports, "merge", {
+  enumerable: true,
+  get: function () {
+    return _merge.default;
+  }
+});
+Object.defineProperty(exports, "min", {
+  enumerable: true,
+  get: function () {
+    return _min.default;
+  }
+});
+Object.defineProperty(exports, "minIndex", {
+  enumerable: true,
+  get: function () {
+    return _minIndex.default;
+  }
+});
+Object.defineProperty(exports, "nice", {
+  enumerable: true,
+  get: function () {
+    return _nice.default;
+  }
+});
+Object.defineProperty(exports, "pairs", {
+  enumerable: true,
+  get: function () {
+    return _pairs.default;
+  }
+});
+Object.defineProperty(exports, "permute", {
+  enumerable: true,
+  get: function () {
+    return _permute.default;
+  }
+});
+Object.defineProperty(exports, "quantile", {
+  enumerable: true,
+  get: function () {
+    return _quantile.default;
+  }
+});
+Object.defineProperty(exports, "quantileSorted", {
+  enumerable: true,
+  get: function () {
+    return _quantile.quantileSorted;
+  }
+});
+Object.defineProperty(exports, "quickselect", {
+  enumerable: true,
+  get: function () {
+    return _quickselect.default;
+  }
+});
+Object.defineProperty(exports, "range", {
+  enumerable: true,
+  get: function () {
+    return _range.default;
+  }
+});
+Object.defineProperty(exports, "least", {
+  enumerable: true,
+  get: function () {
+    return _least.default;
+  }
+});
+Object.defineProperty(exports, "leastIndex", {
+  enumerable: true,
+  get: function () {
+    return _leastIndex.default;
+  }
+});
+Object.defineProperty(exports, "greatest", {
+  enumerable: true,
+  get: function () {
+    return _greatest.default;
+  }
+});
+Object.defineProperty(exports, "greatestIndex", {
+  enumerable: true,
+  get: function () {
+    return _greatestIndex.default;
+  }
+});
+Object.defineProperty(exports, "scan", {
+  enumerable: true,
+  get: function () {
+    return _scan.default;
+  }
+});
+Object.defineProperty(exports, "shuffle", {
+  enumerable: true,
+  get: function () {
+    return _shuffle.default;
+  }
+});
+Object.defineProperty(exports, "shuffler", {
+  enumerable: true,
+  get: function () {
+    return _shuffle.shuffler;
+  }
+});
+Object.defineProperty(exports, "sum", {
+  enumerable: true,
+  get: function () {
+    return _sum.default;
+  }
+});
+Object.defineProperty(exports, "ticks", {
+  enumerable: true,
+  get: function () {
+    return _ticks.default;
+  }
+});
+Object.defineProperty(exports, "tickIncrement", {
+  enumerable: true,
+  get: function () {
+    return _ticks.tickIncrement;
+  }
+});
+Object.defineProperty(exports, "tickStep", {
+  enumerable: true,
+  get: function () {
+    return _ticks.tickStep;
+  }
+});
+Object.defineProperty(exports, "transpose", {
+  enumerable: true,
+  get: function () {
+    return _transpose.default;
+  }
+});
+Object.defineProperty(exports, "variance", {
+  enumerable: true,
+  get: function () {
+    return _variance.default;
+  }
+});
+Object.defineProperty(exports, "zip", {
+  enumerable: true,
+  get: function () {
+    return _zip.default;
+  }
+});
+Object.defineProperty(exports, "every", {
+  enumerable: true,
+  get: function () {
+    return _every.default;
+  }
+});
+Object.defineProperty(exports, "some", {
+  enumerable: true,
+  get: function () {
+    return _some.default;
+  }
+});
+Object.defineProperty(exports, "filter", {
+  enumerable: true,
+  get: function () {
+    return _filter.default;
+  }
+});
+Object.defineProperty(exports, "map", {
+  enumerable: true,
+  get: function () {
+    return _map.default;
+  }
+});
+Object.defineProperty(exports, "reduce", {
+  enumerable: true,
+  get: function () {
+    return _reduce.default;
+  }
+});
+Object.defineProperty(exports, "reverse", {
+  enumerable: true,
+  get: function () {
+    return _reverse.default;
+  }
+});
+Object.defineProperty(exports, "sort", {
+  enumerable: true,
+  get: function () {
+    return _sort.default;
+  }
+});
+Object.defineProperty(exports, "difference", {
+  enumerable: true,
+  get: function () {
+    return _difference.default;
+  }
+});
+Object.defineProperty(exports, "disjoint", {
+  enumerable: true,
+  get: function () {
+    return _disjoint.default;
+  }
+});
+Object.defineProperty(exports, "intersection", {
+  enumerable: true,
+  get: function () {
+    return _intersection.default;
+  }
+});
+Object.defineProperty(exports, "subset", {
+  enumerable: true,
+  get: function () {
+    return _subset.default;
+  }
+});
+Object.defineProperty(exports, "superset", {
+  enumerable: true,
+  get: function () {
+    return _superset.default;
+  }
+});
+Object.defineProperty(exports, "union", {
+  enumerable: true,
+  get: function () {
+    return _union.default;
+  }
+});
+Object.defineProperty(exports, "InternMap", {
+  enumerable: true,
+  get: function () {
+    return _internmap.InternMap;
+  }
+});
+Object.defineProperty(exports, "InternSet", {
+  enumerable: true,
+  get: function () {
+    return _internmap.InternSet;
+  }
+});
+
+var _bisect = _interopRequireWildcard(require("./bisect.js"));
+
+var _ascending = _interopRequireDefault(require("./ascending.js"));
+
+var _bisector = _interopRequireDefault(require("./bisector.js"));
+
+var _count = _interopRequireDefault(require("./count.js"));
+
+var _cross = _interopRequireDefault(require("./cross.js"));
+
+var _cumsum = _interopRequireDefault(require("./cumsum.js"));
+
+var _descending = _interopRequireDefault(require("./descending.js"));
+
+var _deviation = _interopRequireDefault(require("./deviation.js"));
+
+var _extent = _interopRequireDefault(require("./extent.js"));
+
+var _fsum = require("./fsum.js");
+
+var _group = _interopRequireWildcard(require("./group.js"));
+
+var _groupSort = _interopRequireDefault(require("./groupSort.js"));
+
+var _bin = _interopRequireDefault(require("./bin.js"));
+
+var _freedmanDiaconis = _interopRequireDefault(require("./threshold/freedmanDiaconis.js"));
+
+var _scott = _interopRequireDefault(require("./threshold/scott.js"));
+
+var _sturges = _interopRequireDefault(require("./threshold/sturges.js"));
+
+var _max = _interopRequireDefault(require("./max.js"));
+
+var _maxIndex = _interopRequireDefault(require("./maxIndex.js"));
+
+var _mean = _interopRequireDefault(require("./mean.js"));
+
+var _median = _interopRequireDefault(require("./median.js"));
+
+var _merge = _interopRequireDefault(require("./merge.js"));
+
+var _min = _interopRequireDefault(require("./min.js"));
+
+var _minIndex = _interopRequireDefault(require("./minIndex.js"));
+
+var _nice = _interopRequireDefault(require("./nice.js"));
+
+var _pairs = _interopRequireDefault(require("./pairs.js"));
+
+var _permute = _interopRequireDefault(require("./permute.js"));
+
+var _quantile = _interopRequireWildcard(require("./quantile.js"));
+
+var _quickselect = _interopRequireDefault(require("./quickselect.js"));
+
+var _range = _interopRequireDefault(require("./range.js"));
+
+var _least = _interopRequireDefault(require("./least.js"));
+
+var _leastIndex = _interopRequireDefault(require("./leastIndex.js"));
+
+var _greatest = _interopRequireDefault(require("./greatest.js"));
+
+var _greatestIndex = _interopRequireDefault(require("./greatestIndex.js"));
+
+var _scan = _interopRequireDefault(require("./scan.js"));
+
+var _shuffle = _interopRequireWildcard(require("./shuffle.js"));
+
+var _sum = _interopRequireDefault(require("./sum.js"));
+
+var _ticks = _interopRequireWildcard(require("./ticks.js"));
+
+var _transpose = _interopRequireDefault(require("./transpose.js"));
+
+var _variance = _interopRequireDefault(require("./variance.js"));
+
+var _zip = _interopRequireDefault(require("./zip.js"));
+
+var _every = _interopRequireDefault(require("./every.js"));
+
+var _some = _interopRequireDefault(require("./some.js"));
+
+var _filter = _interopRequireDefault(require("./filter.js"));
+
+var _map = _interopRequireDefault(require("./map.js"));
+
+var _reduce = _interopRequireDefault(require("./reduce.js"));
+
+var _reverse = _interopRequireDefault(require("./reverse.js"));
+
+var _sort = _interopRequireDefault(require("./sort.js"));
+
+var _difference = _interopRequireDefault(require("./difference.js"));
+
+var _disjoint = _interopRequireDefault(require("./disjoint.js"));
+
+var _intersection = _interopRequireDefault(require("./intersection.js"));
+
+var _subset = _interopRequireDefault(require("./subset.js"));
+
+var _superset = _interopRequireDefault(require("./superset.js"));
+
+var _union = _interopRequireDefault(require("./union.js"));
+
+var _internmap = require("internmap");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+},{"./bisect.js":"../node_modules/d3-array/src/bisect.js","./ascending.js":"../node_modules/d3-array/src/ascending.js","./bisector.js":"../node_modules/d3-array/src/bisector.js","./count.js":"../node_modules/d3-array/src/count.js","./cross.js":"../node_modules/d3-array/src/cross.js","./cumsum.js":"../node_modules/d3-array/src/cumsum.js","./descending.js":"../node_modules/d3-array/src/descending.js","./deviation.js":"../node_modules/d3-array/src/deviation.js","./extent.js":"../node_modules/d3-array/src/extent.js","./fsum.js":"../node_modules/d3-array/src/fsum.js","./group.js":"../node_modules/d3-array/src/group.js","./groupSort.js":"../node_modules/d3-array/src/groupSort.js","./bin.js":"../node_modules/d3-array/src/bin.js","./threshold/freedmanDiaconis.js":"../node_modules/d3-array/src/threshold/freedmanDiaconis.js","./threshold/scott.js":"../node_modules/d3-array/src/threshold/scott.js","./threshold/sturges.js":"../node_modules/d3-array/src/threshold/sturges.js","./max.js":"../node_modules/d3-array/src/max.js","./maxIndex.js":"../node_modules/d3-array/src/maxIndex.js","./mean.js":"../node_modules/d3-array/src/mean.js","./median.js":"../node_modules/d3-array/src/median.js","./merge.js":"../node_modules/d3-array/src/merge.js","./min.js":"../node_modules/d3-array/src/min.js","./minIndex.js":"../node_modules/d3-array/src/minIndex.js","./nice.js":"../node_modules/d3-array/src/nice.js","./pairs.js":"../node_modules/d3-array/src/pairs.js","./permute.js":"../node_modules/d3-array/src/permute.js","./quantile.js":"../node_modules/d3-array/src/quantile.js","./quickselect.js":"../node_modules/d3-array/src/quickselect.js","./range.js":"../node_modules/d3-array/src/range.js","./least.js":"../node_modules/d3-array/src/least.js","./leastIndex.js":"../node_modules/d3-array/src/leastIndex.js","./greatest.js":"../node_modules/d3-array/src/greatest.js","./greatestIndex.js":"../node_modules/d3-array/src/greatestIndex.js","./scan.js":"../node_modules/d3-array/src/scan.js","./shuffle.js":"../node_modules/d3-array/src/shuffle.js","./sum.js":"../node_modules/d3-array/src/sum.js","./ticks.js":"../node_modules/d3-array/src/ticks.js","./transpose.js":"../node_modules/d3-array/src/transpose.js","./variance.js":"../node_modules/d3-array/src/variance.js","./zip.js":"../node_modules/d3-array/src/zip.js","./every.js":"../node_modules/d3-array/src/every.js","./some.js":"../node_modules/d3-array/src/some.js","./filter.js":"../node_modules/d3-array/src/filter.js","./map.js":"../node_modules/d3-array/src/map.js","./reduce.js":"../node_modules/d3-array/src/reduce.js","./reverse.js":"../node_modules/d3-array/src/reverse.js","./sort.js":"../node_modules/d3-array/src/sort.js","./difference.js":"../node_modules/d3-array/src/difference.js","./disjoint.js":"../node_modules/d3-array/src/disjoint.js","./intersection.js":"../node_modules/d3-array/src/intersection.js","./subset.js":"../node_modules/d3-array/src/subset.js","./superset.js":"../node_modules/d3-array/src/superset.js","./union.js":"../node_modules/d3-array/src/union.js","internmap":"../node_modules/internmap/src/index.js"}],"js/views/journalFormView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderJournalForm = exports.clearFormValidationError = exports.updateFormValidationError = exports.grabAllUserInputs = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
+
+var _d3Array = require("d3-array");
 
 var _helpers = require("../helpers");
 
@@ -5376,6 +7726,12 @@ var removeFirstCrossInstances = function removeFirstCrossInstances() {
   journalFormEls.journalFormWrapper.querySelector('.c-journal-form__exit-size-wrapper .js-form-remove-details-row-btn').classList.add('c-journal-form__exit-size-remove-wrapper--disabled');
 };
 
+var addCrossIconToExtraRows = function addCrossIconToExtraRows(targetEl) {
+  var crossBtn = targetEl.previousElementSibling.lastElementChild.lastElementChild;
+  if (crossBtn.classList.contains('c-journal-form__entry-size-remove-wrapper--disabled')) crossBtn.classList.remove('c-journal-form__entry-size-remove-wrapper--disabled');
+  if (crossBtn.classList.contains('c-journal-form__exit-size-remove-wrapper--disabled')) crossBtn.classList.remove('c-journal-form__exit-size-remove-wrapper--disabled');
+};
+
 var queryJournalFormEls = function queryJournalFormEls() {
   journalFormEls = getElements();
 };
@@ -5406,8 +7762,7 @@ var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) 
 exports.addJournalFormEventsHandler = addJournalFormEventsHandler;
 
 var removeJournalFormDetailsRow = function removeJournalFormDetailsRow(el) {
-  el.previousElementSibling.previousElementSibling.remove();
-  el.previousElementSibling.remove();
+  el.parentElement.remove();
   el.remove();
   journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares('.c-journal-form__entry-size');
   journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares('.c-journal-form__exit-size');
@@ -5446,6 +7801,7 @@ var renderExtraDetailsRows = function renderExtraDetailsRows(targetEl) {
   var rowClone = lastRow.cloneNode(true);
   lastRow.insertAdjacentElement('afterend', rowClone);
   addKeyEventToDetailsInputs();
+  addCrossIconToExtraRows(targetEl);
 };
 
 exports.renderExtraDetailsRows = renderExtraDetailsRows;
@@ -5556,7 +7912,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
 };
 
 exports.renderJournalForm = renderJournalForm;
-},{"../helpers":"js/helpers.js"}],"js/models/journalFormModel.js":[function(require,module,exports) {
+},{"d3-array":"../node_modules/d3-array/src/index.js","../helpers":"js/helpers.js"}],"js/models/journalFormModel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
