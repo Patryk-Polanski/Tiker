@@ -364,28 +364,32 @@ const compareToStreaks = function (newEntry) {
     returnCash: newEntry.returnCash,
   };
 
-  // losing streak - checks whether the entry exists in the streak
+  // losing streak - checks whether the entry exists in the losing streak
   const indexInLosses = user.streaks.losses.trades
     .map(loss => loss.id)
     .indexOf(newEntry.id);
 
+  // if the index exists and the new entry's cash return is smaller than zero, overwrite the index
   if (indexInLosses !== -1 && newEntry.returnCash < 0) {
     user.streaks.losses.trades[indexInLosses] = streakObj;
   }
 
+  // if the index exists and the new entry's cash return is bigger than zero, remove the entry from losing streak
   if (indexInLosses !== -1 && newEntry.returnCash > -1) {
     user.streaks.losses.trades.splice(indexInLosses, 1);
   }
 
-  // winning streak - checks whether the entry exists in the streak
+  // winning streak - checks whether the entry exists in the winning streak
   const indexInWins = user.streaks.wins.trades
     .map(win => win.id)
     .indexOf(newEntry.id);
 
+  // if the index exists and the new entry's cash return is bigger than zero, overwrite the index
   if (indexInWins !== -1 && newEntry.returnCash > -1) {
     user.streaks.wins.trades[indexInWins] = streakObj;
   }
 
+  // if the index exists and the new entry's cash return is smaller than zero, remove the entry from winning streak
   if (indexInWins !== -1 && newEntry.returnCash < 0) {
     user.streaks.wins.trades.splice(indexInWins, 1);
   }
@@ -397,10 +401,13 @@ const compareToStreaks = function (newEntry) {
 
   if (indexInCurrent !== -1) {
     const currentStreakLength = user.streaks.current.trades.length;
+    // if the current streak is 1, overwrite the index as the new Entry already exists in the array
     if (currentStreakLength === 1) {
       user.streaks.current.trades[indexInCurrent] = streakObj;
       return;
     }
+    // checks if new Entry's cash return is positive and the previous or next element's cash return is also positive
+    // if this is the case, overwrite the index as the new Entry already exists in the array
     if (
       newEntry.returnCash > -1 &&
       (user.streaks.current.trades[indexInCurrent - 1].return > -1 ||
@@ -410,6 +417,8 @@ const compareToStreaks = function (newEntry) {
       return;
     }
 
+    // checks if new Entry's cash return is positive and the previous or next element's cash return is negative
+    // if this is the case, the streak is broken, so remove the existing new entry index from the array
     if (
       newEntry.returnCash > -1 &&
       (user.streaks.current.trades[indexInCurrent - 1].return < 0 ||
@@ -419,6 +428,8 @@ const compareToStreaks = function (newEntry) {
       return;
     }
 
+    // checks if new Entry's cash return is negative and the previous or next element's cash return is also negative
+    // if this is the case, overwrite the index as the new Entry already exists in the array
     if (
       newEntry.returnCash < 0 &&
       (user.streaks.current.trades[indexInCurrent - 1].return < 0 ||
@@ -428,6 +439,8 @@ const compareToStreaks = function (newEntry) {
       return;
     }
 
+    // checks if new Entry's cash return is negative and the previous or next element's cash return is positive
+    // if this is the case, the streak is broken, so remove the existing new entry index from the array
     if (
       newEntry.returnCash < 0 &&
       (user.streaks.current.trades[indexInCurrent - 1].return > -1 ||
@@ -439,6 +452,7 @@ const compareToStreaks = function (newEntry) {
   }
 
   // check new entry against current streak
+  // the existing entries and the new entry are both positive/negative, so push to the array
   if (
     user.streaks.current.trades[0] &&
     newEntry.returnCash > -1 &&
@@ -446,6 +460,7 @@ const compareToStreaks = function (newEntry) {
   ) {
     user.streaks.current.trades.push(streakObj);
   } else if (
+    // the existing entriees and the new entry are not both positive/negative, so override the array
     user.streaks.current.trades[0] &&
     newEntry.returnCash > -1 &&
     user.streaks.current.trades[0].returnCash < 0
@@ -453,6 +468,7 @@ const compareToStreaks = function (newEntry) {
     user.streaks.current.trades = [streakObj];
   }
 
+  // the existing entries and the new entry are both positive/negative, so push to the array
   if (
     user.streaks.current.trades[0] &&
     newEntry.returnCash < 0 &&
@@ -460,6 +476,7 @@ const compareToStreaks = function (newEntry) {
   ) {
     user.streaks.current.trades.push(streakObj);
   } else if (
+    // the existing entriees and the new entry are not both positive/negative, so override the array
     user.streaks.current.trades[0] &&
     newEntry.returnCash < 0 &&
     user.streaks.current.trades[0].returnCash > -1
@@ -470,6 +487,8 @@ const compareToStreaks = function (newEntry) {
   // compare the current streak to winning and losing streak
   if (user.streaks.current.trades.length > 0) {
     if (
+      // checks if the entries in the current streak are positive and if the current streak is longer than the winning streak
+      // if this is the case, the current streak becomes the new winning streak
       user.streaks.current.trades[0].returnCash > -1 &&
       user.streaks.current.trades.length >= user.streaks.wins.trades.length
     ) {
@@ -478,6 +497,8 @@ const compareToStreaks = function (newEntry) {
     }
 
     if (
+      // checks if the entries in the current streak are negative and if the current streak is longer than the losing streak
+      // if this is the case, the current streak becomes the new losing streak
       user.streaks.current.trades[0].returnCash < 0 &&
       user.streaks.current.trades.length >= user.streaks.losses.trades.length
     ) {
