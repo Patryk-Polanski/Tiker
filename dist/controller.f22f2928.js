@@ -413,12 +413,13 @@ var user = {
       }]
     },
     current: {
-      trades: [{
-        id: 'ZYRwa5z',
-        ticker: 'NFLX',
-        date: '14/06/21',
-        returnCash: 253
-      }]
+      trades: [// {
+        //   id: 'ZYRwa5z',
+        //   ticker: 'NFLX',
+        //   date: '14/06/21',
+        //   returnCash: 253,
+        // },
+      ]
     }
   },
   worstTrades: [{
@@ -748,14 +749,19 @@ var compareToStreaks = function compareToStreaks(newEntry) {
   } // compare the current streak to winning and losing streak
 
 
-  if (user.streaks.current.trades[0].returnCash > -1 && user.streaks.current.trades.length >= user.streaks.wins.trades.length) {
-    user.streaks.wins.trades = user.streaks.current.trades;
-    return;
-  }
+  if (user.streaks.current.trades.length > 0) {
+    if (user.streaks.current.trades[0].returnCash > -1 && user.streaks.current.trades.length >= user.streaks.wins.trades.length) {
+      user.streaks.wins.trades = user.streaks.current.trades;
+      return;
+    }
 
-  if (user.streaks.current.trades[0].returnCash < 0 && user.streaks.current.trades.length >= user.streaks.losses.trades.length) {
-    user.streaks.losses.trades = user.streaks.current.trades;
-    return;
+    if (user.streaks.current.trades[0].returnCash < 0 && user.streaks.current.trades.length >= user.streaks.losses.trades.length) {
+      user.streaks.losses.trades = user.streaks.current.trades;
+      return;
+    }
+  } else {
+    // if the current streak is empty, push the entry
+    user.streaks.current.trades.push(streakObj);
   }
 };
 
