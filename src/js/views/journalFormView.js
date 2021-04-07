@@ -26,13 +26,15 @@ const recalculateDetailsPrice = function (targetElClass, siblingElClass) {
   );
 
   const weightedResultsArr = inputsArr.map(
-    input => +input.value * +input.nextElementSibling.value
+    input =>
+      +input.value *
+      (input.nextElementSibling.value ? +input.nextElementSibling.value : 1)
   );
 
   const allShares = Array.from(
     journalFormEls.journalFormWrapper.querySelectorAll(siblingElClass)
   )
-    .map(input => +input.value)
+    .map(input => (input.value ? +input.value : 1))
     .reduce((acc, num) => acc + num, 0);
 
   const filteredWeightedResultsArr = weightedResultsArr.filter(
@@ -89,11 +91,13 @@ const calculateDetailsOutput = function (focusedEl) {
 };
 
 const addKeyEventToDetailsInputs = function () {
+  let keystrokeTimer;
   journalFormEls.journalForm
     .querySelectorAll('.js-form-details-input')
     .forEach(input => {
       input.addEventListener('keyup', e => {
-        setTimeout(() => {
+        clearTimeout(keystrokeTimer);
+        keystrokeTimer = setTimeout(() => {
           calculateDetailsOutput(e.target);
         }, 2000);
       });

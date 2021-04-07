@@ -5318,10 +5318,10 @@ var toggleDisabledState = function toggleDisabledState(mode) {
 var recalculateDetailsPrice = function recalculateDetailsPrice(targetElClass, siblingElClass) {
   var inputsArr = Array.from(journalFormEls.journalFormWrapper.querySelectorAll(targetElClass));
   var weightedResultsArr = inputsArr.map(function (input) {
-    return +input.value * +input.nextElementSibling.value;
+    return +input.value * (input.nextElementSibling.value ? +input.nextElementSibling.value : 1);
   });
   var allShares = Array.from(journalFormEls.journalFormWrapper.querySelectorAll(siblingElClass)).map(function (input) {
-    return +input.value;
+    return input.value ? +input.value : 1;
   }).reduce(function (acc, num) {
     return acc + num;
   }, 0);
@@ -5362,9 +5362,11 @@ var calculateDetailsOutput = function calculateDetailsOutput(focusedEl) {
 };
 
 var addKeyEventToDetailsInputs = function addKeyEventToDetailsInputs() {
+  var keystrokeTimer;
   journalFormEls.journalForm.querySelectorAll('.js-form-details-input').forEach(function (input) {
     input.addEventListener('keyup', function (e) {
-      setTimeout(function () {
+      clearTimeout(keystrokeTimer);
+      keystrokeTimer = setTimeout(function () {
         calculateDetailsOutput(e.target);
       }, 2000);
     });
