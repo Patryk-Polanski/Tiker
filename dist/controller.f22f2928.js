@@ -691,9 +691,25 @@ var updateProfitableData = function updateProfitableData(items) {
 exports.updateProfitableData = updateProfitableData;
 
 var updateJournalData = function updateJournalData(newEntry) {
-  user.journal.push(newEntry);
+  var newEntryIndex = user.journal.map(function (e) {
+    return e.id;
+  }).indexOf(newEntry.id); // const newEntryIndex = user.journal.map(e => e.id).indexOf('Hf5t3p1');
+  // if the id already exists, meaning the journal entry has been updated
+
+  if (newEntryIndex > -1) {
+    updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
+    user.journal[newEntryIndex] = newEntry;
+  } // newEntryIndex is -1, meaning the jounal entry is new
+
+
+  if (newEntryIndex === -1) {
+    updateCapital(newEntry.returnCash, 'plus');
+    user.journal.push(newEntry); // sort the data
+  }
+
   console.log('UPDATED USER OBJECT');
   console.log(user);
+  return [user.capital];
 };
 
 exports.updateJournalData = updateJournalData;
@@ -5086,19 +5102,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.updateCapitalOutput = exports.queryDetailsEls = void 0;
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 var detailsEls = {};
 
 var getElements = function getElements() {
@@ -5114,12 +5117,7 @@ var queryDetailsEls = function queryDetailsEls() {
 exports.queryDetailsEls = queryDetailsEls;
 
 var updateCapitalOutput = function updateCapitalOutput(capitalData) {
-  var _capitalData = _slicedToArray(capitalData, 3),
-      action = _capitalData[0],
-      amount = _capitalData[1],
-      newCapital = _capitalData[2];
-
-  detailsEls.capitalOutput.textContent = newCapital;
+  detailsEls.capitalOutput.textContent = capitalData;
 };
 
 exports.updateCapitalOutput = updateCapitalOutput;
@@ -5706,7 +5704,7 @@ var _journalFormModel = require("./models/journalFormModel");
 var controlCalcCapital = function controlCalcCapital(amount, action) {
   var capitalData = (0, _dataModel.updateCapital)(amount, action);
   (0, _calculatorsView.renderCapitalMessage)(capitalData);
-  (0, _accountDetailsView.updateCapitalOutput)(capitalData);
+  (0, _accountDetailsView.updateCapitalOutput)(capitalData[2]);
 };
 
 var controlCalcPosition = function controlCalcPosition(data) {
@@ -5784,8 +5782,10 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
     if (validationOutcome[0] === 'PASS') {
       console.log('test has been passed');
       (0, _journalFormView.clearFormValidationError)();
-      (0, _dataModel.updateJournalData)(validationOutcome[1]);
+      var updatedCapital = (0, _dataModel.updateJournalData)(validationOutcome[1]);
+      (0, _journalFormView.switchJournalFormModes)('read-only');
       controlJournalRender();
+      (0, _accountDetailsView.updateCapitalOutput)(updatedCapital);
     }
   }
 };

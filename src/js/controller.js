@@ -79,7 +79,7 @@ import { validateJournalForm } from './models/journalFormModel';
 const controlCalcCapital = function (amount, action) {
   const capitalData = updateCapital(amount, action);
   renderCapitalMessage(capitalData);
-  updateCapitalOutput(capitalData);
+  updateCapitalOutput(capitalData[2]);
 };
 
 const controlCalcPosition = function (data) {
@@ -154,8 +154,10 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
     if (validationOutcome[0] === 'PASS') {
       console.log('test has been passed');
       clearFormValidationError();
-      updateJournalData(validationOutcome[1]);
+      const updatedCapital = updateJournalData(validationOutcome[1]);
+      switchJournalFormModes('read-only');
       controlJournalRender();
+      updateCapitalOutput(updatedCapital);
     }
   }
 };

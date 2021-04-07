@@ -370,9 +370,25 @@ export const updateProfitableData = function (items) {
 };
 
 export const updateJournalData = function (newEntry) {
-  user.journal.push(newEntry);
+  const newEntryIndex = user.journal.map(e => e.id).indexOf(newEntry.id);
+  // const newEntryIndex = user.journal.map(e => e.id).indexOf('Hf5t3p1');
+  // if the id already exists, meaning the journal entry has been updated
+  if (newEntryIndex > -1) {
+    updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
+    user.journal[newEntryIndex] = newEntry;
+  }
+
+  // newEntryIndex is -1, meaning the jounal entry is new
+  if (newEntryIndex === -1) {
+    updateCapital(newEntry.returnCash, 'plus');
+    user.journal.push(newEntry);
+    // sort the data
+  }
+
   console.log('UPDATED USER OBJECT');
   console.log(user);
+
+  return [user.capital];
 };
 
 export const findJournalEntry = function (id) {

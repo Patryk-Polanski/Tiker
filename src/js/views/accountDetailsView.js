@@ -10,6 +10,5 @@ export const queryDetailsEls = function () {
 };
 
 export const updateCapitalOutput = function (capitalData) {
-  const [action, amount, newCapital] = capitalData;
-  detailsEls.capitalOutput.textContent = newCapital;
+  detailsEls.capitalOutput.textContent = capitalData;
 };
