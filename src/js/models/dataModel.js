@@ -55,30 +55,30 @@ const user = {
   },
   worstTrades: [
     {
-      id: 'ZYRwa5z',
+      id: 300,
       ticker: 'NFLX',
       date: '14/06/21',
-      loss: 253,
+      returnCash: -234,
     },
     {
-      id: 'Y58P1M1',
+      id: 250,
       ticker: 'BMBL',
       date: '15/06/21',
-      loss: 312,
+      returnCash: -151,
     },
   ],
   bestTrades: [
     {
-      id: 'ZYRwa5z',
+      id: 600,
       ticker: 'NFLX',
       date: '14/06/21',
-      loss: 253,
+      returnCash: 253,
     },
     {
-      id: 'Y58P1M1',
+      id: 900,
       ticker: 'BMBL',
       date: '15/06/21',
-      loss: 312,
+      returnCash: 312,
     },
   ],
   tickers: {
@@ -490,6 +490,49 @@ const compareToStreaks = function (newEntry) {
   }
 };
 
+const compareToWorstBest = function (newEntry) {
+  if (newEntry.returnCash > -1) {
+    const indexInBest = user.bestTrades
+      .map(trade => trade.id)
+      .indexOf(newEntry.id);
+
+    if (indexInBest !== -1) {
+      user.bestTrades[indexInBest] = newEntry;
+      user.bestTrades = user.bestTrades.sort(
+        (a, b) => b.returnCash - a.returnCash
+      );
+      return;
+    }
+
+    user.bestTrades.push(newEntry);
+    user.bestTrades = user.bestTrades.sort(
+      (a, b) => b.returnCash - a.returnCash
+    );
+
+    if (user.bestTrades.length > 16) user.bestTrades.pop();
+  }
+
+  if (newEntry.returnCash < 0) {
+    const indexInWorst = user.worstTrades
+      .map(trade => trade.id)
+      .indexOf(newEntry.id);
+
+    if (indexInWorst !== -1) {
+      user.worstTrades[indexInWorst] = newEntry;
+      user.worstTrades = user.worstTrades.sort(
+        (a, b) => b.returnCash - a.returnCash
+      );
+      return;
+    }
+
+    user.worstTrades.push(newEntry);
+    user.worstTrades = user.worstTrades.sort(
+      (a, b) => a.returnCash - b.returnCash
+    );
+    if (user.worstTrades.length > 16) user.worstTrades.pop();
+  }
+};
+
 const compareStatistics = function (
   newEntry,
   newEntryIndex,
@@ -497,6 +540,7 @@ const compareStatistics = function (
 ) {
   addToOverall(newEntry, newEntryIndex, previousSide);
   compareToStreaks(newEntry);
+  compareToWorstBest(newEntry);
 };
 
 export const passData = function (field) {

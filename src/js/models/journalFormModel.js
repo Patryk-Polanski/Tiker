@@ -22,7 +22,7 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
   let ticker;
   if (!tickerRegex.test(inputData.stock))
     return ['ERROR', 'Stock ticker field only accepts letters'];
-  ticker = inputData.stock;
+  ticker = inputData.stock.toUpperCase();
 
   // trade side
   const side = inputData.side;

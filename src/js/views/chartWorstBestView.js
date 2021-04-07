@@ -101,14 +101,14 @@ export const renderWorstBestChart = function (passedData) {
   // ZONE - update function
   const updateWorstBestChart = function (data = chartData) {
     // sort the data based on result
-    data.sort((a, b) => b.result - a.result);
+    // data.sort((a, b) => b.returnCash - a.returnCash);
 
     // create responsive gap for the chart
-    const maxMinVals = d3.extent(data, d => d.result);
+    const maxMinVals = d3.extent(data, d => d.returnCash);
     const gap = Math.round((maxMinVals[1] - maxMinVals[0]) / 6);
 
     // set scale domains
-    y.domain([0, d3.max(data, d => d.result) + gap]);
+    y.domain([0, d3.max(data, d => d.returnCash) + gap]);
     x.domain(data.map(item => item.ticker));
 
     // join data to rectangles inside our graph group
@@ -132,8 +132,8 @@ export const renderWorstBestChart = function (passedData) {
       .attr('y', graphHeight)
       .attr('x', d => x(d.ticker))
       .attr('fill', 'orange')
-      .attr('height', d => graphHeight - y(d.result))
-      .attr('y', d => y(d.result))
+      .attr('height', d => graphHeight - y(d.returnCash))
+      .attr('y', d => y(d.returnCash))
       .attr('class', 'worst-best-bars');
 
     // apply axes to axes groups
@@ -156,7 +156,7 @@ export const renderWorstBestChart = function (passedData) {
     for (let i = 0; i < barsDimensions.length; i++) {
       labelsGroup
         .append('text')
-        .text(kFormatter(determineSign(data[i].result), 9999))
+        .text(kFormatter(determineSign(data[i].returnCash), 9999))
         .attr('class', `${type === 'best' ? 'best' : 'worst'}-trades-label`)
         .attr(
           'transform',

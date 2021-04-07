@@ -423,26 +423,26 @@ var user = {
     }
   },
   worstTrades: [{
-    id: 'ZYRwa5z',
+    id: 300,
     ticker: 'NFLX',
     date: '14/06/21',
-    loss: 253
+    returnCash: -234
   }, {
-    id: 'Y58P1M1',
+    id: 250,
     ticker: 'BMBL',
     date: '15/06/21',
-    loss: 312
+    returnCash: -151
   }],
   bestTrades: [{
-    id: 'ZYRwa5z',
+    id: 600,
     ticker: 'NFLX',
     date: '14/06/21',
-    loss: 253
+    returnCash: 253
   }, {
-    id: 'Y58P1M1',
+    id: 900,
     ticker: 'BMBL',
     date: '15/06/21',
-    loss: 312
+    returnCash: 312
   }],
   tickers: {
     AAL: {
@@ -765,10 +765,53 @@ var compareToStreaks = function compareToStreaks(newEntry) {
   }
 };
 
+var compareToWorstBest = function compareToWorstBest(newEntry) {
+  if (newEntry.returnCash > -1) {
+    var indexInBest = user.bestTrades.map(function (trade) {
+      return trade.id;
+    }).indexOf(newEntry.id);
+
+    if (indexInBest !== -1) {
+      user.bestTrades[indexInBest] = newEntry;
+      user.bestTrades = user.bestTrades.sort(function (a, b) {
+        return b.returnCash - a.returnCash;
+      });
+      return;
+    }
+
+    user.bestTrades.push(newEntry);
+    user.bestTrades = user.bestTrades.sort(function (a, b) {
+      return b.returnCash - a.returnCash;
+    });
+    if (user.bestTrades.length > 16) user.bestTrades.pop();
+  }
+
+  if (newEntry.returnCash < 0) {
+    var indexInWorst = user.worstTrades.map(function (trade) {
+      return trade.id;
+    }).indexOf(newEntry.id);
+
+    if (indexInWorst !== -1) {
+      user.worstTrades[indexInWorst] = newEntry;
+      user.worstTrades = user.worstTrades.sort(function (a, b) {
+        return b.returnCash - a.returnCash;
+      });
+      return;
+    }
+
+    user.worstTrades.push(newEntry);
+    user.worstTrades = user.worstTrades.sort(function (a, b) {
+      return a.returnCash - b.returnCash;
+    });
+    if (user.worstTrades.length > 16) user.worstTrades.pop();
+  }
+};
+
 var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
   var previousSide = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
   addToOverall(newEntry, newEntryIndex, previousSide);
   compareToStreaks(newEntry);
+  compareToWorstBest(newEntry);
 };
 
 var passData = function passData(field) {
@@ -5081,17 +5124,15 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
   var updateWorstBestChart = function updateWorstBestChart() {
     var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : chartData;
     // sort the data based on result
-    data.sort(function (a, b) {
-      return b.result - a.result;
-    }); // create responsive gap for the chart
-
+    // data.sort((a, b) => b.returnCash - a.returnCash);
+    // create responsive gap for the chart
     var maxMinVals = d3.extent(data, function (d) {
-      return d.result;
+      return d.returnCash;
     });
     var gap = Math.round((maxMinVals[1] - maxMinVals[0]) / 6); // set scale domains
 
     y.domain([0, d3.max(data, function (d) {
-      return d.result;
+      return d.returnCash;
     }) + gap]);
     x.domain(data.map(function (item) {
       return item.ticker;
@@ -5108,9 +5149,9 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
     rects.enter().append('rect').attr('width', x.bandwidth).attr('height', 0).attr('y', graphHeight).attr('x', function (d) {
       return x(d.ticker);
     }).attr('fill', 'orange').attr('height', function (d) {
-      return graphHeight - y(d.result);
+      return graphHeight - y(d.returnCash);
     }).attr('y', function (d) {
-      return y(d.result);
+      return y(d.returnCash);
     }).attr('class', 'worst-best-bars'); // apply axes to axes groups
 
     xAxisGroup.call(xAxis);
@@ -5123,7 +5164,7 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
     var labelsGroup = graph.append('g');
 
     for (var i = 0; i < barsDimensions.length; i++) {
-      labelsGroup.append('text').text((0, _helpers.kFormatter)(determineSign(data[i].result), 9999)).attr('class', "".concat(type === 'best' ? 'best' : 'worst', "-trades-label")).attr('transform', "translate(".concat(barsDimensions[i][0], ", ").concat(barsDimensions[i][1] - 10, ")"));
+      labelsGroup.append('text').text((0, _helpers.kFormatter)(determineSign(data[i].returnCash), 9999)).attr('class', "".concat(type === 'best' ? 'best' : 'worst', "-trades-label")).attr('transform', "translate(".concat(barsDimensions[i][0], ", ").concat(barsDimensions[i][1] - 10, ")"));
       labelsGroup.append('text').text(data[i].date).attr('class', 'worst-best-date').attr('transform', "translate(".concat(barsDimensions[i][0] - 8, ", ").concat(graphHeight - 10, ") rotate(-90)"));
     } // ZONE - create horizontal line on the x axis to cover the bars borders
 
@@ -5148,83 +5189,83 @@ exports.formatWorstBestData = void 0;
 var worstTrades = [{
   id: '8gW2a5Q',
   ticker: 'ZM',
-  result: 240,
+  returnCash: 240,
   date: '3/4/21'
 }, {
   id: 'lK2G98Q',
   ticker: 'MARA',
-  result: 173,
+  returnCash: 173,
   date: '3/5/21'
 }, {
   id: 'K14Ji98',
   ticker: 'BMBL',
-  result: 166,
+  returnCash: 166,
   date: '13/4/21'
 }, {
   id: 'k98Ck9s',
   ticker: 'X',
-  result: 130,
+  returnCash: 130,
   date: '26/3/21'
 }, {
   id: '92Kji63',
   ticker: 'SNAP',
-  result: 122,
+  returnCash: 122,
   date: '1/3/21'
 }, {
   id: '8gW2a5Q',
   ticker: 'GME',
-  result: 111,
+  returnCash: 111,
   date: '2/4/21'
 }, {
   id: 'Sd8tr32',
   ticker: 'MSFT',
-  result: 103,
+  returnCash: 103,
   date: '5/6/21'
 }, {
   id: 'pa52Qs4',
   ticker: 'ROKU',
-  result: 94,
+  returnCash: 94,
   date: '16/7/21'
 }];
 var bestTrades = [{
   id: '8gW2a5Q',
   ticker: 'ZM',
-  result: 440,
+  returnCash: 440,
   date: '30/4/21'
 }, {
   id: 'lK2G98Q',
   ticker: 'MARA',
-  result: 373,
+  returnCash: 373,
   date: '8/5/21'
 }, {
   id: 'K14Ji98',
   ticker: 'BMBL',
-  result: 366,
+  returnCash: 366,
   date: '8/4/21'
 }, {
   id: 'k98Ck9s',
   ticker: 'X',
-  result: 230,
+  returnCash: 230,
   date: '13/3/21'
 }, {
   id: '92Kji63',
   ticker: 'SNAP',
-  result: 222,
+  returnCash: 222,
   date: '16/3/21'
 }, {
   id: '8gW2a5Q',
   ticker: 'GME',
-  result: 117,
+  returnCash: 117,
   date: '6/4/21'
 }, {
   id: 'Sd8tr32',
   ticker: 'MSFT',
-  result: 109,
+  returnCash: 109,
   date: '2/6/21'
 }, {
   id: 'pa52Qs4',
   ticker: 'ROKU',
-  result: 104,
+  returnCash: 104,
   date: '18/7/21'
 }];
 
@@ -8064,7 +8105,7 @@ var validateJournalForm = function validateJournalForm(inputData) {
   var tickerRegex = /^[a-zA-Z]+$/;
   var ticker;
   if (!tickerRegex.test(inputData.stock)) return ['ERROR', 'Stock ticker field only accepts letters'];
-  ticker = inputData.stock; // trade side
+  ticker = inputData.stock.toUpperCase(); // trade side
 
   var side = inputData.side; // id
 
@@ -8371,7 +8412,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57965" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63855" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
