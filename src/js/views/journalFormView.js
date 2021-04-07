@@ -56,39 +56,20 @@ const recalculateDetailsShares = function (targetElClass) {
 };
 
 const calculateDetailsOutput = function (focusedEl) {
-  if (focusedEl.classList.contains('c-journal-form__entry')) {
-    journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice(
-      '.c-journal-form__entry',
-      '.c-journal-form__entry-size'
-    );
-  }
-
-  if (focusedEl.classList.contains('c-journal-form__entry-size')) {
-    journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares(
-      '.c-journal-form__entry-size'
-    );
-    journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice(
-      '.c-journal-form__entry',
-      '.c-journal-form__entry-size'
-    );
-  }
-
-  if (focusedEl.classList.contains('c-journal-form__exit')) {
-    journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice(
-      '.c-journal-form__exit',
-      '.c-journal-form__exit-size'
-    );
-  }
-
-  if (focusedEl.classList.contains('c-journal-form__exit-size')) {
-    journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares(
-      '.c-journal-form__exit-size'
-    );
-    journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice(
-      '.c-journal-form__exit',
-      '.c-journal-form__exit-size'
-    );
-  }
+  journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice(
+    '.c-journal-form__entry',
+    '.c-journal-form__entry-size'
+  );
+  journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares(
+    '.c-journal-form__entry-size'
+  );
+  journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice(
+    '.c-journal-form__exit',
+    '.c-journal-form__exit-size'
+  );
+  journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares(
+    '.c-journal-form__exit-size'
+  );
 };
 
 const addKeyEventToDetailsInputs = function () {

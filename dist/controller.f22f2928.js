@@ -7699,23 +7699,10 @@ var recalculateDetailsShares = function recalculateDetailsShares(targetElClass) 
 };
 
 var calculateDetailsOutput = function calculateDetailsOutput(focusedEl) {
-  if (focusedEl.classList.contains('c-journal-form__entry')) {
-    journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__entry', '.c-journal-form__entry-size');
-  }
-
-  if (focusedEl.classList.contains('c-journal-form__entry-size')) {
-    journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares('.c-journal-form__entry-size');
-    journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__entry', '.c-journal-form__entry-size');
-  }
-
-  if (focusedEl.classList.contains('c-journal-form__exit')) {
-    journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__exit', '.c-journal-form__exit-size');
-  }
-
-  if (focusedEl.classList.contains('c-journal-form__exit-size')) {
-    journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares('.c-journal-form__exit-size');
-    journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__exit', '.c-journal-form__exit-size');
-  }
+  journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__entry', '.c-journal-form__entry-size');
+  journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares('.c-journal-form__entry-size');
+  journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__exit', '.c-journal-form__exit-size');
+  journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares('.c-journal-form__exit-size');
 };
 
 var addKeyEventToDetailsInputs = function addKeyEventToDetailsInputs() {
