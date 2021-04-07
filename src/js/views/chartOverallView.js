@@ -31,7 +31,7 @@ export const clearLongShortCanvas = function () {
 export const renderStreaks = function (data) {
   overallEls.winStreakTotal.textContent = data.wins.trades.length;
   overallEls.winStreakProfit.textContent = data.wins.trades
-    .map(trade => trade.profit)
+    .map(trade => trade.returnCash)
     .reduce((acc, num) => acc + num, 0);
   overallEls.winStreakDate.textContent = `${data.wins.trades[0].date} - ${
     data.wins.trades[data.wins.trades.length - 1].date
@@ -39,7 +39,7 @@ export const renderStreaks = function (data) {
 
   overallEls.lossStreakTotal.textContent = data.losses.trades.length;
   overallEls.lossStreakProfit.textContent = data.losses.trades
-    .map(trade => trade.loss)
+    .map(trade => trade.returnCash)
     .reduce((acc, num) => acc + num, 0);
   overallEls.lossStreakDate.textContent = `${data.losses.trades[0].date} - ${
     data.losses.trades[data.losses.trades.length - 1].date

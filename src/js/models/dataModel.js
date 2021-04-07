@@ -13,16 +13,16 @@ const user = {
     wins: {
       trades: [
         {
-          id: 'ZYRwa5z',
+          id: 1150,
           ticker: 'NFLX',
           date: '14/06/21',
-          profit: 253,
+          returnCash: 253,
         },
         {
-          id: 'Y58P1M',
-          ticker: 'BMBL',
+          id: 115,
+          ticker: 'VREZ',
           date: '15/06/21',
-          profit: 312,
+          returnCash: 312,
         },
       ],
     },
@@ -32,13 +32,13 @@ const user = {
           id: 'liJ56D3',
           ticker: 'AMZN',
           date: '12/08/21',
-          loss: -90,
+          returnCash: -90,
         },
         {
           id: 'Y58P1M',
           ticker: 'X',
           date: '21/07/21',
-          loss: -112,
+          returnCash: -112,
         },
       ],
     },
@@ -48,7 +48,7 @@ const user = {
           id: 'ZYRwa5z',
           ticker: 'NFLX',
           date: '14/06/21',
-          profit: 253,
+          returnCash: 253,
         },
       ],
     },
@@ -332,6 +332,168 @@ console.log(user);
 
 const sortJournal = data => data.sort((a, b) => a.id - b.id);
 
+const addToOverall = function (newEntry, newEntryIndex, previousSide) {
+  if (newEntryIndex === -1) user.overall.total++;
+
+  if (previousSide === 'short' && newEntry.side === 'long') {
+    user.overall.proportions[0].total++;
+    user.overall.proportions[1].total--;
+    return;
+  }
+
+  if (previousSide === 'long' && newEntry.side === 'short') {
+    user.overall.proportions[0].total--;
+    user.overall.proportions[1].total++;
+    return;
+  }
+
+  if (newEntry.side === 'long') {
+    user.overall.proportions[0].total++;
+  }
+
+  if (newEntry.side === 'short') {
+    user.overall.proportions[1].total++;
+  }
+};
+
+const compareToStreaks = function (newEntry) {
+  const streakObj = {
+    id: newEntry.id,
+    ticker: newEntry.ticker,
+    date: newEntry.dateShort,
+    returnCash: newEntry.returnCash,
+  };
+
+  // losing streak - checks whether the entry exists in the streak
+  const indexInLosses = user.streaks.losses.trades
+    .map(loss => loss.id)
+    .indexOf(newEntry.id);
+
+  if (indexInLosses !== -1 && newEntry.returnCash < 0) {
+    user.streaks.losses.trades[indexInLosses] = streakObj;
+  }
+
+  if (indexInLosses !== -1 && newEntry.returnCash > -1) {
+    user.streaks.losses.trades.splice(indexInLosses, 1);
+  }
+
+  // winning streak - checks whether the entry exists in the streak
+  const indexInWins = user.streaks.wins.trades
+    .map(win => win.id)
+    .indexOf(newEntry.id);
+
+  if (indexInWins !== -1 && newEntry.returnCash > -1) {
+    user.streaks.wins.trades[indexInWins] = streakObj;
+  }
+
+  if (indexInWins !== -1 && newEntry.returnCash < 0) {
+    user.streaks.wins.trades.splice(indexInWins, 1);
+  }
+
+  // current streak - checks whether the entry exists in the streak
+  const indexInCurrent = user.streaks.current.trades
+    .map(cur => cur.id)
+    .indexOf(newEntry.id);
+
+  if (indexInCurrent !== -1) {
+    const currentStreakLength = user.streaks.current.trades.length;
+    if (currentStreakLength === 1) {
+      user.streaks.current.trades[indexInCurrent] = streakObj;
+      return;
+    }
+    if (
+      newEntry.returnCash > -1 &&
+      (user.streaks.current.trades[indexInCurrent - 1].return > -1 ||
+        user.streaks.current.trades[indexInCurrent + 1].return > -1)
+    ) {
+      user.streaks.current.trades[indexInCurrent] = streakObj;
+      return;
+    }
+
+    if (
+      newEntry.returnCash > -1 &&
+      (user.streaks.current.trades[indexInCurrent - 1].return < 0 ||
+        user.streaks.current.trades[indexInCurrent + 1].return < 0)
+    ) {
+      user.streaks.current.trades.splice(indexInCurrent, 1);
+      return;
+    }
+
+    if (
+      newEntry.returnCash < 0 &&
+      (user.streaks.current.trades[indexInCurrent - 1].return < 0 ||
+        user.streaks.current.trades[indexInCurrent + 1].return < 0)
+    ) {
+      user.streaks.current.trades[indexInCurrent] = streakObj;
+      return;
+    }
+
+    if (
+      newEntry.returnCash < 0 &&
+      (user.streaks.current.trades[indexInCurrent - 1].return > -1 ||
+        user.streaks.current.trades[indexInCurrent + 1].return > -1)
+    ) {
+      user.streaks.current.trades.splice(indexInCurrent, 1);
+      return;
+    }
+  }
+
+  // check new entry against current streak
+  if (
+    user.streaks.current.trades[0] &&
+    newEntry.returnCash > -1 &&
+    user.streaks.current.trades[0].returnCash > -1
+  ) {
+    user.streaks.current.trades.push(streakObj);
+  } else if (
+    user.streaks.current.trades[0] &&
+    newEntry.returnCash > -1 &&
+    user.streaks.current.trades[0].returnCash < 0
+  ) {
+    user.streaks.current.trades = [streakObj];
+  }
+
+  if (
+    user.streaks.current.trades[0] &&
+    newEntry.returnCash < 0 &&
+    user.streaks.current.trades[0].returnCash < 0
+  ) {
+    user.streaks.current.trades.push(streakObj);
+  } else if (
+    user.streaks.current.trades[0] &&
+    newEntry.returnCash < 0 &&
+    user.streaks.current.trades[0].returnCash > -1
+  ) {
+    user.streaks.current.trades = [streakObj];
+  }
+
+  // compare the current streak to winning and losing streak
+  if (
+    user.streaks.current.trades[0].returnCash > -1 &&
+    user.streaks.current.trades.length >= user.streaks.wins.trades.length
+  ) {
+    user.streaks.wins.trades = user.streaks.current.trades;
+    return;
+  }
+
+  if (
+    user.streaks.current.trades[0].returnCash < 0 &&
+    user.streaks.current.trades.length >= user.streaks.losses.trades.length
+  ) {
+    user.streaks.losses.trades = user.streaks.current.trades;
+    return;
+  }
+};
+
+const compareStatistics = function (
+  newEntry,
+  newEntryIndex,
+  previousSide = ''
+) {
+  addToOverall(newEntry, newEntryIndex, previousSide);
+  compareToStreaks(newEntry);
+};
+
 export const passData = function (field) {
   return user[field];
 };
@@ -348,7 +510,6 @@ export const updateCapital = function (amount, action) {
   if (action === 'minus') user.capital -= amount;
   if (action === 'plus') user.capital += amount;
   if (user.capital < 0) user.capital = 0;
-  console.log(user);
   return [action, stringifyNum(amount), stringifyNum(user.capital)];
 };
 
@@ -373,10 +534,12 @@ export const updateProfitableData = function (items) {
 
 export const updateJournalData = function (newEntry) {
   const newEntryIndex = user.journal.map(e => e.id).indexOf(newEntry.id);
+  let previousSide;
   // const newEntryIndex = user.journal.map(e => e.id).indexOf('Hf5t3p1');
   // if the id already exists, meaning the journal entry has been updated
   if (newEntryIndex > -1) {
     updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
+    previousSide = user.journal[newEntryIndex].side;
     user.journal[newEntryIndex] = newEntry;
     updateCapital(newEntry.returnCash, 'plus');
   }
@@ -388,6 +551,8 @@ export const updateJournalData = function (newEntry) {
     // sort the data
     sortJournal(user.journal);
   }
+
+  compareStatistics(newEntry, newEntryIndex, previousSide);
 
   console.log('UPDATED USER OBJECT');
   console.log(user);

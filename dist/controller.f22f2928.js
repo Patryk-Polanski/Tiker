@@ -388,15 +388,15 @@ var user = {
   streaks: {
     wins: {
       trades: [{
-        id: 'ZYRwa5z',
+        id: 1150,
         ticker: 'NFLX',
         date: '14/06/21',
-        profit: 253
+        returnCash: 253
       }, {
-        id: 'Y58P1M',
-        ticker: 'BMBL',
+        id: 115,
+        ticker: 'VREZ',
         date: '15/06/21',
-        profit: 312
+        returnCash: 312
       }]
     },
     losses: {
@@ -404,12 +404,12 @@ var user = {
         id: 'liJ56D3',
         ticker: 'AMZN',
         date: '12/08/21',
-        loss: -90
+        returnCash: -90
       }, {
         id: 'Y58P1M',
         ticker: 'X',
         date: '21/07/21',
-        loss: -112
+        returnCash: -112
       }]
     },
     current: {
@@ -417,7 +417,7 @@ var user = {
         id: 'ZYRwa5z',
         ticker: 'NFLX',
         date: '14/06/21',
-        profit: 253
+        returnCash: 253
       }]
     }
   },
@@ -643,6 +643,128 @@ var sortJournal = function sortJournal(data) {
   });
 };
 
+var addToOverall = function addToOverall(newEntry, newEntryIndex, previousSide) {
+  if (newEntryIndex === -1) user.overall.total++;
+
+  if (previousSide === 'short' && newEntry.side === 'long') {
+    user.overall.proportions[0].total++;
+    user.overall.proportions[1].total--;
+    return;
+  }
+
+  if (previousSide === 'long' && newEntry.side === 'short') {
+    user.overall.proportions[0].total--;
+    user.overall.proportions[1].total++;
+    return;
+  }
+
+  if (newEntry.side === 'long') {
+    user.overall.proportions[0].total++;
+  }
+
+  if (newEntry.side === 'short') {
+    user.overall.proportions[1].total++;
+  }
+};
+
+var compareToStreaks = function compareToStreaks(newEntry) {
+  var streakObj = {
+    id: newEntry.id,
+    ticker: newEntry.ticker,
+    date: newEntry.dateShort,
+    returnCash: newEntry.returnCash
+  }; // losing streak - checks whether the entry exists in the streak
+
+  var indexInLosses = user.streaks.losses.trades.map(function (loss) {
+    return loss.id;
+  }).indexOf(newEntry.id);
+
+  if (indexInLosses !== -1 && newEntry.returnCash < 0) {
+    user.streaks.losses.trades[indexInLosses] = streakObj;
+  }
+
+  if (indexInLosses !== -1 && newEntry.returnCash > -1) {
+    user.streaks.losses.trades.splice(indexInLosses, 1);
+  } // winning streak - checks whether the entry exists in the streak
+
+
+  var indexInWins = user.streaks.wins.trades.map(function (win) {
+    return win.id;
+  }).indexOf(newEntry.id);
+
+  if (indexInWins !== -1 && newEntry.returnCash > -1) {
+    user.streaks.wins.trades[indexInWins] = streakObj;
+  }
+
+  if (indexInWins !== -1 && newEntry.returnCash < 0) {
+    user.streaks.wins.trades.splice(indexInWins, 1);
+  } // current streak - checks whether the entry exists in the streak
+
+
+  var indexInCurrent = user.streaks.current.trades.map(function (cur) {
+    return cur.id;
+  }).indexOf(newEntry.id);
+
+  if (indexInCurrent !== -1) {
+    var currentStreakLength = user.streaks.current.trades.length;
+
+    if (currentStreakLength === 1) {
+      user.streaks.current.trades[indexInCurrent] = streakObj;
+      return;
+    }
+
+    if (newEntry.returnCash > -1 && (user.streaks.current.trades[indexInCurrent - 1].return > -1 || user.streaks.current.trades[indexInCurrent + 1].return > -1)) {
+      user.streaks.current.trades[indexInCurrent] = streakObj;
+      return;
+    }
+
+    if (newEntry.returnCash > -1 && (user.streaks.current.trades[indexInCurrent - 1].return < 0 || user.streaks.current.trades[indexInCurrent + 1].return < 0)) {
+      user.streaks.current.trades.splice(indexInCurrent, 1);
+      return;
+    }
+
+    if (newEntry.returnCash < 0 && (user.streaks.current.trades[indexInCurrent - 1].return < 0 || user.streaks.current.trades[indexInCurrent + 1].return < 0)) {
+      user.streaks.current.trades[indexInCurrent] = streakObj;
+      return;
+    }
+
+    if (newEntry.returnCash < 0 && (user.streaks.current.trades[indexInCurrent - 1].return > -1 || user.streaks.current.trades[indexInCurrent + 1].return > -1)) {
+      user.streaks.current.trades.splice(indexInCurrent, 1);
+      return;
+    }
+  } // check new entry against current streak
+
+
+  if (user.streaks.current.trades[0] && newEntry.returnCash > -1 && user.streaks.current.trades[0].returnCash > -1) {
+    user.streaks.current.trades.push(streakObj);
+  } else if (user.streaks.current.trades[0] && newEntry.returnCash > -1 && user.streaks.current.trades[0].returnCash < 0) {
+    user.streaks.current.trades = [streakObj];
+  }
+
+  if (user.streaks.current.trades[0] && newEntry.returnCash < 0 && user.streaks.current.trades[0].returnCash < 0) {
+    user.streaks.current.trades.push(streakObj);
+  } else if (user.streaks.current.trades[0] && newEntry.returnCash < 0 && user.streaks.current.trades[0].returnCash > -1) {
+    user.streaks.current.trades = [streakObj];
+  } // compare the current streak to winning and losing streak
+
+
+  if (user.streaks.current.trades[0].returnCash > -1 && user.streaks.current.trades.length >= user.streaks.wins.trades.length) {
+    user.streaks.wins.trades = user.streaks.current.trades;
+    return;
+  }
+
+  if (user.streaks.current.trades[0].returnCash < 0 && user.streaks.current.trades.length >= user.streaks.losses.trades.length) {
+    user.streaks.losses.trades = user.streaks.current.trades;
+    return;
+  }
+};
+
+var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
+  var previousSide = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  addToOverall(newEntry, newEntryIndex, previousSide);
+  compareToStreaks(newEntry);
+};
+
 var passData = function passData(field) {
   return user[field];
 };
@@ -663,7 +785,6 @@ var updateCapital = function updateCapital(amount, action) {
   if (action === 'minus') user.capital -= amount;
   if (action === 'plus') user.capital += amount;
   if (user.capital < 0) user.capital = 0;
-  console.log(user);
   return [action, (0, _helpers.stringifyNum)(amount), (0, _helpers.stringifyNum)(user.capital)];
 };
 
@@ -699,11 +820,13 @@ exports.updateProfitableData = updateProfitableData;
 var updateJournalData = function updateJournalData(newEntry) {
   var newEntryIndex = user.journal.map(function (e) {
     return e.id;
-  }).indexOf(newEntry.id); // const newEntryIndex = user.journal.map(e => e.id).indexOf('Hf5t3p1');
+  }).indexOf(newEntry.id);
+  var previousSide; // const newEntryIndex = user.journal.map(e => e.id).indexOf('Hf5t3p1');
   // if the id already exists, meaning the journal entry has been updated
 
   if (newEntryIndex > -1) {
     updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
+    previousSide = user.journal[newEntryIndex].side;
     user.journal[newEntryIndex] = newEntry;
     updateCapital(newEntry.returnCash, 'plus');
   } // newEntryIndex is -1, meaning the jounal entry is new
@@ -716,6 +839,7 @@ var updateJournalData = function updateJournalData(newEntry) {
     sortJournal(user.journal);
   }
 
+  compareStatistics(newEntry, newEntryIndex, previousSide);
   console.log('UPDATED USER OBJECT');
   console.log(user);
   return [user.capital];
@@ -890,14 +1014,14 @@ exports.clearLongShortCanvas = clearLongShortCanvas;
 var renderStreaks = function renderStreaks(data) {
   overallEls.winStreakTotal.textContent = data.wins.trades.length;
   overallEls.winStreakProfit.textContent = data.wins.trades.map(function (trade) {
-    return trade.profit;
+    return trade.returnCash;
   }).reduce(function (acc, num) {
     return acc + num;
   }, 0);
   overallEls.winStreakDate.textContent = "".concat(data.wins.trades[0].date, " - ").concat(data.wins.trades[data.wins.trades.length - 1].date);
   overallEls.lossStreakTotal.textContent = data.losses.trades.length;
   overallEls.lossStreakProfit.textContent = data.losses.trades.map(function (trade) {
-    return trade.loss;
+    return trade.returnCash;
   }).reduce(function (acc, num) {
     return acc + num;
   }, 0);
@@ -8133,7 +8257,6 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
     if (validationOutcome[0] === 'ERROR') (0, _journalFormView.updateFormValidationError)(validationOutcome[1]);
 
     if (validationOutcome[0] === 'PASS') {
-      console.log('test has been passed');
       (0, _journalFormView.clearFormValidationError)();
       var updatedCapital = (0, _dataModel.updateJournalData)(validationOutcome[1]);
       (0, _journalFormView.switchJournalFormModes)('read-only');
@@ -8242,7 +8365,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50526" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57965" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
