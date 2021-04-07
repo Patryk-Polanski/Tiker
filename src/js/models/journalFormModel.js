@@ -99,12 +99,14 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
   ).toFixed(2);
 
   // calculate cash return
-  const returnCash = +(Math.abs(avgEntry - avgExit) * sharesAmount).toFixed(2);
+  let returnCash;
+  if (side === 'long')
+    returnCash = +((avgExit - avgEntry) * sharesAmount).toFixed(2);
+  if (side === 'short')
+    returnCash = +((avgEntry - avgExit) * sharesAmount).toFixed(2);
 
   // calculate account % return
-  const returnPercent = +Math.abs((returnCash / accountCapital) * 100).toFixed(
-    2
-  );
+  const returnPercent = +((returnCash / accountCapital) * 100).toFixed(2);
 
   const body = inputData.body;
 

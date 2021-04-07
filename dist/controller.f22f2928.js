@@ -5635,9 +5635,11 @@ var validateJournalForm = function validateJournalForm(inputData) {
     return acc + num;
   }, 0) / sharesAmount).toFixed(2); // calculate cash return
 
-  var returnCash = +(Math.abs(avgEntry - avgExit) * sharesAmount).toFixed(2); // calculate account % return
+  var returnCash;
+  if (side === 'long') returnCash = +((avgExit - avgEntry) * sharesAmount).toFixed(2);
+  if (side === 'short') returnCash = +((avgEntry - avgExit) * sharesAmount).toFixed(2); // calculate account % return
 
-  var returnPercent = +Math.abs(returnCash / accountCapital * 100).toFixed(2);
+  var returnPercent = +(returnCash / accountCapital * 100).toFixed(2);
   var body = inputData.body;
   var entryObj = {
     id: id,
@@ -5885,7 +5887,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54942" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50526" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
