@@ -187,96 +187,6 @@ const user = {
         ],
       },
     ],
-    // jul21: [
-    //   {
-    //     id: 'Kr92fYl',
-    //     side: 'short',
-    //     result: -90,
-    //     resultPercentage: -0.9,
-    //     date: '02/07/21',
-    //   },
-    //   {
-    //     id: 'P9gHt21',
-    //     side: 'long',
-    //     result: -86,
-    //     resultPercentage: -0.84,
-    //     date: '07/07/21',
-    //   },
-    //   {
-    //     id: 'K88spRl',
-    //     side: 'long',
-    //     result: 146,
-    //     resultPercentage: 1.46,
-    //     date: '15/07/21',
-    //   },
-    //   {
-    //     id: 'Mn3z2pl',
-    //     side: 'short',
-    //     result: 67,
-    //     resultPercentage: 0.63,
-    //     date: '20/07/21',
-    //   },
-    // ],
-    // jun21: [
-    //   {
-    //     id: 'OL4stW4',
-    //     side: 'long',
-    //     result: 240,
-    //     resultPercentage: 1.83,
-    //     date: '04/06/21',
-    //   },
-    //   {
-    //     id: 'SLX8f6s',
-    //     side: 'long',
-    //     result: -130,
-    //     resultPercentage: -1.92,
-    //     date: '13/06/21',
-    //   },
-    //   {
-    //     id: 'SLX8f6a',
-    //     side: 'long',
-    //     result: -130,
-    //     resultPercentage: -1.92,
-    //     date: '19/06/21',
-    //   },
-    //   {
-    //     id: 'Qr4fG61',
-    //     side: 'short',
-    //     result: 106,
-    //     resultPercentage: 1.02,
-    //     date: '24/06/21',
-    //   },
-    // ],
-    // may21: [
-    //   {
-    //     id: 'HR6q2pf',
-    //     side: 'short',
-    //     result: -160,
-    //     resultPercentage: -1.42,
-    //     date: '07/05/21',
-    //   },
-    //   {
-    //     id: 'Gq9pd4H',
-    //     side: 'short',
-    //     result: -80,
-    //     resultPercentage: -0.8,
-    //     date: '11/05/21',
-    //   },
-    //   {
-    //     id: 'Bd99sd1',
-    //     side: 'long',
-    //     result: 213,
-    //     resultPercentage: 2.2,
-    //     date: '19/05/21',
-    //   },
-    //   {
-    //     id: 'lE59t6A',
-    //     side: 'short',
-    //     result: 110,
-    //     resultPercentage: 1.1,
-    //     date: '25/05/21',
-    //   },
-    // ],
   },
   journal: [
     {
@@ -619,7 +529,7 @@ export const updateCapital = function (amount, action) {
   return [action, stringifyNum(amount), stringifyNum(user.capital)];
 };
 
-export const updateMonthlyData = function (obj) {
+export const updateCalendarData = function (obj) {
   Object.keys(obj).forEach(key => {
     user.monthlyData[key] = obj[key];
   });

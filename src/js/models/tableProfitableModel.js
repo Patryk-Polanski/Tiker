@@ -53,7 +53,7 @@ export const checkAgainstLeaders = function (leaders, dataArr) {
     const leaderTickers = Object.keys(leaders);
     const leaderAvgReturn = [];
 
-    // calculate avg wi percentage on the new data
+    // calculate avg win percentage on the new data
     const avgWinPercent = (
       data.trades
         .map(trade => trade.winPercentage)

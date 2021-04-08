@@ -356,7 +356,7 @@ exports.createLongDate = createLongDate;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.findJournalEntry = exports.updateJournalData = exports.updateProfitableData = exports.updateMonthlyData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
+exports.findJournalEntry = exports.updateJournalData = exports.updateProfitableData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
 
 var _helpers = require("./../helpers");
 
@@ -563,97 +563,7 @@ var user = {
         returnCash: -70,
         returnPercent: -1.1
       }]
-    }] // jul21: [
-    //   {
-    //     id: 'Kr92fYl',
-    //     side: 'short',
-    //     result: -90,
-    //     resultPercentage: -0.9,
-    //     date: '02/07/21',
-    //   },
-    //   {
-    //     id: 'P9gHt21',
-    //     side: 'long',
-    //     result: -86,
-    //     resultPercentage: -0.84,
-    //     date: '07/07/21',
-    //   },
-    //   {
-    //     id: 'K88spRl',
-    //     side: 'long',
-    //     result: 146,
-    //     resultPercentage: 1.46,
-    //     date: '15/07/21',
-    //   },
-    //   {
-    //     id: 'Mn3z2pl',
-    //     side: 'short',
-    //     result: 67,
-    //     resultPercentage: 0.63,
-    //     date: '20/07/21',
-    //   },
-    // ],
-    // jun21: [
-    //   {
-    //     id: 'OL4stW4',
-    //     side: 'long',
-    //     result: 240,
-    //     resultPercentage: 1.83,
-    //     date: '04/06/21',
-    //   },
-    //   {
-    //     id: 'SLX8f6s',
-    //     side: 'long',
-    //     result: -130,
-    //     resultPercentage: -1.92,
-    //     date: '13/06/21',
-    //   },
-    //   {
-    //     id: 'SLX8f6a',
-    //     side: 'long',
-    //     result: -130,
-    //     resultPercentage: -1.92,
-    //     date: '19/06/21',
-    //   },
-    //   {
-    //     id: 'Qr4fG61',
-    //     side: 'short',
-    //     result: 106,
-    //     resultPercentage: 1.02,
-    //     date: '24/06/21',
-    //   },
-    // ],
-    // may21: [
-    //   {
-    //     id: 'HR6q2pf',
-    //     side: 'short',
-    //     result: -160,
-    //     resultPercentage: -1.42,
-    //     date: '07/05/21',
-    //   },
-    //   {
-    //     id: 'Gq9pd4H',
-    //     side: 'short',
-    //     result: -80,
-    //     resultPercentage: -0.8,
-    //     date: '11/05/21',
-    //   },
-    //   {
-    //     id: 'Bd99sd1',
-    //     side: 'long',
-    //     result: 213,
-    //     resultPercentage: 2.2,
-    //     date: '19/05/21',
-    //   },
-    //   {
-    //     id: 'lE59t6A',
-    //     side: 'short',
-    //     result: 110,
-    //     resultPercentage: 1.1,
-    //     date: '25/05/21',
-    //   },
-    // ],
-
+    }]
   },
   journal: [{
     id: 115,
@@ -931,14 +841,14 @@ var updateCapital = function updateCapital(amount, action) {
 
 exports.updateCapital = updateCapital;
 
-var updateMonthlyData = function updateMonthlyData(obj) {
+var updateCalendarData = function updateCalendarData(obj) {
   Object.keys(obj).forEach(function (key) {
     user.monthlyData[key] = obj[key];
   });
   return user.monthlyData;
 };
 
-exports.updateMonthlyData = updateMonthlyData;
+exports.updateCalendarData = updateCalendarData;
 
 var updateProfitableData = function updateProfitableData(items) {
   items.forEach(function (item) {
@@ -1408,7 +1318,7 @@ var checkAgainstLeaders = function checkAgainstLeaders(leaders, dataArr) {
     }; // check if number of trades is greater than three
 
     var leaderTickers = Object.keys(leaders);
-    var leaderAvgReturn = []; // calculate avg wi percentage on the new data
+    var leaderAvgReturn = []; // calculate avg win percentage on the new data
 
     var avgWinPercent = (data.trades.map(function (trade) {
       return trade.winPercentage;
@@ -8440,7 +8350,7 @@ var controlCalcRatio = function controlCalcRatio(data) {
 
 var controlMonthlyRender = function controlMonthlyRender() {
   var computedData = (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('calendarData'));
-  (0, _tableMonthlyView.renderMonthlyTable)((0, _dataModel.updateMonthlyData)(computedData));
+  (0, _tableMonthlyView.renderMonthlyTable)((0, _dataModel.updateCalendarData)(computedData));
 };
 
 var controlProfitableRender = function controlProfitableRender() {
@@ -8605,7 +8515,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61346" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55488" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

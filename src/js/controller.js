@@ -11,7 +11,7 @@ import {
   passData,
   passNestedData,
   updateCapital,
-  updateMonthlyData,
+  updateCalendarData,
   updateProfitableData,
   findJournalEntry,
   updateJournalData,
@@ -98,7 +98,7 @@ const controlCalcRatio = function (data) {
 
 const controlMonthlyRender = function () {
   const computedData = computeMonthlyData(passData('calendarData'));
-  renderMonthlyTable(updateMonthlyData(computedData));
+  renderMonthlyTable(updateCalendarData(computedData));
 };
 
 const controlProfitableRender = function () {
