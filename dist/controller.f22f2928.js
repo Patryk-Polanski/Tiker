@@ -448,7 +448,7 @@ var user = {
   tickers: {
     AAL: {
       ticker: 'AAL',
-      profitable: 0,
+      avgReturn: 0.58,
       trades: [{
         id: '7Ft7s4w',
         shares: 60,
@@ -468,7 +468,7 @@ var user = {
     },
     AAPL: {
       ticker: 'AAPL',
-      profitable: 0,
+      avgReturn: 0.59,
       trades: [{
         id: 'QHnv65t',
         shares: 40,
@@ -486,23 +486,6 @@ var user = {
         winPercentage: -1.1
       }]
     }
-  },
-  profitable: {// BMBL: {
-    //   totalProfit: 2780,
-    //   totalShares: 312,
-    //   avgReturn: 134,
-    //   avgWinPercentage: 1.56,
-    //   battingAvgPercentage: 64,
-    //   winLossRatio: 3.11,
-    // },
-    // AAPL: {
-    //   totalProfit: 2780,
-    //   totalShares: 312,
-    //   avgReturn: 134,
-    //   avgWinPercentage: 1.56,
-    //   battingAvgPercentage: 64,
-    //   winLossRatio: 3.11,
-    // },
   },
   monthlyData: {},
   calendarData: {
@@ -1259,14 +1242,11 @@ exports.computeMonthlyData = computeMonthlyData;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.checkAgainstLeaders = void 0;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+exports.computeProfitableData = exports.checkAgainstLeaders = void 0;
 
 var convertToLeader = function convertToLeader(data) {
   var ticker = data.ticker;
-
-  var formattedLeader = _defineProperty({}, ticker, {
+  var formattedLeader = {
     totalTrades: data.trades.length,
     profitable: 0,
     totalProfit: 0,
@@ -1275,9 +1255,8 @@ var convertToLeader = function convertToLeader(data) {
     avgWinPercent: 0,
     battingAvgPercent: 0,
     winLossRatio: 0
-  });
-
-  var current = formattedLeader[ticker];
+  };
+  var current = formattedLeader;
   var tradeResults = data.trades.map(function (trade) {
     return trade.result;
   });
@@ -1297,9 +1276,9 @@ var convertToLeader = function convertToLeader(data) {
   current.totalProfit = totalProfit;
   current.totalShares = totalShares;
   current.avgReturn = +(totalProfit / current.totalTrades).toFixed(0);
-  current.avgWinPercent = winPercentTrades.reduce(function (acc, num) {
+  current.avgWinPercent = (winPercentTrades.reduce(function (acc, num) {
     return acc + num;
-  }) / winPercentTrades.length;
+  }) / winPercentTrades.length).toFixed(2);
   current.profitable = winPercentTrades.length;
   current.battingAvgPercent = +(current.profitable / current.totalTrades * 100).toFixed(2);
   current.winLossRatio = +(current.profitable / (current.totalTrades - current.profitable)).toFixed(2);
@@ -1350,6 +1329,26 @@ var checkAgainstLeaders = function checkAgainstLeaders(leaders, dataArr) {
 };
 
 exports.checkAgainstLeaders = checkAgainstLeaders;
+
+var computeProfitableData = function computeProfitableData(tickerData) {
+  console.log('this is the ticker data');
+  console.log(tickerData);
+  var sortedTickers = Object.values(tickerData).sort(function (a, b) {
+    return b.avgReturn - a.avgReturn;
+  });
+  var topSix = sortedTickers.splice(0, 6);
+  console.log(topSix);
+  var leadersArray = {};
+  topSix.forEach(function (leader) {
+    var leaderFormat = convertToLeader(leader);
+    leadersArray[leader.ticker] = leaderFormat;
+  });
+  console.log('this is the leaders array');
+  console.log(leadersArray);
+  return leadersArray;
+};
+
+exports.computeProfitableData = computeProfitableData;
 },{}],"../node_modules/d3-path/src/path.js":[function(require,module,exports) {
 "use strict";
 
@@ -8354,9 +8353,13 @@ var controlMonthlyRender = function controlMonthlyRender() {
 };
 
 var controlProfitableRender = function controlProfitableRender() {
-  var newProfitable = (0, _tableProfitableModel.checkAgainstLeaders)((0, _dataModel.passData)('profitable'), [(0, _dataModel.passNestedData)('tickers', '')]);
-  var tableData = (0, _dataModel.updateProfitableData)(newProfitable);
-  (0, _tableProfitableView.renderProfitableTable)(tableData);
+  // const newProfitable = checkAgainstLeaders(passData('profitable'), [
+  //   passNestedData('tickers', ''),
+  // ]);
+  // const tableData = updateProfitableData(newProfitable);
+  // renderProfitableTable(tableData);
+  var profitableStocks = (0, _tableProfitableModel.computeProfitableData)((0, _dataModel.passData)('tickers'));
+  (0, _tableProfitableView.renderProfitableTable)(profitableStocks);
 };
 
 var controlOverallRender = function controlOverallRender() {

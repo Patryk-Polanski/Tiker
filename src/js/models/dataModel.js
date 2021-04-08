@@ -84,7 +84,7 @@ const user = {
   tickers: {
     AAL: {
       ticker: 'AAL',
-      profitable: 0,
+      avgReturn: 0.58,
       trades: [
         {
           id: '7Ft7s4w',
@@ -108,7 +108,7 @@ const user = {
     },
     AAPL: {
       ticker: 'AAPL',
-      profitable: 0,
+      avgReturn: 0.59,
       trades: [
         {
           id: 'QHnv65t',
@@ -130,24 +130,6 @@ const user = {
         },
       ],
     },
-  },
-  profitable: {
-    // BMBL: {
-    //   totalProfit: 2780,
-    //   totalShares: 312,
-    //   avgReturn: 134,
-    //   avgWinPercentage: 1.56,
-    //   battingAvgPercentage: 64,
-    //   winLossRatio: 3.11,
-    // },
-    // AAPL: {
-    //   totalProfit: 2780,
-    //   totalShares: 312,
-    //   avgReturn: 134,
-    //   avgWinPercentage: 1.56,
-    //   battingAvgPercentage: 64,
-    //   winLossRatio: 3.11,
-    // },
   },
   monthlyData: {},
   calendarData: {

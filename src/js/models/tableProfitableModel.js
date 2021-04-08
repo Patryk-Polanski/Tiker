@@ -1,19 +1,17 @@
 const convertToLeader = function (data) {
   const ticker = data.ticker;
   const formattedLeader = {
-    [ticker]: {
-      totalTrades: data.trades.length,
-      profitable: 0,
-      totalProfit: 0,
-      totalShares: 0,
-      avgReturn: 0,
-      avgWinPercent: 0,
-      battingAvgPercent: 0,
-      winLossRatio: 0,
-    },
+    totalTrades: data.trades.length,
+    profitable: 0,
+    totalProfit: 0,
+    totalShares: 0,
+    avgReturn: 0,
+    avgWinPercent: 0,
+    battingAvgPercent: 0,
+    winLossRatio: 0,
   };
 
-  const current = formattedLeader[ticker];
+  const current = formattedLeader;
 
   const tradeResults = data.trades.map(trade => trade.result);
   const totalProfit = tradeResults.reduce((acc, num) => acc + num, 0);
@@ -27,8 +25,9 @@ const convertToLeader = function (data) {
   current.totalProfit = totalProfit;
   current.totalShares = totalShares;
   current.avgReturn = +(totalProfit / current.totalTrades).toFixed(0);
-  current.avgWinPercent =
-    winPercentTrades.reduce((acc, num) => acc + num) / winPercentTrades.length;
+  current.avgWinPercent = (
+    winPercentTrades.reduce((acc, num) => acc + num) / winPercentTrades.length
+  ).toFixed(2);
   current.profitable = winPercentTrades.length;
   current.battingAvgPercent = +(
     (current.profitable / current.totalTrades) *
@@ -80,4 +79,24 @@ export const checkAgainstLeaders = function (leaders, dataArr) {
   });
 
   return newLeadersArr;
+};
+
+export const computeProfitableData = function (tickerData) {
+  console.log('this is the ticker data');
+  console.log(tickerData);
+  const sortedTickers = Object.values(tickerData).sort(
+    (a, b) => b.avgReturn - a.avgReturn
+  );
+  const topSix = sortedTickers.splice(0, 6);
+  console.log(topSix);
+
+  let leadersArray = {};
+  topSix.forEach(leader => {
+    const leaderFormat = convertToLeader(leader);
+    leadersArray[leader.ticker] = leaderFormat;
+  });
+
+  console.log('this is the leaders array');
+  console.log(leadersArray);
+  return leadersArray;
 };

@@ -29,7 +29,7 @@ import {
   clearLongShortCanvas,
 } from './views/chartOverallView';
 import { computeMonthlyData } from './models/tableMonthlyModel';
-import { checkAgainstLeaders } from './models/tableProfitableModel';
+import { computeProfitableData } from './models/tableProfitableModel';
 import {
   queryPerformanceEls,
   renderPerformanceChart,
@@ -102,11 +102,13 @@ const controlMonthlyRender = function () {
 };
 
 const controlProfitableRender = function () {
-  const newProfitable = checkAgainstLeaders(passData('profitable'), [
-    passNestedData('tickers', ''),
-  ]);
-  const tableData = updateProfitableData(newProfitable);
-  renderProfitableTable(tableData);
+  // const newProfitable = checkAgainstLeaders(passData('profitable'), [
+  //   passNestedData('tickers', ''),
+  // ]);
+  // const tableData = updateProfitableData(newProfitable);
+  // renderProfitableTable(tableData);
+  const profitableStocks = computeProfitableData(passData('tickers'));
+  renderProfitableTable(profitableStocks);
 };
 
 const controlOverallRender = function () {
