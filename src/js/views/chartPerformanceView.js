@@ -60,7 +60,7 @@ export const renderPerformanceChart = function (passedData) {
   const canvasRect = performanceEls.performanceCanvas.getBoundingClientRect();
 
   // create room for axes
-  const margin = { top: 25, right: 20, bottom: 50, left: 50 };
+  const margin = { top: 25, right: 20, bottom: 50, left: 60 };
   const graphWidth = canvasRect.width - margin.left - margin.right;
   const graphHeight = canvasRect.height - margin.top - margin.bottom;
 
@@ -106,9 +106,6 @@ export const renderPerformanceChart = function (passedData) {
 
   // ZONE - update function
   const updatePerformanceChart = function (data = chartData) {
-    // sort the data based on date object
-    data.sort((a, b) => new Date(a.date) - new Date(b.date));
-
     // create responsive gaps for the chart
     const maxMinVals = d3.extent(data, d => d.total);
     const gap = Math.round((maxMinVals[1] - maxMinVals[0]) / 6);
@@ -152,12 +149,13 @@ export const renderPerformanceChart = function (passedData) {
     const xAxis = d3
       .axisBottom(x)
       .ticks(data.length)
-      .tickFormat(d => (data[d - 1] ? data[d - 1].shortDate : '')); // create bottom axis based on our x scale
+      .tickFormat(d => data[d].dateShort);
+    // .tickFormat(d => (data[d - 1] ? data[d - 1].dateShort : '')); // create bottom axis based on our x scale
 
     const yAxis = d3
       .axisLeft(y)
       .ticks(4)
-      .tickFormat(d => kFormatter(d, 999));
+      .tickFormat(d => kFormatter(d, 999, ''));
 
     // generate all shapes for xAxis and yAxis and place them in axis groups
     xAxisGroup.call(xAxis);
@@ -205,7 +203,7 @@ export const renderPerformanceChart = function (passedData) {
         .attr(
           'class',
           `${
-            data[i].result >= 0
+            data[i].returnCash >= 0
               ? 'performance-label'
               : 'performance-label--negative'
           }`
@@ -213,7 +211,7 @@ export const renderPerformanceChart = function (passedData) {
         .attr(
           'transform',
           `translate(${pointsCoords[i][0] - 20}, ${
-            pointsCoords[i][1] - (data[i].result >= 0 ? 15 : -25)
+            pointsCoords[i][1] - (data[i].returnCash >= 0 ? 15 : -25)
           })`
         );
     }

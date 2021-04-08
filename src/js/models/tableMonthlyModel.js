@@ -54,8 +54,6 @@ export const computeMonthlyData = function (rawData) {
 
   keys.forEach(key => {
     const currentMonth = rawData[key];
-    console.log('this is the flattened days');
-    console.log(currentMonth.map(day => day.trades).flat());
     let tableUnit = createPlaceholderObj(key);
 
     // grab all the trades from that month and flatten into one array

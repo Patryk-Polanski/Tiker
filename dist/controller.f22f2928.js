@@ -288,8 +288,9 @@ exports.filterNonStrings = filterNonStrings;
 
 var kFormatter = function kFormatter(num) {
   var decimal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 999;
+  var unit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'k';
   if (!num) return 0;
-  return Math.abs(num) > decimal ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k' : Math.sign(num) * Math.abs(num);
+  return Math.abs(num) > decimal ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + unit : Math.sign(num) * Math.abs(num);
 };
 
 exports.kFormatter = kFormatter;
@@ -374,7 +375,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var user = {
-  capital: 7000,
+  capital: 17000,
   overall: {
     total: 723,
     proportions: [{
@@ -506,7 +507,8 @@ var user = {
   monthlyData: {},
   calendarData: {
     jul21: [{
-      date: '2/07/21',
+      dateLong: 'Mon Mar 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+      dateShort: '2/07/21',
       trades: [{
         id: 730,
         side: 'short',
@@ -519,7 +521,8 @@ var user = {
         returnPercent: 1.6
       }]
     }, {
-      date: '3/07/21',
+      dateLong: 'Mon Mar 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+      dateShort: '3/07/21',
       trades: [{
         id: 2140,
         side: 'short',
@@ -533,7 +536,8 @@ var user = {
       }]
     }],
     aug21: [{
-      date: '14/08/21',
+      dateLong: 'Mon Mar 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+      dateShort: '14/08/21',
       trades: [{
         id: 854,
         side: 'long',
@@ -546,7 +550,8 @@ var user = {
         returnPercent: -0.45
       }]
     }, {
-      date: '21/08/21',
+      dateLong: 'Mon Mar 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+      dateShort: '21/08/21',
       trades: [{
         id: 652,
         side: 'long',
@@ -989,68 +994,9 @@ var findJournalEntry = function findJournalEntry(id) {
     return entry.id === id;
   });
   s;
-}; // ZONE - calendar object bleprint
-
+};
 
 exports.findJournalEntry = findJournalEntry;
-
-calendarData: {
-  jul21: [{
-    date: '2/07/21',
-    trades: [{
-      id: 730,
-      side: 'short',
-      returnCash: -90,
-      returnPercent: -0.9
-    }, {
-      id: 820,
-      side: 'long',
-      returnCash: 120,
-      returnPercent: 1.6
-    }]
-  }, {
-    date: '3/07/21',
-    trades: [{
-      id: 2140,
-      side: 'short',
-      returnCash: 100,
-      returnPercent: 1.3
-    }, {
-      id: 820,
-      side: 'short',
-      returnCash: -50,
-      returnPercent: -0.7
-    }]
-  }];
-
-  aug21: [{
-    date: '14/08/21',
-    trades: [{
-      id: 854,
-      side: 'long',
-      returnCash: 110,
-      returnPercent: 1.3
-    }, {
-      id: 820,
-      side: 'long',
-      returnCash: -30,
-      returnPercent: -0.45
-    }]
-  }, {
-    date: '21/08/21',
-    trades: [{
-      id: 652,
-      side: 'long',
-      returnCash: -111,
-      returnPercent: -1.2
-    }, {
-      id: 1167,
-      side: 'short',
-      returnCash: -70,
-      returnPercent: -1.1
-    }]
-  }];
-}
 },{"./../helpers":"js/helpers.js"}],"js/models/calculatorsModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -1345,10 +1291,6 @@ var computeMonthlyData = function computeMonthlyData(rawData) {
   var keys = Object.keys(rawData);
   keys.forEach(function (key) {
     var currentMonth = rawData[key];
-    console.log('this is the flattened days');
-    console.log(currentMonth.map(function (day) {
-      return day.trades;
-    }).flat());
     var tableUnit = createPlaceholderObj(key); // grab all the trades from that month and flatten into one array
 
     var flattenedDays = currentMonth.map(function (day) {
@@ -4926,7 +4868,7 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
     top: 25,
     right: 20,
     bottom: 50,
-    left: 50
+    left: 60
   };
   var graphWidth = canvasRect.width - margin.left - margin.right;
   var graphHeight = canvasRect.height - margin.top - margin.bottom; // create svg container, specify width & height, translate to create room for axes labels
@@ -4953,11 +4895,7 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
 
   var updatePerformanceChart = function updatePerformanceChart() {
     var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : chartData;
-    // sort the data based on date object
-    data.sort(function (a, b) {
-      return new Date(a.date) - new Date(b.date);
-    }); // create responsive gaps for the chart
-
+    // create responsive gaps for the chart
     var maxMinVals = d3.extent(data, function (d) {
       return d.total;
     });
@@ -4997,11 +4935,11 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
     }); // create axes
 
     var xAxis = d3.axisBottom(x).ticks(data.length).tickFormat(function (d) {
-      return data[d - 1] ? data[d - 1].shortDate : '';
-    }); // create bottom axis based on our x scale
+      return data[d].dateShort;
+    }); // .tickFormat(d => (data[d - 1] ? data[d - 1].dateShort : '')); // create bottom axis based on our x scale
 
     var yAxis = d3.axisLeft(y).ticks(4).tickFormat(function (d) {
-      return (0, _helpers.kFormatter)(d, 999);
+      return (0, _helpers.kFormatter)(d, 999, '');
     }); // generate all shapes for xAxis and yAxis and place them in axis groups
 
     xAxisGroup.call(xAxis);
@@ -5025,7 +4963,7 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
     var labelsGroup = graph.append('g');
 
     for (var _i = 0; _i < pointsCoords.length; _i++) {
-      var label = labelsGroup.append('text').text((0, _helpers.kFormatter)(data[_i].total, 9999)).attr('class', "".concat(data[_i].result >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i][0] - 20, ", ").concat(pointsCoords[_i][1] - (data[_i].result >= 0 ? 15 : -25), ")"));
+      var label = labelsGroup.append('text').text((0, _helpers.kFormatter)(data[_i].total, 9999)).attr('class', "".concat(data[_i].returnCash >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i][0] - 20, ", ").concat(pointsCoords[_i][1] - (data[_i].returnCash >= 0 ? 15 : -25), ")"));
     } // select x axis text and translate down every odd text to make space
 
 
@@ -5043,6 +4981,44 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.formatPerformanceData = void 0;
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+var monthlyData = [{
+  date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+  total: 100500,
+  result: 2500,
+  shortDate: '3/21',
+  position: 1
+}, {
+  date: 'Mon Mar 02 2022 23:13:58 GMT+0000 (Greenwich Mean Time)',
+  total: 123260,
+  result: 18260,
+  shortDate: '4/21',
+  position: 2
+}, {
+  date: 'Mon Mar 03 2023 23:12:58 GMT+0000 (Greenwich Mean Time)',
+  total: 120000,
+  result: -3200,
+  shortDate: '5/21',
+  position: 3
+}, {
+  date: 'Mon Mar 03 2024 23:12:58 GMT+0000 (Greenwich Mean Time)',
+  total: 110340,
+  result: -10660,
+  shortDate: '5/21',
+  position: 4
+}];
 var dailyData = [{
   date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
   total: 2400,
@@ -5134,35 +5110,48 @@ var dailyData = [{
   shortDate: '29/3/21',
   position: 15
 }];
-var monthlyData = [{
-  date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-  total: 100500,
-  result: 2500,
-  shortDate: '3/21',
-  position: 1
-}, {
-  date: 'Mon Mar 02 2022 23:13:58 GMT+0000 (Greenwich Mean Time)',
-  total: 123260,
-  result: 18260,
-  shortDate: '4/21',
-  position: 2
-}, {
-  date: 'Mon Mar 03 2023 23:12:58 GMT+0000 (Greenwich Mean Time)',
-  total: 120000,
-  result: -3200,
-  shortDate: '5/21',
-  position: 3
-}, {
-  date: 'Mon Mar 03 2024 23:12:58 GMT+0000 (Greenwich Mean Time)',
-  total: 110340,
-  result: -10660,
-  shortDate: '5/21',
-  position: 4
-}];
 
-var formatPerformanceData = function formatPerformanceData(type) {
-  if (type === 'day') return ['Daily', dailyData];
-  if (type === 'month') return ['Monthly', monthlyData];
+var formatDailyData = function formatDailyData(calendarData, capital) {
+  var currentCapital = capital;
+  var daysArr = [];
+  Object.keys(calendarData).forEach(function (monthKey) {
+    daysArr.push.apply(daysArr, _toConsumableArray(calendarData[monthKey].map(function (day) {
+      day.trades.dateShort = day.dateShort;
+      day.trades.dateLong = day.dateLong;
+      return day.trades;
+    })));
+  });
+  var formattedDaysArr = daysArr.map(function (day) {
+    var returnCash = day.map(function (trade) {
+      if (trade.returnCash) return trade.returnCash;
+    }).reduce(function (acc, num) {
+      return acc + num;
+    }, 0);
+    return {
+      dateShort: day.dateShort,
+      dateLong: day.dateLong,
+      returnCash: returnCash
+    };
+  });
+  formattedDaysArr.sort(function (a, b) {
+    return new Date(a.dateLong) - new Date(b.dateLong);
+  });
+  formattedDaysArr.forEach(function (day, index) {
+    currentCapital += day.returnCash;
+    day.total = currentCapital;
+    day.position = index;
+  });
+  console.log(formattedDaysArr);
+  return formattedDaysArr;
+};
+
+var formatMonthlyData = function formatMonthlyData(calendarData, capital) {
+  return monthlyData;
+};
+
+var formatPerformanceData = function formatPerformanceData(calendarData, capital, type) {
+  if (type === 'day') return ['Daily', formatDailyData(calendarData, capital)];
+  if (type === 'month') return ['Monthly', formatMonthlyData(monthlyData, capital)];
 };
 
 exports.formatPerformanceData = formatPerformanceData;
@@ -8417,7 +8406,7 @@ var controlOverallRender = function controlOverallRender() {
 
 var controlPerformanceRender = function controlPerformanceRender() {
   var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'day';
-  (0, _chartPerformanceView.renderPerformanceChart)((0, _chartPerformanceModel.formatPerformanceData)(type));
+  (0, _chartPerformanceView.renderPerformanceChart)((0, _chartPerformanceModel.formatPerformanceData)((0, _dataModel.passData)('calendarData'), (0, _dataModel.passData)('capital'), type));
 };
 
 var controlWorstBestRender = function controlWorstBestRender() {

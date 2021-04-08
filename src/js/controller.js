@@ -114,7 +114,9 @@ const controlOverallRender = function () {
 };
 
 const controlPerformanceRender = function (type = 'day') {
-  renderPerformanceChart(formatPerformanceData(type));
+  renderPerformanceChart(
+    formatPerformanceData(passData('calendarData'), passData('capital'), type)
+  );
 };
 
 const controlWorstBestRender = function (type = 'worst') {

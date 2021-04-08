@@ -179,8 +179,9 @@ exports.filterNonStrings = filterNonStrings;
 
 var kFormatter = function kFormatter(num) {
   var decimal = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 999;
+  var unit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'k';
   if (!num) return 0;
-  return Math.abs(num) > decimal ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + 'k' : Math.sign(num) * Math.abs(num);
+  return Math.abs(num) > decimal ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(2) + unit : Math.sign(num) * Math.abs(num);
 };
 
 exports.kFormatter = kFormatter;

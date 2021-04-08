@@ -1,3 +1,34 @@
+const monthlyData = [
+  {
+    date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+    total: 100500,
+    result: 2500,
+    shortDate: '3/21',
+    position: 1,
+  },
+  {
+    date: 'Mon Mar 02 2022 23:13:58 GMT+0000 (Greenwich Mean Time)',
+    total: 123260,
+    result: 18260,
+    shortDate: '4/21',
+    position: 2,
+  },
+  {
+    date: 'Mon Mar 03 2023 23:12:58 GMT+0000 (Greenwich Mean Time)',
+    total: 120000,
+    result: -3200,
+    shortDate: '5/21',
+    position: 3,
+  },
+  {
+    date: 'Mon Mar 03 2024 23:12:58 GMT+0000 (Greenwich Mean Time)',
+    total: 110340,
+    result: -10660,
+    shortDate: '5/21',
+    position: 4,
+  },
+];
+
 const dailyData = [
   {
     date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
@@ -106,38 +137,51 @@ const dailyData = [
   },
 ];
 
-const monthlyData = [
-  {
-    date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-    total: 100500,
-    result: 2500,
-    shortDate: '3/21',
-    position: 1,
-  },
-  {
-    date: 'Mon Mar 02 2022 23:13:58 GMT+0000 (Greenwich Mean Time)',
-    total: 123260,
-    result: 18260,
-    shortDate: '4/21',
-    position: 2,
-  },
-  {
-    date: 'Mon Mar 03 2023 23:12:58 GMT+0000 (Greenwich Mean Time)',
-    total: 120000,
-    result: -3200,
-    shortDate: '5/21',
-    position: 3,
-  },
-  {
-    date: 'Mon Mar 03 2024 23:12:58 GMT+0000 (Greenwich Mean Time)',
-    total: 110340,
-    result: -10660,
-    shortDate: '5/21',
-    position: 4,
-  },
-];
+const formatDailyData = function (calendarData, capital) {
+  let currentCapital = capital;
+  let daysArr = [];
+  Object.keys(calendarData).forEach(monthKey => {
+    daysArr.push(
+      ...calendarData[monthKey].map(day => {
+        day.trades.dateShort = day.dateShort;
+        day.trades.dateLong = day.dateLong;
+        return day.trades;
+      })
+    );
+  });
 
-export const formatPerformanceData = function (type) {
-  if (type === 'day') return ['Daily', dailyData];
-  if (type === 'month') return ['Monthly', monthlyData];
+  let formattedDaysArr = daysArr.map(day => {
+    const returnCash = day
+      .map(trade => {
+        if (trade.returnCash) return trade.returnCash;
+      })
+      .reduce((acc, num) => acc + num, 0);
+    return {
+      dateShort: day.dateShort,
+      dateLong: day.dateLong,
+      returnCash,
+    };
+  });
+
+  formattedDaysArr.sort((a, b) => new Date(a.dateLong) - new Date(b.dateLong));
+
+  formattedDaysArr.forEach((day, index) => {
+    currentCapital += day.returnCash;
+    day.total = currentCapital;
+    day.position = index;
+  });
+
+  console.log(formattedDaysArr);
+
+  return formattedDaysArr;
+};
+
+const formatMonthlyData = function (calendarData, capital) {
+  return monthlyData;
+};
+
+export const formatPerformanceData = function (calendarData, capital, type) {
+  if (type === 'day') return ['Daily', formatDailyData(calendarData, capital)];
+  if (type === 'month')
+    return ['Monthly', formatMonthlyData(monthlyData, capital)];
 };
