@@ -506,80 +506,149 @@ var user = {
   monthlyData: {},
   calendarData: {
     jul21: [{
-      id: 'Kr92fYl',
-      side: 'short',
-      result: -90,
-      resultPercentage: -0.9,
-      date: '02/07/21'
+      date: '2/07/21',
+      trades: [{
+        id: 730,
+        side: 'short',
+        returnCash: -90,
+        returnPercent: -0.9
+      }, {
+        id: 820,
+        side: 'long',
+        returnCash: 120,
+        returnPercent: 1.6
+      }]
     }, {
-      id: 'P9gHt21',
-      side: 'long',
-      result: -86,
-      resultPercentage: -0.84,
-      date: '07/07/21'
-    }, {
-      id: 'K88spRl',
-      side: 'long',
-      result: 146,
-      resultPercentage: 1.46,
-      date: '15/07/21'
-    }, {
-      id: 'Mn3z2pl',
-      side: 'short',
-      result: 67,
-      resultPercentage: 0.63,
-      date: '20/07/21'
+      date: '3/07/21',
+      trades: [{
+        id: 2140,
+        side: 'short',
+        returnCash: 100,
+        returnPercent: 1.3
+      }, {
+        id: 820,
+        side: 'short',
+        returnCash: -50,
+        returnPercent: -0.7
+      }]
     }],
-    jun21: [{
-      id: 'OL4stW4',
-      side: 'long',
-      result: 240,
-      resultPercentage: 1.83,
-      date: '04/06/21'
+    aug21: [{
+      date: '14/08/21',
+      trades: [{
+        id: 854,
+        side: 'long',
+        returnCash: 110,
+        returnPercent: 1.3
+      }, {
+        id: 820,
+        side: 'long',
+        returnCash: -30,
+        returnPercent: -0.45
+      }]
     }, {
-      id: 'SLX8f6s',
-      side: 'long',
-      result: -130,
-      resultPercentage: -1.92,
-      date: '13/06/21'
-    }, {
-      id: 'SLX8f6a',
-      side: 'long',
-      result: -130,
-      resultPercentage: -1.92,
-      date: '19/06/21'
-    }, {
-      id: 'Qr4fG61',
-      side: 'short',
-      result: 106,
-      resultPercentage: 1.02,
-      date: '24/06/21'
-    }],
-    may21: [{
-      id: 'HR6q2pf',
-      side: 'short',
-      result: -160,
-      resultPercentage: -1.42,
-      date: '07/05/21'
-    }, {
-      id: 'Gq9pd4H',
-      side: 'short',
-      result: -80,
-      resultPercentage: -0.8,
-      date: '11/05/21'
-    }, {
-      id: 'Bd99sd1',
-      side: 'long',
-      result: 213,
-      resultPercentage: 2.2,
-      date: '19/05/21'
-    }, {
-      id: 'lE59t6A',
-      side: 'short',
-      result: 110,
-      resultPercentage: 1.1,
-      date: '25/05/21'
-    }]
+      date: '21/08/21',
+      trades: [{
+        id: 652,
+        side: 'long',
+        returnCash: -111,
+        returnPercent: -1.2
+      }, {
+        id: 1167,
+        side: 'short',
+        returnCash: -70,
+        returnPercent: -1.1
+      }]
+    }] // jul21: [
+    //   {
+    //     id: 'Kr92fYl',
+    //     side: 'short',
+    //     result: -90,
+    //     resultPercentage: -0.9,
+    //     date: '02/07/21',
+    //   },
+    //   {
+    //     id: 'P9gHt21',
+    //     side: 'long',
+    //     result: -86,
+    //     resultPercentage: -0.84,
+    //     date: '07/07/21',
+    //   },
+    //   {
+    //     id: 'K88spRl',
+    //     side: 'long',
+    //     result: 146,
+    //     resultPercentage: 1.46,
+    //     date: '15/07/21',
+    //   },
+    //   {
+    //     id: 'Mn3z2pl',
+    //     side: 'short',
+    //     result: 67,
+    //     resultPercentage: 0.63,
+    //     date: '20/07/21',
+    //   },
+    // ],
+    // jun21: [
+    //   {
+    //     id: 'OL4stW4',
+    //     side: 'long',
+    //     result: 240,
+    //     resultPercentage: 1.83,
+    //     date: '04/06/21',
+    //   },
+    //   {
+    //     id: 'SLX8f6s',
+    //     side: 'long',
+    //     result: -130,
+    //     resultPercentage: -1.92,
+    //     date: '13/06/21',
+    //   },
+    //   {
+    //     id: 'SLX8f6a',
+    //     side: 'long',
+    //     result: -130,
+    //     resultPercentage: -1.92,
+    //     date: '19/06/21',
+    //   },
+    //   {
+    //     id: 'Qr4fG61',
+    //     side: 'short',
+    //     result: 106,
+    //     resultPercentage: 1.02,
+    //     date: '24/06/21',
+    //   },
+    // ],
+    // may21: [
+    //   {
+    //     id: 'HR6q2pf',
+    //     side: 'short',
+    //     result: -160,
+    //     resultPercentage: -1.42,
+    //     date: '07/05/21',
+    //   },
+    //   {
+    //     id: 'Gq9pd4H',
+    //     side: 'short',
+    //     result: -80,
+    //     resultPercentage: -0.8,
+    //     date: '11/05/21',
+    //   },
+    //   {
+    //     id: 'Bd99sd1',
+    //     side: 'long',
+    //     result: 213,
+    //     resultPercentage: 2.2,
+    //     date: '19/05/21',
+    //   },
+    //   {
+    //     id: 'lE59t6A',
+    //     side: 'short',
+    //     result: 110,
+    //     resultPercentage: 1.1,
+    //     date: '25/05/21',
+    //   },
+    // ],
+
   },
   journal: [{
     id: 115,
@@ -1224,12 +1293,12 @@ exports.computeMonthlyData = void 0;
 var _helpers = require("../helpers");
 
 // import { reduce } from 'core-js/core/array';
-var createPlaceholderObj = function createPlaceholderObj(current, key) {
+var createPlaceholderObj = function createPlaceholderObj(key) {
   return {
     total: {
       month: key,
       monthlyReturn: [0],
-      totalTrades: current.length,
+      totalTrades: 0,
       avgReturn: [],
       avgWinPercent: [],
       avgLossPercent: [],
@@ -1276,24 +1345,33 @@ var computeMonthlyData = function computeMonthlyData(rawData) {
   var keys = Object.keys(rawData);
   keys.forEach(function (key) {
     var currentMonth = rawData[key];
-    var tableUnit = createPlaceholderObj(currentMonth, key);
-    currentMonth.forEach(function (trade) {
-      var currentSide; // decided which object to add data to
+    console.log('this is the flattened days');
+    console.log(currentMonth.map(function (day) {
+      return day.trades;
+    }).flat());
+    var tableUnit = createPlaceholderObj(key); // grab all the trades from that month and flatten into one array
+
+    var flattenedDays = currentMonth.map(function (day) {
+      return day.trades;
+    }).flat();
+    tableUnit.total.totalTrades = flattenedDays.length;
+    flattenedDays.forEach(function (trade) {
+      var currentSide; // decides which object to add data to
 
       if (trade.side === 'long') currentSide = tableUnit.long;else if (trade.side === 'short') currentSide = tableUnit.short;
-      currentSide.monthlyReturn.push(trade.result); // monthly return
+      currentSide.monthlyReturn.push(trade.returnCash); // monthly return
 
       currentSide.totalTrades++; // total trades
 
-      currentSide.avgReturn.push(trade.result); // avg Return
+      currentSide.avgReturn.push(trade.returnCash); // avg Return
       // avg win and loss %
 
-      if (trade.resultPercentage >= 0) {
-        currentSide.avgWinPercent.push(trade.resultPercentage);
+      if (trade.returnPercent >= 0) {
+        currentSide.avgWinPercent.push(trade.returnPercent);
         tableUnit.total.profitableNumber++;
         currentSide.profitableNumber++;
-      } else if (trade.resultPercentage <= 0) {
-        currentSide.avgLossPercent.push(trade.resultPercentage);
+      } else if (trade.returnPercent <= 0) {
+        currentSide.avgLossPercent.push(trade.returnPercent);
       }
     }); // crunch the array data into single numbers
 

@@ -1,12 +1,12 @@
 // import { reduce } from 'core-js/core/array';
 import { crunchData, reduceData, filterNonStrings } from '../helpers';
 
-const createPlaceholderObj = function (current, key) {
+const createPlaceholderObj = function (key) {
   return {
     total: {
       month: key,
       monthlyReturn: [0],
-      totalTrades: current.length,
+      totalTrades: 0,
       avgReturn: [],
       avgWinPercent: [],
       avgLossPercent: [],
@@ -54,22 +54,28 @@ export const computeMonthlyData = function (rawData) {
 
   keys.forEach(key => {
     const currentMonth = rawData[key];
-    let tableUnit = createPlaceholderObj(currentMonth, key);
+    console.log('this is the flattened days');
+    console.log(currentMonth.map(day => day.trades).flat());
+    let tableUnit = createPlaceholderObj(key);
 
-    currentMonth.forEach(trade => {
-      let currentSide; // decided which object to add data to
+    // grab all the trades from that month and flatten into one array
+    const flattenedDays = currentMonth.map(day => day.trades).flat();
+    tableUnit.total.totalTrades = flattenedDays.length;
+
+    flattenedDays.forEach(trade => {
+      let currentSide; // decides which object to add data to
       if (trade.side === 'long') currentSide = tableUnit.long;
       else if (trade.side === 'short') currentSide = tableUnit.short;
-      currentSide.monthlyReturn.push(trade.result); // monthly return
+      currentSide.monthlyReturn.push(trade.returnCash); // monthly return
       currentSide.totalTrades++; // total trades
-      currentSide.avgReturn.push(trade.result); // avg Return
+      currentSide.avgReturn.push(trade.returnCash); // avg Return
       // avg win and loss %
-      if (trade.resultPercentage >= 0) {
-        currentSide.avgWinPercent.push(trade.resultPercentage);
+      if (trade.returnPercent >= 0) {
+        currentSide.avgWinPercent.push(trade.returnPercent);
         tableUnit.total.profitableNumber++;
         currentSide.profitableNumber++;
-      } else if (trade.resultPercentage <= 0) {
-        currentSide.avgLossPercent.push(trade.resultPercentage);
+      } else if (trade.returnPercent <= 0) {
+        currentSide.avgLossPercent.push(trade.returnPercent);
       }
     });
 
