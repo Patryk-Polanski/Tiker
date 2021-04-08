@@ -100,6 +100,7 @@ export const renderJournalEntries = function (
   paginationPage = 1,
   clear = true
 ) {
+  if (entriesData.length < 1) return;
   const existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll(
     '.c-journal-entry'
   );

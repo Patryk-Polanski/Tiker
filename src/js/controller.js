@@ -25,6 +25,7 @@ import {
 import {
   queryOverallEls,
   renderStreaks,
+  renderLongShortStats,
   renderLongShortPie,
   clearLongShortCanvas,
 } from './views/chartOverallView';
@@ -98,7 +99,8 @@ const controlCalcRatio = function (data) {
 
 const controlMonthlyRender = function () {
   const computedData = computeMonthlyData(passData('calendarData'));
-  renderMonthlyTable(updateCalendarData(computedData));
+  // renderMonthlyTable(updateCalendarData(computedData));
+  renderMonthlyTable(computedData);
 };
 
 const controlProfitableRender = function () {
@@ -107,6 +109,7 @@ const controlProfitableRender = function () {
 };
 
 const controlOverallRender = function () {
+  renderLongShortStats(passData('overall'));
   renderStreaks(passData('streaks'));
 };
 
@@ -130,6 +133,7 @@ const controlLongShortPieRender = function () {
 
 const controlJournalRender = function () {
   const activeEntryID = renderJournalEntries(passData('journal'));
+  if (!activeEntryID) return;
   renderJournalForm(findJournalEntry(activeEntryID));
 };
 
@@ -207,6 +211,7 @@ const queryDOM = function () {
 window.addEventListener('DOMContentLoaded', e => {
   console.log('DOM app is loaded');
   queryDOM();
+  updateCapitalOutput(passData('capital'));
   controlMonthlyRender();
   controlProfitableRender();
   controlOverallRender();

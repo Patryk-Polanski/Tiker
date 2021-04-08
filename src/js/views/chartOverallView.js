@@ -17,6 +17,11 @@ const getElements = function (obj = {}) {
   obj.lossStreakProfit = obj.pieStreakCard.querySelector(
     '.js-loss-streak-profit'
   );
+  obj.overallTradesNumber = obj.pieStreakCard.querySelector(
+    '.js-overall-trades-number'
+  );
+  obj.shortPositions = obj.pieStreakCard.querySelector('.js-short-positions');
+  obj.longPositions = obj.pieStreakCard.querySelector('.js-long-positions');
   return obj;
 };
 
@@ -28,21 +33,62 @@ export const clearLongShortCanvas = function () {
   overallEls.shortLongCanvas.innerHTML = '';
 };
 
+export const renderLongShortStats = function (data) {
+  overallEls.overallTradesNumber.textContent = data.total ? data.total : 0;
+
+  if (data.proportions && data.proportions[0]) {
+    overallEls.longPositions.textContent = `${data.proportions[0].total} - ${(
+      (data.proportions[0].total / data.total) *
+      100
+    ).toFixed(1)}%`;
+  } else {
+    overallEls.longPositions.textContent = '0 - 0%';
+  }
+
+  if (data.proportions && data.proportions[1]) {
+    overallEls.shortPositions.textContent = `${data.proportions[1].total} - ${(
+      (data.proportions[1].total / data.total) *
+      100
+    ).toFixed(1)}%`;
+  } else {
+    overallEls.shortPositions.textContent = '0 - 0%';
+  }
+};
+
 export const renderStreaks = function (data) {
-  overallEls.winStreakTotal.textContent = data.wins.trades.length;
+  overallEls.winStreakTotal.textContent = data.wins.trades
+    ? data.wins.trades.length
+    : 0;
   overallEls.winStreakProfit.textContent = data.wins.trades
-    .map(trade => trade.returnCash)
-    .reduce((acc, num) => acc + num, 0);
-  overallEls.winStreakDate.textContent = `${data.wins.trades[0].date} - ${
-    data.wins.trades[data.wins.trades.length - 1].date
+    ? data.wins.trades
+        .map(trade => trade.returnCash)
+        .reduce((acc, num) => acc + num, 0)
+    : 0;
+
+  overallEls.winStreakDate.textContent = `${
+    data.wins.trades ? data.wins.trades[0].date : 'xx/xx/xx'
+  } - ${
+    data.wins.trades
+      ? data.wins.trades[data.wins.trades.length - 1].date
+      : 'xx/xx/xx'
   }`;
 
-  overallEls.lossStreakTotal.textContent = data.losses.trades.length;
+  overallEls.lossStreakTotal.textContent = data.losses.trades
+    ? data.losses.trades.length
+    : 0;
+
   overallEls.lossStreakProfit.textContent = data.losses.trades
-    .map(trade => trade.returnCash)
-    .reduce((acc, num) => acc + num, 0);
-  overallEls.lossStreakDate.textContent = `${data.losses.trades[0].date} - ${
-    data.losses.trades[data.losses.trades.length - 1].date
+    ? data.losses.trades
+        .map(trade => trade.returnCash)
+        .reduce((acc, num) => acc + num, 0)
+    : 0;
+
+  overallEls.lossStreakDate.textContent = `${
+    data.losses.trades ? data.losses.trades[0].date : 'xx/xx/xx'
+  } - ${
+    data.losses.trades
+      ? data.losses.trades[data.losses.trades.length - 1].date
+      : 'xx/xx/xx'
   }`;
 };
 

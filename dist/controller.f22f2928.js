@@ -363,43 +363,43 @@ var _helpers = require("./../helpers");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var user = {
-  capital: 17000,
-  overall: {
-    total: 723,
-    proportions: [{
-      side: 'long',
-      total: 395
-    }, {
-      side: 'short',
-      total: 328
-    }]
+  capital: 0,
+  overall: {// total: 724,
+    // proportions: [
+    //   { side: 'long', total: 395 },
+    //   { side: 'short', total: 328 },
+    // ],
   },
   streaks: {
-    wins: {
-      trades: [{
-        id: 1150,
-        ticker: 'NFLX',
-        date: '14/06/21',
-        returnCash: 253
-      }, {
-        id: 115,
-        ticker: 'VREZ',
-        date: '15/06/21',
-        returnCash: 312
-      }]
+    wins: {// trades: [
+      //   {
+      //     id: 1150,
+      //     ticker: 'NFLX',
+      //     date: '14/06/21',
+      //     returnCash: 253,
+      //   },
+      //   {
+      //     id: 115,
+      //     ticker: 'VREZ',
+      //     date: '15/06/21',
+      //     returnCash: 312,
+      //   },
+      // ],
     },
-    losses: {
-      trades: [{
-        id: 'liJ56D3',
-        ticker: 'AMZN',
-        date: '12/08/21',
-        returnCash: -90
-      }, {
-        id: 'Y58P1M',
-        ticker: 'X',
-        date: '21/07/21',
-        returnCash: -112
-      }]
+    losses: {// trades: [
+      //   {
+      //     id: 'liJ56D3',
+      //     ticker: 'AMZN',
+      //     date: '12/08/21',
+      //     returnCash: -90,
+      //   },
+      //   {
+      //     id: 'Y58P1M',
+      //     ticker: 'X',
+      //     date: '21/07/21',
+      //     returnCash: -112,
+      //   },
+      // ],
     },
     current: {
       trades: [// {
@@ -411,181 +411,197 @@ var user = {
       ]
     }
   },
-  worstTrades: [{
-    id: 300,
-    ticker: 'NFLX',
-    date: '14/06/21',
-    returnCash: -234
-  }, {
-    id: 250,
-    ticker: 'BMBL',
-    date: '15/06/21',
-    returnCash: -151
-  }, {
-    id: 115,
-    ticker: 'GME',
-    date: '7/7/21',
-    returnCash: -180
-  }],
-  bestTrades: [{
-    id: 600,
-    ticker: 'NFLX',
-    date: '14/06/21',
-    returnCash: 253
-  }, {
-    id: 900,
-    ticker: 'BMBL',
-    date: '15/06/21',
-    returnCash: 312
-  }, {
-    id: 450,
-    ticker: 'SNAP',
-    date: '13/08/21',
-    returnCash: 187
-  }],
-  tickers: {
-    AAL: {
-      ticker: 'AAL',
-      avgReturn: 0.58,
-      trades: [{
-        id: '7Ft7s4w',
-        shares: 60,
-        result: 121,
-        winPercentage: 1.44
-      }, {
-        id: 'p8Hi52N',
-        shares: 72,
-        result: 118,
-        winPercentage: 1.32
-      }, {
-        id: 'Jk6sDew',
-        shares: 70,
-        result: -82,
-        winPercentage: -1
-      }]
-    },
-    AAPL: {
-      ticker: 'AAPL',
-      avgReturn: 0.59,
-      trades: [{
-        id: 'QHnv65t',
-        shares: 40,
-        result: 175,
-        winPercentage: 1.54
-      }, {
-        id: 'kG24s8i',
-        shares: 50,
-        result: 125,
-        winPercentage: 1.23
-      }, {
-        id: 'Vz9qA1k',
-        shares: 42,
-        result: -102,
-        winPercentage: -1.1
-      }]
-    }
+  worstTrades: [// {
+    //   id: 300,
+    //   ticker: 'NFLX',
+    //   date: '14/06/21',
+    //   returnCash: -234,
+    // },
+    // {
+    //   id: 250,
+    //   ticker: 'BMBL',
+    //   date: '15/06/21',
+    //   returnCash: -151,
+    // },
+    // {
+    //   id: 115,
+    //   ticker: 'GME',
+    //   date: '7/7/21',
+    //   returnCash: -180,
+    // },
+  ],
+  bestTrades: [// {
+    //   id: 600,
+    //   ticker: 'NFLX',
+    //   date: '14/06/21',
+    //   returnCash: 253,
+    // },
+    // {
+    //   id: 900,
+    //   ticker: 'BMBL',
+    //   date: '15/06/21',
+    //   returnCash: 312,
+    // },
+    // {
+    //   id: 450,
+    //   ticker: 'SNAP',
+    //   date: '13/08/21',
+    //   returnCash: 187,
+    // },
+  ],
+  tickers: {// AAL: {
+    //   ticker: 'AAL',
+    //   avgReturn: 0.58,
+    //   trades: [
+    //     {
+    //       id: '7Ft7s4w',
+    //       shares: 60,
+    //       result: 121,
+    //       winPercentage: 1.44,
+    //     },
+    //     {
+    //       id: 'p8Hi52N',
+    //       shares: 72,
+    //       result: 118,
+    //       winPercentage: 1.32,
+    //     },
+    //     {
+    //       id: 'Jk6sDew',
+    //       shares: 70,
+    //       result: -82,
+    //       winPercentage: -1,
+    //     },
+    //   ],
+    // },
+    // AAPL: {
+    //   ticker: 'AAPL',
+    //   avgReturn: 0.59,
+    //   trades: [
+    //     {
+    //       id: 'QHnv65t',
+    //       shares: 40,
+    //       result: 175,
+    //       winPercentage: 1.54,
+    //     },
+    //     {
+    //       id: 'kG24s8i',
+    //       shares: 50,
+    //       result: 125,
+    //       winPercentage: 1.23,
+    //     },
+    //     {
+    //       id: 'Vz9qA1k',
+    //       shares: 42,
+    //       result: -102,
+    //       winPercentage: -1.1,
+    //     },
+    //   ],
+    // },
   },
-  monthlyData: {},
-  calendarData: {
-    jul21: [{
-      dateLong: 'Mon Mar 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-      dateShort: '6/3/21',
-      trades: [{
-        id: 730,
-        side: 'short',
-        returnCash: -90,
-        returnPercent: -0.9
-      }, {
-        id: 820,
-        side: 'long',
-        returnCash: 120,
-        returnPercent: 1.6
-      }]
-    }, {
-      dateLong: 'Mon Mar 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-      dateShort: '4/3/21',
-      trades: [{
-        id: 2140,
-        side: 'short',
-        returnCash: 100,
-        returnPercent: 1.3
-      }, {
-        id: 820,
-        side: 'short',
-        returnCash: -50,
-        returnPercent: -0.7
-      }]
-    }],
-    aug21: [{
-      dateLong: 'Mon Apr 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-      dateShort: '2/4/21',
-      trades: [{
-        id: 854,
-        side: 'long',
-        returnCash: 110,
-        returnPercent: 1.3
-      }, {
-        id: 820,
-        side: 'long',
-        returnCash: -30,
-        returnPercent: -0.45
-      }]
-    }, {
-      dateLong: 'Mon Apr 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-      dateShort: '7/4/21',
-      trades: [{
-        id: 652,
-        side: 'long',
-        returnCash: -111,
-        returnPercent: -1.2
-      }, {
-        id: 1167,
-        side: 'short',
-        returnCash: -70,
-        returnPercent: -1.1
-      }]
-    }]
+  calendarData: {// jul21: [
+    //   {
+    //     dateLong: 'Mon Mar 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+    //     dateShort: '6/3/21',
+    //     trades: [
+    //       { id: 730, side: 'short', returnCash: -90, returnPercent: -0.9 },
+    //       { id: 820, side: 'long', returnCash: 120, returnPercent: 1.6 },
+    //     ],
+    //   },
+    //   {
+    //     dateLong: 'Mon Mar 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+    //     dateShort: '4/3/21',
+    //     trades: [
+    //       { id: 2140, side: 'short', returnCash: 100, returnPercent: 1.3 },
+    //       { id: 820, side: 'short', returnCash: -50, returnPercent: -0.7 },
+    //     ],
+    //   },
+    // ],
+    // aug21: [
+    //   {
+    //     dateLong: 'Mon Apr 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+    //     dateShort: '2/4/21',
+    //     trades: [
+    //       { id: 854, side: 'long', returnCash: 110, returnPercent: 1.3 },
+    //       { id: 820, side: 'long', returnCash: -30, returnPercent: -0.45 },
+    //     ],
+    //   },
+    //   {
+    //     dateLong: 'Mon Apr 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+    //     dateShort: '7/4/21',
+    //     trades: [
+    //       { id: 652, side: 'long', returnCash: -111, returnPercent: -1.2 },
+    //       { id: 1167, side: 'short', returnCash: -70, returnPercent: -1.1 },
+    //     ],
+    //   },
+    // ],
   },
-  journal: [{
-    id: 115,
-    ticker: 'ROKU',
-    dateShort: '28/07/21',
-    side: 'short',
-    sharesAmount: 100,
-    avgEntry: 180.84,
-    avgExit: 181.9,
-    returnCash: 112.52,
-    returnPercent: 1.63,
-    tradeEntries: [[180.75, 40], [180.9, 60]],
-    tradeExits: [[181.15, 20], [181.42, 20], [182.69, 60]],
-    body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
-  }, {
-    id: 11500,
-    ticker: 'RIOT',
-    dateShort: '29/07/21',
-    side: 'long',
-    sharesAmount: 100,
-    avgEntry: 180.84,
-    avgExit: 181.9,
-    returnCash: 112.52,
-    returnPercent: 1.63,
-    tradeEntries: [[180.75, 40], [180.9, 60]],
-    tradeExits: [[181.15, 20], [181.42, 20], [182.69, 60]],
-    body: 'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.'
-  }, {
-    id: 1150,
-    ticker: 'MSFT',
-    dateShort: '30/07/21',
-    side: 'short',
-    sharesAmount: 110,
-    avgEntry: 180.84,
-    avgExit: 181.9,
-    returnCash: 112.52,
-    returnPercent: 1.63,
-    tradeEntries: [[180.75, 50], [180.9, 60]],
-    tradeExits: [[181.15, 20], [181.42, 20], [182.69, 70]],
-    body: 'In hac habitasse platea dictumst. Diam donec adipiscing tristique risus. Velit scelerisque in dictum non consectetur. Vel pretium lectus quam id leo in vitae. Urna porttitor rhoncus dolor purus. Ultrices gravida dictum fusce ut placerat. Vel quam elementum pulvinar etiam non quam lacus suspendisse. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Luctus accumsan tortor posuere ac ut consequat.'
-  }],
+  journal: [// {
+    //   id: 115,
+    //   ticker: 'ROKU',
+    //   dateShort: '28/07/21',
+    //   side: 'short',
+    //   sharesAmount: 100,
+    //   avgEntry: 180.84,
+    //   avgExit: 181.9,
+    //   returnCash: 112.52,
+    //   returnPercent: 1.63,
+    //   tradeEntries: [
+    //     [180.75, 40],
+    //     [180.9, 60],
+    //   ],
+    //   tradeExits: [
+    //     [181.15, 20],
+    //     [181.42, 20],
+    //     [182.69, 60],
+    //   ],
+    //   body:
+    //     'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.',
+    // },
+    // {
+    //   id: 11500,
+    //   ticker: 'RIOT',
+    //   dateShort: '29/07/21',
+    //   side: 'long',
+    //   sharesAmount: 100,
+    //   avgEntry: 180.84,
+    //   avgExit: 181.9,
+    //   returnCash: 112.52,
+    //   returnPercent: 1.63,
+    //   tradeEntries: [
+    //     [180.75, 40],
+    //     [180.9, 60],
+    //   ],
+    //   tradeExits: [
+    //     [181.15, 20],
+    //     [181.42, 20],
+    //     [182.69, 60],
+    //   ],
+    //   body:
+    //     'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.',
+    // },
+    // {
+    //   id: 1150,
+    //   ticker: 'MSFT',
+    //   dateShort: '30/07/21',
+    //   side: 'short',
+    //   sharesAmount: 110,
+    //   avgEntry: 180.84,
+    //   avgExit: 181.9,
+    //   returnCash: 112.52,
+    //   returnPercent: 1.63,
+    //   tradeEntries: [
+    //     [180.75, 50],
+    //     [180.9, 60],
+    //   ],
+    //   tradeExits: [
+    //     [181.15, 20],
+    //     [181.42, 20],
+    //     [182.69, 70],
+    //   ],
+    //   body:
+    //     'In hac habitasse platea dictumst. Diam donec adipiscing tristique risus. Velit scelerisque in dictum non consectetur. Vel pretium lectus quam id leo in vitae. Urna porttitor rhoncus dolor purus. Ultrices gravida dictum fusce ut placerat. Vel quam elementum pulvinar etiam non quam lacus suspendisse. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Luctus accumsan tortor posuere ac ut consequat.',
+    // },
+  ],
   dummyJournal: [{
     id: '',
     ticker: '',
@@ -824,9 +840,9 @@ exports.updateCapital = updateCapital;
 
 var updateCalendarData = function updateCalendarData(obj) {
   Object.keys(obj).forEach(function (key) {
-    user.monthlyData[key] = obj[key];
+    user.calendarData[key] = obj[key];
   });
-  return user.monthlyData;
+  return user.calendarData;
 };
 
 exports.updateCalendarData = updateCalendarData;
@@ -993,7 +1009,7 @@ exports.renderProfitableTable = renderProfitableTable;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderLongShortPie = exports.renderStreaks = exports.clearLongShortCanvas = exports.queryOverallEls = void 0;
+exports.renderLongShortPie = exports.renderStreaks = exports.renderLongShortStats = exports.clearLongShortCanvas = exports.queryOverallEls = void 0;
 
 var _helpers = require("../helpers");
 
@@ -1009,6 +1025,9 @@ var getElements = function getElements() {
   obj.lossStreakDate = obj.pieStreakCard.querySelector('.js-loss-streak-date');
   obj.lossStreakTotal = obj.pieStreakCard.querySelector('.js-loss-streak-total');
   obj.lossStreakProfit = obj.pieStreakCard.querySelector('.js-loss-streak-profit');
+  obj.overallTradesNumber = obj.pieStreakCard.querySelector('.js-overall-trades-number');
+  obj.shortPositions = obj.pieStreakCard.querySelector('.js-short-positions');
+  obj.longPositions = obj.pieStreakCard.querySelector('.js-long-positions');
   return obj;
 };
 
@@ -1024,21 +1043,39 @@ var clearLongShortCanvas = function clearLongShortCanvas() {
 
 exports.clearLongShortCanvas = clearLongShortCanvas;
 
+var renderLongShortStats = function renderLongShortStats(data) {
+  overallEls.overallTradesNumber.textContent = data.total ? data.total : 0;
+
+  if (data.proportions && data.proportions[0]) {
+    overallEls.longPositions.textContent = "".concat(data.proportions[0].total, " - ").concat((data.proportions[0].total / data.total * 100).toFixed(1), "%");
+  } else {
+    overallEls.longPositions.textContent = '0 - 0%';
+  }
+
+  if (data.proportions && data.proportions[1]) {
+    overallEls.shortPositions.textContent = "".concat(data.proportions[1].total, " - ").concat((data.proportions[1].total / data.total * 100).toFixed(1), "%");
+  } else {
+    overallEls.shortPositions.textContent = '0 - 0%';
+  }
+};
+
+exports.renderLongShortStats = renderLongShortStats;
+
 var renderStreaks = function renderStreaks(data) {
-  overallEls.winStreakTotal.textContent = data.wins.trades.length;
-  overallEls.winStreakProfit.textContent = data.wins.trades.map(function (trade) {
+  overallEls.winStreakTotal.textContent = data.wins.trades ? data.wins.trades.length : 0;
+  overallEls.winStreakProfit.textContent = data.wins.trades ? data.wins.trades.map(function (trade) {
     return trade.returnCash;
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0);
-  overallEls.winStreakDate.textContent = "".concat(data.wins.trades[0].date, " - ").concat(data.wins.trades[data.wins.trades.length - 1].date);
-  overallEls.lossStreakTotal.textContent = data.losses.trades.length;
-  overallEls.lossStreakProfit.textContent = data.losses.trades.map(function (trade) {
+  }, 0) : 0;
+  overallEls.winStreakDate.textContent = "".concat(data.wins.trades ? data.wins.trades[0].date : 'xx/xx/xx', " - ").concat(data.wins.trades ? data.wins.trades[data.wins.trades.length - 1].date : 'xx/xx/xx');
+  overallEls.lossStreakTotal.textContent = data.losses.trades ? data.losses.trades.length : 0;
+  overallEls.lossStreakProfit.textContent = data.losses.trades ? data.losses.trades.map(function (trade) {
     return trade.returnCash;
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0);
-  overallEls.lossStreakDate.textContent = "".concat(data.losses.trades[0].date, " - ").concat(data.losses.trades[data.losses.trades.length - 1].date);
+  }, 0) : 0;
+  overallEls.lossStreakDate.textContent = "".concat(data.losses.trades ? data.losses.trades[0].date : 'xx/xx/xx', " - ").concat(data.losses.trades ? data.losses.trades[data.losses.trades.length - 1].date : 'xx/xx/xx');
 }; // ZONE - D3
 
 
@@ -1265,13 +1302,10 @@ var convertToLeader = function convertToLeader(data) {
 };
 
 var computeProfitableData = function computeProfitableData(tickerData) {
-  console.log('this is the ticker data');
-  console.log(tickerData);
   var sortedTickers = Object.values(tickerData).sort(function (a, b) {
     return b.avgReturn - a.avgReturn;
   });
   var topSix = sortedTickers.splice(0, 6);
-  console.log(topSix);
   var leadersArray = {};
   topSix.forEach(function (leader) {
     if (leader.avgReturn > 0) {
@@ -1279,8 +1313,6 @@ var computeProfitableData = function computeProfitableData(tickerData) {
       leadersArray[leader.ticker] = leaderFormat;
     }
   });
-  console.log('this is the leaders array');
-  console.log(leadersArray);
   return leadersArray;
 };
 
@@ -5161,9 +5193,7 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
 
   var updateWorstBestChart = function updateWorstBestChart() {
     var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : chartData;
-    console.log('THIS IS THE DATA');
-    console.log(data); // create responsive gap for the chart
-
+    // create responsive gap for the chart
     var maxMinVals = d3.extent(data, function (d) {
       return d.returnCash;
     });
@@ -5259,7 +5289,7 @@ var queryDetailsEls = function queryDetailsEls() {
 exports.queryDetailsEls = queryDetailsEls;
 
 var updateCapitalOutput = function updateCapitalOutput(capitalData) {
-  detailsEls.capitalOutput.textContent = capitalData;
+  detailsEls.capitalOutput.textContent = capitalData ? capitalData : 0;
 };
 
 exports.updateCapitalOutput = updateCapitalOutput;
@@ -5367,6 +5397,7 @@ var renderJournalPagination = function renderJournalPagination(entriesNumber, pa
 var renderJournalEntries = function renderJournalEntries(entriesData) {
   var paginationPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var clear = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  if (entriesData.length < 1) return;
   var existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll('.c-journal-entry');
   if (existingEls && clear) existingEls.forEach(function (el) {
     return el.remove();
@@ -8208,8 +8239,9 @@ var controlCalcRatio = function controlCalcRatio(data) {
 };
 
 var controlMonthlyRender = function controlMonthlyRender() {
-  var computedData = (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('calendarData'));
-  (0, _tableMonthlyView.renderMonthlyTable)((0, _dataModel.updateCalendarData)(computedData));
+  var computedData = (0, _tableMonthlyModel.computeMonthlyData)((0, _dataModel.passData)('calendarData')); // renderMonthlyTable(updateCalendarData(computedData));
+
+  (0, _tableMonthlyView.renderMonthlyTable)(computedData);
 };
 
 var controlProfitableRender = function controlProfitableRender() {
@@ -8218,6 +8250,7 @@ var controlProfitableRender = function controlProfitableRender() {
 };
 
 var controlOverallRender = function controlOverallRender() {
+  (0, _chartOverallView.renderLongShortStats)((0, _dataModel.passData)('overall'));
   (0, _chartOverallView.renderStreaks)((0, _dataModel.passData)('streaks'));
 };
 
@@ -8242,6 +8275,7 @@ var controlLongShortPieRender = function controlLongShortPieRender() {
 
 var controlJournalRender = function controlJournalRender() {
   var activeEntryID = (0, _journalEntriesView.renderJournalEntries)((0, _dataModel.passData)('journal'));
+  if (!activeEntryID) return;
   (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(activeEntryID));
 };
 
@@ -8321,6 +8355,7 @@ var queryDOM = function queryDOM() {
 window.addEventListener('DOMContentLoaded', function (e) {
   console.log('DOM app is loaded');
   queryDOM();
+  (0, _accountDetailsView.updateCapitalOutput)((0, _dataModel.passData)('capital'));
   controlMonthlyRender();
   controlProfitableRender();
   controlOverallRender();

@@ -10,5 +10,5 @@ export const queryDetailsEls = function () {
 };
 
 export const updateCapitalOutput = function (capitalData) {
-  detailsEls.capitalOutput.textContent = capitalData;
+  detailsEls.capitalOutput.textContent = capitalData ? capitalData : 0;
 };

@@ -100,9 +100,6 @@ export const renderWorstBestChart = function (passedData) {
 
   // ZONE - update function
   const updateWorstBestChart = function (data = chartData) {
-    console.log('THIS IS THE DATA');
-    console.log(data);
-
     // create responsive gap for the chart
     const maxMinVals = d3.extent(data, d => d.returnCash);
     const gap = Math.round((maxMinVals[1] - maxMinVals[0]) / 6);

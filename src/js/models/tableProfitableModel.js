@@ -41,13 +41,10 @@ const convertToLeader = function (data) {
 };
 
 export const computeProfitableData = function (tickerData) {
-  console.log('this is the ticker data');
-  console.log(tickerData);
   const sortedTickers = Object.values(tickerData).sort(
     (a, b) => b.avgReturn - a.avgReturn
   );
   const topSix = sortedTickers.splice(0, 6);
-  console.log(topSix);
 
   let leadersArray = {};
   topSix.forEach(leader => {
@@ -56,8 +53,5 @@ export const computeProfitableData = function (tickerData) {
       leadersArray[leader.ticker] = leaderFormat;
     }
   });
-
-  console.log('this is the leaders array');
-  console.log(leadersArray);
   return leadersArray;
 };
