@@ -38,7 +38,7 @@ export const renderLongShortStats = function (data) {
 
   if (data.proportions && data.proportions[0]) {
     overallEls.longPositions.textContent = `${data.proportions[0].total} - ${(
-      (data.proportions[0].total / data.total) *
+      (data.proportions[0].total / (data.total > 0 ? data.total : 1)) *
       100
     ).toFixed(1)}%`;
   } else {
@@ -47,7 +47,7 @@ export const renderLongShortStats = function (data) {
 
   if (data.proportions && data.proportions[1]) {
     overallEls.shortPositions.textContent = `${data.proportions[1].total} - ${(
-      (data.proportions[1].total / data.total) *
+      (data.proportions[1].total / (data.total > 0 ? data.total : 1)) *
       100
     ).toFixed(1)}%`;
   } else {
@@ -66,9 +66,9 @@ export const renderStreaks = function (data) {
     : 0;
 
   overallEls.winStreakDate.textContent = `${
-    data.wins.trades ? data.wins.trades[0].date : 'xx/xx/xx'
+    data.wins.trades.length > 0 ? data.wins.trades[0].date : 'xx/xx/xx'
   } - ${
-    data.wins.trades
+    data.wins.trades.length > 0
       ? data.wins.trades[data.wins.trades.length - 1].date
       : 'xx/xx/xx'
   }`;
@@ -84,9 +84,9 @@ export const renderStreaks = function (data) {
     : 0;
 
   overallEls.lossStreakDate.textContent = `${
-    data.losses.trades ? data.losses.trades[0].date : 'xx/xx/xx'
+    data.losses.trades.length > 0 ? data.losses.trades[0].date : 'xx/xx/xx'
   } - ${
-    data.losses.trades
+    data.losses.trades.length > 0
       ? data.losses.trades[data.losses.trades.length - 1].date
       : 'xx/xx/xx'
   }`;

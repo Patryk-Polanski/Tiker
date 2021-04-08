@@ -164,6 +164,9 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
       switchJournalFormModes('read-only');
       controlJournalRender();
       updateCapitalOutput(updatedCapital);
+      // re-render visualisations
+      controlOverallRender();
+      controlLongShortPieRender();
     }
   }
 };

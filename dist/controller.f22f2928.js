@@ -363,43 +363,47 @@ var _helpers = require("./../helpers");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var user = {
-  capital: 0,
-  overall: {// total: 724,
-    // proportions: [
-    //   { side: 'long', total: 395 },
-    //   { side: 'short', total: 328 },
-    // ],
+  capital: 7000,
+  overall: {
+    total: 0,
+    proportions: [{
+      side: 'long',
+      total: 0
+    }, {
+      side: 'short',
+      total: 0
+    }]
   },
   streaks: {
-    wins: {// trades: [
-      //   {
-      //     id: 1150,
-      //     ticker: 'NFLX',
-      //     date: '14/06/21',
-      //     returnCash: 253,
-      //   },
-      //   {
-      //     id: 115,
-      //     ticker: 'VREZ',
-      //     date: '15/06/21',
-      //     returnCash: 312,
-      //   },
-      // ],
+    wins: {
+      trades: [//   {
+        //     id: 1150,
+        //     ticker: 'NFLX',
+        //     date: '14/06/21',
+        //     returnCash: 253,
+        //   },
+        //   {
+        //     id: 115,
+        //     ticker: 'VREZ',
+        //     date: '15/06/21',
+        //     returnCash: 312,
+        //   },
+      ]
     },
-    losses: {// trades: [
-      //   {
-      //     id: 'liJ56D3',
-      //     ticker: 'AMZN',
-      //     date: '12/08/21',
-      //     returnCash: -90,
-      //   },
-      //   {
-      //     id: 'Y58P1M',
-      //     ticker: 'X',
-      //     date: '21/07/21',
-      //     returnCash: -112,
-      //   },
-      // ],
+    losses: {
+      trades: [//   {
+        //     id: 'liJ56D3',
+        //     ticker: 'AMZN',
+        //     date: '12/08/21',
+        //     returnCash: -90,
+        //   },
+        //   {
+        //     id: 'Y58P1M',
+        //     ticker: 'X',
+        //     date: '21/07/21',
+        //     returnCash: -112,
+        //   },
+      ]
     },
     current: {
       trades: [// {
@@ -657,9 +661,9 @@ var compareToStreaks = function compareToStreaks(newEntry) {
     returnCash: newEntry.returnCash
   }; // losing streak - checks whether the entry exists in the losing streak
 
-  var indexInLosses = user.streaks.losses.trades.map(function (loss) {
+  var indexInLosses = user.streaks.losses.trades ? user.streaks.losses.trades.map(function (loss) {
     return loss.id;
-  }).indexOf(newEntry.id); // if the index exists and the new entry's cash return is smaller than zero, overwrite the index
+  }).indexOf(newEntry.id) : -1; // if the index exists and the new entry's cash return is smaller than zero, overwrite the index
 
   if (indexInLosses !== -1 && newEntry.returnCash < 0) {
     user.streaks.losses.trades[indexInLosses] = streakObj;
@@ -671,9 +675,9 @@ var compareToStreaks = function compareToStreaks(newEntry) {
   } // winning streak - checks whether the entry exists in the winning streak
 
 
-  var indexInWins = user.streaks.wins.trades.map(function (win) {
+  var indexInWins = user.streaks.wins.trades ? user.streaks.wins.trades.map(function (win) {
     return win.id;
-  }).indexOf(newEntry.id); // if the index exists and the new entry's cash return is bigger than zero, overwrite the index
+  }).indexOf(newEntry.id) : -1; // if the index exists and the new entry's cash return is bigger than zero, overwrite the index
 
   if (indexInWins !== -1 && newEntry.returnCash > -1) {
     user.streaks.wins.trades[indexInWins] = streakObj;
@@ -685,9 +689,9 @@ var compareToStreaks = function compareToStreaks(newEntry) {
   } // current streak - checks whether the entry exists in the streak
 
 
-  var indexInCurrent = user.streaks.current.trades.map(function (cur) {
+  var indexInCurrent = user.streaks.current.trades ? user.streaks.current.trades.map(function (cur) {
     return cur.id;
-  }).indexOf(newEntry.id);
+  }).indexOf(newEntry.id) : -1;
 
   if (indexInCurrent !== -1) {
     var currentStreakLength = user.streaks.current.trades.length; // if the current streak is 1, overwrite the index as the new Entry already exists in the array
@@ -1047,13 +1051,13 @@ var renderLongShortStats = function renderLongShortStats(data) {
   overallEls.overallTradesNumber.textContent = data.total ? data.total : 0;
 
   if (data.proportions && data.proportions[0]) {
-    overallEls.longPositions.textContent = "".concat(data.proportions[0].total, " - ").concat((data.proportions[0].total / data.total * 100).toFixed(1), "%");
+    overallEls.longPositions.textContent = "".concat(data.proportions[0].total, " - ").concat((data.proportions[0].total / (data.total > 0 ? data.total : 1) * 100).toFixed(1), "%");
   } else {
     overallEls.longPositions.textContent = '0 - 0%';
   }
 
   if (data.proportions && data.proportions[1]) {
-    overallEls.shortPositions.textContent = "".concat(data.proportions[1].total, " - ").concat((data.proportions[1].total / data.total * 100).toFixed(1), "%");
+    overallEls.shortPositions.textContent = "".concat(data.proportions[1].total, " - ").concat((data.proportions[1].total / (data.total > 0 ? data.total : 1) * 100).toFixed(1), "%");
   } else {
     overallEls.shortPositions.textContent = '0 - 0%';
   }
@@ -1068,14 +1072,14 @@ var renderStreaks = function renderStreaks(data) {
   }).reduce(function (acc, num) {
     return acc + num;
   }, 0) : 0;
-  overallEls.winStreakDate.textContent = "".concat(data.wins.trades ? data.wins.trades[0].date : 'xx/xx/xx', " - ").concat(data.wins.trades ? data.wins.trades[data.wins.trades.length - 1].date : 'xx/xx/xx');
+  overallEls.winStreakDate.textContent = "".concat(data.wins.trades.length > 0 ? data.wins.trades[0].date : 'xx/xx/xx', " - ").concat(data.wins.trades.length > 0 ? data.wins.trades[data.wins.trades.length - 1].date : 'xx/xx/xx');
   overallEls.lossStreakTotal.textContent = data.losses.trades ? data.losses.trades.length : 0;
   overallEls.lossStreakProfit.textContent = data.losses.trades ? data.losses.trades.map(function (trade) {
     return trade.returnCash;
   }).reduce(function (acc, num) {
     return acc + num;
   }, 0) : 0;
-  overallEls.lossStreakDate.textContent = "".concat(data.losses.trades ? data.losses.trades[0].date : 'xx/xx/xx', " - ").concat(data.losses.trades ? data.losses.trades[data.losses.trades.length - 1].date : 'xx/xx/xx');
+  overallEls.lossStreakDate.textContent = "".concat(data.losses.trades.length > 0 ? data.losses.trades[0].date : 'xx/xx/xx', " - ").concat(data.losses.trades.length > 0 ? data.losses.trades[data.losses.trades.length - 1].date : 'xx/xx/xx');
 }; // ZONE - D3
 
 
@@ -8308,7 +8312,10 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
       var updatedCapital = (0, _dataModel.updateJournalData)(validationOutcome[1]);
       (0, _journalFormView.switchJournalFormModes)('read-only');
       controlJournalRender();
-      (0, _accountDetailsView.updateCapitalOutput)(updatedCapital);
+      (0, _accountDetailsView.updateCapitalOutput)(updatedCapital); // re-render visualisations
+
+      controlOverallRender();
+      controlLongShortPieRender();
     }
   }
 };
@@ -8413,7 +8420,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55488" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61589" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

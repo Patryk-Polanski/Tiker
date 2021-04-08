@@ -1,46 +1,46 @@
 import { stringifyNum } from './../helpers';
 
 const user = {
-  capital: 0,
+  capital: 7000,
   overall: {
-    // total: 724,
-    // proportions: [
-    //   { side: 'long', total: 395 },
-    //   { side: 'short', total: 328 },
-    // ],
+    total: 0,
+    proportions: [
+      { side: 'long', total: 0 },
+      { side: 'short', total: 0 },
+    ],
   },
   streaks: {
     wins: {
-      // trades: [
-      //   {
-      //     id: 1150,
-      //     ticker: 'NFLX',
-      //     date: '14/06/21',
-      //     returnCash: 253,
-      //   },
-      //   {
-      //     id: 115,
-      //     ticker: 'VREZ',
-      //     date: '15/06/21',
-      //     returnCash: 312,
-      //   },
-      // ],
+      trades: [
+        //   {
+        //     id: 1150,
+        //     ticker: 'NFLX',
+        //     date: '14/06/21',
+        //     returnCash: 253,
+        //   },
+        //   {
+        //     id: 115,
+        //     ticker: 'VREZ',
+        //     date: '15/06/21',
+        //     returnCash: 312,
+        //   },
+      ],
     },
     losses: {
-      // trades: [
-      //   {
-      //     id: 'liJ56D3',
-      //     ticker: 'AMZN',
-      //     date: '12/08/21',
-      //     returnCash: -90,
-      //   },
-      //   {
-      //     id: 'Y58P1M',
-      //     ticker: 'X',
-      //     date: '21/07/21',
-      //     returnCash: -112,
-      //   },
-      // ],
+      trades: [
+        //   {
+        //     id: 'liJ56D3',
+        //     ticker: 'AMZN',
+        //     date: '12/08/21',
+        //     returnCash: -90,
+        //   },
+        //   {
+        //     id: 'Y58P1M',
+        //     ticker: 'X',
+        //     date: '21/07/21',
+        //     returnCash: -112,
+        //   },
+      ],
     },
     current: {
       trades: [
@@ -305,8 +305,8 @@ const compareToStreaks = function (newEntry) {
 
   // losing streak - checks whether the entry exists in the losing streak
   const indexInLosses = user.streaks.losses.trades
-    .map(loss => loss.id)
-    .indexOf(newEntry.id);
+    ? user.streaks.losses.trades.map(loss => loss.id).indexOf(newEntry.id)
+    : -1;
 
   // if the index exists and the new entry's cash return is smaller than zero, overwrite the index
   if (indexInLosses !== -1 && newEntry.returnCash < 0) {
@@ -320,8 +320,8 @@ const compareToStreaks = function (newEntry) {
 
   // winning streak - checks whether the entry exists in the winning streak
   const indexInWins = user.streaks.wins.trades
-    .map(win => win.id)
-    .indexOf(newEntry.id);
+    ? user.streaks.wins.trades.map(win => win.id).indexOf(newEntry.id)
+    : -1;
 
   // if the index exists and the new entry's cash return is bigger than zero, overwrite the index
   if (indexInWins !== -1 && newEntry.returnCash > -1) {
@@ -335,8 +335,8 @@ const compareToStreaks = function (newEntry) {
 
   // current streak - checks whether the entry exists in the streak
   const indexInCurrent = user.streaks.current.trades
-    .map(cur => cur.id)
-    .indexOf(newEntry.id);
+    ? user.streaks.current.trades.map(cur => cur.id).indexOf(newEntry.id)
+    : -1;
 
   if (indexInCurrent !== -1) {
     const currentStreakLength = user.streaks.current.trades.length;
