@@ -920,9 +920,68 @@ var findJournalEntry = function findJournalEntry(id) {
     return entry.id === id;
   });
   s;
-};
+}; // ZONE - calendar object bleprint
+
 
 exports.findJournalEntry = findJournalEntry;
+
+calendarData: {
+  jul21: [{
+    date: '2/07/21',
+    trades: [{
+      id: 730,
+      side: 'short',
+      returnCash: -90,
+      returnPercent: -0.9
+    }, {
+      id: 820,
+      side: 'long',
+      returnCash: 120,
+      returnPercent: 1.6
+    }]
+  }, {
+    date: '3/07/21',
+    trades: [{
+      id: 2140,
+      side: 'short',
+      returnCash: 100,
+      returnPercent: 1.3
+    }, {
+      id: 820,
+      side: 'short',
+      returnCash: -50,
+      returnPercent: -0.7
+    }]
+  }];
+
+  aug21: [{
+    date: '14/08/21',
+    trades: [{
+      id: 854,
+      side: 'long',
+      returnCash: 110,
+      returnPercent: 1.3
+    }, {
+      id: 820,
+      side: 'long',
+      returnCash: -30,
+      returnPercent: -0.45
+    }]
+  }, {
+    date: '21/08/21',
+    trades: [{
+      id: 652,
+      side: 'long',
+      returnCash: -111,
+      returnPercent: -1.2
+    }, {
+      id: 1167,
+      side: 'short',
+      returnCash: -70,
+      returnPercent: -1.1
+    }]
+  }];
+}
 },{"./../helpers":"js/helpers.js"}],"js/models/calculatorsModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -8430,7 +8489,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63855" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61346" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
