@@ -1242,7 +1242,7 @@ exports.computeMonthlyData = computeMonthlyData;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.computeProfitableData = exports.checkAgainstLeaders = void 0;
+exports.computeProfitableData = void 0;
 
 var convertToLeader = function convertToLeader(data) {
   var ticker = data.ticker;
@@ -1285,51 +1285,6 @@ var convertToLeader = function convertToLeader(data) {
   return formattedLeader;
 };
 
-var checkAgainstLeaders = function checkAgainstLeaders(leaders, dataArr) {
-  var newLeadersArr = [];
-  Object.keys(dataArr[0]).forEach(function (key) {
-    var data = dataArr[0][key];
-    var newLeader;
-    var leaderSmallestAvg;
-    if (data.trades.length < 3) return {
-      newLeader: newLeader,
-      leaderSmallestAvg: leaderSmallestAvg
-    }; // check if number of trades is greater than three
-
-    var leaderTickers = Object.keys(leaders);
-    var leaderAvgReturn = []; // calculate avg win percentage on the new data
-
-    var avgWinPercent = (data.trades.map(function (trade) {
-      return trade.winPercentage;
-    }).reduce(function (acc, num) {
-      return acc + num;
-    }, 0) / data.trades.length).toFixed(2); // if the length of the leader tickers array is bigger than 6, push the avg return of each leader to an array
-    // sort the array so that the leader with the smallest avgWinPercent is first
-    // Compare the smallest leader to current data
-    // if the avgWinPercent of the current data is larger than the smallest leader, create a new leader
-
-    if (leaderTickers.length >= 6) {
-      leaderTickers.forEach(function (ticker) {
-        leaderAvgReturn.push([leaders[ticker].avgWinPercent, ticker]);
-      });
-      leaderSmallestAvg = leaderAvgReturn.sort(function (a, b) {
-        return a[0] - b[0];
-      })[0];
-      if (avgWinPercent > leaderSmallestAvg) newLeader = convertToLeader(data);
-    } // if the length of the leader tickers array is smaller than six, create a new leader
-
-
-    if (leaderTickers.length < 6) {
-      newLeader = convertToLeader(data);
-    }
-
-    newLeadersArr.push([newLeader, leaderSmallestAvg]);
-  });
-  return newLeadersArr;
-};
-
-exports.checkAgainstLeaders = checkAgainstLeaders;
-
 var computeProfitableData = function computeProfitableData(tickerData) {
   console.log('this is the ticker data');
   console.log(tickerData);
@@ -1340,8 +1295,10 @@ var computeProfitableData = function computeProfitableData(tickerData) {
   console.log(topSix);
   var leadersArray = {};
   topSix.forEach(function (leader) {
-    var leaderFormat = convertToLeader(leader);
-    leadersArray[leader.ticker] = leaderFormat;
+    if (leader.avgReturn > 0) {
+      var leaderFormat = convertToLeader(leader);
+      leadersArray[leader.ticker] = leaderFormat;
+    }
   });
   console.log('this is the leaders array');
   console.log(leadersArray);
