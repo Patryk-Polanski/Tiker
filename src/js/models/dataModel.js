@@ -66,6 +66,12 @@ const user = {
       date: '15/06/21',
       returnCash: -151,
     },
+    {
+      id: 115,
+      ticker: 'GME',
+      date: '7/7/21',
+      returnCash: -180,
+    },
   ],
   bestTrades: [
     {
@@ -79,6 +85,12 @@ const user = {
       ticker: 'BMBL',
       date: '15/06/21',
       returnCash: 312,
+    },
+    {
+      id: 450,
+      ticker: 'SNAP',
+      date: '13/08/21',
+      returnCash: 187,
     },
   ],
   tickers: {
@@ -518,22 +530,9 @@ export const updateCalendarData = function (obj) {
   return user.monthlyData;
 };
 
-export const updateProfitableData = function (items) {
-  items.forEach(item => {
-    const [newLeader, oldLeader] = item;
-    if (oldLeader) delete user.profitable[oldLeader];
-    if (newLeader) {
-      const getTicker = Object.keys(newLeader)[0];
-      user.profitable[getTicker] = newLeader[getTicker];
-    }
-  });
-  return user.profitable;
-};
-
 export const updateJournalData = function (newEntry) {
   const newEntryIndex = user.journal.map(e => e.id).indexOf(newEntry.id);
   let previousSide;
-  // const newEntryIndex = user.journal.map(e => e.id).indexOf('Hf5t3p1');
   // if the id already exists, meaning the journal entry has been updated
   if (newEntryIndex > -1) {
     updateCapital(user.journal[newEntryIndex].returnCash, 'minus');

@@ -356,21 +356,9 @@ exports.createLongDate = createLongDate;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.findJournalEntry = exports.updateJournalData = exports.updateProfitableData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
+exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
 
 var _helpers = require("./../helpers");
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -433,6 +421,11 @@ var user = {
     ticker: 'BMBL',
     date: '15/06/21',
     returnCash: -151
+  }, {
+    id: 115,
+    ticker: 'GME',
+    date: '7/7/21',
+    returnCash: -180
   }],
   bestTrades: [{
     id: 600,
@@ -444,6 +437,11 @@ var user = {
     ticker: 'BMBL',
     date: '15/06/21',
     returnCash: 312
+  }, {
+    id: 450,
+    ticker: 'SNAP',
+    date: '13/08/21',
+    returnCash: 187
   }],
   tickers: {
     AAL: {
@@ -833,30 +831,11 @@ var updateCalendarData = function updateCalendarData(obj) {
 
 exports.updateCalendarData = updateCalendarData;
 
-var updateProfitableData = function updateProfitableData(items) {
-  items.forEach(function (item) {
-    var _item = _slicedToArray(item, 2),
-        newLeader = _item[0],
-        oldLeader = _item[1];
-
-    if (oldLeader) delete user.profitable[oldLeader];
-
-    if (newLeader) {
-      var getTicker = Object.keys(newLeader)[0];
-      user.profitable[getTicker] = newLeader[getTicker];
-    }
-  });
-  return user.profitable;
-};
-
-exports.updateProfitableData = updateProfitableData;
-
 var updateJournalData = function updateJournalData(newEntry) {
   var newEntryIndex = user.journal.map(function (e) {
     return e.id;
   }).indexOf(newEntry.id);
-  var previousSide; // const newEntryIndex = user.journal.map(e => e.id).indexOf('Hf5t3p1');
-  // if the id already exists, meaning the journal entry has been updated
+  var previousSide; // if the id already exists, meaning the journal entry has been updated
 
   if (newEntryIndex > -1) {
     updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
@@ -5182,9 +5161,9 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
 
   var updateWorstBestChart = function updateWorstBestChart() {
     var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : chartData;
-    // sort the data based on result
-    // data.sort((a, b) => b.returnCash - a.returnCash);
-    // create responsive gap for the chart
+    console.log('THIS IS THE DATA');
+    console.log(data); // create responsive gap for the chart
+
     var maxMinVals = d3.extent(data, function (d) {
       return d.returnCash;
     });
@@ -5245,92 +5224,16 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.formatWorstBestData = void 0;
-var worstTrades = [{
-  id: '8gW2a5Q',
-  ticker: 'ZM',
-  returnCash: 240,
-  date: '3/4/21'
-}, {
-  id: 'lK2G98Q',
-  ticker: 'MARA',
-  returnCash: 173,
-  date: '3/5/21'
-}, {
-  id: 'K14Ji98',
-  ticker: 'BMBL',
-  returnCash: 166,
-  date: '13/4/21'
-}, {
-  id: 'k98Ck9s',
-  ticker: 'X',
-  returnCash: 130,
-  date: '26/3/21'
-}, {
-  id: '92Kji63',
-  ticker: 'SNAP',
-  returnCash: 122,
-  date: '1/3/21'
-}, {
-  id: '8gW2a5Q',
-  ticker: 'GME',
-  returnCash: 111,
-  date: '2/4/21'
-}, {
-  id: 'Sd8tr32',
-  ticker: 'MSFT',
-  returnCash: 103,
-  date: '5/6/21'
-}, {
-  id: 'pa52Qs4',
-  ticker: 'ROKU',
-  returnCash: 94,
-  date: '16/7/21'
-}];
-var bestTrades = [{
-  id: '8gW2a5Q',
-  ticker: 'ZM',
-  returnCash: 440,
-  date: '30/4/21'
-}, {
-  id: 'lK2G98Q',
-  ticker: 'MARA',
-  returnCash: 373,
-  date: '8/5/21'
-}, {
-  id: 'K14Ji98',
-  ticker: 'BMBL',
-  returnCash: 366,
-  date: '8/4/21'
-}, {
-  id: 'k98Ck9s',
-  ticker: 'X',
-  returnCash: 230,
-  date: '13/3/21'
-}, {
-  id: '92Kji63',
-  ticker: 'SNAP',
-  returnCash: 222,
-  date: '16/3/21'
-}, {
-  id: '8gW2a5Q',
-  ticker: 'GME',
-  returnCash: 117,
-  date: '6/4/21'
-}, {
-  id: 'Sd8tr32',
-  ticker: 'MSFT',
-  returnCash: 109,
-  date: '2/6/21'
-}, {
-  id: 'pa52Qs4',
-  ticker: 'ROKU',
-  returnCash: 104,
-  date: '18/7/21'
-}];
 
-var formatWorstBestData = function formatWorstBestData(type) {
-  if (type === 'worst') return ['worst', worstTrades];
-  if (type === 'best') return ['best', bestTrades];
+var formatWorstBestData = function formatWorstBestData(type, stocksData) {
+  if (type === 'worst') {
+    stocksData.forEach(function (stock) {
+      return stock.returnCash = Math.abs(stock.returnCash);
+    });
+    return ['worst', stocksData];
+  }
+
+  if (type === 'best') return ['best', stocksData];
 };
 
 exports.formatWorstBestData = formatWorstBestData;
@@ -8310,11 +8213,6 @@ var controlMonthlyRender = function controlMonthlyRender() {
 };
 
 var controlProfitableRender = function controlProfitableRender() {
-  // const newProfitable = checkAgainstLeaders(passData('profitable'), [
-  //   passNestedData('tickers', ''),
-  // ]);
-  // const tableData = updateProfitableData(newProfitable);
-  // renderProfitableTable(tableData);
   var profitableStocks = (0, _tableProfitableModel.computeProfitableData)((0, _dataModel.passData)('tickers'));
   (0, _tableProfitableView.renderProfitableTable)(profitableStocks);
 };
@@ -8330,7 +8228,12 @@ var controlPerformanceRender = function controlPerformanceRender() {
 
 var controlWorstBestRender = function controlWorstBestRender() {
   var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'worst';
-  (0, _chartWorstBestView.renderWorstBestChart)((0, _chartWorstBestModel.formatWorstBestData)(type));
+
+  if (type === 'worst') {
+    (0, _chartWorstBestView.renderWorstBestChart)((0, _chartWorstBestModel.formatWorstBestData)(type, (0, _dataModel.passData)('worstTrades')));
+  }
+
+  if (type === 'best') (0, _chartWorstBestView.renderWorstBestChart)((0, _chartWorstBestModel.formatWorstBestData)(type, (0, _dataModel.passData)('bestTrades')));
 };
 
 var controlLongShortPieRender = function controlLongShortPieRender() {

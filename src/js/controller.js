@@ -102,11 +102,6 @@ const controlMonthlyRender = function () {
 };
 
 const controlProfitableRender = function () {
-  // const newProfitable = checkAgainstLeaders(passData('profitable'), [
-  //   passNestedData('tickers', ''),
-  // ]);
-  // const tableData = updateProfitableData(newProfitable);
-  // renderProfitableTable(tableData);
   const profitableStocks = computeProfitableData(passData('tickers'));
   renderProfitableTable(profitableStocks);
 };
@@ -122,7 +117,11 @@ const controlPerformanceRender = function (type = 'day') {
 };
 
 const controlWorstBestRender = function (type = 'worst') {
-  renderWorstBestChart(formatWorstBestData(type));
+  if (type === 'worst') {
+    renderWorstBestChart(formatWorstBestData(type, passData('worstTrades')));
+  }
+  if (type === 'best')
+    renderWorstBestChart(formatWorstBestData(type, passData('bestTrades')));
 };
 
 const controlLongShortPieRender = function () {
