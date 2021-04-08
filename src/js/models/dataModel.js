@@ -154,7 +154,7 @@ const user = {
     jul21: [
       {
         dateLong: 'Mon Mar 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-        dateShort: '2/07/21',
+        dateShort: '6/3/21',
         trades: [
           { id: 730, side: 'short', returnCash: -90, returnPercent: -0.9 },
           { id: 820, side: 'long', returnCash: 120, returnPercent: 1.6 },
@@ -162,7 +162,7 @@ const user = {
       },
       {
         dateLong: 'Mon Mar 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-        dateShort: '3/07/21',
+        dateShort: '4/3/21',
         trades: [
           { id: 2140, side: 'short', returnCash: 100, returnPercent: 1.3 },
           { id: 820, side: 'short', returnCash: -50, returnPercent: -0.7 },
@@ -171,16 +171,16 @@ const user = {
     ],
     aug21: [
       {
-        dateLong: 'Mon Mar 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-        dateShort: '14/08/21',
+        dateLong: 'Mon Apr 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+        dateShort: '2/4/21',
         trades: [
           { id: 854, side: 'long', returnCash: 110, returnPercent: 1.3 },
           { id: 820, side: 'long', returnCash: -30, returnPercent: -0.45 },
         ],
       },
       {
-        dateLong: 'Mon Mar 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-        dateShort: '21/08/21',
+        dateLong: 'Mon Apr 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+        dateShort: '7/4/21',
         trades: [
           { id: 652, side: 'long', returnCash: -111, returnPercent: -1.2 },
           { id: 1167, side: 'short', returnCash: -70, returnPercent: -1.1 },

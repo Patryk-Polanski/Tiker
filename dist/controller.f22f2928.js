@@ -508,7 +508,7 @@ var user = {
   calendarData: {
     jul21: [{
       dateLong: 'Mon Mar 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-      dateShort: '2/07/21',
+      dateShort: '6/3/21',
       trades: [{
         id: 730,
         side: 'short',
@@ -522,7 +522,7 @@ var user = {
       }]
     }, {
       dateLong: 'Mon Mar 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-      dateShort: '3/07/21',
+      dateShort: '4/3/21',
       trades: [{
         id: 2140,
         side: 'short',
@@ -536,8 +536,8 @@ var user = {
       }]
     }],
     aug21: [{
-      dateLong: 'Mon Mar 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-      dateShort: '14/08/21',
+      dateLong: 'Mon Apr 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+      dateShort: '2/4/21',
       trades: [{
         id: 854,
         side: 'long',
@@ -550,8 +550,8 @@ var user = {
         returnPercent: -0.45
       }]
     }, {
-      dateLong: 'Mon Mar 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-      dateShort: '21/08/21',
+      dateLong: 'Mon Apr 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+      dateShort: '7/4/21',
       trades: [{
         id: 652,
         side: 'long',
@@ -4994,122 +4994,176 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-var monthlyData = [{
-  date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-  total: 100500,
-  result: 2500,
-  shortDate: '3/21',
-  position: 1
-}, {
-  date: 'Mon Mar 02 2022 23:13:58 GMT+0000 (Greenwich Mean Time)',
-  total: 123260,
-  result: 18260,
-  shortDate: '4/21',
-  position: 2
-}, {
-  date: 'Mon Mar 03 2023 23:12:58 GMT+0000 (Greenwich Mean Time)',
-  total: 120000,
-  result: -3200,
-  shortDate: '5/21',
-  position: 3
-}, {
-  date: 'Mon Mar 03 2024 23:12:58 GMT+0000 (Greenwich Mean Time)',
-  total: 110340,
-  result: -10660,
-  shortDate: '5/21',
-  position: 4
-}];
-var dailyData = [{
-  date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-  total: 2400,
-  result: 400,
-  shortDate: '1/3/21',
-  position: 1
-}, {
-  date: 'Mon Mar 02 2021 23:13:58 GMT+0000 (Greenwich Mean Time)',
-  total: 1200,
-  result: -1200,
-  shortDate: '2/3/21',
-  position: 2
-}, {
-  date: 'Mon Mar 03 2021 23:12:58 GMT+0000 (Greenwich Mean Time)',
-  total: 900,
-  result: -300,
-  shortDate: '3/3/21',
-  position: 3
-}, {
-  date: 'Mon Mar 04 2021 23:11:58 GMT+0000 (Greenwich Mean Time)',
-  total: 1400,
-  result: 500,
-  shortDate: '4/3/21',
-  position: 4
-}, {
-  date: 'Mon Mar 05 2021 23:10:58 GMT+0000 (Greenwich Mean Time)',
-  total: 2200,
-  result: 800,
-  shortDate: '5/3/21',
-  position: 5
-}, {
-  date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 600,
-  result: -1600,
-  shortDate: '6/3/21',
-  position: 6
-}, {
-  date: 'Mon Mar 07 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 500,
-  result: -100,
-  shortDate: '7/3/21',
-  position: 7
-}, {
-  date: 'Mon Mar 12 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 660,
-  result: 160,
-  shortDate: '12/3/21',
-  position: 8
-}, {
-  date: 'Mon Mar 16 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 990,
-  result: 330,
-  shortDate: '16/3/21',
-  position: 9
-}, {
-  date: 'Mon Mar 18 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 1300,
-  result: 310,
-  shortDate: '19/3/21',
-  position: 10
-}, {
-  date: 'Mon Mar 23 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 1348,
-  result: 48,
-  shortDate: '23/3/21',
-  position: 11
-}, {
-  date: 'Mon Mar 24 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 1450,
-  result: 112,
-  shortDate: '24/3/21',
-  position: 12
-}, {
-  date: 'Mon Mar 26 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 1300,
-  result: -150,
-  shortDate: '26/3/21',
-  position: 13
-}, {
-  date: 'Mon Mar 27 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 1423,
-  result: 123,
-  shortDate: '27/3/21',
-  position: 14
-}, {
-  date: 'Mon Mar 29 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-  total: 1497,
-  result: 74,
-  shortDate: '29/3/21',
-  position: 15
-}];
+// const dailyData = [
+//   {
+//     date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 2400,
+//     result: 400,
+//     shortDate: '1/3/21',
+//     position: 1,
+//   },
+//   {
+//     date: 'Mon Mar 02 2021 23:13:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 1200,
+//     result: -1200,
+//     shortDate: '2/3/21',
+//     position: 2,
+//   },
+//   {
+//     date: 'Mon Mar 03 2021 23:12:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 900,
+//     result: -300,
+//     shortDate: '3/3/21',
+//     position: 3,
+//   },
+//   {
+//     date: 'Mon Mar 04 2021 23:11:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 1400,
+//     result: 500,
+//     shortDate: '4/3/21',
+//     position: 4,
+//   },
+//   {
+//     date: 'Mon Mar 05 2021 23:10:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 2200,
+//     result: 800,
+//     shortDate: '5/3/21',
+//     position: 5,
+//   },
+//   {
+//     date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 600,
+//     result: -1600,
+//     shortDate: '6/3/21',
+//     position: 6,
+//   },
+//   {
+//     date: 'Mon Mar 07 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 500,
+//     result: -100,
+//     shortDate: '7/3/21',
+//     position: 7,
+//   },
+//   {
+//     date: 'Mon Mar 12 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 660,
+//     result: 160,
+//     shortDate: '12/3/21',
+//     position: 8,
+//   },
+//   {
+//     date: 'Mon Mar 16 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 990,
+//     result: 330,
+//     shortDate: '16/3/21',
+//     position: 9,
+//   },
+//   {
+//     date: 'Mon Mar 18 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 1300,
+//     result: 310,
+//     shortDate: '19/3/21',
+//     position: 10,
+//   },
+//   {
+//     date: 'Mon Mar 23 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 1348,
+//     result: 48,
+//     shortDate: '23/3/21',
+//     position: 11,
+//   },
+//   {
+//     date: 'Mon Mar 24 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 1450,
+//     result: 112,
+//     shortDate: '24/3/21',
+//     position: 12,
+//   },
+//   {
+//     date: 'Mon Mar 26 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 1300,
+//     result: -150,
+//     shortDate: '26/3/21',
+//     position: 13,
+//   },
+//   {
+//     date: 'Mon Mar 27 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 1423,
+//     result: 123,
+//     shortDate: '27/3/21',
+//     position: 14,
+//   },
+//   {
+//     date: 'Mon Mar 29 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 1497,
+//     result: 74,
+//     shortDate: '29/3/21',
+//     position: 15,
+//   },
+// ];
+// const monthlyData = [
+//   {
+//     date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 100500,
+//     result: 2500,
+//     shortDate: '3/21',
+//     position: 1,
+//   },
+//   {
+//     date: 'Mon Mar 02 2022 23:13:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 123260,
+//     result: 18260,
+//     shortDate: '4/21',
+//     position: 2,
+//   },
+//   {
+//     date: 'Mon Mar 03 2023 23:12:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 120000,
+//     result: -3200,
+//     shortDate: '5/21',
+//     position: 3,
+//   },
+//   {
+//     date: 'Mon Mar 03 2024 23:12:58 GMT+0000 (Greenwich Mean Time)',
+//     total: 110340,
+//     result: -10660,
+//     shortDate: '5/21',
+//     position: 4,
+//   },
+// ];
+var formatMonthlyData = function formatMonthlyData(calendarData, capital) {
+  var currentCapital = capital;
+  var monthsArr = [];
+  Object.keys(calendarData).forEach(function (monthKey) {
+    monthsArr.push(calendarData[monthKey].map(function (day) {
+      return day.trades;
+    }));
+  });
+  var formattedMonthsArr = [];
+  monthsArr.forEach(function (month) {
+    var returnCash = month.flat().map(function (item) {
+      return item.returnCash;
+    }).reduce(function (acc, num) {
+      return acc + num;
+    }, 0);
+    var dateLong = month[0].dateLong;
+    var dateShort = month[0].dateShort;
+    formattedMonthsArr.push({
+      returnCash: returnCash,
+      dateLong: dateLong,
+      dateShort: dateShort
+    });
+  });
+  formattedMonthsArr.sort(function (a, b) {
+    return new Date(a.dateLong) - new Date(b.dateLong);
+  });
+  formattedMonthsArr.forEach(function (month, index) {
+    currentCapital += month.returnCash;
+    month.total = currentCapital;
+    month.position = index;
+  });
+  return formattedMonthsArr;
+};
 
 var formatDailyData = function formatDailyData(calendarData, capital) {
   var currentCapital = capital;
@@ -5141,17 +5195,12 @@ var formatDailyData = function formatDailyData(calendarData, capital) {
     day.total = currentCapital;
     day.position = index;
   });
-  console.log(formattedDaysArr);
   return formattedDaysArr;
-};
-
-var formatMonthlyData = function formatMonthlyData(calendarData, capital) {
-  return monthlyData;
 };
 
 var formatPerformanceData = function formatPerformanceData(calendarData, capital, type) {
   if (type === 'day') return ['Daily', formatDailyData(calendarData, capital)];
-  if (type === 'month') return ['Monthly', formatMonthlyData(monthlyData, capital)];
+  if (type === 'month') return ['Monthly', formatMonthlyData(calendarData, capital)];
 };
 
 exports.formatPerformanceData = formatPerformanceData;
