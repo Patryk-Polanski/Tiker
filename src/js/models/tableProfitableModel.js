@@ -22,9 +22,6 @@ const convertToLeader = function (data) {
     .map(trade => trade.returnPercent)
     .filter(percent => percent >= 0);
 
-  console.log('WIN PERCENT TRADES');
-  console.log(winPercentTrades);
-
   current.totalProfit = totalProfit;
   current.totalShares = totalShares;
   current.avgReturn = +(totalProfit / current.totalTrades).toFixed(0);
@@ -52,8 +49,6 @@ export const computeProfitableData = function (tickerData) {
 
   let leadersArray = {};
   topSix.forEach(leader => {
-    console.log('this is the leader!');
-    console.log(leader);
     if (leader.avgReturn > 0) {
       const leaderFormat = convertToLeader(leader);
       leadersArray[leader.ticker] = leaderFormat;

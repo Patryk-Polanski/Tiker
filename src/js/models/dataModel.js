@@ -1,4 +1,5 @@
 import { stringifyNum } from './../helpers';
+import { MONTHS_FORMAT } from './../config';
 
 const user = {
   capital: 7000,
@@ -495,7 +496,6 @@ const compareToWorstBest = function (newEntry) {
 };
 
 const addToTickers = function (newEntry) {
-  console.log(newEntry);
   let currentTicker = user.tickers[newEntry.ticker];
 
   // if the ticker already exists in the array
@@ -548,8 +548,12 @@ const addToTickers = function (newEntry) {
       ],
     };
   }
+};
 
-  console.log(user);
+const addToCalendarData = function (newEntry) {
+  console.log('THIS IS THE ENTRY TO BE ADDED TO CALENDAR DATA');
+  console.log(newEntry);
+  console.log(MONTHS_FORMAT);
 };
 
 const compareStatistics = function (
@@ -561,6 +565,7 @@ const compareStatistics = function (
   compareToStreaks(newEntry);
   compareToWorstBest(newEntry);
   addToTickers(newEntry);
+  addToCalendarData(newEntry);
 };
 
 export const passData = function (field) {

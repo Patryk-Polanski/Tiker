@@ -350,6 +350,17 @@ var createLongDate = function createLongDate(shortDate) {
 };
 
 exports.createLongDate = createLongDate;
+},{}],"js/config.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.MONTHS_FORMAT = exports.ENTRIES_PER_PAGE = void 0;
+var ENTRIES_PER_PAGE = 2;
+exports.ENTRIES_PER_PAGE = ENTRIES_PER_PAGE;
+var MONTHS_FORMAT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Sep', 'Oct', 'Nov', 'Dec'];
+exports.MONTHS_FORMAT = MONTHS_FORMAT;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
@@ -359,6 +370,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
 
 var _helpers = require("./../helpers");
+
+var _config = require("./../config");
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -813,7 +826,6 @@ var compareToWorstBest = function compareToWorstBest(newEntry) {
 };
 
 var addToTickers = function addToTickers(newEntry) {
-  console.log(newEntry);
   var currentTicker = user.tickers[newEntry.ticker]; // if the ticker already exists in the array
 
   if (currentTicker) {
@@ -862,8 +874,12 @@ var addToTickers = function addToTickers(newEntry) {
       }]
     };
   }
+};
 
-  console.log(user);
+var addToCalendarData = function addToCalendarData(newEntry) {
+  console.log('THIS IS THE ENTRY TO BE ADDED TO CALENDAR DATA');
+  console.log(newEntry);
+  console.log(_config.MONTHS_FORMAT);
 };
 
 var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
@@ -872,6 +888,7 @@ var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
   compareToStreaks(newEntry);
   compareToWorstBest(newEntry);
   addToTickers(newEntry);
+  addToCalendarData(newEntry);
 };
 
 var passData = function passData(field) {
@@ -944,7 +961,7 @@ var findJournalEntry = function findJournalEntry(id) {
 };
 
 exports.findJournalEntry = findJournalEntry;
-},{"./../helpers":"js/helpers.js"}],"js/models/calculatorsModel.js":[function(require,module,exports) {
+},{"./../helpers":"js/helpers.js","./../config":"js/config.js"}],"js/models/calculatorsModel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1351,8 +1368,6 @@ var convertToLeader = function convertToLeader(data) {
   }).filter(function (percent) {
     return percent >= 0;
   });
-  console.log('WIN PERCENT TRADES');
-  console.log(winPercentTrades);
   current.totalProfit = totalProfit;
   current.totalShares = totalShares;
   current.avgReturn = +(totalProfit / current.totalTrades).toFixed(0);
@@ -1373,9 +1388,6 @@ var computeProfitableData = function computeProfitableData(tickerData) {
   var topSix = sortedTickers.splice(0, 6);
   var leadersArray = {};
   topSix.forEach(function (leader) {
-    console.log('this is the leader!');
-    console.log(leader);
-
     if (leader.avgReturn > 0) {
       var leaderFormat = convertToLeader(leader);
       leadersArray[leader.ticker] = leaderFormat;
@@ -5377,15 +5389,6 @@ var updateCapitalOutput = function updateCapitalOutput(capitalData) {
 };
 
 exports.updateCapitalOutput = updateCapitalOutput;
-},{}],"js/config.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ENTRIES_PER_PAGE = void 0;
-var ENTRIES_PER_PAGE = 2;
-exports.ENTRIES_PER_PAGE = ENTRIES_PER_PAGE;
 },{}],"js/views/journalEntriesView.js":[function(require,module,exports) {
 "use strict";
 
