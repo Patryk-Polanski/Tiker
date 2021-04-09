@@ -30,8 +30,8 @@ export const renderProfitableTable = function (tableData) {
       9999
     )}</td>
             <td>${ticker.avgReturn}</td>
-            <td>${ticker.avgWinPercent}%</td>
-            <td>${ticker.battingAvgPercent}%</td>
+            <td>${ticker.avgWinPercent}</td>
+            <td>${ticker.battingAvgPercent}</td>
             <td>${ticker.winLossRatio}</td>
         </tr>
       `;

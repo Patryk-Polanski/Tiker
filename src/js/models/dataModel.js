@@ -349,8 +349,8 @@ const compareToStreaks = function (newEntry) {
     // if this is the case, overwrite the index as the new Entry already exists in the array
     if (
       newEntry.returnCash > -1 &&
-      (user.streaks.current.trades[indexInCurrent - 1].return > -1 ||
-        user.streaks.current.trades[indexInCurrent + 1].return > -1)
+      (user.streaks.current.trades[indexInCurrent - 1].returnCash > -1 ||
+        user.streaks.current.trades[indexInCurrent + 1].returnCash > -1)
     ) {
       user.streaks.current.trades[indexInCurrent] = streakObj;
       return;
@@ -360,8 +360,8 @@ const compareToStreaks = function (newEntry) {
     // if this is the case, the streak is broken, so remove the existing new entry index from the array
     if (
       newEntry.returnCash > -1 &&
-      (user.streaks.current.trades[indexInCurrent - 1].return < 0 ||
-        user.streaks.current.trades[indexInCurrent + 1].return < 0)
+      (user.streaks.current.trades[indexInCurrent - 1].returnCash < 0 ||
+        user.streaks.current.trades[indexInCurrent + 1].returnCash < 0)
     ) {
       user.streaks.current.trades.splice(indexInCurrent, 1);
       return;
@@ -371,8 +371,8 @@ const compareToStreaks = function (newEntry) {
     // if this is the case, overwrite the index as the new Entry already exists in the array
     if (
       newEntry.returnCash < 0 &&
-      (user.streaks.current.trades[indexInCurrent - 1].return < 0 ||
-        user.streaks.current.trades[indexInCurrent + 1].return < 0)
+      (user.streaks.current.trades[indexInCurrent - 1].returnCash < 0 ||
+        user.streaks.current.trades[indexInCurrent + 1].returnCash < 0)
     ) {
       user.streaks.current.trades[indexInCurrent] = streakObj;
       return;
@@ -382,8 +382,8 @@ const compareToStreaks = function (newEntry) {
     // if this is the case, the streak is broken, so remove the existing new entry index from the array
     if (
       newEntry.returnCash < 0 &&
-      (user.streaks.current.trades[indexInCurrent - 1].return > -1 ||
-        user.streaks.current.trades[indexInCurrent + 1].return > -1)
+      (user.streaks.current.trades[indexInCurrent - 1].returnCash > -1 ||
+        user.streaks.current.trades[indexInCurrent + 1].returnCash > -1)
     ) {
       user.streaks.current.trades.splice(indexInCurrent, 1);
       return;
@@ -501,12 +501,31 @@ const addToTickers = function (newEntry) {
   // if the ticker already exists in the array
   if (currentTicker) {
     //TODO: check if the id already exists in the array
-    currentTicker.trades.push({
-      id: newEntry.id,
-      shares: newEntry.sharesAmount,
-      returnCash: newEntry.returnCash,
-      returnPercent: newEntry.returnPercent,
-    });
+
+    const indexInTrades = currentTicker.trades
+      .map(trade => trade.id)
+      .indexOf(newEntry.id);
+    console.log('}{}{}{}{}{}{}{}{');
+    console.log(indexInTrades);
+
+    if (indexInTrades !== -1) {
+      currentTicker.trades[indexInTrades] = {
+        id: newEntry.id,
+        shares: newEntry.sharesAmount,
+        returnCash: newEntry.returnCash,
+        returnPercent: newEntry.returnPercent,
+      };
+    }
+
+    if (indexInTrades === -1) {
+      currentTicker.trades.push({
+        id: newEntry.id,
+        shares: newEntry.sharesAmount,
+        returnCash: newEntry.returnCash,
+        returnPercent: newEntry.returnPercent,
+      });
+    }
+
     currentTicker.avgReturn = +(
       currentTicker.trades
         .map(trade => trade.returnCash)
