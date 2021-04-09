@@ -169,6 +169,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
       controlLongShortPieRender();
       controlWorstBestRender('best');
       controlWorstBestRender();
+      controlProfitableRender();
     }
   }
 };

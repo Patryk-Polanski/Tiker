@@ -13,14 +13,17 @@ const convertToLeader = function (data) {
 
   const current = formattedLeader;
 
-  const tradeResults = data.trades.map(trade => trade.result);
+  const tradeResults = data.trades.map(trade => trade.returnCash);
   const totalProfit = tradeResults.reduce((acc, num) => acc + num, 0);
   const totalShares = data.trades
     .map(trade => trade.shares)
     .reduce((acc, num) => acc + num, 0);
   const winPercentTrades = data.trades
-    .map(trade => trade.winPercentage)
+    .map(trade => trade.returnPercent)
     .filter(percent => percent >= 0);
+
+  console.log('WIN PERCENT TRADES');
+  console.log(winPercentTrades);
 
   current.totalProfit = totalProfit;
   current.totalShares = totalShares;
@@ -37,6 +40,7 @@ const convertToLeader = function (data) {
     current.profitable /
     (current.totalTrades - current.profitable)
   ).toFixed(2);
+  if (!isFinite(current.winLossRatio)) current.winLossRatio = 1;
   return formattedLeader;
 };
 
@@ -48,6 +52,8 @@ export const computeProfitableData = function (tickerData) {
 
   let leadersArray = {};
   topSix.forEach(leader => {
+    console.log('this is the leader!');
+    console.log(leader);
     if (leader.avgReturn > 0) {
       const leaderFormat = convertToLeader(leader);
       leadersArray[leader.ticker] = leaderFormat;

@@ -812,11 +812,48 @@ var compareToWorstBest = function compareToWorstBest(newEntry) {
   }
 };
 
+var addToTickers = function addToTickers(newEntry) {
+  console.log(newEntry);
+  var currentTicker = user.tickers[newEntry.ticker]; // if the ticker already exists in the array
+
+  if (currentTicker) {
+    //TODO: check if the id already exists in the array
+    currentTicker.trades.push({
+      id: newEntry.id,
+      shares: newEntry.sharesAmount,
+      returnCash: newEntry.returnCash,
+      returnPercent: newEntry.returnPercent
+    });
+    currentTicker.avgReturn = +(currentTicker.trades.map(function (trade) {
+      return trade.returnCash;
+    }).reduce(function (acc, num) {
+      return acc + num;
+    }, 0) / currentTicker.trades.length).toFixed(2);
+  } // if the ticker is new
+
+
+  if (!currentTicker) {
+    user.tickers[newEntry.ticker] = {
+      ticker: newEntry.ticker,
+      avgReturn: newEntry.returnCash,
+      trades: [{
+        id: newEntry.id,
+        shares: newEntry.sharesAmount,
+        returnCash: newEntry.returnCash,
+        returnPercent: newEntry.returnPercent
+      }]
+    };
+  }
+
+  console.log(user);
+};
+
 var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
   var previousSide = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
   addToOverall(newEntry, newEntryIndex, previousSide);
   compareToStreaks(newEntry);
   compareToWorstBest(newEntry);
+  addToTickers(newEntry);
 };
 
 var passData = function passData(field) {
@@ -999,6 +1036,9 @@ var queryProfitableEls = function queryProfitableEls() {
 exports.queryProfitableEls = queryProfitableEls;
 
 var renderProfitableTable = function renderProfitableTable(tableData) {
+  profitableEls.profitableTableHead.parentElement.querySelectorAll('tr:not(:first-child)').forEach(function (row) {
+    return row.remove();
+  });
   Object.keys(tableData).forEach(function (data) {
     var ticker = tableData[data];
     var html = "\n        <tr>\n            <th>".concat(data, "</th>\n            <td>").concat(ticker.totalProfit, "</td>\n            <td>").concat(ticker.totalTrades, "/").concat((0, _helpers.kFormatter)(ticker.totalShares, 9999), "</td>\n            <td>").concat(ticker.avgReturn, "</td>\n            <td>").concat(ticker.avgWinPercent, "%</td>\n            <td>").concat(ticker.battingAvgPercent, "%</td>\n            <td>").concat(ticker.winLossRatio, "</td>\n        </tr>\n      ");
@@ -1278,7 +1318,7 @@ var convertToLeader = function convertToLeader(data) {
   };
   var current = formattedLeader;
   var tradeResults = data.trades.map(function (trade) {
-    return trade.result;
+    return trade.returnCash;
   });
   var totalProfit = tradeResults.reduce(function (acc, num) {
     return acc + num;
@@ -1289,10 +1329,12 @@ var convertToLeader = function convertToLeader(data) {
     return acc + num;
   }, 0);
   var winPercentTrades = data.trades.map(function (trade) {
-    return trade.winPercentage;
+    return trade.returnPercent;
   }).filter(function (percent) {
     return percent >= 0;
   });
+  console.log('WIN PERCENT TRADES');
+  console.log(winPercentTrades);
   current.totalProfit = totalProfit;
   current.totalShares = totalShares;
   current.avgReturn = +(totalProfit / current.totalTrades).toFixed(0);
@@ -1302,6 +1344,7 @@ var convertToLeader = function convertToLeader(data) {
   current.profitable = winPercentTrades.length;
   current.battingAvgPercent = +(current.profitable / current.totalTrades * 100).toFixed(2);
   current.winLossRatio = +(current.profitable / (current.totalTrades - current.profitable)).toFixed(2);
+  if (!isFinite(current.winLossRatio)) current.winLossRatio = 1;
   return formattedLeader;
 };
 
@@ -1312,6 +1355,9 @@ var computeProfitableData = function computeProfitableData(tickerData) {
   var topSix = sortedTickers.splice(0, 6);
   var leadersArray = {};
   topSix.forEach(function (leader) {
+    console.log('this is the leader!');
+    console.log(leader);
+
     if (leader.avgReturn > 0) {
       var leaderFormat = convertToLeader(leader);
       leadersArray[leader.ticker] = leaderFormat;
@@ -8329,6 +8375,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
       controlLongShortPieRender();
       controlWorstBestRender('best');
       controlWorstBestRender();
+      controlProfitableRender();
     }
   }
 };

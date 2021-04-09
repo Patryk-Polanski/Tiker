@@ -15,6 +15,10 @@ export const queryProfitableEls = function () {
 };
 
 export const renderProfitableTable = function (tableData) {
+  profitableEls.profitableTableHead.parentElement
+    .querySelectorAll('tr:not(:first-child)')
+    .forEach(row => row.remove());
+
   Object.keys(tableData).forEach(data => {
     const ticker = tableData[data];
     const html = `

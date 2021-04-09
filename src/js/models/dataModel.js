@@ -494,6 +494,45 @@ const compareToWorstBest = function (newEntry) {
   }
 };
 
+const addToTickers = function (newEntry) {
+  console.log(newEntry);
+  let currentTicker = user.tickers[newEntry.ticker];
+
+  // if the ticker already exists in the array
+  if (currentTicker) {
+    //TODO: check if the id already exists in the array
+    currentTicker.trades.push({
+      id: newEntry.id,
+      shares: newEntry.sharesAmount,
+      returnCash: newEntry.returnCash,
+      returnPercent: newEntry.returnPercent,
+    });
+    currentTicker.avgReturn = +(
+      currentTicker.trades
+        .map(trade => trade.returnCash)
+        .reduce((acc, num) => acc + num, 0) / currentTicker.trades.length
+    ).toFixed(2);
+  }
+
+  // if the ticker is new
+  if (!currentTicker) {
+    user.tickers[newEntry.ticker] = {
+      ticker: newEntry.ticker,
+      avgReturn: newEntry.returnCash,
+      trades: [
+        {
+          id: newEntry.id,
+          shares: newEntry.sharesAmount,
+          returnCash: newEntry.returnCash,
+          returnPercent: newEntry.returnPercent,
+        },
+      ],
+    };
+  }
+
+  console.log(user);
+};
+
 const compareStatistics = function (
   newEntry,
   newEntryIndex,
@@ -502,6 +541,7 @@ const compareStatistics = function (
   addToOverall(newEntry, newEntryIndex, previousSide);
   compareToStreaks(newEntry);
   compareToWorstBest(newEntry);
+  addToTickers(newEntry);
 };
 
 export const passData = function (field) {
