@@ -430,7 +430,7 @@ const compareToStreaks = function (newEntry) {
       // checks if the entries in the current streak are positive and if the current streak is longer than the winning streak
       // if this is the case, the current streak becomes the new winning streak
       user.streaks.current.trades[0].returnCash > -1 &&
-      user.streaks.current.trades.length >= user.streaks.wins.trades.length
+      user.streaks.current.trades.length > user.streaks.wins.trades.length + 1
     ) {
       user.streaks.wins.trades = user.streaks.current.trades;
       return;
@@ -440,7 +440,7 @@ const compareToStreaks = function (newEntry) {
       // checks if the entries in the current streak are negative and if the current streak is longer than the losing streak
       // if this is the case, the current streak becomes the new losing streak
       user.streaks.current.trades[0].returnCash < 0 &&
-      user.streaks.current.trades.length >= user.streaks.losses.trades.length
+      user.streaks.current.trades.length > user.streaks.losses.trades.length + 1
     ) {
       user.streaks.losses.trades = user.streaks.current.trades;
       return;
