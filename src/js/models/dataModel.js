@@ -553,7 +553,61 @@ const addToTickers = function (newEntry) {
 const addToCalendarData = function (newEntry) {
   console.log('THIS IS THE ENTRY TO BE ADDED TO CALENDAR DATA');
   console.log(newEntry);
-  console.log(MONTHS_FORMAT);
+  const dateKey =
+    MONTHS_FORMAT[new Date(newEntry.dateFull).getMonth()] +
+    String(new Date(newEntry.dateFull).getFullYear()).slice(-2);
+  console.log(dateKey);
+  const currentKey = user.calendarData[dateKey];
+  if (currentKey) {
+    console.log(currentKey.map(day => day.dateShort));
+    console.log(
+      currentKey.map(day => day.dateShort).indexOf(newEntry.dateShort)
+    );
+    console.log(newEntry.dateShort);
+    const entryDateIndex = currentKey
+      .map(day => day.dateShort)
+      .indexOf(newEntry.dateShort);
+    if (entryDateIndex !== -1) {
+      console.log('it is the same day');
+      currentKey[entryDateIndex].trades.push({
+        id: newEntry.id,
+        side: newEntry.side,
+        returnCash: newEntry.returnCash,
+        returnPercent: newEntry.returnPercent,
+      });
+    }
+    if (entryDateIndex === -1) {
+      currentKey.push({
+        dateLong: newEntry.dateFull,
+        dateShort: newEntry.dateShort,
+        trades: [
+          {
+            id: newEntry.id,
+            side: newEntry.side,
+            returnCash: newEntry.returnCash,
+            returnPercent: newEntry.returnPercent,
+          },
+        ],
+      });
+    }
+  }
+  if (!currentKey) {
+    user.calendarData[dateKey] = [
+      {
+        dateLong: newEntry.dateFull,
+        dateShort: newEntry.dateShort,
+        trades: [
+          {
+            id: newEntry.id,
+            side: newEntry.side,
+            returnCash: newEntry.returnCash,
+            returnPercent: newEntry.returnPercent,
+          },
+        ],
+      },
+    ];
+  }
+  console.log(user);
 };
 
 const compareStatistics = function (

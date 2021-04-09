@@ -138,12 +138,14 @@ export const renderPerformanceChart = function (passedData) {
       .append('circle')
       .attr('cx', d => x(d.position))
       .attr('cy', d => {
-        return y(d.total);
+        return y(Math.round(d.total));
       })
       .attr('class', 'performance-circles');
 
     // update current points
-    circles.attr('cx', d => x(d.position)).attr('cy', d => y(d.total));
+    circles
+      .attr('cx', d => x(d.position))
+      .attr('cy', d => y(Math.round(d.total)));
 
     // create axes
     const xAxis = d3
@@ -222,6 +224,18 @@ export const renderPerformanceChart = function (passedData) {
       .attr('transform', 'translate(0, 18)')
       .attr('class', 'performance-axis-odd');
   };
+
+  // change the buttons accordingly
+  [
+    performanceEls.performanceDayBtn,
+    performanceEls.performanceMonthBtn,
+  ].forEach(btn => btn.classList.remove('btn--tertiary--active'));
+  console.log('THIS IS THE TYPE');
+  console.log(type);
+  if (type === 'Daily')
+    performanceEls.performanceDayBtn.classList.add('btn--tertiary--active');
+  if (type === 'Monthly')
+    performanceEls.performanceMonthBtn.classList.add('btn--tertiary--active');
 
   updatePerformanceChart(data);
 };

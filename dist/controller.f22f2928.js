@@ -359,7 +359,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.MONTHS_FORMAT = exports.ENTRIES_PER_PAGE = void 0;
 var ENTRIES_PER_PAGE = 2;
 exports.ENTRIES_PER_PAGE = ENTRIES_PER_PAGE;
-var MONTHS_FORMAT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Sep', 'Oct', 'Nov', 'Dec'];
+var MONTHS_FORMAT = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 exports.MONTHS_FORMAT = MONTHS_FORMAT;
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
@@ -879,7 +879,60 @@ var addToTickers = function addToTickers(newEntry) {
 var addToCalendarData = function addToCalendarData(newEntry) {
   console.log('THIS IS THE ENTRY TO BE ADDED TO CALENDAR DATA');
   console.log(newEntry);
-  console.log(_config.MONTHS_FORMAT);
+  var dateKey = _config.MONTHS_FORMAT[new Date(newEntry.dateFull).getMonth()] + String(new Date(newEntry.dateFull).getFullYear()).slice(-2);
+  console.log(dateKey);
+  var currentKey = user.calendarData[dateKey];
+
+  if (currentKey) {
+    console.log(currentKey.map(function (day) {
+      return day.dateShort;
+    }));
+    console.log(currentKey.map(function (day) {
+      return day.dateShort;
+    }).indexOf(newEntry.dateShort));
+    console.log(newEntry.dateShort);
+    var entryDateIndex = currentKey.map(function (day) {
+      return day.dateShort;
+    }).indexOf(newEntry.dateShort);
+
+    if (entryDateIndex !== -1) {
+      console.log('it is the same day');
+      currentKey[entryDateIndex].trades.push({
+        id: newEntry.id,
+        side: newEntry.side,
+        returnCash: newEntry.returnCash,
+        returnPercent: newEntry.returnPercent
+      });
+    }
+
+    if (entryDateIndex === -1) {
+      currentKey.push({
+        dateLong: newEntry.dateFull,
+        dateShort: newEntry.dateShort,
+        trades: [{
+          id: newEntry.id,
+          side: newEntry.side,
+          returnCash: newEntry.returnCash,
+          returnPercent: newEntry.returnPercent
+        }]
+      });
+    }
+  }
+
+  if (!currentKey) {
+    user.calendarData[dateKey] = [{
+      dateLong: newEntry.dateFull,
+      dateShort: newEntry.dateShort,
+      trades: [{
+        id: newEntry.id,
+        side: newEntry.side,
+        returnCash: newEntry.returnCash,
+        returnPercent: newEntry.returnPercent
+      }]
+    }];
+  }
+
+  console.log(user);
 };
 
 var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
@@ -4882,13 +4935,13 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
     circles.enter().append('circle').attr('cx', function (d) {
       return x(d.position);
     }).attr('cy', function (d) {
-      return y(d.total);
+      return y(Math.round(d.total));
     }).attr('class', 'performance-circles'); // update current points
 
     circles.attr('cx', function (d) {
       return x(d.position);
     }).attr('cy', function (d) {
-      return y(d.total);
+      return y(Math.round(d.total));
     }); // create axes
 
     var xAxis = d3.axisBottom(x).ticks(data.length).tickFormat(function (d) {
@@ -4925,8 +4978,16 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
 
 
     xAxisGroup.selectAll('g.tick:nth-child(odd) text').attr('transform', 'translate(0, 18)').attr('class', 'performance-axis-odd');
-  };
+  }; // change the buttons accordingly
 
+
+  [performanceEls.performanceDayBtn, performanceEls.performanceMonthBtn].forEach(function (btn) {
+    return btn.classList.remove('btn--tertiary--active');
+  });
+  console.log('THIS IS THE TYPE');
+  console.log(type);
+  if (type === 'Daily') performanceEls.performanceDayBtn.classList.add('btn--tertiary--active');
+  if (type === 'Monthly') performanceEls.performanceMonthBtn.classList.add('btn--tertiary--active');
   updatePerformanceChart(data);
 };
 
@@ -4951,143 +5012,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-// const dailyData = [
-//   {
-//     date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 2400,
-//     result: 400,
-//     shortDate: '1/3/21',
-//     position: 1,
-//   },
-//   {
-//     date: 'Mon Mar 02 2021 23:13:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 1200,
-//     result: -1200,
-//     shortDate: '2/3/21',
-//     position: 2,
-//   },
-//   {
-//     date: 'Mon Mar 03 2021 23:12:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 900,
-//     result: -300,
-//     shortDate: '3/3/21',
-//     position: 3,
-//   },
-//   {
-//     date: 'Mon Mar 04 2021 23:11:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 1400,
-//     result: 500,
-//     shortDate: '4/3/21',
-//     position: 4,
-//   },
-//   {
-//     date: 'Mon Mar 05 2021 23:10:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 2200,
-//     result: 800,
-//     shortDate: '5/3/21',
-//     position: 5,
-//   },
-//   {
-//     date: 'Mon Mar 06 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 600,
-//     result: -1600,
-//     shortDate: '6/3/21',
-//     position: 6,
-//   },
-//   {
-//     date: 'Mon Mar 07 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 500,
-//     result: -100,
-//     shortDate: '7/3/21',
-//     position: 7,
-//   },
-//   {
-//     date: 'Mon Mar 12 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 660,
-//     result: 160,
-//     shortDate: '12/3/21',
-//     position: 8,
-//   },
-//   {
-//     date: 'Mon Mar 16 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 990,
-//     result: 330,
-//     shortDate: '16/3/21',
-//     position: 9,
-//   },
-//   {
-//     date: 'Mon Mar 18 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 1300,
-//     result: 310,
-//     shortDate: '19/3/21',
-//     position: 10,
-//   },
-//   {
-//     date: 'Mon Mar 23 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 1348,
-//     result: 48,
-//     shortDate: '23/3/21',
-//     position: 11,
-//   },
-//   {
-//     date: 'Mon Mar 24 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 1450,
-//     result: 112,
-//     shortDate: '24/3/21',
-//     position: 12,
-//   },
-//   {
-//     date: 'Mon Mar 26 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 1300,
-//     result: -150,
-//     shortDate: '26/3/21',
-//     position: 13,
-//   },
-//   {
-//     date: 'Mon Mar 27 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 1423,
-//     result: 123,
-//     shortDate: '27/3/21',
-//     position: 14,
-//   },
-//   {
-//     date: 'Mon Mar 29 2021 23:09:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 1497,
-//     result: 74,
-//     shortDate: '29/3/21',
-//     position: 15,
-//   },
-// ];
-// const monthlyData = [
-//   {
-//     date: 'Mon Mar 01 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 100500,
-//     result: 2500,
-//     shortDate: '3/21',
-//     position: 1,
-//   },
-//   {
-//     date: 'Mon Mar 02 2022 23:13:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 123260,
-//     result: 18260,
-//     shortDate: '4/21',
-//     position: 2,
-//   },
-//   {
-//     date: 'Mon Mar 03 2023 23:12:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 120000,
-//     result: -3200,
-//     shortDate: '5/21',
-//     position: 3,
-//   },
-//   {
-//     date: 'Mon Mar 03 2024 23:12:58 GMT+0000 (Greenwich Mean Time)',
-//     total: 110340,
-//     result: -10660,
-//     shortDate: '5/21',
-//     position: 4,
-//   },
-// ];
+var formatShortDate = function formatShortDate(dateShort) {
+  var splitDate = dateShort.split('/');
+  splitDate.shift();
+  return splitDate.join('/');
+};
+
 var formatMonthlyData = function formatMonthlyData(calendarData, capital) {
   var currentCapital = capital;
   var monthsArr = [];
@@ -5104,7 +5034,7 @@ var formatMonthlyData = function formatMonthlyData(calendarData, capital) {
       return acc + num;
     }, 0);
     var dateLong = month[0].dateLong;
-    var dateShort = month[0].dateShort;
+    var dateShort = formatShortDate(month[0].dateShort);
     formattedMonthsArr.push({
       returnCash: returnCash,
       dateLong: dateLong,
@@ -8397,6 +8327,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
       controlWorstBestRender('best');
       controlWorstBestRender();
       controlProfitableRender();
+      controlPerformanceRender();
     }
   }
 };
@@ -8501,7 +8432,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53117" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60256" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

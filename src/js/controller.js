@@ -170,6 +170,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
       controlWorstBestRender('best');
       controlWorstBestRender();
       controlProfitableRender();
+      controlPerformanceRender();
     }
   }
 };
