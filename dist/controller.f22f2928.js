@@ -810,9 +810,6 @@ var compareToWorstBest = function compareToWorstBest(newEntry) {
     });
     if (user.worstTrades.length > 16) user.worstTrades.pop();
   }
-
-  console.log('asdlasdkhasdlashlahsdlashjhsadhd');
-  console.log(user.worstTrades);
 };
 
 var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
@@ -878,8 +875,6 @@ var updateJournalData = function updateJournalData(newEntry) {
   }
 
   compareStatistics(newEntry, newEntryIndex, previousSide);
-  console.log('UPDATED USER OBJECT');
-  console.log(user);
   return [user.capital];
 };
 
@@ -5242,7 +5237,7 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
 
     for (var i = 0; i < barsDimensions.length; i++) {
       labelsGroup.append('text').text((0, _helpers.kFormatter)(determineSign(data[i].returnCash), 9999)).attr('class', "".concat(type === 'best' ? 'best' : 'worst', "-trades-label")).attr('transform', "translate(".concat(barsDimensions[i][0], ", ").concat(barsDimensions[i][1] - 10, ")"));
-      labelsGroup.append('text').text(data[i].date).attr('class', 'worst-best-date').attr('transform', "translate(".concat(barsDimensions[i][0] - 8, ", ").concat(graphHeight - 10, ") rotate(-90)"));
+      labelsGroup.append('text').text(data[i].dateShort).attr('class', 'worst-best-date').attr('transform', "translate(".concat(barsDimensions[i][0] - 8, ", ").concat(graphHeight - 10, ") rotate(-90)"));
     } // ZONE - create horizontal line on the x axis to cover the bars borders
 
 
@@ -8111,10 +8106,7 @@ var _helpers = require("../helpers");
 var validateJournalForm = function validateJournalForm(inputData) {
   var accountCapital = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   if (accountCapital < 1) return ['ERROR', 'Account capital needs to be above zero'];
-  console.log(inputData);
-  console.log('~@~@~@~@~@~@~@~@~@~');
   var dateRegex = /^[0-9\/]+$/;
-  console.log(dateRegex.test(inputData.date));
   var dateFull = (0, _helpers.createLongDate)(inputData.date); // dates validation
 
   if (dateFull === 'ERROR') return ['ERROR', 'date must be in the format of dd/mm/yy'];
@@ -8199,7 +8191,6 @@ var validateJournalForm = function validateJournalForm(inputData) {
     body: body
   }; // all validation checks passed
 
-  console.log(entryObj);
   return ['PASS', entryObj];
 };
 

@@ -492,8 +492,6 @@ const compareToWorstBest = function (newEntry) {
     );
     if (user.worstTrades.length > 16) user.worstTrades.pop();
   }
-  console.log('asdlasdkhasdlashlahsdlashjhsadhd');
-  console.log(user.worstTrades);
 };
 
 const compareStatistics = function (
@@ -552,9 +550,6 @@ export const updateJournalData = function (newEntry) {
   }
 
   compareStatistics(newEntry, newEntryIndex, previousSide);
-
-  console.log('UPDATED USER OBJECT');
-  console.log(user);
 
   return [user.capital];
 };

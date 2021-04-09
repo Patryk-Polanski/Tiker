@@ -162,7 +162,7 @@ export const renderWorstBestChart = function (passedData) {
 
       labelsGroup
         .append('text')
-        .text(data[i].date)
+        .text(data[i].dateShort)
         .attr('class', 'worst-best-date')
         .attr(
           'transform',

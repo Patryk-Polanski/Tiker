@@ -3,11 +3,8 @@ import { createLongDate, createShortDate } from '../helpers';
 export const validateJournalForm = function (inputData, accountCapital = 0) {
   if (accountCapital < 1)
     return ['ERROR', 'Account capital needs to be above zero'];
-  console.log(inputData);
-  console.log('~@~@~@~@~@~@~@~@~@~');
 
   let dateRegex = /^[0-9\/]+$/;
-  console.log(dateRegex.test(inputData.date));
 
   const dateFull = createLongDate(inputData.date);
 
@@ -119,6 +116,5 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
   };
 
   // all validation checks passed
-  console.log(entryObj);
   return ['PASS', entryObj];
 };
