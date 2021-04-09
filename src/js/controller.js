@@ -167,6 +167,8 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
       // re-render visualisations
       controlOverallRender();
       controlLongShortPieRender();
+      controlWorstBestRender('best');
+      controlWorstBestRender();
     }
   }
 };

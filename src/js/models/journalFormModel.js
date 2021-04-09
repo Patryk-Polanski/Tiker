@@ -42,15 +42,6 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
       'All entries, exits and shares rows must be filled in or deleted',
     ];
 
-  console.log(
-    [
-      inputData.entriesPrices,
-      inputData.entriesShares,
-      inputData.exitsPrices,
-      inputData.exitShares,
-    ].flat()
-  );
-
   const entriesPrices = inputData.entriesPrices.map(entry => +entry);
   const entriesShares = inputData.entriesShares
     .map(entry => +entry)

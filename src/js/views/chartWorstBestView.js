@@ -186,6 +186,15 @@ export const renderWorstBestChart = function (passedData) {
     xAxisGroup
       .selectAll('g.tick:nth-child(odd) text')
       .attr('transform', 'translate(0, 18)');
+
+    // change the buttons accordingly
+    [bestWorstEls.worstBtn, bestWorstEls.bestBtn].forEach(btn =>
+      btn.classList.remove('btn--tertiary--active')
+    );
+    if (type === 'worst')
+      bestWorstEls.worstBtn.classList.add('btn--tertiary--active');
+    if (type === 'best')
+      bestWorstEls.bestBtn.classList.add('btn--tertiary--active');
   };
   updateWorstBestChart(data);
 };

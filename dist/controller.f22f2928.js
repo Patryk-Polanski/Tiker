@@ -769,6 +769,7 @@ var compareToStreaks = function compareToStreaks(newEntry) {
 };
 
 var compareToWorstBest = function compareToWorstBest(newEntry) {
+  // best comparison
   if (newEntry.returnCash > -1) {
     var indexInBest = user.bestTrades.map(function (trade) {
       return trade.id;
@@ -787,7 +788,8 @@ var compareToWorstBest = function compareToWorstBest(newEntry) {
       return b.returnCash - a.returnCash;
     });
     if (user.bestTrades.length > 16) user.bestTrades.pop();
-  }
+  } // worst comparison
+
 
   if (newEntry.returnCash < 0) {
     var indexInWorst = user.worstTrades.map(function (trade) {
@@ -797,7 +799,7 @@ var compareToWorstBest = function compareToWorstBest(newEntry) {
     if (indexInWorst !== -1) {
       user.worstTrades[indexInWorst] = newEntry;
       user.worstTrades = user.worstTrades.sort(function (a, b) {
-        return b.returnCash - a.returnCash;
+        return a.returnCash - b.returnCash;
       });
       return;
     }
@@ -808,6 +810,9 @@ var compareToWorstBest = function compareToWorstBest(newEntry) {
     });
     if (user.worstTrades.length > 16) user.worstTrades.pop();
   }
+
+  console.log('asdlasdkhasdlashlahsdlashjhsadhd');
+  console.log(user.worstTrades);
 };
 
 var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
@@ -5244,7 +5249,13 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
     var xOverlayLineGroup = graph.append('g');
     xOverlayLineGroup.append('line').attr('x1', 0).attr('x2', graphWidth).attr('y1', graphHeight).attr('y2', graphHeight).attr('class', 'worst-best-overlay-line'); // select x axis text and translate down every odd text to make space
 
-    xAxisGroup.selectAll('g.tick:nth-child(odd) text').attr('transform', 'translate(0, 18)');
+    xAxisGroup.selectAll('g.tick:nth-child(odd) text').attr('transform', 'translate(0, 18)'); // change the buttons accordingly
+
+    [bestWorstEls.worstBtn, bestWorstEls.bestBtn].forEach(function (btn) {
+      return btn.classList.remove('btn--tertiary--active');
+    });
+    if (type === 'worst') bestWorstEls.worstBtn.classList.add('btn--tertiary--active');
+    if (type === 'best') bestWorstEls.bestBtn.classList.add('btn--tertiary--active');
   };
 
   updateWorstBestChart(data);
@@ -5259,12 +5270,22 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.formatWorstBestData = void 0;
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var formatWorstBestData = function formatWorstBestData(type, stocksData) {
   if (type === 'worst') {
+    var dataCopy = [];
     stocksData.forEach(function (stock) {
+      return dataCopy.push(_objectSpread({}, stock));
+    });
+    dataCopy.forEach(function (stock) {
       return stock.returnCash = Math.abs(stock.returnCash);
     });
-    return ['worst', stocksData];
+    return ['worst', dataCopy];
   }
 
   if (type === 'best') return ['best', stocksData];
@@ -8109,7 +8130,6 @@ var validateJournalForm = function validateJournalForm(inputData) {
   var id = inputData.id ? +inputData.id : Date.now(); // validating trade details
 
   if (!inputData.entriesPrices || !inputData.entriesShares || !inputData.exitsPrices || !inputData.exitsShares) return ['ERROR', 'All entries, exits and shares rows must be filled in or deleted'];
-  console.log([inputData.entriesPrices, inputData.entriesShares, inputData.exitsPrices, inputData.exitShares].flat());
   var entriesPrices = inputData.entriesPrices.map(function (entry) {
     return +entry;
   });
@@ -8316,6 +8336,8 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
 
       controlOverallRender();
       controlLongShortPieRender();
+      controlWorstBestRender('best');
+      controlWorstBestRender();
     }
   }
 };
@@ -8420,7 +8442,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61589" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53117" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

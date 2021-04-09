@@ -451,6 +451,7 @@ const compareToStreaks = function (newEntry) {
 };
 
 const compareToWorstBest = function (newEntry) {
+  // best comparison
   if (newEntry.returnCash > -1) {
     const indexInBest = user.bestTrades
       .map(trade => trade.id)
@@ -471,7 +472,7 @@ const compareToWorstBest = function (newEntry) {
 
     if (user.bestTrades.length > 16) user.bestTrades.pop();
   }
-
+  // worst comparison
   if (newEntry.returnCash < 0) {
     const indexInWorst = user.worstTrades
       .map(trade => trade.id)
@@ -480,7 +481,7 @@ const compareToWorstBest = function (newEntry) {
     if (indexInWorst !== -1) {
       user.worstTrades[indexInWorst] = newEntry;
       user.worstTrades = user.worstTrades.sort(
-        (a, b) => b.returnCash - a.returnCash
+        (a, b) => a.returnCash - b.returnCash
       );
       return;
     }
@@ -491,6 +492,8 @@ const compareToWorstBest = function (newEntry) {
     );
     if (user.worstTrades.length > 16) user.worstTrades.pop();
   }
+  console.log('asdlasdkhasdlashlahsdlashjhsadhd');
+  console.log(user.worstTrades);
 };
 
 const compareStatistics = function (
