@@ -11,6 +11,9 @@ const getElements = function (obj = {}) {
   obj.sectionSettings = obj.core.querySelector('.js-section-settings');
   obj.sectionHelp = obj.core.querySelector('.js-section-help');
   obj.performanceChart = obj.core.querySelector('.js-chart-performance');
+  obj.overallChart = obj.core.querySelector('.js-chart-overall');
+  obj.tableProfitable = obj.core.querySelector('.js-table-profitable');
+  obj.worstBestChart = obj.core.querySelector('.js-chart-worst-best');
   return obj;
 };
 
@@ -76,9 +79,19 @@ export const toggleSections = function (targetEl) {
 };
 
 export const showNoDataScreens = function () {
-  coreEls.performanceChart.classList.add('s-content__no-data');
+  [
+    coreEls.performanceChart,
+    coreEls.overallChart,
+    coreEls.tableProfitable,
+    coreEls.worstBestChart,
+  ].forEach(card => card.classList.add('s-content__no-data'));
 };
 
 export const hideNoDataScreens = function () {
-  coreEls.performanceChart.classList.remove('s-content__no-data');
+  [
+    coreEls.performanceChart,
+    coreEls.overallChart,
+    coreEls.tableProfitable,
+    coreEls.worstBestChart,
+  ].forEach(card => card.classList.remove('s-content__no-data'));
 };

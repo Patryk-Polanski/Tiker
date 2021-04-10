@@ -435,11 +435,11 @@ body {
   content: url("/no-data-message.ae483149.png");
   vertical-align: middle;
   position: absolute;
-  padding-top: 10%;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
+  padding-top: 10%;
   background-color: #080808;
   z-index: 8;
   border-radius: 10px;
@@ -1441,6 +1441,7 @@ body {
   grid-row: 1/span 6;
   border-radius: 10px;
   padding: 20px;
+  position: relative;
 }
 @media only screen and (max-width: 87.5em) {
   .c-pie-streak {
@@ -1608,6 +1609,7 @@ body {
   padding: 0 2px 10px 2px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 @media only screen and (max-width: 75em) {
   .c-table-profitable {

@@ -1172,6 +1172,9 @@ var getElements = function getElements() {
   obj.sectionSettings = obj.core.querySelector('.js-section-settings');
   obj.sectionHelp = obj.core.querySelector('.js-section-help');
   obj.performanceChart = obj.core.querySelector('.js-chart-performance');
+  obj.overallChart = obj.core.querySelector('.js-chart-overall');
+  obj.tableProfitable = obj.core.querySelector('.js-table-profitable');
+  obj.worstBestChart = obj.core.querySelector('.js-chart-worst-best');
   return obj;
 };
 
@@ -1247,13 +1250,17 @@ var toggleSections = function toggleSections(targetEl) {
 exports.toggleSections = toggleSections;
 
 var showNoDataScreens = function showNoDataScreens() {
-  coreEls.performanceChart.classList.add('s-content__no-data');
+  [coreEls.performanceChart, coreEls.overallChart, coreEls.tableProfitable, coreEls.worstBestChart].forEach(function (card) {
+    return card.classList.add('s-content__no-data');
+  });
 };
 
 exports.showNoDataScreens = showNoDataScreens;
 
 var hideNoDataScreens = function hideNoDataScreens() {
-  coreEls.performanceChart.classList.remove('s-content__no-data');
+  [coreEls.performanceChart, coreEls.overallChart, coreEls.tableProfitable, coreEls.worstBestChart].forEach(function (card) {
+    return card.classList.remove('s-content__no-data');
+  });
 };
 
 exports.hideNoDataScreens = hideNoDataScreens;
