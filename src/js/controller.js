@@ -74,6 +74,7 @@ import {
   clearFormValidationError,
 } from './views/journalFormView';
 import { validateJournalForm } from './models/journalFormModel';
+import { queryCoreEls } from './views/coreView';
 
 // ZONE - controllers
 
@@ -202,16 +203,17 @@ const controlJournalPagination = function (paginationBtn) {
 };
 
 const queryDOM = function () {
-  queryCalcEls();
-  queryMonthlyEls();
+  queryCoreEls();
   queryProfitableEls();
   queryOverallEls();
   queryPerformanceEls();
-  queryBestWorstEls();
   queryDetailsEls();
+  queryBestWorstEls();
+  queryMonthlyEls();
   queryJournalEntriesEls();
   queryJournalFilterEls();
   queryJournalFormEls();
+  queryCalcEls();
 };
 
 // ZONE - event listeners

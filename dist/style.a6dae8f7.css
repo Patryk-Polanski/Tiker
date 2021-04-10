@@ -365,7 +365,6 @@ body {
 }
 
 .s-calculators {
-  height: 100vh;
   min-height: 100vh;
   padding: 0 10px;
   text-align: center;
@@ -387,13 +386,16 @@ body {
   align-items: center;
 }
 
+.s-core-hidden-section {
+  display: none !important;
+}
+
 .s-content {
   flex-direction: column;
   margin-left: 75px;
 }
 
 .s-help {
-  height: 100vh;
   min-height: 100vh;
   text-align: center;
 }
@@ -593,7 +595,6 @@ body {
 }
 
 .s-monthly {
-  height: 100vh;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -657,6 +658,16 @@ body {
 }
 .s-monthly__table-unit {
   border-bottom: 1px solid #aaaaaa;
+}
+
+.s-settings {
+  min-height: 100vh;
+  text-align: center;
+}
+.s-settings__heading {
+  font-weight: 400;
+  color: #aaaaaa;
+  margin-top: 30px;
 }
 
 .s-visualisations {

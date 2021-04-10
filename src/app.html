@@ -14,11 +14,11 @@
 
 <body class="background-gradient">
     <div class="container">
-        <section class="core">
-            <nav class="c-nav">
+        <section class="core js-core">
+            <nav class="c-nav js-nav">
                 <img class="c-nav__logo" src="./img/tiker-small-logo.png" alt="Tiker logo">
                 <div class="c-nav__cluster-one">
-                    <button class="btn btn--nav">
+                    <button class="btn btn--nav js-nav-overview-btn">
                         <svg class="svg svg--nav" viewBox="0 0 155 155" xmlns="http://www.w3.org/2000/svg">
                             <ellipse cx="76.8535" cy="78.4947" rx="52" ry="51.4947" fill="#762E88" />
                             <g filter="url(#filter0_d)">
@@ -47,7 +47,7 @@
                             </defs>
                         </svg>
                     </button>
-                    <button class="btn btn--nav">
+                    <button class="btn btn--nav js-nav-monthly-btn">
                         <svg class="svg svg--nav" viewBox="0 0 155 155" xmlns="http://www.w3.org/2000/svg">
                             <ellipse cx="77.8535" cy="78.4947" rx="52" ry="51.4947" fill="#762E88" />
                             <g filter="url(#filter0_d)">
@@ -76,7 +76,7 @@
                             </defs>
                         </svg>
                     </button>
-                    <button class="btn btn--nav">
+                    <button class="btn btn--nav js-nav-journal-btn">
                         <svg class="svg svg--nav" viewBox="0 0 155 155" xmlns="http://www.w3.org/2000/svg">
                             <ellipse cx="77.8535" cy="78.4947" rx="52" ry="51.4947" fill="#762E88" />
                             <g filter="url(#filter0_d)">
@@ -105,7 +105,7 @@
                             </defs>
                         </svg>
                     </button>
-                    <button class="btn btn--nav">
+                    <button class="btn btn--nav js-nav-calculators-btn">
                         <svg class="svg svg--nav" viewBox="0 0 155 155" xmlns="http://www.w3.org/2000/svg">
                             <ellipse cx="77.8535" cy="78.4947" rx="52" ry="51.4947" fill="#762E88" />
                             <ellipse cx="77.8535" cy="78.4947" rx="52" ry="51.4947" fill="#762E88" />
@@ -150,7 +150,7 @@
                     </button>
                 </div>
                 <div class="c-nav__cluster-two">
-                    <button class="btn btn--nav">
+                    <button class="btn btn--nav js-nav-settings-btn">
                         <svg class="svg svg--nav" viewBox="0 0 155 155" xmlns="http://www.w3.org/2000/svg">
                             <ellipse cx="77.8535" cy="78.4947" rx="52" ry="51.4947" fill="#762E88" />
                             <g filter="url(#filter0_d)">
@@ -179,7 +179,7 @@
                             </defs>
                         </svg>
                     </button>
-                    <button class="btn btn--nav">
+                    <button class="btn btn--nav js-nav-help-btn">
                         <svg class="svg svg--nav" viewBox="0 0 155 155" xmlns="http://www.w3.org/2000/svg">
                             <ellipse cx="77.8535" cy="78.4947" rx="52" ry="51.4947" fill="#762E88" />
                             <g filter="url(#filter0_d)">
@@ -208,7 +208,7 @@
                             </defs>
                         </svg>
                     </button>
-                    <button class="btn btn--nav">
+                    <button class="btn btn--nav js-nav-exit-btn">
                         <svg class="svg svg--nav" viewBox="0 0 155 155" xmlns="http://www.w3.org/2000/svg">
                             <ellipse cx="77.8535" cy="78.4947" rx="52" ry="51.4947" fill="#762E88" />
                             <g filter="url(#filter0_d)">
@@ -240,7 +240,7 @@
                 </div>
             </nav>
             <section class="s-content">
-                <section class="s-visualisations">
+                <section class="s-visualisations js-section js-section-overview">
                     <div class="s-visualisations__account-info">
                         <span class="s-visualisations__capital js-capital-output">Capital: <span>0</span></span>
                         <span class="s-visualisations__username">Username: <span>mrpat966</span></span>
@@ -334,7 +334,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="s-monthly">
+                <section class="s-monthly s-core-hidden-section js-section js-section-monthly">
                     <h1 class="s-monthly__heading">Monthly report</h1>
                     <div class="s-monthly__table-wrapper">
                         <table class="s-monthly__table js-monthly-table">
@@ -363,7 +363,7 @@
                         </table>
                     </div>
                 </section>
-                <section class="s-journal">
+                <section class="s-journal s-core-hidden-section js-section js-section-journal">
                     <h1 class="s-journal__heading">Trading Journal</h1>
                     <div class="c-journal-filter js-journal-filter">
                         <div class="c-journal-filter__month-wrapper">
@@ -413,7 +413,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="s-calculators">
+                <section class="s-calculators s-core-hidden-section js-section js-section-calculators">
                     <h1 class="s-calculators__heading">Capital management</h1>
                     <div class="s-calculators__wrapper">
                         <div class="c-calculator-capital js-calc-capital">
@@ -512,7 +512,10 @@
                         </div>
                     </div>
                 </section>
-                <section class="s-help">
+                <section class="s-settings s-core-hidden-section js-section js-section-settings">
+                    <h1 class="s-settings__heading">Settings</h1>
+                </section>
+                <section class="s-help s-core-hidden-section js-section js-section-help">
                     <h1 class="s-help__heading">Help and Support</h1>
                     <section class="s-help__content-wrapper">
                         <div class="s-help__guide">

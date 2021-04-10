@@ -8196,7 +8196,36 @@ var validateJournalForm = function validateJournalForm(inputData) {
 };
 
 exports.validateJournalForm = validateJournalForm;
-},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/views/coreView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.queryCoreEls = void 0;
+var coreEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.core = document.querySelector('.js-core');
+  obj.nav = obj.core.querySelector('.js-nav');
+  obj.sectionOverview = obj.core.querySelector('.js-section-overview');
+  obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
+  obj.sectionJournal = obj.core.querySelector('.js-section-journal');
+  obj.sectionCalculators = obj.core.querySelector('.js-section-calculators');
+  obj.sectionSettings = obj.core.querySelector('.js-section-settings');
+  obj.sectionHelp = obj.core.querySelector('.js-section-help');
+  return obj;
+};
+
+var queryCoreEls = function queryCoreEls() {
+  coreEls = getElements();
+  console.log('core els');
+  console.log(coreEls);
+};
+
+exports.queryCoreEls = queryCoreEls;
+},{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _calculatorsView = require("./views/calculatorsView");
@@ -8232,6 +8261,8 @@ var _journalFiltersView = require("./views/journalFiltersView");
 var _journalFormView = require("./views/journalFormView");
 
 var _journalFormModel = require("./models/journalFormModel");
+
+var _coreView = require("./views/coreView");
 
 // ZONE - controllers
 var controlCalcCapital = function controlCalcCapital(amount, action) {
@@ -8363,16 +8394,17 @@ var controlJournalPagination = function controlJournalPagination(paginationBtn) 
 };
 
 var queryDOM = function queryDOM() {
-  (0, _calculatorsView.queryCalcEls)();
-  (0, _tableMonthlyView.queryMonthlyEls)();
+  (0, _coreView.queryCoreEls)();
   (0, _tableProfitableView.queryProfitableEls)();
   (0, _chartOverallView.queryOverallEls)();
   (0, _chartPerformanceView.queryPerformanceEls)();
-  (0, _chartWorstBestView.queryBestWorstEls)();
   (0, _accountDetailsView.queryDetailsEls)();
+  (0, _chartWorstBestView.queryBestWorstEls)();
+  (0, _tableMonthlyView.queryMonthlyEls)();
   (0, _journalEntriesView.queryJournalEntriesEls)();
   (0, _journalFiltersView.queryJournalFilterEls)();
   (0, _journalFormView.queryJournalFormEls)();
+  (0, _calculatorsView.queryCalcEls)();
 }; // ZONE - event listeners
 
 
@@ -8409,7 +8441,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartOverallView.renderLongShortPie)();
   }, 1000);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalEntriesView":"js/views/journalEntriesView.js","./views/journalFiltersView":"js/views/journalFiltersView.js","./views/journalFormView":"js/views/journalFormView.js","./models/journalFormModel":"js/models/journalFormModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalEntriesView":"js/views/journalEntriesView.js","./views/journalFiltersView":"js/views/journalFiltersView.js","./views/journalFormView":"js/views/journalFormView.js","./models/journalFormModel":"js/models/journalFormModel.js","./views/coreView":"js/views/coreView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -8437,7 +8469,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64295" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53291" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
