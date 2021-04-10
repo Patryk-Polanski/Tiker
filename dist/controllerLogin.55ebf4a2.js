@@ -241,6 +241,21 @@ var createLongDate = function createLongDate(shortDate) {
 };
 
 exports.createLongDate = createLongDate;
+},{}],"js/config.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.USER_PASSWORD = exports.USER_USERNAME = exports.MONTHS_FORMAT = exports.ENTRIES_PER_PAGE = void 0;
+var ENTRIES_PER_PAGE = 2;
+exports.ENTRIES_PER_PAGE = ENTRIES_PER_PAGE;
+var MONTHS_FORMAT = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+exports.MONTHS_FORMAT = MONTHS_FORMAT;
+var USER_USERNAME = 'trader';
+exports.USER_USERNAME = USER_USERNAME;
+var USER_PASSWORD = 'app';
+exports.USER_PASSWORD = USER_PASSWORD;
 },{}],"js/views/loginView.js":[function(require,module,exports) {
 "use strict";
 
@@ -248,24 +263,58 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.addHandlerLogin = void 0;
-var formEl = {};
+
+var _config = require("../config");
+
+var formEls = {};
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.enterBtn = document.querySelector('.js-enter-btn');
+  obj.joinBtn = document.querySelector('.js-join-btn');
+  obj.usernameInput = document.querySelector('.js-login-username');
+  obj.passwordInput = document.querySelector('.js-login-password');
+  obj.loginMessage = document.querySelector('.js-form-message');
   return obj;
 };
 
+var clearLoginInputs = function clearLoginInputs() {
+  formEls.usernameInput.value = '';
+  formEls.passwordInput.value = '';
+};
+
+var compareLoginDetails = function compareLoginDetails(inputUsername, inputPassword) {
+  if (inputUsername !== _config.USER_USERNAME || inputPassword !== _config.USER_PASSWORD) {
+    formEls.loginMessage.textContent = 'Incorrect username and/or password';
+    setTimeout(function () {
+      formEls.loginMessage.textContent = '';
+    }, 5000);
+    return;
+  }
+
+  clearLoginInputs();
+  window.location.href = '../../app.html';
+};
+
 var addHandlerLogin = function addHandlerLogin() {
-  formEl = getElements({});
-  formEl.enterBtn.addEventListener('click', function (e) {
+  formEls = getElements({});
+  formEls.enterBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    window.location.href = '../../app.html';
+    var inputtedUsername = formEls.usernameInput.value;
+    var inputtedPassword = formEls.passwordInput.value;
+    compareLoginDetails(inputtedUsername, inputtedPassword);
+  });
+  formEls.joinBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    formEls.loginMessage.textContent = 'Join option is currently unavailable';
+    setTimeout(function () {
+      formEls.loginMessage.textContent = '';
+    }, 5000);
   });
 };
 
 exports.addHandlerLogin = addHandlerLogin;
-},{}],"js/controllerLogin.js":[function(require,module,exports) {
+},{"../config":"js/config.js"}],"js/controllerLogin.js":[function(require,module,exports) {
 "use strict";
 
 var _helpers = _interopRequireDefault(require("./helpers"));
@@ -306,7 +355,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49259" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51483" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -629,6 +629,9 @@ body {
   color: #aaaaaa;
   line-height: 22px;
 }
+.s-login__form-username-input, .s-login__form-password-input {
+  max-width: 200px;
+}
 .s-login__form-password-input {
   letter-spacing: 4px;
 }
@@ -642,6 +645,10 @@ body {
 }
 .s-login__form-button:last-of-type {
   margin-left: 6px;
+}
+.s-login__form-message {
+  margin-top: 30px;
+  color: #c4456f;
 }
 
 .s-monthly {

@@ -35,6 +35,11 @@
     @include ts-body;
   }
 
+  &__form-username-input,
+  &__form-password-input {
+    max-width: 200px;
+  }
+
   &__form-password-input {
     letter-spacing: 4px;
   }
@@ -53,5 +58,10 @@
     &:last-of-type {
       margin-left: 6px;
     }
+  }
+
+  &__form-message {
+    margin-top: 30px;
+    color: $red-light;
   }
 }

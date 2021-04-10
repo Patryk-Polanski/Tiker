@@ -247,11 +247,15 @@ exports.createLongDate = createLongDate;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MONTHS_FORMAT = exports.ENTRIES_PER_PAGE = void 0;
+exports.USER_PASSWORD = exports.USER_USERNAME = exports.MONTHS_FORMAT = exports.ENTRIES_PER_PAGE = void 0;
 var ENTRIES_PER_PAGE = 2;
 exports.ENTRIES_PER_PAGE = ENTRIES_PER_PAGE;
 var MONTHS_FORMAT = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 exports.MONTHS_FORMAT = MONTHS_FORMAT;
+var USER_USERNAME = 'trader';
+exports.USER_USERNAME = USER_USERNAME;
+var USER_PASSWORD = 'app';
+exports.USER_PASSWORD = USER_PASSWORD;
 },{}],"data.json":[function(require,module,exports) {
 module.exports = {
   "capital": 8000,
@@ -8827,7 +8831,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49259" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51483" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

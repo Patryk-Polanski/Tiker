@@ -13,3 +13,5 @@ export const MONTHS_FORMAT = [
   'nov',
   'dec',
 ];
+export const USER_USERNAME = 'trader';
+export const USER_PASSWORD = 'app';
