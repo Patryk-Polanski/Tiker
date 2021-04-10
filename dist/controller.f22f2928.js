@@ -496,7 +496,7 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = exports.fetchUserFromJSON = void 0;
+exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = exports.checkIfJournalEmpty = exports.fetchUserFromJSON = void 0;
 
 var _helpers = require("./../helpers");
 
@@ -768,11 +768,17 @@ var user = {
   }]
 };
 
-var fetchUserFromJSON = function fetchUserFromJSON() {
-  if (_data.default) user = _data.default;
+var fetchUserFromJSON = function fetchUserFromJSON() {// if (jsonData) user = jsonData;
 };
 
 exports.fetchUserFromJSON = fetchUserFromJSON;
+
+var checkIfJournalEmpty = function checkIfJournalEmpty() {
+  if (user.journal.length < 1) return 'empty';
+  if (user.journal.length > 0) return 'full';
+};
+
+exports.checkIfJournalEmpty = checkIfJournalEmpty;
 
 var sortJournal = function sortJournal(data) {
   return data.sort(function (a, b) {
@@ -1151,7 +1157,7 @@ exports.findJournalEntry = findJournalEntry;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.toggleSections = exports.addNavigationHandler = exports.queryCoreEls = exports.removeLoadingScreen = void 0;
+exports.hideNoDataScreens = exports.showNoDataScreens = exports.toggleSections = exports.addNavigationHandler = exports.queryCoreEls = exports.removeLoadingScreen = void 0;
 var coreEls = {};
 
 var getElements = function getElements() {
@@ -1165,6 +1171,7 @@ var getElements = function getElements() {
   obj.sectionCalculators = obj.core.querySelector('.js-section-calculators');
   obj.sectionSettings = obj.core.querySelector('.js-section-settings');
   obj.sectionHelp = obj.core.querySelector('.js-section-help');
+  obj.performanceChart = obj.core.querySelector('.js-chart-performance');
   return obj;
 };
 
@@ -1238,6 +1245,18 @@ var toggleSections = function toggleSections(targetEl) {
 };
 
 exports.toggleSections = toggleSections;
+
+var showNoDataScreens = function showNoDataScreens() {
+  coreEls.performanceChart.classList.add('s-content__no-data');
+};
+
+exports.showNoDataScreens = showNoDataScreens;
+
+var hideNoDataScreens = function hideNoDataScreens() {
+  coreEls.performanceChart.classList.remove('s-content__no-data');
+};
+
+exports.hideNoDataScreens = hideNoDataScreens;
 },{}],"js/views/calculatorsView.js":[function(require,module,exports) {
 "use strict";
 
@@ -8580,6 +8599,12 @@ var controlLoading = function controlLoading() {
   (0, _coreView.removeLoadingScreen)();
 };
 
+var controlNoDataScreens = function controlNoDataScreens() {
+  var outcome = (0, _dataModel.checkIfJournalEmpty)();
+  if (outcome === 'empty') (0, _coreView.showNoDataScreens)();
+  if (outcome === 'full') (0, _coreView.hideNoDataScreens)();
+};
+
 var controlNavigation = function controlNavigation(targetEl) {
   (0, _coreView.toggleSections)(targetEl);
 };
@@ -8676,6 +8701,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
       controlJournalRender();
       (0, _accountDetailsView.updateCapitalOutput)(updatedCapital); // re-render visualisations
 
+      controlNoDataScreens();
       controlOverallRender();
       controlLongShortPieRender();
       controlWorstBestRender('best');
@@ -8731,6 +8757,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   console.log('DOM app is loaded');
   (0, _dataModel.fetchUserFromJSON)();
   queryDOM();
+  controlNoDataScreens();
   (0, _coreView.addNavigationHandler)(controlNavigation);
   (0, _accountDetailsView.updateCapitalOutput)((0, _dataModel.passData)('capital'));
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
@@ -8793,7 +8820,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61048" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49259" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

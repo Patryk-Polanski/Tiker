@@ -429,6 +429,21 @@ body {
 .s-content__loading-wrapper svg {
   animation: rotate 5s linear infinite;
 }
+.s-content__no-data::after {
+  display: flex;
+  justify-content: center;
+  content: url("/no-data-message.ae483149.png");
+  vertical-align: middle;
+  position: absolute;
+  padding-top: 10%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: #080808;
+  z-index: 8;
+  border-radius: 10px;
+}
 
 .s-help {
   min-height: 100vh;

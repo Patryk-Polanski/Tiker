@@ -270,7 +270,12 @@ let user = {
 };
 
 export const fetchUserFromJSON = function () {
-  if (jsonData) user = jsonData;
+  // if (jsonData) user = jsonData;
+};
+
+export const checkIfJournalEmpty = function () {
+  if (user.journal.length < 1) return 'empty';
+  if (user.journal.length > 0) return 'full';
 };
 
 const sortJournal = data => data.sort((a, b) => a.id - b.id);

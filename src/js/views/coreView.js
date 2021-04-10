@@ -10,6 +10,7 @@ const getElements = function (obj = {}) {
   obj.sectionCalculators = obj.core.querySelector('.js-section-calculators');
   obj.sectionSettings = obj.core.querySelector('.js-section-settings');
   obj.sectionHelp = obj.core.querySelector('.js-section-help');
+  obj.performanceChart = obj.core.querySelector('.js-chart-performance');
   return obj;
 };
 
@@ -72,4 +73,12 @@ export const toggleSections = function (targetEl) {
   if (targetEl.classList.contains('js-nav-exit-btn')) {
     window.location.href = '../../index.html';
   }
+};
+
+export const showNoDataScreens = function () {
+  coreEls.performanceChart.classList.add('s-content__no-data');
+};
+
+export const hideNoDataScreens = function () {
+  coreEls.performanceChart.classList.remove('s-content__no-data');
 };

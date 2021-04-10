@@ -1,5 +1,6 @@
 import {
   fetchUserFromJSON,
+  checkIfJournalEmpty,
   passData,
   passNestedData,
   updateCapital,
@@ -12,6 +13,8 @@ import {
   queryCoreEls,
   toggleSections,
   removeLoadingScreen,
+  showNoDataScreens,
+  hideNoDataScreens,
 } from './views/coreView';
 import {
   queryCalcEls,
@@ -85,6 +88,12 @@ import { validateJournalForm } from './models/journalFormModel';
 
 const controlLoading = function () {
   removeLoadingScreen();
+};
+
+const controlNoDataScreens = function () {
+  const outcome = checkIfJournalEmpty();
+  if (outcome === 'empty') showNoDataScreens();
+  if (outcome === 'full') hideNoDataScreens();
 };
 
 const controlNavigation = function (targetEl) {
@@ -179,6 +188,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
       controlJournalRender();
       updateCapitalOutput(updatedCapital);
       // re-render visualisations
+      controlNoDataScreens();
       controlOverallRender();
       controlLongShortPieRender();
       controlWorstBestRender('best');
@@ -235,6 +245,7 @@ window.addEventListener('DOMContentLoaded', e => {
   console.log('DOM app is loaded');
   fetchUserFromJSON();
   queryDOM();
+  controlNoDataScreens();
   addNavigationHandler(controlNavigation);
   updateCapitalOutput(passData('capital'));
   addCalcPositionHandler(controlCalcPosition);
