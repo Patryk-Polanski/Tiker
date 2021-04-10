@@ -230,8 +230,6 @@ export const renderPerformanceChart = function (passedData) {
     performanceEls.performanceDayBtn,
     performanceEls.performanceMonthBtn,
   ].forEach(btn => btn.classList.remove('btn--tertiary--active'));
-  console.log('THIS IS THE TYPE');
-  console.log(type);
   if (type === 'Daily')
     performanceEls.performanceDayBtn.classList.add('btn--tertiary--active');
   if (type === 'Monthly')

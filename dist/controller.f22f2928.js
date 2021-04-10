@@ -829,12 +829,9 @@ var addToTickers = function addToTickers(newEntry) {
   var currentTicker = user.tickers[newEntry.ticker]; // if the ticker already exists in the array
 
   if (currentTicker) {
-    //TODO: check if the id already exists in the array
     var indexInTrades = currentTicker.trades.map(function (trade) {
       return trade.id;
     }).indexOf(newEntry.id);
-    console.log('}{}{}{}{}{}{}{}{');
-    console.log(indexInTrades);
 
     if (indexInTrades !== -1) {
       currentTicker.trades[indexInTrades] = {
@@ -877,8 +874,6 @@ var addToTickers = function addToTickers(newEntry) {
 };
 
 var addToCalendarData = function addToCalendarData(newEntry) {
-  console.log('THIS IS THE ENTRY TO BE ADDED TO CALENDAR DATA');
-  console.log(newEntry);
   var dateKey = _config.MONTHS_FORMAT[new Date(newEntry.dateFull).getMonth()] + String(new Date(newEntry.dateFull).getFullYear()).slice(-2);
   console.log(dateKey);
   var currentKey = user.calendarData[dateKey];
@@ -931,8 +926,6 @@ var addToCalendarData = function addToCalendarData(newEntry) {
       }]
     }];
   }
-
-  console.log(user);
 };
 
 var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
@@ -1089,11 +1082,20 @@ var queryMonthlyEls = function queryMonthlyEls() {
 exports.queryMonthlyEls = queryMonthlyEls;
 
 var renderMonthlyTable = function renderMonthlyTable(data) {
+  if (monthlyEls.monthlyTableRows) {
+    console.log('this is it');
+    console.log(monthlyEls.monthlyTableRows);
+    Array.from(monthlyEls.monthlyTableRows).forEach(function (row) {
+      return row.remove();
+    });
+  }
+
   var keys = Object.keys(data).reverse();
   keys.forEach(function (key) {
     var current = data[key];
-    var html = "\n    <tr>\n        <th>".concat(current.total.month, "</th>\n        <td class=\"").concat(current.total.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.total.monthlyReturn, "</td>\n        <td>").concat(current.total.totalTrades, "</td>\n        <td class=\"").concat(current.total.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.total.avgReturn, "</td>\n        <td>").concat(+current.total.avgWinPercent, "%</td>\n        <td>").concat(+current.total.avgLossPercent, "%</td>\n        <td>").concat(+current.total.battingAvg, "%</td>\n        <td>").concat(current.total.winLossRatio, "</td>\n    </tr>\n    <tr>\n        <th>").concat(current.long.side, "</th>\n        <td class=\"").concat(current.long.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.long.monthlyReturn, "</td>\n        <td>").concat(current.long.totalTrades, "</td>\n        <td class=\"").concat(current.long.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.long.avgReturn, "</td>\n        <td>").concat(+current.long.avgWinPercent, "%</td>\n        <td>").concat(+current.long.avgLossPercent, "%</td>\n        <td>").concat(+current.long.battingAvg, "%</td>\n        <td>").concat(current.long.winLossRatio, "</td>\n    </tr>\n    <tr class=\"s-monthly__table-unit\">\n        <th>").concat(current.short.side, "</th>\n        <td class=\"").concat(current.short.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.short.monthlyReturn, "</td>\n        <td>").concat(current.short.totalTrades, "</td>\n        <td class=\"").concat(current.short.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.short.avgReturn, "</td>\n        <td>").concat(+current.short.avgWinPercent, "%</td>\n        <td>").concat(+current.short.avgLossPercent, "%</td>\n        <td>").concat(+current.short.battingAvg, "%</td>\n        <td>").concat(current.short.winLossRatio, "</td>\n    </tr>\n    ");
+    var html = "\n    <tr class=\"js-table-monthly-row\">\n        <th>".concat(current.total.month, "</th>\n        <td class=\"").concat(current.total.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.total.monthlyReturn.toFixed(2), "</td>\n        <td>").concat(current.total.totalTrades, "</td>\n        <td class=\"").concat(current.total.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.total.avgReturn, "</td>\n        <td>").concat(+current.total.avgWinPercent, "%</td>\n        <td>").concat(+current.total.avgLossPercent, "%</td>\n        <td>").concat(+current.total.battingAvg, "%</td>\n        <td>").concat(current.total.winLossRatio, "</td>\n    </tr>\n    <tr class=\"js-table-monthly-row\">\n        <th>").concat(current.long.side, "</th>\n        <td class=\"").concat(current.long.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.long.monthlyReturn.toFixed(2), "</td>\n        <td>").concat(current.long.totalTrades, "</td>\n        <td class=\"").concat(current.long.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.long.avgReturn, "</td>\n        <td>").concat(+current.long.avgWinPercent, "%</td>\n        <td>").concat(+current.long.avgLossPercent, "%</td>\n        <td>").concat(+current.long.battingAvg, "%</td>\n        <td>").concat(current.long.winLossRatio, "</td>\n    </tr>\n    <tr class=\"s-monthly__table-unit js-table-monthly-row\">\n        <th>").concat(current.short.side, "</th>\n        <td class=\"").concat(current.short.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.short.monthlyReturn.toFixed(2), "</td>\n        <td>").concat(current.short.totalTrades, "</td>\n        <td class=\"").concat(current.short.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.short.avgReturn, "</td>\n        <td>").concat(+current.short.avgWinPercent, "%</td>\n        <td>").concat(+current.short.avgLossPercent, "%</td>\n        <td>").concat(+current.short.battingAvg, "%</td>\n        <td>").concat(current.short.winLossRatio, "</td>\n    </tr>\n    ");
     monthlyEls.monthlyTableHead.insertAdjacentHTML('afterend', html);
+    monthlyEls.monthlyTableRows = monthlyEls.monthlyTable.querySelectorAll('.js-table-monthly-row');
   });
 };
 
@@ -1319,12 +1321,16 @@ var createPlaceholderObj = function createPlaceholderObj(key) {
 };
 
 var calcBattingAvg = function calcBattingAvg(profitable, total) {
+  if (!profitable) profitable = 0;
+  if (!total) total = 1;
   return Math.round(profitable / total * 100);
 };
 
 var calcWinLossRatio = function calcWinLossRatio(profitable, total) {
+  if (!profitable) profitable = 0;
+  if (!total) total = 1;
   if (profitable === total) total++;
-  return (profitable / (total - profitable)).toFixed(2);
+  return (profitable / total).toFixed(2);
 };
 
 var computeMonthlyData = function computeMonthlyData(rawData) {
@@ -4984,8 +4990,6 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
   [performanceEls.performanceDayBtn, performanceEls.performanceMonthBtn].forEach(function (btn) {
     return btn.classList.remove('btn--tertiary--active');
   });
-  console.log('THIS IS THE TYPE');
-  console.log(type);
   if (type === 'Daily') performanceEls.performanceDayBtn.classList.add('btn--tertiary--active');
   if (type === 'Monthly') performanceEls.performanceMonthBtn.classList.add('btn--tertiary--active');
   updatePerformanceChart(data);
@@ -8328,6 +8332,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
       controlWorstBestRender();
       controlProfitableRender();
       controlPerformanceRender();
+      controlMonthlyRender();
     }
   }
 };
@@ -8432,7 +8437,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60256" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64295" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -40,12 +40,16 @@ const createPlaceholderObj = function (key) {
 };
 
 const calcBattingAvg = function (profitable, total) {
+  if (!profitable) profitable = 0;
+  if (!total) total = 1;
   return Math.round((profitable / total) * 100);
 };
 
 const calcWinLossRatio = function (profitable, total) {
+  if (!profitable) profitable = 0;
+  if (!total) total = 1;
   if (profitable === total) total++;
-  return (profitable / (total - profitable)).toFixed(2);
+  return (profitable / total).toFixed(2);
 };
 
 export const computeMonthlyData = function (rawData) {

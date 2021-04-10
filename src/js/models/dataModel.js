@@ -500,13 +500,9 @@ const addToTickers = function (newEntry) {
 
   // if the ticker already exists in the array
   if (currentTicker) {
-    //TODO: check if the id already exists in the array
-
     const indexInTrades = currentTicker.trades
       .map(trade => trade.id)
       .indexOf(newEntry.id);
-    console.log('}{}{}{}{}{}{}{}{');
-    console.log(indexInTrades);
 
     if (indexInTrades !== -1) {
       currentTicker.trades[indexInTrades] = {
@@ -551,8 +547,6 @@ const addToTickers = function (newEntry) {
 };
 
 const addToCalendarData = function (newEntry) {
-  console.log('THIS IS THE ENTRY TO BE ADDED TO CALENDAR DATA');
-  console.log(newEntry);
   const dateKey =
     MONTHS_FORMAT[new Date(newEntry.dateFull).getMonth()] +
     String(new Date(newEntry.dateFull).getFullYear()).slice(-2);
@@ -607,7 +601,6 @@ const addToCalendarData = function (newEntry) {
       },
     ];
   }
-  console.log(user);
 };
 
 const compareStatistics = function (
