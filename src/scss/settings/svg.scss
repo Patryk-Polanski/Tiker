@@ -51,4 +51,14 @@
     width: 30px;
     pointer-events: none;
   }
+
+  &--loading {
+    fill: none;
+    width: 100px;
+    height: 100px;
+
+    & path {
+      fill: $grey-light;
+    }
+  }
 }

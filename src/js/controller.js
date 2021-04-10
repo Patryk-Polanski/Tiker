@@ -11,6 +11,7 @@ import {
   addNavigationHandler,
   queryCoreEls,
   toggleSections,
+  removeLoadingScreen,
 } from './views/coreView';
 import {
   queryCalcEls,
@@ -81,6 +82,10 @@ import {
 import { validateJournalForm } from './models/journalFormModel';
 
 // ZONE - controllers
+
+const controlLoading = function () {
+  removeLoadingScreen();
+};
 
 const controlNavigation = function (targetEl) {
   toggleSections(targetEl);
@@ -232,13 +237,6 @@ window.addEventListener('DOMContentLoaded', e => {
   queryDOM();
   addNavigationHandler(controlNavigation);
   updateCapitalOutput(passData('capital'));
-  controlMonthlyRender();
-  controlProfitableRender();
-  controlOverallRender();
-  controlPerformanceRender();
-  controlWorstBestRender();
-  controlLongShortPieRender();
-  controlJournalRender();
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
   addCalcCapitalHandler(controlCalcCapital);
@@ -248,6 +246,16 @@ window.addEventListener('DOMContentLoaded', e => {
   addJournalEntriesHandler(controlJournalActiveEntries);
   addJournalFormEventsHandler(controlJournalFormEvents);
   addJournalPaginationHandler(controlJournalPagination);
+  setTimeout(() => {
+    controlLoading();
+    controlProfitableRender();
+    controlOverallRender();
+    controlPerformanceRender();
+    controlWorstBestRender();
+    controlMonthlyRender();
+    controlLongShortPieRender();
+    controlJournalRender();
+  }, 700);
 });
 
 let resizeTimer;

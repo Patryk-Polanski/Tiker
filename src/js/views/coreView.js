@@ -3,6 +3,7 @@ let coreEls = {};
 const getElements = function (obj = {}) {
   obj.core = document.querySelector('.js-core');
   obj.nav = obj.core.querySelector('.js-nav');
+  obj.loadingScreen = obj.core.querySelector('.js-loading');
   obj.sectionOverview = obj.core.querySelector('.js-section-overview');
   obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
   obj.sectionJournal = obj.core.querySelector('.js-section-journal');
@@ -28,6 +29,10 @@ const toggleActiveNavBtns = function (targetEl) {
     .querySelector('.btn--nav--active')
     .classList.remove('btn--nav--active');
   targetEl.classList.add('btn--nav--active');
+};
+
+export const removeLoadingScreen = function () {
+  coreEls.loadingScreen.remove();
 };
 
 export const queryCoreEls = function () {

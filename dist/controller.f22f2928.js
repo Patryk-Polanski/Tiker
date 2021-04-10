@@ -1151,13 +1151,14 @@ exports.findJournalEntry = findJournalEntry;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.toggleSections = exports.addNavigationHandler = exports.queryCoreEls = void 0;
+exports.toggleSections = exports.addNavigationHandler = exports.queryCoreEls = exports.removeLoadingScreen = void 0;
 var coreEls = {};
 
 var getElements = function getElements() {
   var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   obj.core = document.querySelector('.js-core');
   obj.nav = obj.core.querySelector('.js-nav');
+  obj.loadingScreen = obj.core.querySelector('.js-loading');
   obj.sectionOverview = obj.core.querySelector('.js-section-overview');
   obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
   obj.sectionJournal = obj.core.querySelector('.js-section-journal');
@@ -1177,6 +1178,12 @@ var toggleActiveNavBtns = function toggleActiveNavBtns(targetEl) {
   coreEls.nav.querySelector('.btn--nav--active').classList.remove('btn--nav--active');
   targetEl.classList.add('btn--nav--active');
 };
+
+var removeLoadingScreen = function removeLoadingScreen() {
+  coreEls.loadingScreen.remove();
+};
+
+exports.removeLoadingScreen = removeLoadingScreen;
 
 var queryCoreEls = function queryCoreEls() {
   coreEls = getElements();
@@ -8569,6 +8576,10 @@ var _journalFormView = require("./views/journalFormView");
 var _journalFormModel = require("./models/journalFormModel");
 
 // ZONE - controllers
+var controlLoading = function controlLoading() {
+  (0, _coreView.removeLoadingScreen)();
+};
+
 var controlNavigation = function controlNavigation(targetEl) {
   (0, _coreView.toggleSections)(targetEl);
 };
@@ -8722,13 +8733,6 @@ window.addEventListener('DOMContentLoaded', function (e) {
   queryDOM();
   (0, _coreView.addNavigationHandler)(controlNavigation);
   (0, _accountDetailsView.updateCapitalOutput)((0, _dataModel.passData)('capital'));
-  controlMonthlyRender();
-  controlProfitableRender();
-  controlOverallRender();
-  controlPerformanceRender();
-  controlWorstBestRender();
-  controlLongShortPieRender();
-  controlJournalRender();
   (0, _calculatorsView.addCalcPositionHandler)(controlCalcPosition);
   (0, _calculatorsView.addCalcRatioHandler)(controlCalcRatio);
   (0, _calculatorsView.addCalcCapitalHandler)(controlCalcCapital);
@@ -8738,6 +8742,16 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _journalEntriesView.addJournalEntriesHandler)(controlJournalActiveEntries);
   (0, _journalFormView.addJournalFormEventsHandler)(controlJournalFormEvents);
   (0, _journalEntriesView.addJournalPaginationHandler)(controlJournalPagination);
+  setTimeout(function () {
+    controlLoading();
+    controlProfitableRender();
+    controlOverallRender();
+    controlPerformanceRender();
+    controlWorstBestRender();
+    controlMonthlyRender();
+    controlLongShortPieRender();
+    controlJournalRender();
+  }, 700);
 });
 var resizeTimer;
 window.addEventListener('resize', function (e) {
@@ -8779,7 +8793,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53291" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61048" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

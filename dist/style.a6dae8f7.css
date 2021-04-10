@@ -188,6 +188,14 @@ span {
   font-weight: 400;
 }
 
+@keyframes rotate {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
 .svg {
   fill: none;
 }
@@ -229,6 +237,14 @@ span {
   height: 30px;
   width: 30px;
   pointer-events: none;
+}
+.svg--loading {
+  fill: none;
+  width: 100px;
+  height: 100px;
+}
+.svg--loading path {
+  fill: #aaaaaa;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -395,6 +411,23 @@ body {
 .s-content {
   flex-direction: column;
   margin-left: 75px;
+  position: relative;
+}
+.s-content__loading-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #080808;
+  background: linear-gradient(0deg, #0f0d0f 0%, #111010 50%, #0f0d0f);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.s-content__loading-wrapper svg {
+  animation: rotate 5s linear infinite;
 }
 
 .s-help {
