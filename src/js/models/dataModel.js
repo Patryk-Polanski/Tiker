@@ -1,7 +1,8 @@
 import { stringifyNum } from './../helpers';
 import { MONTHS_FORMAT } from './../config';
+import jsonData from '../../data.json';
 
-const user = {
+let user = {
   capital: 7000,
   overall: {
     total: 0,
@@ -268,7 +269,9 @@ const user = {
   ],
 };
 
-console.log(user);
+export const fetchUserFromJSON = function () {
+  if (jsonData) user = jsonData;
+};
 
 const sortJournal = data => data.sort((a, b) => a.id - b.id);
 

@@ -1,4 +1,13 @@
 import {
+  fetchUserFromJSON,
+  passData,
+  passNestedData,
+  updateCapital,
+  updateCalendarData,
+  findJournalEntry,
+  updateJournalData,
+} from './models/dataModel';
+import {
   addNavigationHandler,
   queryCoreEls,
   toggleSections,
@@ -12,15 +21,6 @@ import {
   renderCalcResult,
   clearCalcResult,
 } from './views/calculatorsView';
-import {
-  passData,
-  passNestedData,
-  updateCapital,
-  updateCalendarData,
-  updateProfitableData,
-  findJournalEntry,
-  updateJournalData,
-} from './models/dataModel';
 import { calcPositionResult, calcRatioResult } from './models/calculatorsModel';
 import { queryMonthlyEls, renderMonthlyTable } from './views/tableMonthlyView';
 import {
@@ -228,6 +228,7 @@ const queryDOM = function () {
 
 window.addEventListener('DOMContentLoaded', e => {
   console.log('DOM app is loaded');
+  fetchUserFromJSON();
   queryDOM();
   addNavigationHandler(controlNavigation);
   updateCapitalOutput(passData('capital'));

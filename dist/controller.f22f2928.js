@@ -117,202 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"js/views/coreView.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.toggleSections = exports.addNavigationHandler = exports.queryCoreEls = void 0;
-var coreEls = {};
-
-var getElements = function getElements() {
-  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  obj.core = document.querySelector('.js-core');
-  obj.nav = obj.core.querySelector('.js-nav');
-  obj.sectionOverview = obj.core.querySelector('.js-section-overview');
-  obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
-  obj.sectionJournal = obj.core.querySelector('.js-section-journal');
-  obj.sectionCalculators = obj.core.querySelector('.js-section-calculators');
-  obj.sectionSettings = obj.core.querySelector('.js-section-settings');
-  obj.sectionHelp = obj.core.querySelector('.js-section-help');
-  return obj;
-};
-
-var hideAllSections = function hideAllSections() {
-  [coreEls.sectionOverview, coreEls.sectionMonthly, coreEls.sectionJournal, coreEls.sectionCalculators, coreEls.sectionSettings, coreEls.sectionHelp].forEach(function (section) {
-    return section.classList.add('s-core-hidden-section');
-  });
-};
-
-var toggleActiveNavBtns = function toggleActiveNavBtns(targetEl) {
-  coreEls.nav.querySelector('.btn--nav--active').classList.remove('btn--nav--active');
-  targetEl.classList.add('btn--nav--active');
-};
-
-var queryCoreEls = function queryCoreEls() {
-  coreEls = getElements();
-};
-
-exports.queryCoreEls = queryCoreEls;
-
-var addNavigationHandler = function addNavigationHandler(handler) {
-  coreEls.nav.addEventListener('click', function (e) {
-    return handler(e.target);
-  });
-};
-
-exports.addNavigationHandler = addNavigationHandler;
-
-var toggleSections = function toggleSections(targetEl) {
-  if (targetEl.classList.contains('btn--nav')) hideAllSections();
-
-  if (targetEl.classList.contains('js-nav-overview-btn')) {
-    coreEls.sectionOverview.classList.remove('s-core-hidden-section');
-    toggleActiveNavBtns(targetEl);
-  }
-
-  if (targetEl.classList.contains('js-nav-monthly-btn')) {
-    coreEls.sectionMonthly.classList.remove('s-core-hidden-section');
-    toggleActiveNavBtns(targetEl);
-  }
-
-  if (targetEl.classList.contains('js-nav-journal-btn')) {
-    coreEls.sectionJournal.classList.remove('s-core-hidden-section');
-    toggleActiveNavBtns(targetEl);
-  }
-
-  if (targetEl.classList.contains('js-nav-calculators-btn')) {
-    coreEls.sectionCalculators.classList.remove('s-core-hidden-section');
-    toggleActiveNavBtns(targetEl);
-  }
-
-  if (targetEl.classList.contains('js-nav-settings-btn')) {
-    coreEls.sectionSettings.classList.remove('s-core-hidden-section');
-    toggleActiveNavBtns(targetEl);
-  }
-
-  if (targetEl.classList.contains('js-nav-help-btn')) {
-    coreEls.sectionHelp.classList.remove('s-core-hidden-section');
-    toggleActiveNavBtns(targetEl);
-  }
-
-  if (targetEl.classList.contains('js-nav-exit-btn')) {
-    window.location.href = '../../index.html';
-  }
-};
-
-exports.toggleSections = toggleSections;
-},{}],"js/views/calculatorsView.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.clearCalcResult = exports.renderCalcResult = exports.renderCapitalMessage = exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.addCalcCapitalHandler = exports.queryCalcEls = void 0;
-var calculatorEls = {};
-
-var getElements = function getElements() {
-  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  obj.calcPosition = document.querySelector('.js-calc-position');
-  obj.positionEntryPrice = obj.calcPosition.querySelector('.js-calc-position-entry');
-  obj.positionRiskPercentage = obj.calcPosition.querySelector('.js-calc-position-percentage');
-  obj.positionStopPrice = obj.calcPosition.querySelector('.js-calc-position-stop');
-  obj.positionResult = obj.calcPosition.querySelector('.js-calc-position-result');
-  obj.calcRatio = document.querySelector('.js-calc-ratio');
-  obj.ratioEntryPrice = obj.calcRatio.querySelector('.js-calc-ratio-entry');
-  obj.ratioExitPrice = obj.calcRatio.querySelector('.js-calc-ratio-exit');
-  obj.ratioStopPrice = obj.calcRatio.querySelector('.js-calc-ratio-stop');
-  obj.ratioResult = obj.calcRatio.querySelector('.js-calc-ratio-result');
-  obj.calcCapital = document.querySelector('.js-calc-capital');
-  obj.capitalSign = obj.calcCapital.querySelector('.js-calc-capital-sign');
-  obj.capitalSignBtn = obj.calcCapital.querySelector('.js-calc-capital-sign-btn');
-  obj.capitalInput = obj.calcCapital.querySelector('.js-calc-capital-input');
-  obj.capitalUpdateBtn = obj.calcCapital.querySelector('.js-calc-capital-update-btn');
-  obj.capitalMessage = obj.calcCapital.querySelector('.js-calc-capital-message');
-  return obj;
-};
-
-var queryCalcEls = function queryCalcEls() {
-  calculatorEls = getElements();
-};
-
-exports.queryCalcEls = queryCalcEls;
-
-var checkFieldsForData = function checkFieldsForData(el1, el2, el3) {
-  if (!el1.value || !el2.value || !el3.value) return;
-  return [+el1.value, +el2.value, +el3.value];
-};
-
-var addCalcCapitalHandler = function addCalcCapitalHandler(handler) {
-  calculatorEls.capitalUpdateBtn.addEventListener('click', function (e) {
-    var amount = +calculatorEls.capitalInput.value;
-    if (!amount || isNaN(amount)) return;
-    handler(amount, calculatorEls.capitalSign.getAttribute('data-action'));
-  });
-  calculatorEls.capitalSignBtn.addEventListener('click', function (e) {
-    if (e.target.previousElementSibling.getAttribute('data-action') === 'plus') {
-      calculatorEls.capitalSign.innerHTML = "\n      <svg class=\"svg svg--minus\" viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\">\n        <rect y=\"5\" width=\"13\" height=\"3\" fill=\"#C4C4C4\"/>\n      </svg>\n      ";
-      calculatorEls.capitalSign.setAttribute('data-action', 'minus');
-    } else {
-      calculatorEls.capitalSign.innerHTML = "\n      <svg class=\"svg svg--plus\" viewBox=\"0 0 13 13\"\n        xmlns=\"http://www.w3.org/2000/svg\">\n        <rect y=\"5\" width=\"13\" height=\"3\" fill=\"#C4C4C4\" />\n        <rect x=\"8\" width=\"13\" height=\"3\" transform=\"rotate(90 8 0)\" fill=\"#C4C4C4\" />\n      </svg>\n      ";
-      calculatorEls.capitalSign.setAttribute('data-action', 'plus');
-    }
-  });
-};
-
-exports.addCalcCapitalHandler = addCalcCapitalHandler;
-
-var addCalcPositionHandler = function addCalcPositionHandler(handler) {
-  [calculatorEls.positionEntryPrice, calculatorEls.positionRiskPercentage, calculatorEls.positionStopPrice].forEach(function (input) {
-    input.addEventListener('keyup', function (e) {
-      if (e.key === 'Tab' || !isFinite(e.key) && e.key !== 'Backspace') return;
-      var formattedData = checkFieldsForData(calculatorEls.positionEntryPrice, calculatorEls.positionRiskPercentage, calculatorEls.positionStopPrice);
-      handler(formattedData);
-    });
-  });
-};
-
-exports.addCalcPositionHandler = addCalcPositionHandler;
-
-var addCalcRatioHandler = function addCalcRatioHandler(handler) {
-  [calculatorEls.ratioEntryPrice, calculatorEls.ratioExitPrice, calculatorEls.ratioStopPrice].forEach(function (input) {
-    input.addEventListener('keyup', function (e) {
-      if (e.key === 'Tab' || !isFinite(e.key) && e.key !== 'Backspace') return;
-      var formattedData = checkFieldsForData(calculatorEls.ratioEntryPrice, calculatorEls.ratioExitPrice, calculatorEls.ratioStopPrice);
-      handler(formattedData);
-    });
-  });
-};
-
-exports.addCalcRatioHandler = addCalcRatioHandler;
-
-var renderCapitalMessage = function renderCapitalMessage(arr) {
-  var spanEls = calculatorEls.capitalMessage.querySelectorAll('span');
-  spanEls[0].textContent = arr[0] === 'plus' ? 'added' : 'removed';
-  spanEls[1].textContent = arr[1];
-  spanEls[2].textContent = arr[2];
-  calculatorEls.capitalMessage.classList.add('c-calculator-capital__message--is-active');
-  setTimeout(function () {
-    calculatorEls.capitalMessage.classList.remove('c-calculator-capital__message--is-active');
-    calculatorEls.capitalInput.value = '';
-  }, 6000);
-};
-
-exports.renderCapitalMessage = renderCapitalMessage;
-
-var renderCalcResult = function renderCalcResult(result, el) {
-  calculatorEls[el].value = result;
-};
-
-exports.renderCalcResult = renderCalcResult;
-
-var clearCalcResult = function clearCalcResult(el) {
-  calculatorEls[el].value = '';
-};
-
-exports.clearCalcResult = clearCalcResult;
-},{}],"js/helpers.js":[function(require,module,exports) {
+})({"js/helpers.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -447,17 +252,259 @@ var ENTRIES_PER_PAGE = 2;
 exports.ENTRIES_PER_PAGE = ENTRIES_PER_PAGE;
 var MONTHS_FORMAT = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 exports.MONTHS_FORMAT = MONTHS_FORMAT;
+},{}],"data.json":[function(require,module,exports) {
+module.exports = {
+  "capital": 8000,
+  "overall": {
+    "total": 0,
+    "proportions": [{
+      "side": "long",
+      "total": 0
+    }, {
+      "side": "short",
+      "total": 0
+    }]
+  },
+  "streaks": {
+    "wins": {
+      "trades": [{
+        "id": 1150,
+        "ticker": "NFLX",
+        "date": "14/06/21",
+        "returnCash": 253
+      }, {
+        "id": 115,
+        "ticker": "VREZ",
+        "date": "15/06/21",
+        "returnCash": 312
+      }]
+    },
+    "losses": {
+      "trades": [{
+        "id": "liJ56D3",
+        "ticker": "AMZN",
+        "date": "12/08/21",
+        "returnCash": -90
+      }, {
+        "id": "Y58P1M",
+        "ticker": "X",
+        "date": "21/07/21",
+        "returnCash": -112
+      }]
+    },
+    "current": {
+      "trades": [{
+        "id": "ZYRwa5z",
+        "ticker": "NFLX",
+        "date": "14/06/21",
+        "returnCash": 253
+      }]
+    }
+  },
+  "worstTrades": [{
+    "id": 300,
+    "ticker": "NFLX",
+    "date": "14/06/21",
+    "returnCash": -234
+  }, {
+    "id": 250,
+    "ticker": "BMBL",
+    "date": "15/06/21",
+    "returnCash": -151
+  }, {
+    "id": 115,
+    "ticker": "GME",
+    "date": "7/7/21",
+    "returnCash": -180
+  }],
+  "bestTrades": [{
+    "id": 600,
+    "ticker": "NFLX",
+    "date": "14/06/21",
+    "returnCash": 253
+  }, {
+    "id": 900,
+    "ticker": "BMBL",
+    "date": "15/06/21",
+    "returnCash": 312
+  }, {
+    "id": 450,
+    "ticker": "SNAP",
+    "date": "13/08/21",
+    "returnCash": 187
+  }],
+  "tickers": {
+    "AAL": {
+      "ticker": "AAL",
+      "avgReturn": 0.58,
+      "trades": [{
+        "id": "7Ft7s4w",
+        "shares": 60,
+        "returnCash": 121,
+        "returnPercent": 1.44
+      }, {
+        "id": "p8Hi52N",
+        "shares": 72,
+        "returnCash": 118,
+        "returnPercent": 1.32
+      }, {
+        "id": "Jk6sDew",
+        "shares": 70,
+        "returnCash": -82,
+        "returnPercent": -1
+      }]
+    },
+    "AAPL": {
+      "ticker": "AAPL",
+      "avgReturn": 0.59,
+      "trades": [{
+        "id": "QHnv65t",
+        "shares": 40,
+        "returnCash": 175,
+        "returnPercent": 1.54
+      }, {
+        "id": "kG24s8i",
+        "shares": 50,
+        "returnCash": 125,
+        "returnPercent": 1.23
+      }, {
+        "id": "Vz9qA1k",
+        "shares": 42,
+        "returnCash": -102,
+        "returnPercent": -1.1
+      }]
+    }
+  },
+  "calendarData": {
+    "jul21": [{
+      "dateLong": "Mon Mar 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "6/3/21",
+      "trades": [{
+        "id": 730,
+        "side": "short",
+        "returnCash": -90,
+        "returnPercent": -0.9
+      }, {
+        "id": 820,
+        "side": "long",
+        "returnCash": 120,
+        "returnPercent": 1.6
+      }]
+    }, {
+      "dateLong": "Mon Mar 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "4/3/21",
+      "trades": [{
+        "id": 2140,
+        "side": "short",
+        "returnCash": 100,
+        "returnPercent": 1.3
+      }, {
+        "id": 820,
+        "side": "short",
+        "returnCash": -50,
+        "returnPercent": -0.7
+      }]
+    }],
+    "aug21": [{
+      "dateLong": "Mon Apr 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "2/4/21",
+      "trades": [{
+        "id": 854,
+        "side": "long",
+        "returnCash": 110,
+        "returnPercent": 1.3
+      }, {
+        "id": 820,
+        "side": "long",
+        "returnCash": -30,
+        "returnPercent": -0.45
+      }]
+    }, {
+      "dateLong": "Mon Apr 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "7/4/21",
+      "trades": [{
+        "id": 652,
+        "side": "long",
+        "returnCash": -111,
+        "returnPercent": -1.2
+      }, {
+        "id": 1167,
+        "side": "short",
+        "returnCash": -70,
+        "returnPercent": -1.1
+      }]
+    }]
+  },
+  "journal": [{
+    "id": 115,
+    "ticker": "ROKU",
+    "dateShort": "28/07/21",
+    "side": "short",
+    "sharesAmount": 100,
+    "avgEntry": 180.84,
+    "avgExit": 181.9,
+    "returnCash": 112.52,
+    "returnPercent": 1.63,
+    "tradeEntries": [[180.75, 40], [180.9, 60]],
+    "tradeExits": [[181.15, 20], [181.42, 20], [182.69, 60]],
+    "body": "Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra."
+  }, {
+    "id": 11500,
+    "ticker": "RIOT",
+    "dateShort": "29/07/21",
+    "side": "long",
+    "sharesAmount": 100,
+    "avgEntry": 180.84,
+    "avgExit": 181.9,
+    "returnCash": 112.52,
+    "returnPercent": 1.63,
+    "tradeEntries": [[180.75, 40], [180.9, 60]],
+    "tradeExits": [[181.15, 20], [181.42, 20], [182.69, 60]],
+    "body": "Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra."
+  }, {
+    "id": 1150,
+    "ticker": "MSFT",
+    "dateShort": "30/07/21",
+    "side": "short",
+    "sharesAmount": 110,
+    "avgEntry": 180.84,
+    "avgExit": 181.9,
+    "returnCash": 112.52,
+    "returnPercent": 1.63,
+    "tradeEntries": [[180.75, 50], [180.9, 60]],
+    "tradeExits": [[181.15, 20], [181.42, 20], [182.69, 70]],
+    "body": "In hac habitasse platea dictumst. Diam donec adipiscing tristique risus. Velit scelerisque in dictum non consectetur. Vel pretium lectus quam id leo in vitae. Urna porttitor rhoncus dolor purus. Ultrices gravida dictum fusce ut placerat. Vel quam elementum pulvinar etiam non quam lacus suspendisse. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Luctus accumsan tortor posuere ac ut consequat."
+  }],
+  "dummyJournal": [{
+    "id": "",
+    "ticker": "",
+    "dateShort": "",
+    "side": "",
+    "sharesAmount": "",
+    "avgEntry": "",
+    "avgExit": "",
+    "returnCash": "",
+    "returnPercent": "",
+    "tradeEntries": [["", ""]],
+    "tradeExits": [["", ""]],
+    "body": ""
+  }]
+};
 },{}],"js/models/dataModel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = void 0;
+exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = exports.fetchUserFromJSON = void 0;
 
 var _helpers = require("./../helpers");
 
 var _config = require("./../config");
+
+var _data = _interopRequireDefault(require("../../data.json"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -720,7 +767,12 @@ var user = {
     body: ''
   }]
 };
-console.log(user);
+
+var fetchUserFromJSON = function fetchUserFromJSON() {
+  if (_data.default) user = _data.default;
+};
+
+exports.fetchUserFromJSON = fetchUserFromJSON;
 
 var sortJournal = function sortJournal(data) {
   return data.sort(function (a, b) {
@@ -1093,7 +1145,202 @@ var findJournalEntry = function findJournalEntry(id) {
 };
 
 exports.findJournalEntry = findJournalEntry;
-},{"./../helpers":"js/helpers.js","./../config":"js/config.js"}],"js/models/calculatorsModel.js":[function(require,module,exports) {
+},{"./../helpers":"js/helpers.js","./../config":"js/config.js","../../data.json":"data.json"}],"js/views/coreView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toggleSections = exports.addNavigationHandler = exports.queryCoreEls = void 0;
+var coreEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.core = document.querySelector('.js-core');
+  obj.nav = obj.core.querySelector('.js-nav');
+  obj.sectionOverview = obj.core.querySelector('.js-section-overview');
+  obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
+  obj.sectionJournal = obj.core.querySelector('.js-section-journal');
+  obj.sectionCalculators = obj.core.querySelector('.js-section-calculators');
+  obj.sectionSettings = obj.core.querySelector('.js-section-settings');
+  obj.sectionHelp = obj.core.querySelector('.js-section-help');
+  return obj;
+};
+
+var hideAllSections = function hideAllSections() {
+  [coreEls.sectionOverview, coreEls.sectionMonthly, coreEls.sectionJournal, coreEls.sectionCalculators, coreEls.sectionSettings, coreEls.sectionHelp].forEach(function (section) {
+    return section.classList.add('s-core-hidden-section');
+  });
+};
+
+var toggleActiveNavBtns = function toggleActiveNavBtns(targetEl) {
+  coreEls.nav.querySelector('.btn--nav--active').classList.remove('btn--nav--active');
+  targetEl.classList.add('btn--nav--active');
+};
+
+var queryCoreEls = function queryCoreEls() {
+  coreEls = getElements();
+};
+
+exports.queryCoreEls = queryCoreEls;
+
+var addNavigationHandler = function addNavigationHandler(handler) {
+  coreEls.nav.addEventListener('click', function (e) {
+    return handler(e.target);
+  });
+};
+
+exports.addNavigationHandler = addNavigationHandler;
+
+var toggleSections = function toggleSections(targetEl) {
+  if (targetEl.classList.contains('btn--nav')) hideAllSections();
+
+  if (targetEl.classList.contains('js-nav-overview-btn')) {
+    coreEls.sectionOverview.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
+  }
+
+  if (targetEl.classList.contains('js-nav-monthly-btn')) {
+    coreEls.sectionMonthly.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
+  }
+
+  if (targetEl.classList.contains('js-nav-journal-btn')) {
+    coreEls.sectionJournal.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
+  }
+
+  if (targetEl.classList.contains('js-nav-calculators-btn')) {
+    coreEls.sectionCalculators.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
+  }
+
+  if (targetEl.classList.contains('js-nav-settings-btn')) {
+    coreEls.sectionSettings.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
+  }
+
+  if (targetEl.classList.contains('js-nav-help-btn')) {
+    coreEls.sectionHelp.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
+  }
+
+  if (targetEl.classList.contains('js-nav-exit-btn')) {
+    window.location.href = '../../index.html';
+  }
+};
+
+exports.toggleSections = toggleSections;
+},{}],"js/views/calculatorsView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.clearCalcResult = exports.renderCalcResult = exports.renderCapitalMessage = exports.addCalcRatioHandler = exports.addCalcPositionHandler = exports.addCalcCapitalHandler = exports.queryCalcEls = void 0;
+var calculatorEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.calcPosition = document.querySelector('.js-calc-position');
+  obj.positionEntryPrice = obj.calcPosition.querySelector('.js-calc-position-entry');
+  obj.positionRiskPercentage = obj.calcPosition.querySelector('.js-calc-position-percentage');
+  obj.positionStopPrice = obj.calcPosition.querySelector('.js-calc-position-stop');
+  obj.positionResult = obj.calcPosition.querySelector('.js-calc-position-result');
+  obj.calcRatio = document.querySelector('.js-calc-ratio');
+  obj.ratioEntryPrice = obj.calcRatio.querySelector('.js-calc-ratio-entry');
+  obj.ratioExitPrice = obj.calcRatio.querySelector('.js-calc-ratio-exit');
+  obj.ratioStopPrice = obj.calcRatio.querySelector('.js-calc-ratio-stop');
+  obj.ratioResult = obj.calcRatio.querySelector('.js-calc-ratio-result');
+  obj.calcCapital = document.querySelector('.js-calc-capital');
+  obj.capitalSign = obj.calcCapital.querySelector('.js-calc-capital-sign');
+  obj.capitalSignBtn = obj.calcCapital.querySelector('.js-calc-capital-sign-btn');
+  obj.capitalInput = obj.calcCapital.querySelector('.js-calc-capital-input');
+  obj.capitalUpdateBtn = obj.calcCapital.querySelector('.js-calc-capital-update-btn');
+  obj.capitalMessage = obj.calcCapital.querySelector('.js-calc-capital-message');
+  return obj;
+};
+
+var queryCalcEls = function queryCalcEls() {
+  calculatorEls = getElements();
+};
+
+exports.queryCalcEls = queryCalcEls;
+
+var checkFieldsForData = function checkFieldsForData(el1, el2, el3) {
+  if (!el1.value || !el2.value || !el3.value) return;
+  return [+el1.value, +el2.value, +el3.value];
+};
+
+var addCalcCapitalHandler = function addCalcCapitalHandler(handler) {
+  calculatorEls.capitalUpdateBtn.addEventListener('click', function (e) {
+    var amount = +calculatorEls.capitalInput.value;
+    if (!amount || isNaN(amount)) return;
+    handler(amount, calculatorEls.capitalSign.getAttribute('data-action'));
+  });
+  calculatorEls.capitalSignBtn.addEventListener('click', function (e) {
+    if (e.target.previousElementSibling.getAttribute('data-action') === 'plus') {
+      calculatorEls.capitalSign.innerHTML = "\n      <svg class=\"svg svg--minus\" viewBox=\"0 0 13 13\" xmlns=\"http://www.w3.org/2000/svg\">\n        <rect y=\"5\" width=\"13\" height=\"3\" fill=\"#C4C4C4\"/>\n      </svg>\n      ";
+      calculatorEls.capitalSign.setAttribute('data-action', 'minus');
+    } else {
+      calculatorEls.capitalSign.innerHTML = "\n      <svg class=\"svg svg--plus\" viewBox=\"0 0 13 13\"\n        xmlns=\"http://www.w3.org/2000/svg\">\n        <rect y=\"5\" width=\"13\" height=\"3\" fill=\"#C4C4C4\" />\n        <rect x=\"8\" width=\"13\" height=\"3\" transform=\"rotate(90 8 0)\" fill=\"#C4C4C4\" />\n      </svg>\n      ";
+      calculatorEls.capitalSign.setAttribute('data-action', 'plus');
+    }
+  });
+};
+
+exports.addCalcCapitalHandler = addCalcCapitalHandler;
+
+var addCalcPositionHandler = function addCalcPositionHandler(handler) {
+  [calculatorEls.positionEntryPrice, calculatorEls.positionRiskPercentage, calculatorEls.positionStopPrice].forEach(function (input) {
+    input.addEventListener('keyup', function (e) {
+      if (e.key === 'Tab' || !isFinite(e.key) && e.key !== 'Backspace') return;
+      var formattedData = checkFieldsForData(calculatorEls.positionEntryPrice, calculatorEls.positionRiskPercentage, calculatorEls.positionStopPrice);
+      handler(formattedData);
+    });
+  });
+};
+
+exports.addCalcPositionHandler = addCalcPositionHandler;
+
+var addCalcRatioHandler = function addCalcRatioHandler(handler) {
+  [calculatorEls.ratioEntryPrice, calculatorEls.ratioExitPrice, calculatorEls.ratioStopPrice].forEach(function (input) {
+    input.addEventListener('keyup', function (e) {
+      if (e.key === 'Tab' || !isFinite(e.key) && e.key !== 'Backspace') return;
+      var formattedData = checkFieldsForData(calculatorEls.ratioEntryPrice, calculatorEls.ratioExitPrice, calculatorEls.ratioStopPrice);
+      handler(formattedData);
+    });
+  });
+};
+
+exports.addCalcRatioHandler = addCalcRatioHandler;
+
+var renderCapitalMessage = function renderCapitalMessage(arr) {
+  var spanEls = calculatorEls.capitalMessage.querySelectorAll('span');
+  spanEls[0].textContent = arr[0] === 'plus' ? 'added' : 'removed';
+  spanEls[1].textContent = arr[1];
+  spanEls[2].textContent = arr[2];
+  calculatorEls.capitalMessage.classList.add('c-calculator-capital__message--is-active');
+  setTimeout(function () {
+    calculatorEls.capitalMessage.classList.remove('c-calculator-capital__message--is-active');
+    calculatorEls.capitalInput.value = '';
+  }, 6000);
+};
+
+exports.renderCapitalMessage = renderCapitalMessage;
+
+var renderCalcResult = function renderCalcResult(result, el) {
+  calculatorEls[el].value = result;
+};
+
+exports.renderCalcResult = renderCalcResult;
+
+var clearCalcResult = function clearCalcResult(el) {
+  calculatorEls[el].value = '';
+};
+
+exports.clearCalcResult = clearCalcResult;
+},{}],"js/models/calculatorsModel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8285,11 +8532,11 @@ exports.validateJournalForm = validateJournalForm;
 },{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
+var _dataModel = require("./models/dataModel");
+
 var _coreView = require("./views/coreView");
 
 var _calculatorsView = require("./views/calculatorsView");
-
-var _dataModel = require("./models/dataModel");
 
 var _calculatorsModel = require("./models/calculatorsModel");
 
@@ -8471,6 +8718,7 @@ var queryDOM = function queryDOM() {
 
 window.addEventListener('DOMContentLoaded', function (e) {
   console.log('DOM app is loaded');
+  (0, _dataModel.fetchUserFromJSON)();
   queryDOM();
   (0, _coreView.addNavigationHandler)(controlNavigation);
   (0, _accountDetailsView.updateCapitalOutput)((0, _dataModel.passData)('capital'));
@@ -8503,7 +8751,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartOverallView.renderLongShortPie)();
   }, 1000);
 });
-},{"./views/coreView":"js/views/coreView.js","./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalEntriesView":"js/views/journalEntriesView.js","./views/journalFiltersView":"js/views/journalFiltersView.js","./views/journalFormView":"js/views/journalFormView.js","./models/journalFormModel":"js/models/journalFormModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./models/dataModel":"js/models/dataModel.js","./views/coreView":"js/views/coreView.js","./views/calculatorsView":"js/views/calculatorsView.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalEntriesView":"js/views/journalEntriesView.js","./views/journalFiltersView":"js/views/journalFiltersView.js","./views/journalFormView":"js/views/journalFormView.js","./models/journalFormModel":"js/models/journalFormModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

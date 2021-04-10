@@ -1,0 +1,309 @@
+{
+  "capital": 8000,
+  "overall": {
+    "total": 0,
+    "proportions": [
+      {
+        "side": "long",
+        "total": 0
+      },
+      {
+        "side": "short",
+        "total": 0
+      }
+    ]
+  },
+  "streaks": {
+    "wins": {
+      "trades": [
+        {
+          "id": 1150,
+          "ticker": "NFLX",
+          "date": "14/06/21",
+          "returnCash": 253
+        },
+        {
+          "id": 115,
+          "ticker": "VREZ",
+          "date": "15/06/21",
+          "returnCash": 312
+        }
+      ]
+    },
+    "losses": {
+      "trades": [
+        {
+          "id": "liJ56D3",
+          "ticker": "AMZN",
+          "date": "12/08/21",
+          "returnCash": -90
+        },
+        {
+          "id": "Y58P1M",
+          "ticker": "X",
+          "date": "21/07/21",
+          "returnCash": -112
+        }
+      ]
+    },
+    "current": {
+      "trades": [
+        {
+          "id": "ZYRwa5z",
+          "ticker": "NFLX",
+          "date": "14/06/21",
+          "returnCash": 253
+        }
+      ]
+    }
+  },
+  "worstTrades": [
+    {
+      "id": 300,
+      "ticker": "NFLX",
+      "date": "14/06/21",
+      "returnCash": -234
+    },
+    {
+      "id": 250,
+      "ticker": "BMBL",
+      "date": "15/06/21",
+      "returnCash": -151
+    },
+    {
+      "id": 115,
+      "ticker": "GME",
+      "date": "7/7/21",
+      "returnCash": -180
+    }
+  ],
+  "bestTrades": [
+    {
+      "id": 600,
+      "ticker": "NFLX",
+      "date": "14/06/21",
+      "returnCash": 253
+    },
+    {
+      "id": 900,
+      "ticker": "BMBL",
+      "date": "15/06/21",
+      "returnCash": 312
+    },
+    {
+      "id": 450,
+      "ticker": "SNAP",
+      "date": "13/08/21",
+      "returnCash": 187
+    }
+  ],
+  "tickers": {
+    "AAL": {
+      "ticker": "AAL",
+      "avgReturn": 0.58,
+      "trades": [
+        {
+          "id": "7Ft7s4w",
+          "shares": 60,
+          "returnCash": 121,
+          "returnPercent": 1.44
+        },
+        {
+          "id": "p8Hi52N",
+          "shares": 72,
+          "returnCash": 118,
+          "returnPercent": 1.32
+        },
+        {
+          "id": "Jk6sDew",
+          "shares": 70,
+          "returnCash": -82,
+          "returnPercent": -1
+        }
+      ]
+    },
+    "AAPL": {
+      "ticker": "AAPL",
+      "avgReturn": 0.59,
+      "trades": [
+        {
+          "id": "QHnv65t",
+          "shares": 40,
+          "returnCash": 175,
+          "returnPercent": 1.54
+        },
+        {
+          "id": "kG24s8i",
+          "shares": 50,
+          "returnCash": 125,
+          "returnPercent": 1.23
+        },
+        {
+          "id": "Vz9qA1k",
+          "shares": 42,
+          "returnCash": -102,
+          "returnPercent": -1.1
+        }
+      ]
+    }
+  },
+  "calendarData": {
+    "jul21": [
+      {
+        "dateLong": "Mon Mar 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+        "dateShort": "6/3/21",
+        "trades": [
+          {
+            "id": 730,
+            "side": "short",
+            "returnCash": -90,
+            "returnPercent": -0.9
+          },
+          {
+            "id": 820,
+            "side": "long",
+            "returnCash": 120,
+            "returnPercent": 1.6
+          }
+        ]
+      },
+      {
+        "dateLong": "Mon Mar 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+        "dateShort": "4/3/21",
+        "trades": [
+          {
+            "id": 2140,
+            "side": "short",
+            "returnCash": 100,
+            "returnPercent": 1.3
+          },
+          {
+            "id": 820,
+            "side": "short",
+            "returnCash": -50,
+            "returnPercent": -0.7
+          }
+        ]
+      }
+    ],
+    "aug21": [
+      {
+        "dateLong": "Mon Apr 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+        "dateShort": "2/4/21",
+        "trades": [
+          {
+            "id": 854,
+            "side": "long",
+            "returnCash": 110,
+            "returnPercent": 1.3
+          },
+          {
+            "id": 820,
+            "side": "long",
+            "returnCash": -30,
+            "returnPercent": -0.45
+          }
+        ]
+      },
+      {
+        "dateLong": "Mon Apr 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+        "dateShort": "7/4/21",
+        "trades": [
+          {
+            "id": 652,
+            "side": "long",
+            "returnCash": -111,
+            "returnPercent": -1.2
+          },
+          {
+            "id": 1167,
+            "side": "short",
+            "returnCash": -70,
+            "returnPercent": -1.1
+          }
+        ]
+      }
+    ]
+  },
+  "journal": [
+    {
+      "id": 115,
+      "ticker": "ROKU",
+      "dateShort": "28/07/21",
+      "side": "short",
+      "sharesAmount": 100,
+      "avgEntry": 180.84,
+      "avgExit": 181.9,
+      "returnCash": 112.52,
+      "returnPercent": 1.63,
+      "tradeEntries": [
+        [180.75, 40],
+        [180.9, 60]
+      ],
+      "tradeExits": [
+        [181.15, 20],
+        [181.42, 20],
+        [182.69, 60]
+      ],
+      "body": "Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra."
+    },
+    {
+      "id": 11500,
+      "ticker": "RIOT",
+      "dateShort": "29/07/21",
+      "side": "long",
+      "sharesAmount": 100,
+      "avgEntry": 180.84,
+      "avgExit": 181.9,
+      "returnCash": 112.52,
+      "returnPercent": 1.63,
+      "tradeEntries": [
+        [180.75, 40],
+        [180.9, 60]
+      ],
+      "tradeExits": [
+        [181.15, 20],
+        [181.42, 20],
+        [182.69, 60]
+      ],
+      "body": "Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra."
+    },
+    {
+      "id": 1150,
+      "ticker": "MSFT",
+      "dateShort": "30/07/21",
+      "side": "short",
+      "sharesAmount": 110,
+      "avgEntry": 180.84,
+      "avgExit": 181.9,
+      "returnCash": 112.52,
+      "returnPercent": 1.63,
+      "tradeEntries": [
+        [180.75, 50],
+        [180.9, 60]
+      ],
+      "tradeExits": [
+        [181.15, 20],
+        [181.42, 20],
+        [182.69, 70]
+      ],
+      "body": "In hac habitasse platea dictumst. Diam donec adipiscing tristique risus. Velit scelerisque in dictum non consectetur. Vel pretium lectus quam id leo in vitae. Urna porttitor rhoncus dolor purus. Ultrices gravida dictum fusce ut placerat. Vel quam elementum pulvinar etiam non quam lacus suspendisse. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Luctus accumsan tortor posuere ac ut consequat."
+    }
+  ],
+  "dummyJournal": [
+    {
+      "id": "",
+      "ticker": "",
+      "dateShort": "",
+      "side": "",
+      "sharesAmount": "",
+      "avgEntry": "",
+      "avgExit": "",
+      "returnCash": "",
+      "returnPercent": "",
+      "tradeEntries": [["", ""]],
+      "tradeExits": [["", ""]],
+      "body": ""
+    }
+  ]
+}
