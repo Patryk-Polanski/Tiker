@@ -117,7 +117,86 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"js/views/calculatorsView.js":[function(require,module,exports) {
+})({"js/views/coreView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.toggleSections = exports.addNavigationHandler = exports.queryCoreEls = void 0;
+var coreEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.core = document.querySelector('.js-core');
+  obj.nav = obj.core.querySelector('.js-nav');
+  obj.sectionOverview = obj.core.querySelector('.js-section-overview');
+  obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
+  obj.sectionJournal = obj.core.querySelector('.js-section-journal');
+  obj.sectionCalculators = obj.core.querySelector('.js-section-calculators');
+  obj.sectionSettings = obj.core.querySelector('.js-section-settings');
+  obj.sectionHelp = obj.core.querySelector('.js-section-help');
+  return obj;
+};
+
+var hideAllSections = function hideAllSections() {
+  [coreEls.sectionOverview, coreEls.sectionMonthly, coreEls.sectionJournal, coreEls.sectionCalculators, coreEls.sectionSettings, coreEls.sectionHelp].forEach(function (section) {
+    return section.classList.add('s-core-hidden-section');
+  });
+};
+
+var queryCoreEls = function queryCoreEls() {
+  coreEls = getElements();
+  console.log(coreEls);
+};
+
+exports.queryCoreEls = queryCoreEls;
+
+var addNavigationHandler = function addNavigationHandler(handler) {
+  coreEls.nav.addEventListener('click', function (e) {
+    return handler(e.target);
+  });
+};
+
+exports.addNavigationHandler = addNavigationHandler;
+
+var toggleSections = function toggleSections(targetEl) {
+  if (targetEl.classList.contains('btn--nav')) hideAllSections();
+
+  if (targetEl.classList.contains('js-nav-overview-btn')) {
+    coreEls.sectionOverview.classList.remove('s-core-hidden-section');
+  }
+
+  if (targetEl.classList.contains('js-nav-monthly-btn')) {
+    coreEls.sectionMonthly.classList.remove('s-core-hidden-section');
+  }
+
+  if (targetEl.classList.contains('js-nav-journal-btn')) {
+    coreEls.sectionJournal.classList.remove('s-core-hidden-section');
+  }
+
+  if (targetEl.classList.contains('js-nav-calculators-btn')) {
+    coreEls.sectionCalculators.classList.remove('s-core-hidden-section');
+  }
+
+  if (targetEl.classList.contains('js-nav-settings-btn')) {
+    coreEls.sectionSettings.classList.remove('s-core-hidden-section');
+  }
+
+  if (targetEl.classList.contains('js-nav-help-btn')) {
+    coreEls.sectionHelp.classList.remove('s-core-hidden-section');
+  }
+
+  if (targetEl.classList.contains('js-nav-exit-btn')) {
+    window.location.href = '../../index.html';
+  }
+
+  console.log('this is the target el');
+  console.log(targetEl);
+};
+
+exports.toggleSections = toggleSections;
+},{}],"js/views/calculatorsView.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8196,37 +8275,10 @@ var validateJournalForm = function validateJournalForm(inputData) {
 };
 
 exports.validateJournalForm = validateJournalForm;
-},{"../helpers":"js/helpers.js"}],"js/views/coreView.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.queryCoreEls = void 0;
-var coreEls = {};
-
-var getElements = function getElements() {
-  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  obj.core = document.querySelector('.js-core');
-  obj.nav = obj.core.querySelector('.js-nav');
-  obj.sectionOverview = obj.core.querySelector('.js-section-overview');
-  obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
-  obj.sectionJournal = obj.core.querySelector('.js-section-journal');
-  obj.sectionCalculators = obj.core.querySelector('.js-section-calculators');
-  obj.sectionSettings = obj.core.querySelector('.js-section-settings');
-  obj.sectionHelp = obj.core.querySelector('.js-section-help');
-  return obj;
-};
-
-var queryCoreEls = function queryCoreEls() {
-  coreEls = getElements();
-  console.log('core els');
-  console.log(coreEls);
-};
-
-exports.queryCoreEls = queryCoreEls;
-},{}],"js/controller.js":[function(require,module,exports) {
-"use strict";
+var _coreView = require("./views/coreView");
 
 var _calculatorsView = require("./views/calculatorsView");
 
@@ -8262,9 +8314,11 @@ var _journalFormView = require("./views/journalFormView");
 
 var _journalFormModel = require("./models/journalFormModel");
 
-var _coreView = require("./views/coreView");
-
 // ZONE - controllers
+var controlNavigation = function controlNavigation(targetEl) {
+  (0, _coreView.toggleSections)(targetEl);
+};
+
 var controlCalcCapital = function controlCalcCapital(amount, action) {
   var capitalData = (0, _dataModel.updateCapital)(amount, action);
   (0, _calculatorsView.renderCapitalMessage)(capitalData);
@@ -8411,6 +8465,7 @@ var queryDOM = function queryDOM() {
 window.addEventListener('DOMContentLoaded', function (e) {
   console.log('DOM app is loaded');
   queryDOM();
+  (0, _coreView.addNavigationHandler)(controlNavigation);
   (0, _accountDetailsView.updateCapitalOutput)((0, _dataModel.passData)('capital'));
   controlMonthlyRender();
   controlProfitableRender();
@@ -8441,7 +8496,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartOverallView.renderLongShortPie)();
   }, 1000);
 });
-},{"./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalEntriesView":"js/views/journalEntriesView.js","./views/journalFiltersView":"js/views/journalFiltersView.js","./views/journalFormView":"js/views/journalFormView.js","./models/journalFormModel":"js/models/journalFormModel.js","./views/coreView":"js/views/coreView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./views/coreView":"js/views/coreView.js","./views/calculatorsView":"js/views/calculatorsView.js","./models/dataModel":"js/models/dataModel.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalEntriesView":"js/views/journalEntriesView.js","./views/journalFiltersView":"js/views/journalFiltersView.js","./views/journalFormView":"js/views/journalFormView.js","./models/journalFormModel":"js/models/journalFormModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

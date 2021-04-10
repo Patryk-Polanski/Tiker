@@ -83,6 +83,10 @@
       background-color: $brown-light;
       outline: 0;
     }
+
+    & svg {
+      pointer-events: none;
+    }
   }
 
   &--form-icon {

@@ -1,4 +1,9 @@
 import {
+  addNavigationHandler,
+  queryCoreEls,
+  toggleSections,
+} from './views/coreView';
+import {
   queryCalcEls,
   addCalcCapitalHandler,
   addCalcPositionHandler,
@@ -74,9 +79,12 @@ import {
   clearFormValidationError,
 } from './views/journalFormView';
 import { validateJournalForm } from './models/journalFormModel';
-import { queryCoreEls } from './views/coreView';
 
 // ZONE - controllers
+
+const controlNavigation = function (targetEl) {
+  toggleSections(targetEl);
+};
 
 const controlCalcCapital = function (amount, action) {
   const capitalData = updateCapital(amount, action);
@@ -221,6 +229,7 @@ const queryDOM = function () {
 window.addEventListener('DOMContentLoaded', e => {
   console.log('DOM app is loaded');
   queryDOM();
+  addNavigationHandler(controlNavigation);
   updateCapitalOutput(passData('capital'));
   controlMonthlyRender();
   controlProfitableRender();

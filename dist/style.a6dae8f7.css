@@ -792,6 +792,9 @@ body {
   background-color: #201c20;
   outline: 0;
 }
+.btn--nav svg {
+  pointer-events: none;
+}
 .btn--form-icon {
   border-radius: 0px;
   padding: 1px;
