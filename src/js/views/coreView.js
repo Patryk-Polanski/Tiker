@@ -23,9 +23,15 @@ const hideAllSections = function () {
   ].forEach(section => section.classList.add('s-core-hidden-section'));
 };
 
+const toggleActiveNavBtns = function (targetEl) {
+  coreEls.nav
+    .querySelector('.btn--nav--active')
+    .classList.remove('btn--nav--active');
+  targetEl.classList.add('btn--nav--active');
+};
+
 export const queryCoreEls = function () {
   coreEls = getElements();
-  console.log(coreEls);
 };
 
 export const addNavigationHandler = function (handler) {
@@ -36,25 +42,29 @@ export const toggleSections = function (targetEl) {
   if (targetEl.classList.contains('btn--nav')) hideAllSections();
   if (targetEl.classList.contains('js-nav-overview-btn')) {
     coreEls.sectionOverview.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-monthly-btn')) {
     coreEls.sectionMonthly.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-journal-btn')) {
     coreEls.sectionJournal.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-calculators-btn')) {
     coreEls.sectionCalculators.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-settings-btn')) {
     coreEls.sectionSettings.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-help-btn')) {
     coreEls.sectionHelp.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-exit-btn')) {
     window.location.href = '../../index.html';
   }
-  console.log('this is the target el');
-  console.log(targetEl);
 };

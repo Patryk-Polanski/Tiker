@@ -60,7 +60,6 @@
 
     &--active {
       &::before {
-        // left: -6px;
         transform: translateX(-6px);
         opacity: 1;
       }
@@ -73,6 +72,16 @@
     margin: 0;
     height: 75px;
     width: 75px;
+
+    & svg > ellipse:first-child {
+      transition: 0.2s transform ease-in;
+    }
+
+    &--active {
+      & svg > ellipse:first-child {
+        transform: translateX(-9px);
+      }
+    }
 
     &:focus {
       background-color: $brown-light;

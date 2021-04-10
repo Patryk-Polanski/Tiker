@@ -784,6 +784,12 @@ body {
   height: 75px;
   width: 75px;
 }
+.btn--nav svg > ellipse:first-child {
+  transition: 0.2s transform ease-in;
+}
+.btn--nav--active svg > ellipse:first-child {
+  transform: translateX(-9px);
+}
 .btn--nav:focus {
   background-color: #201c20;
   outline: 0;

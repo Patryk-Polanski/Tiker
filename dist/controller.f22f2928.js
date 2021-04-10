@@ -145,9 +145,13 @@ var hideAllSections = function hideAllSections() {
   });
 };
 
+var toggleActiveNavBtns = function toggleActiveNavBtns(targetEl) {
+  coreEls.nav.querySelector('.btn--nav--active').classList.remove('btn--nav--active');
+  targetEl.classList.add('btn--nav--active');
+};
+
 var queryCoreEls = function queryCoreEls() {
   coreEls = getElements();
-  console.log(coreEls);
 };
 
 exports.queryCoreEls = queryCoreEls;
@@ -165,34 +169,37 @@ var toggleSections = function toggleSections(targetEl) {
 
   if (targetEl.classList.contains('js-nav-overview-btn')) {
     coreEls.sectionOverview.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-monthly-btn')) {
     coreEls.sectionMonthly.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-journal-btn')) {
     coreEls.sectionJournal.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-calculators-btn')) {
     coreEls.sectionCalculators.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-settings-btn')) {
     coreEls.sectionSettings.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-help-btn')) {
     coreEls.sectionHelp.classList.remove('s-core-hidden-section');
+    toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-exit-btn')) {
     window.location.href = '../../index.html';
   }
-
-  console.log('this is the target el');
-  console.log(targetEl);
 };
 
 exports.toggleSections = toggleSections;
