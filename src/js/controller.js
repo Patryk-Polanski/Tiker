@@ -110,9 +110,12 @@ const controlPopups = function (action, dataAttr) {
   if (action === 'hide') hidePopup();
   if (action === 'proceed') {
     if (dataAttr === 'logoff') {
+      console.log('we need to logoff!', dataAttr);
+      redirectToLogin();
     }
-    console.log('we need to logoff!', dataAttr);
-    redirectToLogin();
+    if (dataAttr === 'reset') {
+      console.log('we need to reset the app!', dataAttr);
+    }
   }
 };
 
@@ -248,6 +251,11 @@ const controlJournalPagination = function (paginationBtn) {
 
 const controlAppReset = function () {
   console.log('reset initiated');
+  showDoubleBtnPopup(
+    'reset',
+    'All user data will be deleted',
+    'Are you sure you want to reset the application?'
+  );
 };
 
 const queryDOM = function () {

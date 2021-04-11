@@ -8746,10 +8746,14 @@ var controlPopups = function controlPopups(action, dataAttr) {
   if (action === 'hide') (0, _coreView.hidePopup)();
 
   if (action === 'proceed') {
-    if (dataAttr === 'logoff') {}
+    if (dataAttr === 'logoff') {
+      console.log('we need to logoff!', dataAttr);
+      (0, _coreView.redirectToLogin)();
+    }
 
-    console.log('we need to logoff!', dataAttr);
-    (0, _coreView.redirectToLogin)();
+    if (dataAttr === 'reset') {
+      console.log('we need to reset the app!', dataAttr);
+    }
   }
 };
 
@@ -8885,6 +8889,7 @@ var controlJournalPagination = function controlJournalPagination(paginationBtn) 
 
 var controlAppReset = function controlAppReset() {
   console.log('reset initiated');
+  (0, _coreView.showDoubleBtnPopup)('reset', 'All user data will be deleted', 'Are you sure you want to reset the application?');
 };
 
 var queryDOM = function queryDOM() {
