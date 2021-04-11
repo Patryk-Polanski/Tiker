@@ -282,6 +282,10 @@ export const grabAllUserInputs = function () {
   return formInputs;
 };
 
+export const clearJournalForm = function () {
+  journalFormEls.journalFormWrapper.innerHTML = '';
+};
+
 export const updateFormValidationError = function (message = 'fail') {
   journalFormEls.formValidationError.textContent = message;
 };

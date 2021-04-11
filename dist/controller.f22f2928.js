@@ -500,7 +500,7 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = exports.checkIfJournalEmpty = exports.fetchUserFromJSON = void 0;
+exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = exports.checkIfJournalEmpty = exports.clearUserObject = exports.fetchUserFromJSON = void 0;
 
 var _helpers = require("./../helpers");
 
@@ -512,8 +512,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var user = {
-  capital: 7000,
+var user;
+var startingUserObject = {
+  capital: 0,
   overall: {
     total: 0,
     proportions: [{
@@ -526,236 +527,20 @@ var user = {
   },
   streaks: {
     wins: {
-      trades: [//   {
-        //     id: 1150,
-        //     ticker: 'NFLX',
-        //     date: '14/06/21',
-        //     returnCash: 253,
-        //   },
-        //   {
-        //     id: 115,
-        //     ticker: 'VREZ',
-        //     date: '15/06/21',
-        //     returnCash: 312,
-        //   },
-      ]
+      trades: []
     },
     losses: {
-      trades: [//   {
-        //     id: 'liJ56D3',
-        //     ticker: 'AMZN',
-        //     date: '12/08/21',
-        //     returnCash: -90,
-        //   },
-        //   {
-        //     id: 'Y58P1M',
-        //     ticker: 'X',
-        //     date: '21/07/21',
-        //     returnCash: -112,
-        //   },
-      ]
+      trades: []
     },
     current: {
-      trades: [// {
-        //   id: 'ZYRwa5z',
-        //   ticker: 'NFLX',
-        //   date: '14/06/21',
-        //   returnCash: 253,
-        // },
-      ]
+      trades: []
     }
   },
-  worstTrades: [// {
-    //   id: 300,
-    //   ticker: 'NFLX',
-    //   date: '14/06/21',
-    //   returnCash: -234,
-    // },
-    // {
-    //   id: 250,
-    //   ticker: 'BMBL',
-    //   date: '15/06/21',
-    //   returnCash: -151,
-    // },
-    // {
-    //   id: 115,
-    //   ticker: 'GME',
-    //   date: '7/7/21',
-    //   returnCash: -180,
-    // },
-  ],
-  bestTrades: [// {
-    //   id: 600,
-    //   ticker: 'NFLX',
-    //   date: '14/06/21',
-    //   returnCash: 253,
-    // },
-    // {
-    //   id: 900,
-    //   ticker: 'BMBL',
-    //   date: '15/06/21',
-    //   returnCash: 312,
-    // },
-    // {
-    //   id: 450,
-    //   ticker: 'SNAP',
-    //   date: '13/08/21',
-    //   returnCash: 187,
-    // },
-  ],
-  tickers: {// AAL: {
-    //   ticker: 'AAL',
-    //   avgReturn: 0.58,
-    //   trades: [
-    //     {
-    //       id: '7Ft7s4w',
-    //       shares: 60,
-    //       result: 121,
-    //       winPercentage: 1.44,
-    //     },
-    //     {
-    //       id: 'p8Hi52N',
-    //       shares: 72,
-    //       result: 118,
-    //       winPercentage: 1.32,
-    //     },
-    //     {
-    //       id: 'Jk6sDew',
-    //       shares: 70,
-    //       result: -82,
-    //       winPercentage: -1,
-    //     },
-    //   ],
-    // },
-    // AAPL: {
-    //   ticker: 'AAPL',
-    //   avgReturn: 0.59,
-    //   trades: [
-    //     {
-    //       id: 'QHnv65t',
-    //       shares: 40,
-    //       result: 175,
-    //       winPercentage: 1.54,
-    //     },
-    //     {
-    //       id: 'kG24s8i',
-    //       shares: 50,
-    //       result: 125,
-    //       winPercentage: 1.23,
-    //     },
-    //     {
-    //       id: 'Vz9qA1k',
-    //       shares: 42,
-    //       result: -102,
-    //       winPercentage: -1.1,
-    //     },
-    //   ],
-    // },
-  },
-  calendarData: {// jul21: [
-    //   {
-    //     dateLong: 'Mon Mar 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-    //     dateShort: '6/3/21',
-    //     trades: [
-    //       { id: 730, side: 'short', returnCash: -90, returnPercent: -0.9 },
-    //       { id: 820, side: 'long', returnCash: 120, returnPercent: 1.6 },
-    //     ],
-    //   },
-    //   {
-    //     dateLong: 'Mon Mar 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-    //     dateShort: '4/3/21',
-    //     trades: [
-    //       { id: 2140, side: 'short', returnCash: 100, returnPercent: 1.3 },
-    //       { id: 820, side: 'short', returnCash: -50, returnPercent: -0.7 },
-    //     ],
-    //   },
-    // ],
-    // aug21: [
-    //   {
-    //     dateLong: 'Mon Apr 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-    //     dateShort: '2/4/21',
-    //     trades: [
-    //       { id: 854, side: 'long', returnCash: 110, returnPercent: 1.3 },
-    //       { id: 820, side: 'long', returnCash: -30, returnPercent: -0.45 },
-    //     ],
-    //   },
-    //   {
-    //     dateLong: 'Mon Apr 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)',
-    //     dateShort: '7/4/21',
-    //     trades: [
-    //       { id: 652, side: 'long', returnCash: -111, returnPercent: -1.2 },
-    //       { id: 1167, side: 'short', returnCash: -70, returnPercent: -1.1 },
-    //     ],
-    //   },
-    // ],
-  },
-  journal: [// {
-    //   id: 115,
-    //   ticker: 'ROKU',
-    //   dateShort: '28/07/21',
-    //   side: 'short',
-    //   sharesAmount: 100,
-    //   avgEntry: 180.84,
-    //   avgExit: 181.9,
-    //   returnCash: 112.52,
-    //   returnPercent: 1.63,
-    //   tradeEntries: [
-    //     [180.75, 40],
-    //     [180.9, 60],
-    //   ],
-    //   tradeExits: [
-    //     [181.15, 20],
-    //     [181.42, 20],
-    //     [182.69, 60],
-    //   ],
-    //   body:
-    //     'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.',
-    // },
-    // {
-    //   id: 11500,
-    //   ticker: 'RIOT',
-    //   dateShort: '29/07/21',
-    //   side: 'long',
-    //   sharesAmount: 100,
-    //   avgEntry: 180.84,
-    //   avgExit: 181.9,
-    //   returnCash: 112.52,
-    //   returnPercent: 1.63,
-    //   tradeEntries: [
-    //     [180.75, 40],
-    //     [180.9, 60],
-    //   ],
-    //   tradeExits: [
-    //     [181.15, 20],
-    //     [181.42, 20],
-    //     [182.69, 60],
-    //   ],
-    //   body:
-    //     'Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra.',
-    // },
-    // {
-    //   id: 1150,
-    //   ticker: 'MSFT',
-    //   dateShort: '30/07/21',
-    //   side: 'short',
-    //   sharesAmount: 110,
-    //   avgEntry: 180.84,
-    //   avgExit: 181.9,
-    //   returnCash: 112.52,
-    //   returnPercent: 1.63,
-    //   tradeEntries: [
-    //     [180.75, 50],
-    //     [180.9, 60],
-    //   ],
-    //   tradeExits: [
-    //     [181.15, 20],
-    //     [181.42, 20],
-    //     [182.69, 70],
-    //   ],
-    //   body:
-    //     'In hac habitasse platea dictumst. Diam donec adipiscing tristique risus. Velit scelerisque in dictum non consectetur. Vel pretium lectus quam id leo in vitae. Urna porttitor rhoncus dolor purus. Ultrices gravida dictum fusce ut placerat. Vel quam elementum pulvinar etiam non quam lacus suspendisse. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Luctus accumsan tortor posuere ac ut consequat.',
-    // },
-  ],
+  worstTrades: [],
+  bestTrades: [],
+  tickers: {},
+  calendarData: {},
+  journal: [],
   dummyJournal: [{
     id: '',
     ticker: '',
@@ -772,10 +557,20 @@ var user = {
   }]
 };
 
-var fetchUserFromJSON = function fetchUserFromJSON() {// if (jsonData) user = jsonData;
+var fetchUserFromJSON = function fetchUserFromJSON() {
+  user = startingUserObject;
+  if (_data.default) user = _data.default;
 };
 
 exports.fetchUserFromJSON = fetchUserFromJSON;
+
+var clearUserObject = function clearUserObject() {
+  user = startingUserObject;
+  console.log('this is the cleared user object');
+  console.log(user);
+};
+
+exports.clearUserObject = clearUserObject;
 
 var checkIfJournalEmpty = function checkIfJournalEmpty() {
   if (user.journal.length < 1) return 'empty';
@@ -1272,6 +1067,10 @@ var addPopupHandler = function addPopupHandler(handler) {
     e.preventDefault();
     handler('hide');
   });
+  coreEls.singleBtnPopup.children[0].addEventListener('click', function (e) {
+    e.preventDefault();
+    stopPropagation();
+  });
   coreEls.singleBtnPopup.addEventListener('click', function (e) {
     e.preventDefault();
     handler('hide');
@@ -1283,6 +1082,10 @@ var addPopupHandler = function addPopupHandler(handler) {
   coreEls.doubleBtnPopupYesBtn.addEventListener('click', function (e) {
     e.stopPropagation();
     handler('proceed', coreEls.doubleBtnPopup.getAttribute('source'), coreEls.doubleBtnPopup.getAttribute('entry-id'));
+  });
+  coreEls.doubleBtnPopup.children[0].addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
   });
   coreEls.doubleBtnPopup.addEventListener('click', function (e) {
     e.preventDefault();
@@ -5795,7 +5598,7 @@ exports.updateCapitalOutput = updateCapitalOutput;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalEntries = exports.removeEmptyJournalCard = exports.addJournalPaginationHandler = exports.addJournalEntriesHandler = exports.queryJournalEntriesEls = void 0;
+exports.renderJournalEntries = exports.clearJournalEntries = exports.removeEmptyJournalCard = exports.addJournalPaginationHandler = exports.addJournalEntriesHandler = exports.queryJournalEntriesEls = void 0;
 
 var _config = require("../config");
 
@@ -5881,11 +5684,25 @@ var renderJournalPagination = function renderJournalPagination(entriesNumber, pa
   makePaginationBtnActive(paginationPage);
 };
 
+var clearJournalEntries = function clearJournalEntries() {
+  var existingEntries = journalEntriesEls.journalEntriesWrapper.querySelectorAll('.c-journal-entry');
+  if (existingEntries) existingEntries.forEach(function (el) {
+    return el.remove();
+  });
+  journalEntriesEls.journalPaginationWrapper.innerHTML = '';
+};
+
+exports.clearJournalEntries = clearJournalEntries;
+
 var renderJournalEntries = function renderJournalEntries(entriesData) {
   var paginationPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var clear = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   if (entriesData.length < 1) return;
   var existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll('.c-journal-entry');
+  console.log('these are the existing elements');
+  console.log(existingEls);
+  console.log('this is the clear outcome');
+  console.log(clear);
   if (existingEls && clear) existingEls.forEach(function (el) {
     return el.remove();
   });
@@ -8286,7 +8103,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalForm = exports.clearFormValidationError = exports.updateFormValidationError = exports.grabAllUserInputs = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.grabEntryFormID = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
+exports.renderJournalForm = exports.clearFormValidationError = exports.updateFormValidationError = exports.clearJournalForm = exports.grabAllUserInputs = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.grabEntryFormID = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
 
 var _d3Array = require("d3-array");
 
@@ -8499,6 +8316,12 @@ var grabAllUserInputs = function grabAllUserInputs() {
 };
 
 exports.grabAllUserInputs = grabAllUserInputs;
+
+var clearJournalForm = function clearJournalForm() {
+  journalFormEls.journalFormWrapper.innerHTML = '';
+};
+
+exports.clearJournalForm = clearJournalForm;
 
 var updateFormValidationError = function updateFormValidationError() {
   var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'fail';
@@ -8782,6 +8605,15 @@ var controlPopups = function controlPopups(action, dataAttr, entryID) {
 
     if (dataAttr === 'reset') {
       console.log('we need to reset the app!', dataAttr);
+      (0, _dataModel.clearUserObject)();
+      controlNoDataScreens();
+      controlProfitableRender();
+      controlOverallRender();
+      controlPerformanceRender();
+      controlWorstBestRender();
+      controlMonthlyRender();
+      controlLongShortPieRender();
+      controlJournalRender();
       (0, _coreView.hidePopup)();
       (0, _coreView.showSingleBtnPopup)('You can do so in the capital management section', 'Your account capital is now 0 and needs to be updated', 'Application has been reset');
     }
@@ -8851,7 +8683,13 @@ var controlLongShortPieRender = function controlLongShortPieRender() {
 
 var controlJournalRender = function controlJournalRender() {
   var activeEntryID = (0, _journalEntriesView.renderJournalEntries)((0, _dataModel.passData)('journal'));
-  if (!activeEntryID) return;
+
+  if (!activeEntryID) {
+    (0, _journalEntriesView.clearJournalEntries)();
+    (0, _journalFormView.clearJournalForm)();
+    return;
+  }
+
   (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(activeEntryID));
 };
 

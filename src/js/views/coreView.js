@@ -99,6 +99,10 @@ export const addPopupHandler = function (handler) {
     e.preventDefault();
     handler('hide');
   });
+  coreEls.singleBtnPopup.children[0].addEventListener('click', e => {
+    e.preventDefault();
+    stopPropagation();
+  });
   coreEls.singleBtnPopup.addEventListener('click', e => {
     e.preventDefault();
     handler('hide');
@@ -115,6 +119,10 @@ export const addPopupHandler = function (handler) {
       coreEls.doubleBtnPopup.getAttribute('source'),
       coreEls.doubleBtnPopup.getAttribute('entry-id')
     );
+  });
+  coreEls.doubleBtnPopup.children[0].addEventListener('click', e => {
+    e.preventDefault();
+    e.stopPropagation();
   });
   coreEls.doubleBtnPopup.addEventListener('click', e => {
     e.preventDefault();

@@ -7,6 +7,7 @@ import {
   updateCalendarData,
   findJournalEntry,
   updateJournalData,
+  clearUserObject,
 } from './models/dataModel';
 import {
   addNavigationHandler,
@@ -69,6 +70,7 @@ import {
   renderJournalEntries,
   removeEmptyJournalCard,
   addJournalPaginationHandler,
+  clearJournalEntries,
 } from './views/journalEntriesView';
 import {
   queryJournalFilterEls,
@@ -87,6 +89,7 @@ import {
   grabAllUserInputs,
   updateFormValidationError,
   clearFormValidationError,
+  clearJournalForm,
 } from './views/journalFormView';
 import { validateJournalForm } from './models/journalFormModel';
 import { querySettingsEls, addAppResetHandler } from './views/settingsView';
@@ -123,6 +126,15 @@ const controlPopups = function (action, dataAttr, entryID) {
     }
     if (dataAttr === 'reset') {
       console.log('we need to reset the app!', dataAttr);
+      clearUserObject();
+      controlNoDataScreens();
+      controlProfitableRender();
+      controlOverallRender();
+      controlPerformanceRender();
+      controlWorstBestRender();
+      controlMonthlyRender();
+      controlLongShortPieRender();
+      controlJournalRender();
       hidePopup();
       showSingleBtnPopup(
         'You can do so in the capital management section',
@@ -194,7 +206,11 @@ const controlLongShortPieRender = function () {
 
 const controlJournalRender = function () {
   const activeEntryID = renderJournalEntries(passData('journal'));
-  if (!activeEntryID) return;
+  if (!activeEntryID) {
+    clearJournalEntries();
+    clearJournalForm();
+    return;
+  }
   renderJournalForm(findJournalEntry(activeEntryID));
 };
 
