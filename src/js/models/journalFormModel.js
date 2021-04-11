@@ -40,13 +40,22 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
     ];
 
   const entriesPrices = inputData.entriesPrices.map(entry => +entry);
-  const entriesShares = inputData.entriesShares
-    .map(entry => +entry)
-    .filter(shares => shares > 0);
+  const entriesShares = inputData.entriesShares.map(entry => +entry);
   const exitsPrices = inputData.exitsPrices.map(exit => +exit);
-  const exitsShares = inputData.exitsShares
-    .map(exit => +exit)
-    .filter(shares => shares > 0);
+  const exitsShares = inputData.exitsShares.map(exit => +exit);
+
+  const absoluteNumberCheck = [
+    ...entriesPrices,
+    ...entriesShares,
+    ...exitsPrices,
+    ...exitsShares,
+  ].filter(number => number < 0);
+
+  if (absoluteNumberCheck.length > 0)
+    return [
+      'ERROR',
+      'All entries, exits and shares must have a positive value',
+    ];
 
   if (
     entriesPrices.length !== entriesShares.length ||

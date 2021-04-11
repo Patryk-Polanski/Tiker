@@ -258,7 +258,7 @@ var USER_PASSWORD = 'app';
 exports.USER_PASSWORD = USER_PASSWORD;
 },{}],"data.json":[function(require,module,exports) {
 module.exports = {
-  "capital": 0,
+  "capital": 8000,
   "overall": {
     "total": 3,
     "proportions": [{
@@ -8577,6 +8577,18 @@ exports.validateJournalForm = void 0;
 
 var _helpers = require("../helpers");
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 var validateJournalForm = function validateJournalForm(inputData) {
   var accountCapital = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   if (accountCapital < 1) return ['ERROR', 'Account capital needs to be above zero'];
@@ -8601,17 +8613,17 @@ var validateJournalForm = function validateJournalForm(inputData) {
   });
   var entriesShares = inputData.entriesShares.map(function (entry) {
     return +entry;
-  }).filter(function (shares) {
-    return shares > 0;
   });
   var exitsPrices = inputData.exitsPrices.map(function (exit) {
     return +exit;
   });
   var exitsShares = inputData.exitsShares.map(function (exit) {
     return +exit;
-  }).filter(function (shares) {
-    return shares > 0;
   });
+  var absoluteNumberCheck = [].concat(_toConsumableArray(entriesPrices), _toConsumableArray(entriesShares), _toConsumableArray(exitsPrices), _toConsumableArray(exitsShares)).filter(function (number) {
+    return number < 0;
+  });
+  if (absoluteNumberCheck.length > 0) return ['ERROR', 'All entries, exits and shares must have a positive value'];
   if (entriesPrices.length !== entriesShares.length || exitsPrices.length !== exitsShares.length) return ['ERROR', 'All entries, exits and shares rows must be filled in or deleted']; // check if the number of entry shares equals the number of exit shares
 
   var sharesAmount = entriesShares.reduce(function (acc, num) {
