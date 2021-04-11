@@ -1162,7 +1162,7 @@ exports.findJournalEntry = findJournalEntry;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.hideNoDataScreens = exports.showNoDataScreens = exports.toggleSections = exports.addPopupHandler = exports.addNavigationHandler = exports.queryCoreEls = exports.removeLoadingScreen = exports.hidePopup = exports.showDoubleBtnPopup = exports.showSingleBtnPopup = void 0;
+exports.hideNoDataScreens = exports.showNoDataScreens = exports.redirectToLogin = exports.toggleSections = exports.addPopupHandler = exports.addNavigationHandler = exports.queryCoreEls = exports.removeLoadingScreen = exports.hidePopup = exports.showDoubleBtnPopup = exports.showSingleBtnPopup = void 0;
 var coreEls = {};
 
 var getElements = function getElements() {
@@ -1216,11 +1216,13 @@ var showSingleBtnPopup = function showSingleBtnPopup() {
 exports.showSingleBtnPopup = showSingleBtnPopup;
 
 var showDoubleBtnPopup = function showDoubleBtnPopup() {
+  var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   coreEls.doubleBtnPopup.classList.add('s-content__popup--active');
+  coreEls.doubleBtnPopup.setAttribute('source', source);
   var popupContentWrapper = coreEls.doubleBtnPopup.children[0];
 
-  for (var _len2 = arguments.length, messages = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    messages[_key2] = arguments[_key2];
+  for (var _len2 = arguments.length, messages = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    messages[_key2 - 1] = arguments[_key2];
   }
 
   messages.forEach(function (message) {
@@ -1267,19 +1269,23 @@ exports.addNavigationHandler = addNavigationHandler;
 var addPopupHandler = function addPopupHandler(handler) {
   coreEls.singleBtnPopupOkBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    handler();
+    handler('hide');
   });
   coreEls.singleBtnPopup.addEventListener('click', function (e) {
     e.preventDefault();
-    handler();
+    handler('hide');
   });
   coreEls.doubleBtnPopupNoBtn.addEventListener('click', function (e) {
     e.preventDefault();
-    handler();
+    handler('hide');
+  });
+  coreEls.doubleBtnPopupYesBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    handler('proceed', coreEls.doubleBtnPopup.getAttribute('source'));
   });
   coreEls.doubleBtnPopup.addEventListener('click', function (e) {
     e.preventDefault();
-    handler();
+    handler('hide');
   });
 };
 
@@ -1330,11 +1336,18 @@ var toggleSections = function toggleSections(targetEl) {
 
   if (targetEl.classList.contains('js-nav-exit-btn')) {
     hidePopup();
-    showDoubleBtnPopup('All unsaved progress will be lost', 'Are you sure you want to log off?'); // window.location.href = '../../index.html';
+    showDoubleBtnPopup('logoff', 'All unsaved progress will be lost', 'Are you sure you want to log off?');
   }
 };
 
 exports.toggleSections = toggleSections;
+
+var redirectToLogin = function redirectToLogin() {
+  hidePopup();
+  window.location.href = '../../index.html';
+};
+
+exports.redirectToLogin = redirectToLogin;
 
 var showNoDataScreens = function showNoDataScreens() {
   [coreEls.performanceChart, coreEls.overallChart, coreEls.tableProfitable, coreEls.worstBestChart].forEach(function (card) {
@@ -8729,8 +8742,15 @@ var controlNavigation = function controlNavigation(targetEl) {
   (0, _coreView.toggleSections)(targetEl);
 };
 
-var controlPopups = function controlPopups() {
-  (0, _coreView.hidePopup)();
+var controlPopups = function controlPopups(action, dataAttr) {
+  if (action === 'hide') (0, _coreView.hidePopup)();
+
+  if (action === 'proceed') {
+    if (dataAttr === 'logoff') {}
+
+    console.log('we need to logoff!', dataAttr);
+    (0, _coreView.redirectToLogin)();
+  }
 };
 
 var controlCalcCapital = function controlCalcCapital(amount, action) {

@@ -53,8 +53,9 @@ export const showSingleBtnPopup = function (...messages) {
   });
 };
 
-export const showDoubleBtnPopup = function (...messages) {
+export const showDoubleBtnPopup = function (source = '', ...messages) {
   coreEls.doubleBtnPopup.classList.add('s-content__popup--active');
+  coreEls.doubleBtnPopup.setAttribute('source', source);
 
   const popupContentWrapper = coreEls.doubleBtnPopup.children[0];
 
@@ -91,20 +92,24 @@ export const addNavigationHandler = function (handler) {
 export const addPopupHandler = function (handler) {
   coreEls.singleBtnPopupOkBtn.addEventListener('click', e => {
     e.preventDefault();
-    handler();
+    handler('hide');
   });
   coreEls.singleBtnPopup.addEventListener('click', e => {
     e.preventDefault();
-    handler();
+    handler('hide');
   });
 
   coreEls.doubleBtnPopupNoBtn.addEventListener('click', e => {
     e.preventDefault();
-    handler();
+    handler('hide');
+  });
+  coreEls.doubleBtnPopupYesBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    handler('proceed', coreEls.doubleBtnPopup.getAttribute('source'));
   });
   coreEls.doubleBtnPopup.addEventListener('click', e => {
     e.preventDefault();
-    handler();
+    handler('hide');
   });
 };
 
@@ -148,11 +153,16 @@ export const toggleSections = function (targetEl) {
   if (targetEl.classList.contains('js-nav-exit-btn')) {
     hidePopup();
     showDoubleBtnPopup(
+      'logoff',
       'All unsaved progress will be lost',
       'Are you sure you want to log off?'
     );
-    // window.location.href = '../../index.html';
   }
+};
+
+export const redirectToLogin = function () {
+  hidePopup();
+  window.location.href = '../../index.html';
 };
 
 export const showNoDataScreens = function () {

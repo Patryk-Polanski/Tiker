@@ -19,6 +19,7 @@ import {
   showSingleBtnPopup,
   showDoubleBtnPopup,
   hidePopup,
+  redirectToLogin,
 } from './views/coreView';
 import {
   queryCalcEls,
@@ -105,8 +106,14 @@ const controlNavigation = function (targetEl) {
   toggleSections(targetEl);
 };
 
-const controlPopups = function () {
-  hidePopup();
+const controlPopups = function (action, dataAttr) {
+  if (action === 'hide') hidePopup();
+  if (action === 'proceed') {
+    if (dataAttr === 'logoff') {
+    }
+    console.log('we need to logoff!', dataAttr);
+    redirectToLogin();
+  }
 };
 
 const controlCalcCapital = function (amount, action) {
