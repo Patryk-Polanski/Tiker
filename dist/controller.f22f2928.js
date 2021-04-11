@@ -1162,7 +1162,7 @@ exports.findJournalEntry = findJournalEntry;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.hideNoDataScreens = exports.showNoDataScreens = exports.toggleSections = exports.addNavigationHandler = exports.queryCoreEls = exports.removeLoadingScreen = void 0;
+exports.hideNoDataScreens = exports.showNoDataScreens = exports.toggleSections = exports.addPopupHandler = exports.addNavigationHandler = exports.queryCoreEls = exports.removeLoadingScreen = exports.hidePopup = exports.showSingleBtnPopup = void 0;
 var coreEls = {};
 
 var getElements = function getElements() {
@@ -1170,6 +1170,8 @@ var getElements = function getElements() {
   obj.core = document.querySelector('.js-core');
   obj.nav = obj.core.querySelector('.js-nav');
   obj.loadingScreen = obj.core.querySelector('.js-loading');
+  obj.singleBtnPopup = obj.core.querySelector('.js-single-btn-popup');
+  obj.singleBtnPopupOkBtn = obj.core.querySelector('.js-popup-ok-btn');
   obj.sectionOverview = obj.core.querySelector('.js-section-overview');
   obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
   obj.sectionJournal = obj.core.querySelector('.js-section-journal');
@@ -1194,6 +1196,35 @@ var toggleActiveNavBtns = function toggleActiveNavBtns(targetEl) {
   targetEl.classList.add('btn--nav--active');
 };
 
+var showSingleBtnPopup = function showSingleBtnPopup() {
+  coreEls.singleBtnPopup.classList.add('s-content__popup--active');
+  var popupContentWrapper = coreEls.singleBtnPopup.children[0];
+
+  for (var _len = arguments.length, messages = new Array(_len), _key = 0; _key < _len; _key++) {
+    messages[_key] = arguments[_key];
+  }
+
+  messages.forEach(function (message) {
+    var html = "\n      <p class=\"s-content__popup-text\">".concat(message, "</p>\n    ");
+    popupContentWrapper.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+exports.showSingleBtnPopup = showSingleBtnPopup;
+
+var hidePopup = function hidePopup() {
+  var activePopup = coreEls.core.querySelector('.s-content__popup--active');
+
+  if (activePopup) {
+    activePopup.children[0].querySelectorAll('p').forEach(function (text) {
+      return text.remove();
+    });
+    activePopup.classList.remove('s-content__popup--active');
+  }
+};
+
+exports.hidePopup = hidePopup;
+
 var removeLoadingScreen = function removeLoadingScreen() {
   coreEls.loadingScreen.remove();
 };
@@ -1214,40 +1245,60 @@ var addNavigationHandler = function addNavigationHandler(handler) {
 
 exports.addNavigationHandler = addNavigationHandler;
 
+var addPopupHandler = function addPopupHandler(handler) {
+  coreEls.singleBtnPopupOkBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    handler();
+  });
+  coreEls.singleBtnPopup.addEventListener('click', function (e) {
+    e.preventDefault();
+    handler();
+  });
+};
+
+exports.addPopupHandler = addPopupHandler;
+
 var toggleSections = function toggleSections(targetEl) {
   if (targetEl.classList.contains('btn--nav')) hideAllSections();
 
   if (targetEl.classList.contains('js-nav-overview-btn')) {
+    hidePopup();
     coreEls.sectionOverview.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-monthly-btn')) {
+    hidePopup();
     coreEls.sectionMonthly.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-journal-btn')) {
+    hidePopup();
     coreEls.sectionJournal.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-calculators-btn')) {
+    hidePopup();
     coreEls.sectionCalculators.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-settings-btn')) {
+    hidePopup();
     coreEls.sectionSettings.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-help-btn')) {
+    hidePopup();
     coreEls.sectionHelp.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-exit-btn')) {
+    hidePopup();
     window.location.href = '../../index.html';
   }
 };
@@ -1454,8 +1505,6 @@ exports.queryMonthlyEls = queryMonthlyEls;
 
 var renderMonthlyTable = function renderMonthlyTable(data) {
   if (monthlyEls.monthlyTableRows) {
-    console.log('this is it');
-    console.log(monthlyEls.monthlyTableRows);
     Array.from(monthlyEls.monthlyTableRows).forEach(function (row) {
       return row.remove();
     });
@@ -8649,6 +8698,10 @@ var controlNavigation = function controlNavigation(targetEl) {
   (0, _coreView.toggleSections)(targetEl);
 };
 
+var controlPopups = function controlPopups() {
+  (0, _coreView.hidePopup)();
+};
+
 var controlCalcCapital = function controlCalcCapital(amount, action) {
   var capitalData = (0, _dataModel.updateCapital)(amount, action);
   (0, _calculatorsView.renderCapitalMessage)(capitalData);
@@ -8737,6 +8790,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
     if (validationOutcome[0] === 'PASS') {
       (0, _journalFormView.clearFormValidationError)();
       var updatedCapital = (0, _dataModel.updateJournalData)(validationOutcome[1]);
+      (0, _coreView.showSingleBtnPopup)("% return: ".concat(validationOutcome[1].returnPercent, ", cash return: ").concat(validationOutcome[1].returnCash), "stock: ".concat(validationOutcome[1].ticker, ", date: ").concat(validationOutcome[1].dateShort), 'Journal Updated');
       (0, _journalFormView.switchJournalFormModes)('read-only');
       controlJournalRender();
       (0, _accountDetailsView.updateCapitalOutput)(updatedCapital); // re-render visualisations
@@ -8814,6 +8868,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _journalEntriesView.addJournalEntriesHandler)(controlJournalActiveEntries);
   (0, _journalFormView.addJournalFormEventsHandler)(controlJournalFormEvents);
   (0, _journalEntriesView.addJournalPaginationHandler)(controlJournalPagination);
+  (0, _coreView.addPopupHandler)(controlPopups);
   (0, _settingsView.addAppResetHandler)(controlAppReset);
   setTimeout(function () {
     controlLoading();
@@ -8866,7 +8921,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53667" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64958" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

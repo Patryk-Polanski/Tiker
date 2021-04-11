@@ -14,8 +14,6 @@ export const queryMonthlyEls = function () {
 
 export const renderMonthlyTable = function (data) {
   if (monthlyEls.monthlyTableRows) {
-    console.log('this is it');
-    console.log(monthlyEls.monthlyTableRows);
     Array.from(monthlyEls.monthlyTableRows).forEach(row => row.remove());
   }
 

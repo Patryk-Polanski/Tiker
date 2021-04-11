@@ -43,4 +43,47 @@
       border-radius: 10px;
     }
   }
+
+  &__popup-single-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba($black, 0.4);
+    z-index: 12;
+    display: none;
+    opacity: 0;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.2s ease-in;
+  }
+
+  &__popup--active {
+    display: flex;
+    opacity: 1;
+  }
+
+  &__popup-wrapper {
+    min-height: 350px;
+    min-width: 450px;
+    background-color: $grey-dark;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 30px;
+    border: 2px solid $purple-light;
+  }
+
+  &__popup-text {
+    color: $grey-light;
+  }
+
+  &__popup-btn-wrapper {
+  }
+
+  &__popup-btn {
+  }
 }

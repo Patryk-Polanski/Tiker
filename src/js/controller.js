@@ -15,6 +15,9 @@ import {
   removeLoadingScreen,
   showNoDataScreens,
   hideNoDataScreens,
+  showSingleBtnPopup,
+  addPopupHandler,
+  hidePopup,
 } from './views/coreView';
 import {
   queryCalcEls,
@@ -101,6 +104,10 @@ const controlNavigation = function (targetEl) {
   toggleSections(targetEl);
 };
 
+const controlPopups = function () {
+  hidePopup();
+};
+
 const controlCalcCapital = function (amount, action) {
   const capitalData = updateCapital(amount, action);
   renderCapitalMessage(capitalData);
@@ -185,6 +192,11 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
     if (validationOutcome[0] === 'PASS') {
       clearFormValidationError();
       const updatedCapital = updateJournalData(validationOutcome[1]);
+      showSingleBtnPopup(
+        `% return: ${validationOutcome[1].returnPercent}, cash return: ${validationOutcome[1].returnCash}`,
+        `stock: ${validationOutcome[1].ticker}, date: ${validationOutcome[1].dateShort}`,
+        'Journal Updated'
+      );
       switchJournalFormModes('read-only');
       controlJournalRender();
       updateCapitalOutput(updatedCapital);
@@ -263,6 +275,7 @@ window.addEventListener('DOMContentLoaded', e => {
   addJournalEntriesHandler(controlJournalActiveEntries);
   addJournalFormEventsHandler(controlJournalFormEvents);
   addJournalPaginationHandler(controlJournalPagination);
+  addPopupHandler(controlPopups);
   addAppResetHandler(controlAppReset);
   setTimeout(() => {
     controlLoading();

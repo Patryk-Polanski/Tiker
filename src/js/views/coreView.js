@@ -4,6 +4,8 @@ const getElements = function (obj = {}) {
   obj.core = document.querySelector('.js-core');
   obj.nav = obj.core.querySelector('.js-nav');
   obj.loadingScreen = obj.core.querySelector('.js-loading');
+  obj.singleBtnPopup = obj.core.querySelector('.js-single-btn-popup');
+  obj.singleBtnPopupOkBtn = obj.core.querySelector('.js-popup-ok-btn');
   obj.sectionOverview = obj.core.querySelector('.js-section-overview');
   obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
   obj.sectionJournal = obj.core.querySelector('.js-section-journal');
@@ -35,6 +37,29 @@ const toggleActiveNavBtns = function (targetEl) {
   targetEl.classList.add('btn--nav--active');
 };
 
+export const showSingleBtnPopup = function (...messages) {
+  coreEls.singleBtnPopup.classList.add('s-content__popup--active');
+
+  const popupContentWrapper = coreEls.singleBtnPopup.children[0];
+
+  messages.forEach(message => {
+    const html = `
+      <p class="s-content__popup-text">${message}</p>
+    `;
+    popupContentWrapper.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+export const hidePopup = function () {
+  const activePopup = coreEls.core.querySelector('.s-content__popup--active');
+  if (activePopup) {
+    activePopup.children[0]
+      .querySelectorAll('p')
+      .forEach(text => text.remove());
+    activePopup.classList.remove('s-content__popup--active');
+  }
+};
+
 export const removeLoadingScreen = function () {
   coreEls.loadingScreen.remove();
 };
@@ -47,33 +72,51 @@ export const addNavigationHandler = function (handler) {
   coreEls.nav.addEventListener('click', e => handler(e.target));
 };
 
+export const addPopupHandler = function (handler) {
+  coreEls.singleBtnPopupOkBtn.addEventListener('click', e => {
+    e.preventDefault();
+    handler();
+  });
+  coreEls.singleBtnPopup.addEventListener('click', e => {
+    e.preventDefault();
+    handler();
+  });
+};
+
 export const toggleSections = function (targetEl) {
   if (targetEl.classList.contains('btn--nav')) hideAllSections();
   if (targetEl.classList.contains('js-nav-overview-btn')) {
+    hidePopup();
     coreEls.sectionOverview.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-monthly-btn')) {
+    hidePopup();
     coreEls.sectionMonthly.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-journal-btn')) {
+    hidePopup();
     coreEls.sectionJournal.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-calculators-btn')) {
+    hidePopup();
     coreEls.sectionCalculators.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-settings-btn')) {
+    hidePopup();
     coreEls.sectionSettings.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-help-btn')) {
+    hidePopup();
     coreEls.sectionHelp.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-exit-btn')) {
+    hidePopup();
     window.location.href = '../../index.html';
   }
 };
