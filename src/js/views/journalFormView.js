@@ -157,7 +157,13 @@ export const addJournalFormEventsHandler = function (handler) {
       handler('pop', '', e.target);
 
     if (e.target.classList.contains('js-form-save-btn')) handler('save');
+
+    if (e.target.classList.contains('js-form-delete-btn')) handler('delete');
   });
+};
+
+export const grabEntryFormID = function () {
+  return journalFormEls.journalForm.getAttribute('data-id');
 };
 
 export const removeJournalFormDetailsRow = function (el) {
@@ -426,7 +432,7 @@ export const renderJournalForm = function (singleEntry) {
     }</textarea>
     </div>
     <div class="c-journal-form__buttons-wrapper">
-        <button class="c-journal-from__button-delete btn btn--secondary">delete</button>
+        <button class="c-journal-from__button-delete btn btn--secondary js-form-delete-btn">delete</button>
         <div class="c-journal-form__buttons-inner-wrapper">
             <button class="c-journal-form__button-cancel btn btn--secondary c-journal-form__edit-mode-btn js-form-cancel-btn">cancel</button>
             <button class="c-journal-form__button-save btn btn--primary c-journal-form__edit-mode-btn js-form-save-btn">save</button>

@@ -81,6 +81,7 @@ import {
   switchJournalFormModes,
   checkFormMode,
   switchPositionSide,
+  grabEntryFormID,
   renderExtraDetailsRows,
   removeJournalFormDetailsRow,
   grabAllUserInputs,
@@ -106,15 +107,25 @@ const controlNavigation = function (targetEl) {
   toggleSections(targetEl);
 };
 
-const controlPopups = function (action, dataAttr) {
+const controlPopups = function (action, dataAttr, entryID) {
   if (action === 'hide') hidePopup();
   if (action === 'proceed') {
     if (dataAttr === 'logoff') {
-      console.log('we need to logoff!', dataAttr);
       redirectToLogin();
     }
     if (dataAttr === 'reset') {
       console.log('we need to reset the app!', dataAttr);
+      hidePopup();
+      showSingleBtnPopup(
+        'To do so, go to the capital management section',
+        'Your account capital is now 0 and needs to be updated',
+        'Application has been reset'
+      );
+    }
+    if (dataAttr === 'delete') {
+      console.log('we need to delete an entry', dataAttr, entryID);
+      hidePopup();
+      showSingleBtnPopup('Entry has been deleted');
     }
   }
 };
@@ -192,6 +203,23 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
   if (action === 'swap') switchPositionSide();
   if (action === 'extra') renderExtraDetailsRows(targetEl);
   if (action === 'pop') removeJournalFormDetailsRow(targetEl);
+  if (action === 'delete') {
+    const currentEntryID = grabEntryFormID();
+    if (currentEntryID) {
+      showDoubleBtnPopup(
+        currentEntryID,
+        'delete',
+        'Are you sure you want to delete this existing entry?'
+      );
+    } else {
+      showDoubleBtnPopup(
+        '',
+        'delete',
+        'Are you sure you want to delete this new entry?'
+      );
+    }
+  }
+
   if (action === 'save') {
     clearFormValidationError();
     const validationOutcome = validateJournalForm(
@@ -252,6 +280,7 @@ const controlJournalPagination = function (paginationBtn) {
 const controlAppReset = function () {
   console.log('reset initiated');
   showDoubleBtnPopup(
+    '',
     'reset',
     'All user data will be deleted',
     'Are you sure you want to reset the application?'

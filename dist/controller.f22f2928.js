@@ -1216,13 +1216,15 @@ var showSingleBtnPopup = function showSingleBtnPopup() {
 exports.showSingleBtnPopup = showSingleBtnPopup;
 
 var showDoubleBtnPopup = function showDoubleBtnPopup() {
-  var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var entryID = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var source = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   coreEls.doubleBtnPopup.classList.add('s-content__popup--active');
   coreEls.doubleBtnPopup.setAttribute('source', source);
+  coreEls.doubleBtnPopup.setAttribute('entry-id', entryID);
   var popupContentWrapper = coreEls.doubleBtnPopup.children[0];
 
-  for (var _len2 = arguments.length, messages = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-    messages[_key2 - 1] = arguments[_key2];
+  for (var _len2 = arguments.length, messages = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+    messages[_key2 - 2] = arguments[_key2];
   }
 
   messages.forEach(function (message) {
@@ -1281,7 +1283,7 @@ var addPopupHandler = function addPopupHandler(handler) {
   });
   coreEls.doubleBtnPopupYesBtn.addEventListener('click', function (e) {
     e.stopPropagation();
-    handler('proceed', coreEls.doubleBtnPopup.getAttribute('source'));
+    handler('proceed', coreEls.doubleBtnPopup.getAttribute('source'), coreEls.doubleBtnPopup.getAttribute('entry-id'));
   });
   coreEls.doubleBtnPopup.addEventListener('click', function (e) {
     e.preventDefault();
@@ -8284,7 +8286,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.renderJournalForm = exports.clearFormValidationError = exports.updateFormValidationError = exports.grabAllUserInputs = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
+exports.renderJournalForm = exports.clearFormValidationError = exports.updateFormValidationError = exports.grabAllUserInputs = exports.switchPositionSide = exports.checkFormMode = exports.renderExtraDetailsRows = exports.switchJournalFormModes = exports.removeJournalFormDetailsRow = exports.grabEntryFormID = exports.addJournalFormEventsHandler = exports.queryJournalFormEls = void 0;
 
 var _d3Array = require("d3-array");
 
@@ -8401,10 +8403,17 @@ var addJournalFormEventsHandler = function addJournalFormEventsHandler(handler) 
     if (e.target.classList.contains('js-form-plus-btn')) handler('extra', '', e.target);
     if (e.target.classList.contains('js-form-remove-details-row-btn')) handler('pop', '', e.target);
     if (e.target.classList.contains('js-form-save-btn')) handler('save');
+    if (e.target.classList.contains('js-form-delete-btn')) handler('delete');
   });
 };
 
 exports.addJournalFormEventsHandler = addJournalFormEventsHandler;
+
+var grabEntryFormID = function grabEntryFormID() {
+  return journalFormEls.journalForm.getAttribute('data-id');
+};
+
+exports.grabEntryFormID = grabEntryFormID;
 
 var removeJournalFormDetailsRow = function removeJournalFormDetailsRow(el) {
   el.parentElement.remove();
@@ -8535,7 +8544,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
     return single[1];
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0) : '', "</span></span>\n              </div>\n          </div>\n  \n      </div>\n      <p class=\"c-journal-form__error-message js-form-error-message\"></p>\n    <textarea class=\"c-journal-form__text-area c-journal-form__manual-input js-form-body-input\" rows=\"10\" disabled>").concat(singleEntry.body, "</textarea>\n    </div>\n    <div class=\"c-journal-form__buttons-wrapper\">\n        <button class=\"c-journal-from__button-delete btn btn--secondary\">delete</button>\n        <div class=\"c-journal-form__buttons-inner-wrapper\">\n            <button class=\"c-journal-form__button-cancel btn btn--secondary c-journal-form__edit-mode-btn js-form-cancel-btn\">cancel</button>\n            <button class=\"c-journal-form__button-save btn btn--primary c-journal-form__edit-mode-btn js-form-save-btn\">save</button>\n        </div>\n        <button class=\"c-journal-form__button-edit btn btn--primary js-form-edit-btn\">edit</button>\n    </div>\n    ");
+  }, 0) : '', "</span></span>\n              </div>\n          </div>\n  \n      </div>\n      <p class=\"c-journal-form__error-message js-form-error-message\"></p>\n    <textarea class=\"c-journal-form__text-area c-journal-form__manual-input js-form-body-input\" rows=\"10\" disabled>").concat(singleEntry.body, "</textarea>\n    </div>\n    <div class=\"c-journal-form__buttons-wrapper\">\n        <button class=\"c-journal-from__button-delete btn btn--secondary js-form-delete-btn\">delete</button>\n        <div class=\"c-journal-form__buttons-inner-wrapper\">\n            <button class=\"c-journal-form__button-cancel btn btn--secondary c-journal-form__edit-mode-btn js-form-cancel-btn\">cancel</button>\n            <button class=\"c-journal-form__button-save btn btn--primary c-journal-form__edit-mode-btn js-form-save-btn\">save</button>\n        </div>\n        <button class=\"c-journal-form__button-edit btn btn--primary js-form-edit-btn\">edit</button>\n    </div>\n    ");
   journalFormEls.journalFormWrapper.insertAdjacentHTML('afterbegin', html);
   journalFormEls.journalForm = document.querySelector('.js-journal-form');
   journalFormEls.formValidationError = document.querySelector('.js-form-error-message');
@@ -8742,17 +8751,24 @@ var controlNavigation = function controlNavigation(targetEl) {
   (0, _coreView.toggleSections)(targetEl);
 };
 
-var controlPopups = function controlPopups(action, dataAttr) {
+var controlPopups = function controlPopups(action, dataAttr, entryID) {
   if (action === 'hide') (0, _coreView.hidePopup)();
 
   if (action === 'proceed') {
     if (dataAttr === 'logoff') {
-      console.log('we need to logoff!', dataAttr);
       (0, _coreView.redirectToLogin)();
     }
 
     if (dataAttr === 'reset') {
       console.log('we need to reset the app!', dataAttr);
+      (0, _coreView.hidePopup)();
+      (0, _coreView.showSingleBtnPopup)('To do so, go to the capital management section', 'Your account capital is now 0 and needs to be updated', 'Application has been reset');
+    }
+
+    if (dataAttr === 'delete') {
+      console.log('we need to delete an entry', dataAttr, entryID);
+      (0, _coreView.hidePopup)();
+      (0, _coreView.showSingleBtnPopup)('Entry has been deleted');
     }
   }
 };
@@ -8837,6 +8853,16 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
   if (action === 'extra') (0, _journalFormView.renderExtraDetailsRows)(targetEl);
   if (action === 'pop') (0, _journalFormView.removeJournalFormDetailsRow)(targetEl);
 
+  if (action === 'delete') {
+    var currentEntryID = (0, _journalFormView.grabEntryFormID)();
+
+    if (currentEntryID) {
+      (0, _coreView.showDoubleBtnPopup)(currentEntryID, 'delete', 'Are you sure you want to delete this existing entry?');
+    } else {
+      (0, _coreView.showDoubleBtnPopup)('', 'delete', 'Are you sure you want to delete this new entry?');
+    }
+  }
+
   if (action === 'save') {
     (0, _journalFormView.clearFormValidationError)();
     var validationOutcome = (0, _journalFormModel.validateJournalForm)((0, _journalFormView.grabAllUserInputs)(), (0, _dataModel.passData)('capital'));
@@ -8889,7 +8915,7 @@ var controlJournalPagination = function controlJournalPagination(paginationBtn) 
 
 var controlAppReset = function controlAppReset() {
   console.log('reset initiated');
-  (0, _coreView.showDoubleBtnPopup)('reset', 'All user data will be deleted', 'Are you sure you want to reset the application?');
+  (0, _coreView.showDoubleBtnPopup)('', 'reset', 'All user data will be deleted', 'Are you sure you want to reset the application?');
 };
 
 var queryDOM = function queryDOM() {

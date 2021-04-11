@@ -53,9 +53,14 @@ export const showSingleBtnPopup = function (...messages) {
   });
 };
 
-export const showDoubleBtnPopup = function (source = '', ...messages) {
+export const showDoubleBtnPopup = function (
+  entryID = '',
+  source = '',
+  ...messages
+) {
   coreEls.doubleBtnPopup.classList.add('s-content__popup--active');
   coreEls.doubleBtnPopup.setAttribute('source', source);
+  coreEls.doubleBtnPopup.setAttribute('entry-id', entryID);
 
   const popupContentWrapper = coreEls.doubleBtnPopup.children[0];
 
@@ -105,7 +110,11 @@ export const addPopupHandler = function (handler) {
   });
   coreEls.doubleBtnPopupYesBtn.addEventListener('click', e => {
     e.stopPropagation();
-    handler('proceed', coreEls.doubleBtnPopup.getAttribute('source'));
+    handler(
+      'proceed',
+      coreEls.doubleBtnPopup.getAttribute('source'),
+      coreEls.doubleBtnPopup.getAttribute('entry-id')
+    );
   });
   coreEls.doubleBtnPopup.addEventListener('click', e => {
     e.preventDefault();
