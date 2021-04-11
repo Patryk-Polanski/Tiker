@@ -83,6 +83,7 @@ import {
   clearFormValidationError,
 } from './views/journalFormView';
 import { validateJournalForm } from './models/journalFormModel';
+import { querySettingsEls, addAppResetHandler } from './views/settingsView';
 
 // ZONE - controllers
 
@@ -225,6 +226,10 @@ const controlJournalPagination = function (paginationBtn) {
   renderJournalForm(findJournalEntry(activeEntryID));
 };
 
+const controlAppReset = function () {
+  console.log('reset initiated');
+};
+
 const queryDOM = function () {
   queryCoreEls();
   queryProfitableEls();
@@ -237,6 +242,7 @@ const queryDOM = function () {
   queryJournalFilterEls();
   queryJournalFormEls();
   queryCalcEls();
+  querySettingsEls();
 };
 
 // ZONE - event listeners
@@ -257,6 +263,7 @@ window.addEventListener('DOMContentLoaded', e => {
   addJournalEntriesHandler(controlJournalActiveEntries);
   addJournalFormEventsHandler(controlJournalFormEvents);
   addJournalPaginationHandler(controlJournalPagination);
+  addAppResetHandler(controlAppReset);
   setTimeout(() => {
     controlLoading();
     controlProfitableRender();

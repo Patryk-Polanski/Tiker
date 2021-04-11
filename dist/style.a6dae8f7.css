@@ -726,6 +726,18 @@ body {
   color: #aaaaaa;
   margin-top: 30px;
 }
+.s-settings__inner-wrapper {
+  max-width: 600px;
+  margin: 80px auto 0;
+}
+.s-settings__single {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.s-settings__text {
+  color: #aaaaaa;
+}
 
 .s-visualisations {
   min-height: 100vh;

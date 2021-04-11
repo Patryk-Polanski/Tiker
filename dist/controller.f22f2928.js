@@ -772,7 +772,8 @@ var user = {
   }]
 };
 
-var fetchUserFromJSON = function fetchUserFromJSON() {// if (jsonData) user = jsonData;
+var fetchUserFromJSON = function fetchUserFromJSON() {
+  if (_data.default) user = _data.default;
 };
 
 exports.fetchUserFromJSON = fetchUserFromJSON;
@@ -8566,7 +8567,33 @@ var validateJournalForm = function validateJournalForm(inputData) {
 };
 
 exports.validateJournalForm = validateJournalForm;
-},{"../helpers":"js/helpers.js"}],"js/controller.js":[function(require,module,exports) {
+},{"../helpers":"js/helpers.js"}],"js/views/settingsView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addAppResetHandler = exports.querySettingsEls = void 0;
+var settingsEls = {};
+
+var getElements = function getElements() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  obj.settingsResetBtn = document.querySelector('.js-settings-reset-btn');
+  return obj;
+};
+
+var querySettingsEls = function querySettingsEls() {
+  settingsEls = getElements();
+};
+
+exports.querySettingsEls = querySettingsEls;
+
+var addAppResetHandler = function addAppResetHandler(handler) {
+  settingsEls.settingsResetBtn.addEventListener('click', handler);
+};
+
+exports.addAppResetHandler = addAppResetHandler;
+},{}],"js/controller.js":[function(require,module,exports) {
 "use strict";
 
 var _dataModel = require("./models/dataModel");
@@ -8604,6 +8631,8 @@ var _journalFiltersView = require("./views/journalFiltersView");
 var _journalFormView = require("./views/journalFormView");
 
 var _journalFormModel = require("./models/journalFormModel");
+
+var _settingsView = require("./views/settingsView");
 
 // ZONE - controllers
 var controlLoading = function controlLoading() {
@@ -8749,6 +8778,10 @@ var controlJournalPagination = function controlJournalPagination(paginationBtn) 
   (0, _journalFormView.renderJournalForm)((0, _dataModel.findJournalEntry)(activeEntryID));
 };
 
+var controlAppReset = function controlAppReset() {
+  console.log('reset initiated');
+};
+
 var queryDOM = function queryDOM() {
   (0, _coreView.queryCoreEls)();
   (0, _tableProfitableView.queryProfitableEls)();
@@ -8761,6 +8794,7 @@ var queryDOM = function queryDOM() {
   (0, _journalFiltersView.queryJournalFilterEls)();
   (0, _journalFormView.queryJournalFormEls)();
   (0, _calculatorsView.queryCalcEls)();
+  (0, _settingsView.querySettingsEls)();
 }; // ZONE - event listeners
 
 
@@ -8780,6 +8814,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   (0, _journalEntriesView.addJournalEntriesHandler)(controlJournalActiveEntries);
   (0, _journalFormView.addJournalFormEventsHandler)(controlJournalFormEvents);
   (0, _journalEntriesView.addJournalPaginationHandler)(controlJournalPagination);
+  (0, _settingsView.addAppResetHandler)(controlAppReset);
   setTimeout(function () {
     controlLoading();
     controlProfitableRender();
@@ -8803,7 +8838,7 @@ window.addEventListener('resize', function (e) {
     (0, _chartOverallView.renderLongShortPie)();
   }, 1000);
 });
-},{"./models/dataModel":"js/models/dataModel.js","./views/coreView":"js/views/coreView.js","./views/calculatorsView":"js/views/calculatorsView.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalEntriesView":"js/views/journalEntriesView.js","./views/journalFiltersView":"js/views/journalFiltersView.js","./views/journalFormView":"js/views/journalFormView.js","./models/journalFormModel":"js/models/journalFormModel.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./models/dataModel":"js/models/dataModel.js","./views/coreView":"js/views/coreView.js","./views/calculatorsView":"js/views/calculatorsView.js","./models/calculatorsModel":"js/models/calculatorsModel.js","./views/tableMonthlyView":"js/views/tableMonthlyView.js","./views/tableProfitableView":"js/views/tableProfitableView.js","./views/chartOverallView":"js/views/chartOverallView.js","./models/tableMonthlyModel":"js/models/tableMonthlyModel.js","./models/tableProfitableModel":"js/models/tableProfitableModel.js","./views/chartPerformanceView":"js/views/chartPerformanceView.js","./models/chartPerformanceModel":"js/models/chartPerformanceModel.js","./views/chartWorstBestView":"js/views/chartWorstBestView.js","./models/chartWorstBestModel":"js/models/chartWorstBestModel.js","./views/accountDetailsView":"js/views/accountDetailsView.js","./views/journalEntriesView":"js/views/journalEntriesView.js","./views/journalFiltersView":"js/views/journalFiltersView.js","./views/journalFormView":"js/views/journalFormView.js","./models/journalFormModel":"js/models/journalFormModel.js","./views/settingsView":"js/views/settingsView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
