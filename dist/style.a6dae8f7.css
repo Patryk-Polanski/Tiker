@@ -429,6 +429,7 @@ body {
 .s-content__loading-wrapper svg {
   animation: rotate 5s linear infinite;
 }
+<<<<<<< HEAD
 .s-content__no-data::after {
   display: flex;
   justify-content: center;
@@ -444,6 +445,8 @@ body {
   z-index: 8;
   border-radius: 10px;
 }
+=======
+>>>>>>> parent of 09e705f (beging working on no data screen)
 
 .s-help {
   min-height: 100vh;

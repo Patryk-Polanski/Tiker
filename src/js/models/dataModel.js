@@ -270,7 +270,7 @@ let user = {
 };
 
 export const fetchUserFromJSON = function () {
-  // if (jsonData) user = jsonData;
+  if (jsonData) user = jsonData;
 };
 
 export const checkIfJournalEmpty = function () {

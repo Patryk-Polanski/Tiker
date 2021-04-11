@@ -772,7 +772,8 @@ var user = {
   }]
 };
 
-var fetchUserFromJSON = function fetchUserFromJSON() {// if (jsonData) user = jsonData;
+var fetchUserFromJSON = function fetchUserFromJSON() {
+  if (_data.default) user = _data.default;
 };
 
 exports.fetchUserFromJSON = fetchUserFromJSON;
