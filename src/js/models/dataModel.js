@@ -420,8 +420,8 @@ export const passNestedData = function (field, field2) {
 };
 
 export const updateCapital = function (amount, action) {
-  if (action === 'minus') user.capital -= amount;
-  if (action === 'plus') user.capital += amount;
+  if (action === 'minus') user.capital -= Math.round(amount);
+  if (action === 'plus') user.capital += Math.round(amount);
   return [action, stringifyNum(amount), stringifyNum(user.capital)];
 };
 

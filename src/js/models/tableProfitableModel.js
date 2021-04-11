@@ -49,7 +49,6 @@ export const computeProfitableData = function (tickerData) {
   const topSix = sortedTickers
     .filter(ticker => ticker.trades.length > 2)
     .splice(0, 7);
-  console.log(topSix);
 
   let leadersArray = {};
   topSix.forEach(leader => {

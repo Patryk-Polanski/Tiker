@@ -258,15 +258,15 @@ var USER_PASSWORD = 'app';
 exports.USER_PASSWORD = USER_PASSWORD;
 },{}],"data.json":[function(require,module,exports) {
 module.exports = {
-  "capital": 7231,
+  "capital": 7167,
   "overall": {
-    "total": 5,
+    "total": 6,
     "proportions": [{
       "side": "long",
       "total": 3
     }, {
       "side": "short",
-      "total": 2
+      "total": 3
     }]
   },
   "streaks": {
@@ -288,19 +288,30 @@ module.exports = {
     },
     "current": {
       "trades": [{
-        "id": 1618179185438,
-        "ticker": "NIO",
-        "date": "19/3/21",
-        "returnCash": 16
-      }, {
-        "id": 1618179285427,
-        "ticker": "BMBL",
-        "date": "24/3/21",
-        "returnCash": 80
+        "id": 1618183416710,
+        "ticker": "VZ",
+        "date": "3/4/21",
+        "returnCash": -64.02
       }]
     }
   },
   "worstTrades": [{
+    "id": 1618183416710,
+    "dateFull": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "3/4/21",
+    "ticker": "VZ",
+    "side": "short",
+    "tradeEntries": [[56.65, 66]],
+    "tradeExits": [[57.62, 66]],
+    "exitsPrices": [57.62],
+    "sharesAmount": 66,
+    "avgEntry": 56.65,
+    "avgExit": 57.62,
+    "returnCash": -64.02,
+    "returnPercent": -0.89,
+    "body": "Orci sagittis eu volutpat odio facilisis. Sed blandit libero volutpat sed cras ornare arcu. Sit amet porttitor eget dolor morbi non arcu risus quis. Diam sit amet nisl suscipit. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et. Nunc non blandit massa enim nec dui nunc. Elementum sagittis vitae et leo. Accumsan in nisl nisi scelerisque. Vitae sapien pellentesque habitant morbi tristique senectus et netus. Accumsan lacus vel facilisis volutpat est velit egestas.",
+    "total": 7167
+  }, {
     "id": 1618179060347,
     "dateFull": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "14/3/21",
@@ -427,6 +438,16 @@ module.exports = {
         "returnCash": 80,
         "returnPercent": 1.12
       }]
+    },
+    "VZ": {
+      "ticker": "VZ",
+      "avgReturn": -64.02,
+      "trades": [{
+        "id": 1618183416710,
+        "shares": 66,
+        "returnCash": -64.02,
+        "returnPercent": -0.89
+      }]
     }
   },
   "calendarData": {
@@ -479,6 +500,17 @@ module.exports = {
         "returnCash": 80,
         "returnPercent": 1.12,
         "total": 7231
+      }]
+    }],
+    "apr21": [{
+      "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "3/4/21",
+      "trades": [{
+        "id": 1618183416710,
+        "side": "short",
+        "returnCash": -64.02,
+        "returnPercent": -0.89,
+        "total": 7167
       }]
     }]
   },
@@ -562,6 +594,22 @@ module.exports = {
     "returnPercent": 1.12,
     "total": 7231,
     "body": ""
+  }, {
+    "id": 1618183416710,
+    "dateFull": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "3/4/21",
+    "ticker": "VZ",
+    "side": "short",
+    "tradeEntries": [[56.65, 66]],
+    "tradeExits": [[57.62, 66]],
+    "exitsPrices": [57.62],
+    "sharesAmount": 66,
+    "avgEntry": 56.65,
+    "avgExit": 57.62,
+    "returnCash": -64.02,
+    "returnPercent": -0.89,
+    "body": "Orci sagittis eu volutpat odio facilisis. Sed blandit libero volutpat sed cras ornare arcu. Sit amet porttitor eget dolor morbi non arcu risus quis. Diam sit amet nisl suscipit. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et. Nunc non blandit massa enim nec dui nunc. Elementum sagittis vitae et leo. Accumsan in nisl nisi scelerisque. Vitae sapien pellentesque habitant morbi tristique senectus et netus. Accumsan lacus vel facilisis volutpat est velit egestas.",
+    "total": 7167
   }],
   "dummyJournal": [{
     "id": "",
@@ -978,8 +1026,8 @@ var passNestedData = function passNestedData(field, field2) {
 exports.passNestedData = passNestedData;
 
 var updateCapital = function updateCapital(amount, action) {
-  if (action === 'minus') user.capital -= amount;
-  if (action === 'plus') user.capital += amount;
+  if (action === 'minus') user.capital -= Math.round(amount);
+  if (action === 'plus') user.capital += Math.round(amount);
   return [action, (0, _helpers.stringifyNum)(amount), (0, _helpers.stringifyNum)(user.capital)];
 };
 
@@ -1868,7 +1916,6 @@ var computeProfitableData = function computeProfitableData(tickerData) {
   var topSix = sortedTickers.filter(function (ticker) {
     return ticker.trades.length > 2;
   }).splice(0, 7);
-  console.log(topSix);
   var leadersArray = {};
   topSix.forEach(function (leader) {
     if (leader.avgReturn > 0) {
