@@ -50,6 +50,7 @@ const startingUserObject = {
 export const fetchUserFromJSON = function () {
   user = startingUserObject;
   if (jsonData) user = jsonData;
+  console.log(user);
 };
 
 export const clearUserObject = function () {
@@ -461,4 +462,45 @@ export const findJournalEntry = function (id) {
   if (!id) return;
   return user.journal.filter(entry => entry.id === id);
   s;
+};
+
+// ZONE - deleting an entry
+
+export const targetSelectedEntry = function (entryID) {
+  const [foundEntry] = user.journal.filter(entry => entry.id === entryID);
+
+  // capital
+  user.capital -= foundEntry.returnCash;
+
+  // overall
+  if (foundEntry.side === 'short') user.overall.proportions[1].total--;
+  if (foundEntry.side === 'long') user.overall.proportions[0].total--;
+  user.overall.total--;
+
+  // streaks
+  const indexInWinsStreak = user.streaks.wins.trades
+    .map(trade => trade.id)
+    .indexOf(entryID);
+  if (indexInWinsStreak !== -1)
+    user.streaks.wins.trades.splice(indexInWinsStreak, 1);
+  const indexInLossStreak = user.streaks.losses.trades
+    .map(trade => trade.id)
+    .indexOf(entryID);
+  if (indexInLossStreak !== -1)
+    user.streaks.losses.trades.splice(indexInWinsStreak, 1);
+  const indexInCurrentStreak = user.streaks.current.trades
+    .map(trade => trade.id)
+    .indexOf(entryID);
+  if (indexInCurrentStreak !== -1)
+    user.streaks.current.trades.splice(indexInCurrentStreak, 1);
+
+  // worst and best trades
+  const indexInWorst = user.worstTrades.map(trade => trade.id).indexOf(entryID);
+  if (indexInWorst !== -1) user.worstTrades.splice(indexInWorst, 1);
+  const indexInBest = user.bestTrades.map(trade => trade.id).indexOf(entryID);
+  if (indexInBest !== -1) user.bestTrades.splice(indexInBest, 1);
+
+  console.log('~~~~~~~~~~~~~~~~~~~~~~');
+  console.log(foundEntry);
+  console.log(user);
 };

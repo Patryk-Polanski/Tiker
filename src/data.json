@@ -27,6 +27,12 @@
           "ticker": "VREZ",
           "date": "15/06/21",
           "returnCash": 312
+        },
+        {
+          "id": 11500,
+          "ticker": "RIOT",
+          "date": "29/07/21",
+          "returnCash": 112.52
         }
       ]
     },
@@ -71,7 +77,7 @@
       "returnCash": -151
     },
     {
-      "id": 115,
+      "id": 11500,
       "ticker": "GME",
       "date": "7/7/21",
       "returnCash": -180
@@ -79,7 +85,7 @@
   ],
   "bestTrades": [
     {
-      "id": 600,
+      "id": 11500,
       "ticker": "NFLX",
       "date": "14/06/21",
       "returnCash": 253

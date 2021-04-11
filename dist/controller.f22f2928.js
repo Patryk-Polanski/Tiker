@@ -281,6 +281,11 @@ module.exports = {
         "ticker": "VREZ",
         "date": "15/06/21",
         "returnCash": 312
+      }, {
+        "id": 11500,
+        "ticker": "RIOT",
+        "date": "29/07/21",
+        "returnCash": 112.52
       }]
     },
     "losses": {
@@ -316,13 +321,13 @@ module.exports = {
     "date": "15/06/21",
     "returnCash": -151
   }, {
-    "id": 115,
+    "id": 11500,
     "ticker": "GME",
     "date": "7/7/21",
     "returnCash": -180
   }],
   "bestTrades": [{
-    "id": 600,
+    "id": 11500,
     "ticker": "NFLX",
     "date": "14/06/21",
     "returnCash": 253
@@ -500,7 +505,7 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = exports.checkIfJournalEmpty = exports.clearUserObject = exports.fetchUserFromJSON = void 0;
+exports.targetSelectedEntry = exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = exports.checkIfJournalEmpty = exports.clearUserObject = exports.fetchUserFromJSON = void 0;
 
 var _helpers = require("./../helpers");
 
@@ -509,6 +514,18 @@ var _config = require("./../config");
 var _data = _interopRequireDefault(require("../../data.json"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -560,6 +577,7 @@ var startingUserObject = {
 var fetchUserFromJSON = function fetchUserFromJSON() {
   user = startingUserObject;
   if (_data.default) user = _data.default;
+  console.log(user);
 };
 
 exports.fetchUserFromJSON = fetchUserFromJSON;
@@ -946,9 +964,52 @@ var findJournalEntry = function findJournalEntry(id) {
     return entry.id === id;
   });
   s;
-};
+}; // ZONE - deleting an entry
+
 
 exports.findJournalEntry = findJournalEntry;
+
+var targetSelectedEntry = function targetSelectedEntry(entryID) {
+  var _user$journal$filter = user.journal.filter(function (entry) {
+    return entry.id === entryID;
+  }),
+      _user$journal$filter2 = _slicedToArray(_user$journal$filter, 1),
+      foundEntry = _user$journal$filter2[0]; // capital
+
+
+  user.capital -= foundEntry.returnCash; // overall
+
+  if (foundEntry.side === 'short') user.overall.proportions[1].total--;
+  if (foundEntry.side === 'long') user.overall.proportions[0].total--;
+  user.overall.total--; // streaks
+
+  var indexInWinsStreak = user.streaks.wins.trades.map(function (trade) {
+    return trade.id;
+  }).indexOf(entryID);
+  if (indexInWinsStreak !== -1) user.streaks.wins.trades.splice(indexInWinsStreak, 1);
+  var indexInLossStreak = user.streaks.losses.trades.map(function (trade) {
+    return trade.id;
+  }).indexOf(entryID);
+  if (indexInLossStreak !== -1) user.streaks.losses.trades.splice(indexInWinsStreak, 1);
+  var indexInCurrentStreak = user.streaks.current.trades.map(function (trade) {
+    return trade.id;
+  }).indexOf(entryID);
+  if (indexInCurrentStreak !== -1) user.streaks.current.trades.splice(indexInCurrentStreak, 1); // worst and best trades
+
+  var indexInWorst = user.worstTrades.map(function (trade) {
+    return trade.id;
+  }).indexOf(entryID);
+  if (indexInWorst !== -1) user.worstTrades.splice(indexInWorst, 1);
+  var indexInBest = user.bestTrades.map(function (trade) {
+    return trade.id;
+  }).indexOf(entryID);
+  if (indexInBest !== -1) user.bestTrades.splice(indexInBest, 1);
+  console.log('~~~~~~~~~~~~~~~~~~~~~~');
+  console.log(foundEntry);
+  console.log(user);
+};
+
+exports.targetSelectedEntry = targetSelectedEntry;
 },{"./../helpers":"js/helpers.js","./../config":"js/config.js","../../data.json":"data.json"}],"js/views/coreView.js":[function(require,module,exports) {
 "use strict";
 
@@ -1068,7 +1129,7 @@ var addPopupHandler = function addPopupHandler(handler) {
   });
   coreEls.singleBtnPopup.children[0].addEventListener('click', function (e) {
     e.preventDefault();
-    stopPropagation();
+    e.stopPropagation();
   });
   coreEls.singleBtnPopup.addEventListener('click', function (e) {
     e.preventDefault();
@@ -5698,10 +5759,6 @@ var renderJournalEntries = function renderJournalEntries(entriesData) {
   var clear = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   if (entriesData.length < 1) return;
   var existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll('.c-journal-entry');
-  console.log('these are the existing elements');
-  console.log(existingEls);
-  console.log('this is the clear outcome');
-  console.log(clear);
   if (existingEls && clear) existingEls.forEach(function (el) {
     return el.remove();
   });
@@ -8620,6 +8677,7 @@ var controlPopups = function controlPopups(action, dataAttr, entryID) {
     if (dataAttr === 'delete') {
       console.log('we need to delete an entry', dataAttr, entryID);
       (0, _coreView.hidePopup)();
+      (0, _dataModel.targetSelectedEntry)(+entryID);
       (0, _coreView.showSingleBtnPopup)('Entry has been deleted');
     }
   }

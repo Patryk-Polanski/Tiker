@@ -112,10 +112,6 @@ export const renderJournalEntries = function (
   const existingEls = journalEntriesEls.journalEntriesWrapper.querySelectorAll(
     '.c-journal-entry'
   );
-  console.log('these are the existing elements');
-  console.log(existingEls);
-  console.log('this is the clear outcome');
-  console.log(clear);
 
   if (existingEls && clear) existingEls.forEach(el => el.remove());
 

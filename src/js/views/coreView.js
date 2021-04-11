@@ -101,7 +101,7 @@ export const addPopupHandler = function (handler) {
   });
   coreEls.singleBtnPopup.children[0].addEventListener('click', e => {
     e.preventDefault();
-    stopPropagation();
+    e.stopPropagation();
   });
   coreEls.singleBtnPopup.addEventListener('click', e => {
     e.preventDefault();

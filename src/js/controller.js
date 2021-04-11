@@ -8,6 +8,7 @@ import {
   findJournalEntry,
   updateJournalData,
   clearUserObject,
+  targetSelectedEntry,
 } from './models/dataModel';
 import {
   addNavigationHandler,
@@ -145,6 +146,7 @@ const controlPopups = function (action, dataAttr, entryID) {
     if (dataAttr === 'delete') {
       console.log('we need to delete an entry', dataAttr, entryID);
       hidePopup();
+      targetSelectedEntry(+entryID);
       showSingleBtnPopup('Entry has been deleted');
     }
   }
