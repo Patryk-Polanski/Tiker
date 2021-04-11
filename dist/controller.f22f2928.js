@@ -258,15 +258,15 @@ var USER_PASSWORD = 'app';
 exports.USER_PASSWORD = USER_PASSWORD;
 },{}],"data.json":[function(require,module,exports) {
 module.exports = {
-  "capital": 8000,
+  "capital": 0,
   "overall": {
-    "total": 0,
+    "total": 3,
     "proportions": [{
       "side": "long",
-      "total": 0
+      "total": 2
     }, {
       "side": "short",
-      "total": 0
+      "total": 1
     }]
   },
   "streaks": {
@@ -8762,7 +8762,7 @@ var controlPopups = function controlPopups(action, dataAttr, entryID) {
     if (dataAttr === 'reset') {
       console.log('we need to reset the app!', dataAttr);
       (0, _coreView.hidePopup)();
-      (0, _coreView.showSingleBtnPopup)('To do so, go to the capital management section', 'Your account capital is now 0 and needs to be updated', 'Application has been reset');
+      (0, _coreView.showSingleBtnPopup)('You can do so in the capital management section', 'Your account capital is now 0 and needs to be updated', 'Application has been reset');
     }
 
     if (dataAttr === 'delete') {
@@ -8900,6 +8900,11 @@ var controlJournalFilters = function controlJournalFilters(action) {
   var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
   if (action === 'new') {
+    if ((0, _dataModel.passData)('capital') < 1) {
+      (0, _coreView.showSingleBtnPopup)('You can do so in the capital management section', 'Please add more capital to your account', 'Your account capital has fallen below 0');
+      return;
+    }
+
     (0, _journalFormView.switchJournalFormModes)('read-only');
     (0, _journalEntriesView.renderJournalEntries)((0, _dataModel.passData)('dummyJournal'), '', false);
     (0, _journalFormView.renderJournalForm)((0, _dataModel.passData)('dummyJournal'));
@@ -9003,7 +9008,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64958" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55904" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

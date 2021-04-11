@@ -117,7 +117,7 @@ const controlPopups = function (action, dataAttr, entryID) {
       console.log('we need to reset the app!', dataAttr);
       hidePopup();
       showSingleBtnPopup(
-        'To do so, go to the capital management section',
+        'You can do so in the capital management section',
         'Your account capital is now 0 and needs to be updated',
         'Application has been reset'
       );
@@ -261,6 +261,14 @@ const controlJournalActiveEntries = function (id = '') {
 
 const controlJournalFilters = function (action, id = '') {
   if (action === 'new') {
+    if (passData('capital') < 1) {
+      showSingleBtnPopup(
+        'You can do so in the capital management section',
+        'Please add more capital to your account',
+        'Your account capital has fallen below 0'
+      );
+      return;
+    }
     switchJournalFormModes('read-only');
     renderJournalEntries(passData('dummyJournal'), '', false);
     renderJournalForm(passData('dummyJournal'));

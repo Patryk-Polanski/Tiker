@@ -1,15 +1,15 @@
 {
-  "capital": 8000,
+  "capital": 0,
   "overall": {
-    "total": 0,
+    "total": 3,
     "proportions": [
       {
         "side": "long",
-        "total": 0
+        "total": 2
       },
       {
         "side": "short",
-        "total": 0
+        "total": 1
       }
     ]
   },
