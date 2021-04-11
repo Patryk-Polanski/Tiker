@@ -899,7 +899,6 @@ exports.passNestedData = passNestedData;
 var updateCapital = function updateCapital(amount, action) {
   if (action === 'minus') user.capital -= amount;
   if (action === 'plus') user.capital += amount;
-  if (user.capital < 0) user.capital = 0;
   return [action, (0, _helpers.stringifyNum)(amount), (0, _helpers.stringifyNum)(user.capital)];
 };
 

@@ -423,7 +423,6 @@ export const passNestedData = function (field, field2) {
 export const updateCapital = function (amount, action) {
   if (action === 'minus') user.capital -= amount;
   if (action === 'plus') user.capital += amount;
-  if (user.capital < 0) user.capital = 0;
   return [action, stringifyNum(amount), stringifyNum(user.capital)];
 };
 
