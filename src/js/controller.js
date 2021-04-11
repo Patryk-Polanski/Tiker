@@ -9,6 +9,7 @@ import {
   updateJournalData,
   clearUserObject,
   targetSelectedEntry,
+  saveToLocalStorage,
 } from './models/dataModel';
 import {
   addNavigationHandler,
@@ -281,6 +282,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
       controlProfitableRender();
       controlPerformanceRender();
       controlMonthlyRender();
+      saveToLocalStorage();
     }
   }
 };

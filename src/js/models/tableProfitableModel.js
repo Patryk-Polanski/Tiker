@@ -43,9 +43,13 @@ const convertToLeader = function (data) {
 
 export const computeProfitableData = function (tickerData) {
   const sortedTickers = Object.values(tickerData).sort(
-    (a, b) => b.avgReturn - a.avgReturn
+    (a, b) => a.avgReturn - b.avgReturn
   );
-  const topSix = sortedTickers.splice(0, 6);
+
+  const topSix = sortedTickers
+    .filter(ticker => ticker.trades.length > 2)
+    .splice(0, 7);
+  console.log(topSix);
 
   let leadersArray = {};
   topSix.forEach(leader => {

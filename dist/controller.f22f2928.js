@@ -382,6 +382,121 @@ module.exports = {
         "returnCash": -102,
         "returnPercent": -1.1
       }]
+    },
+    "AAX": {
+      "ticker": "AAX",
+      "avgReturn": 0.59,
+      "trades": [{
+        "id": "QHnv65t",
+        "shares": 40,
+        "returnCash": 175,
+        "returnPercent": 1.54
+      }, {
+        "id": "kG24s8i",
+        "shares": 50,
+        "returnCash": 125,
+        "returnPercent": 1.23
+      }, {
+        "id": "Vz9qA1k",
+        "shares": 42,
+        "returnCash": -102,
+        "returnPercent": -1.1
+      }]
+    },
+    "AASS": {
+      "ticker": "AASS",
+      "avgReturn": 0.59,
+      "trades": [{
+        "id": "QHnv65t",
+        "shares": 40,
+        "returnCash": 175,
+        "returnPercent": 1.54
+      }, {
+        "id": "kG24s8i",
+        "shares": 50,
+        "returnCash": 125,
+        "returnPercent": 1.23
+      }, {
+        "id": "Vz9qA1k",
+        "shares": 42,
+        "returnCash": -102,
+        "returnPercent": -1.1
+      }]
+    },
+    "AATT": {
+      "ticker": "AATT",
+      "avgReturn": 0.59,
+      "trades": [{
+        "id": "QHnv65t",
+        "shares": 40,
+        "returnCash": 175,
+        "returnPercent": 1.54
+      }, {
+        "id": "kG24s8i",
+        "shares": 50,
+        "returnCash": 125,
+        "returnPercent": 1.23
+      }, {
+        "id": "Vz9qA1k",
+        "shares": 42,
+        "returnCash": -102,
+        "returnPercent": -1.1
+      }]
+    },
+    "AAVV": {
+      "ticker": "AAVV",
+      "avgReturn": 0.59,
+      "trades": [{
+        "id": "QHnv65t",
+        "shares": 40,
+        "returnCash": 175,
+        "returnPercent": 1.54
+      }, {
+        "id": "kG24s8i",
+        "shares": 50,
+        "returnCash": 125,
+        "returnPercent": 1.23
+      }, {
+        "id": "Vz9qA1k",
+        "shares": 42,
+        "returnCash": -102,
+        "returnPercent": -1.1
+      }]
+    },
+    "AAQQ": {
+      "ticker": "AAQQ",
+      "avgReturn": 0.59,
+      "trades": [{
+        "id": "QHnv65t",
+        "shares": 40,
+        "returnCash": 175,
+        "returnPercent": 1.54
+      }, {
+        "id": "kG24s8i",
+        "shares": 50,
+        "returnCash": 125,
+        "returnPercent": 1.23
+      }, {
+        "id": "Vz9qA1k",
+        "shares": 42,
+        "returnCash": -102,
+        "returnPercent": -1.1
+      }]
+    },
+    "BMTW": {
+      "ticker": "BMTW",
+      "avgReturn": 0.59,
+      "trades": [{
+        "id": "QHnv65t",
+        "shares": 40,
+        "returnCash": 175,
+        "returnPercent": 1.54
+      }, {
+        "id": "Vz9qA1k",
+        "shares": 42,
+        "returnCash": -102,
+        "returnPercent": -1.1
+      }]
     }
   },
   "calendarData": {
@@ -507,7 +622,7 @@ module.exports = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.targetSelectedEntry = exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = exports.checkIfJournalEmpty = exports.clearUserObject = exports.fetchUserFromJSON = void 0;
+exports.saveToLocalStorage = exports.targetSelectedEntry = exports.findJournalEntry = exports.updateJournalData = exports.updateCalendarData = exports.updateCapital = exports.passNestedData = exports.passData = exports.checkIfJournalEmpty = exports.clearUserObject = exports.fetchUserFromJSON = void 0;
 
 var _helpers = require("./../helpers");
 
@@ -1019,6 +1134,12 @@ var targetSelectedEntry = function targetSelectedEntry(entryID) {
 };
 
 exports.targetSelectedEntry = targetSelectedEntry;
+
+var saveToLocalStorage = function saveToLocalStorage() {
+  localStorage.setItem('TikerData', JSON.stringify(user));
+};
+
+exports.saveToLocalStorage = saveToLocalStorage;
 },{"./../helpers":"js/helpers.js","./../config":"js/config.js","../../data.json":"data.json"}],"js/views/coreView.js":[function(require,module,exports) {
 "use strict";
 
@@ -1780,9 +1901,12 @@ var convertToLeader = function convertToLeader(data) {
 
 var computeProfitableData = function computeProfitableData(tickerData) {
   var sortedTickers = Object.values(tickerData).sort(function (a, b) {
-    return b.avgReturn - a.avgReturn;
+    return a.avgReturn - b.avgReturn;
   });
-  var topSix = sortedTickers.splice(0, 6);
+  var topSix = sortedTickers.filter(function (ticker) {
+    return ticker.trades.length > 2;
+  }).splice(0, 7);
+  console.log(topSix);
   var leadersArray = {};
   topSix.forEach(function (leader) {
     if (leader.avgReturn > 0) {
@@ -5205,7 +5329,7 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
 
   if (passedData) {
     type = passedData[0];
-    data = passedData[1];
+    data = passedData[1].slice(0, 15);
     updatePerformanceHeading(type);
     clearPerformanceCanvas();
   }
@@ -8816,6 +8940,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
       controlProfitableRender();
       controlPerformanceRender();
       controlMonthlyRender();
+      (0, _dataModel.saveToLocalStorage)();
     }
   }
 };
@@ -8940,7 +9065,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55904" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64767" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

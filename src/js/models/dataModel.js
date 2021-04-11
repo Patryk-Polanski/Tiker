@@ -539,3 +539,7 @@ export const targetSelectedEntry = function (entryID) {
   console.log(foundEntry);
   console.log(user);
 };
+
+export const saveToLocalStorage = function () {
+  localStorage.setItem('TikerData', JSON.stringify(user));
+};

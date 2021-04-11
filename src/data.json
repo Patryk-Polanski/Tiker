@@ -151,6 +151,144 @@
           "returnPercent": -1.1
         }
       ]
+    },
+    "AAX": {
+      "ticker": "AAX",
+      "avgReturn": 0.59,
+      "trades": [
+        {
+          "id": "QHnv65t",
+          "shares": 40,
+          "returnCash": 175,
+          "returnPercent": 1.54
+        },
+        {
+          "id": "kG24s8i",
+          "shares": 50,
+          "returnCash": 125,
+          "returnPercent": 1.23
+        },
+        {
+          "id": "Vz9qA1k",
+          "shares": 42,
+          "returnCash": -102,
+          "returnPercent": -1.1
+        }
+      ]
+    },
+    "AASS": {
+      "ticker": "AASS",
+      "avgReturn": 0.59,
+      "trades": [
+        {
+          "id": "QHnv65t",
+          "shares": 40,
+          "returnCash": 175,
+          "returnPercent": 1.54
+        },
+        {
+          "id": "kG24s8i",
+          "shares": 50,
+          "returnCash": 125,
+          "returnPercent": 1.23
+        },
+        {
+          "id": "Vz9qA1k",
+          "shares": 42,
+          "returnCash": -102,
+          "returnPercent": -1.1
+        }
+      ]
+    },
+    "AATT": {
+      "ticker": "AATT",
+      "avgReturn": 0.59,
+      "trades": [
+        {
+          "id": "QHnv65t",
+          "shares": 40,
+          "returnCash": 175,
+          "returnPercent": 1.54
+        },
+        {
+          "id": "kG24s8i",
+          "shares": 50,
+          "returnCash": 125,
+          "returnPercent": 1.23
+        },
+        {
+          "id": "Vz9qA1k",
+          "shares": 42,
+          "returnCash": -102,
+          "returnPercent": -1.1
+        }
+      ]
+    },
+    "AAVV": {
+      "ticker": "AAVV",
+      "avgReturn": 0.59,
+      "trades": [
+        {
+          "id": "QHnv65t",
+          "shares": 40,
+          "returnCash": 175,
+          "returnPercent": 1.54
+        },
+        {
+          "id": "kG24s8i",
+          "shares": 50,
+          "returnCash": 125,
+          "returnPercent": 1.23
+        },
+        {
+          "id": "Vz9qA1k",
+          "shares": 42,
+          "returnCash": -102,
+          "returnPercent": -1.1
+        }
+      ]
+    },
+    "AAQQ": {
+      "ticker": "AAQQ",
+      "avgReturn": 0.59,
+      "trades": [
+        {
+          "id": "QHnv65t",
+          "shares": 40,
+          "returnCash": 175,
+          "returnPercent": 1.54
+        },
+        {
+          "id": "kG24s8i",
+          "shares": 50,
+          "returnCash": 125,
+          "returnPercent": 1.23
+        },
+        {
+          "id": "Vz9qA1k",
+          "shares": 42,
+          "returnCash": -102,
+          "returnPercent": -1.1
+        }
+      ]
+    },
+    "BMTW": {
+      "ticker": "BMTW",
+      "avgReturn": 0.59,
+      "trades": [
+        {
+          "id": "QHnv65t",
+          "shares": 40,
+          "returnCash": 175,
+          "returnPercent": 1.54
+        },
+        {
+          "id": "Vz9qA1k",
+          "shares": 42,
+          "returnCash": -102,
+          "returnPercent": -1.1
+        }
+      ]
     }
   },
   "calendarData": {

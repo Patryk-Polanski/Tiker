@@ -47,10 +47,11 @@ export const renderPerformanceChart = function (passedData) {
   let type, data;
   if (passedData) {
     type = passedData[0];
-    data = passedData[1];
+    data = passedData[1].slice(0, 15);
     updatePerformanceHeading(type);
     clearPerformanceCanvas();
   }
+
   if (data) {
     (chartData = [...data]), (chartType = type);
   } else {
