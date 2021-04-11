@@ -15,8 +15,9 @@ import {
   removeLoadingScreen,
   showNoDataScreens,
   hideNoDataScreens,
-  showSingleBtnPopup,
   addPopupHandler,
+  showSingleBtnPopup,
+  showDoubleBtnPopup,
   hidePopup,
 } from './views/coreView';
 import {

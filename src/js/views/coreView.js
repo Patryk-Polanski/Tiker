@@ -5,7 +5,10 @@ const getElements = function (obj = {}) {
   obj.nav = obj.core.querySelector('.js-nav');
   obj.loadingScreen = obj.core.querySelector('.js-loading');
   obj.singleBtnPopup = obj.core.querySelector('.js-single-btn-popup');
+  obj.doubleBtnPopup = obj.core.querySelector('.js-double-btn-popup');
   obj.singleBtnPopupOkBtn = obj.core.querySelector('.js-popup-ok-btn');
+  obj.doubleBtnPopupYesBtn = obj.core.querySelector('.js-popup-yes-btn');
+  obj.doubleBtnPopupNoBtn = obj.core.querySelector('.js-popup-no-btn');
   obj.sectionOverview = obj.core.querySelector('.js-section-overview');
   obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
   obj.sectionJournal = obj.core.querySelector('.js-section-journal');
@@ -50,6 +53,19 @@ export const showSingleBtnPopup = function (...messages) {
   });
 };
 
+export const showDoubleBtnPopup = function (...messages) {
+  coreEls.doubleBtnPopup.classList.add('s-content__popup--active');
+
+  const popupContentWrapper = coreEls.doubleBtnPopup.children[0];
+
+  messages.forEach(message => {
+    const html = `
+      <p class="s-content__popup-text">${message}</p>
+    `;
+    popupContentWrapper.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
 export const hidePopup = function () {
   const activePopup = coreEls.core.querySelector('.s-content__popup--active');
   if (activePopup) {
@@ -81,43 +97,61 @@ export const addPopupHandler = function (handler) {
     e.preventDefault();
     handler();
   });
+
+  coreEls.doubleBtnPopupNoBtn.addEventListener('click', e => {
+    e.preventDefault();
+    handler();
+  });
+  coreEls.doubleBtnPopup.addEventListener('click', e => {
+    e.preventDefault();
+    handler();
+  });
 };
 
 export const toggleSections = function (targetEl) {
-  if (targetEl.classList.contains('btn--nav')) hideAllSections();
   if (targetEl.classList.contains('js-nav-overview-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionOverview.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-monthly-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionMonthly.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-journal-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionJournal.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-calculators-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionCalculators.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-settings-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionSettings.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-help-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionHelp.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
   if (targetEl.classList.contains('js-nav-exit-btn')) {
     hidePopup();
-    window.location.href = '../../index.html';
+    showDoubleBtnPopup(
+      'All unsaved progress will be lost',
+      'Are you sure you want to log off?'
+    );
+    // window.location.href = '../../index.html';
   }
 };
 

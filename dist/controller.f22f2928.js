@@ -1162,7 +1162,7 @@ exports.findJournalEntry = findJournalEntry;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.hideNoDataScreens = exports.showNoDataScreens = exports.toggleSections = exports.addPopupHandler = exports.addNavigationHandler = exports.queryCoreEls = exports.removeLoadingScreen = exports.hidePopup = exports.showSingleBtnPopup = void 0;
+exports.hideNoDataScreens = exports.showNoDataScreens = exports.toggleSections = exports.addPopupHandler = exports.addNavigationHandler = exports.queryCoreEls = exports.removeLoadingScreen = exports.hidePopup = exports.showDoubleBtnPopup = exports.showSingleBtnPopup = void 0;
 var coreEls = {};
 
 var getElements = function getElements() {
@@ -1171,7 +1171,10 @@ var getElements = function getElements() {
   obj.nav = obj.core.querySelector('.js-nav');
   obj.loadingScreen = obj.core.querySelector('.js-loading');
   obj.singleBtnPopup = obj.core.querySelector('.js-single-btn-popup');
+  obj.doubleBtnPopup = obj.core.querySelector('.js-double-btn-popup');
   obj.singleBtnPopupOkBtn = obj.core.querySelector('.js-popup-ok-btn');
+  obj.doubleBtnPopupYesBtn = obj.core.querySelector('.js-popup-yes-btn');
+  obj.doubleBtnPopupNoBtn = obj.core.querySelector('.js-popup-no-btn');
   obj.sectionOverview = obj.core.querySelector('.js-section-overview');
   obj.sectionMonthly = obj.core.querySelector('.js-section-monthly');
   obj.sectionJournal = obj.core.querySelector('.js-section-journal');
@@ -1211,6 +1214,22 @@ var showSingleBtnPopup = function showSingleBtnPopup() {
 };
 
 exports.showSingleBtnPopup = showSingleBtnPopup;
+
+var showDoubleBtnPopup = function showDoubleBtnPopup() {
+  coreEls.doubleBtnPopup.classList.add('s-content__popup--active');
+  var popupContentWrapper = coreEls.doubleBtnPopup.children[0];
+
+  for (var _len2 = arguments.length, messages = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    messages[_key2] = arguments[_key2];
+  }
+
+  messages.forEach(function (message) {
+    var html = "\n      <p class=\"s-content__popup-text\">".concat(message, "</p>\n    ");
+    popupContentWrapper.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+exports.showDoubleBtnPopup = showDoubleBtnPopup;
 
 var hidePopup = function hidePopup() {
   var activePopup = coreEls.core.querySelector('.s-content__popup--active');
@@ -1254,52 +1273,64 @@ var addPopupHandler = function addPopupHandler(handler) {
     e.preventDefault();
     handler();
   });
+  coreEls.doubleBtnPopupNoBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    handler();
+  });
+  coreEls.doubleBtnPopup.addEventListener('click', function (e) {
+    e.preventDefault();
+    handler();
+  });
 };
 
 exports.addPopupHandler = addPopupHandler;
 
 var toggleSections = function toggleSections(targetEl) {
-  if (targetEl.classList.contains('btn--nav')) hideAllSections();
-
   if (targetEl.classList.contains('js-nav-overview-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionOverview.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-monthly-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionMonthly.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-journal-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionJournal.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-calculators-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionCalculators.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-settings-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionSettings.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-help-btn')) {
     hidePopup();
+    hideAllSections();
     coreEls.sectionHelp.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
   }
 
   if (targetEl.classList.contains('js-nav-exit-btn')) {
     hidePopup();
-    window.location.href = '../../index.html';
+    showDoubleBtnPopup('All unsaved progress will be lost', 'Are you sure you want to log off?'); // window.location.href = '../../index.html';
   }
 };
 

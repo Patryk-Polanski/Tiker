@@ -444,7 +444,7 @@ body {
   z-index: 8;
   border-radius: 10px;
 }
-.s-content__popup-single-btn {
+.s-content__popup-single-btn, .s-content__popup-double-btn {
   position: absolute;
   top: 0;
   left: 0;
@@ -477,6 +477,14 @@ body {
 .s-content__popup-text {
   color: #aaaaaa;
 }
+.s-content__popup-btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.s-content__popup-btn {
+  margin: 20px;
+}
+
 .s-help {
   min-height: 100vh;
   text-align: center;
