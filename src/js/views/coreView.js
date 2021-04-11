@@ -162,6 +162,7 @@ export const toggleSections = function (targetEl) {
   if (targetEl.classList.contains('js-nav-exit-btn')) {
     hidePopup();
     showDoubleBtnPopup(
+      '',
       'logoff',
       'All unsaved progress will be lost',
       'Are you sure you want to log off?'

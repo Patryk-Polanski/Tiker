@@ -1338,7 +1338,7 @@ var toggleSections = function toggleSections(targetEl) {
 
   if (targetEl.classList.contains('js-nav-exit-btn')) {
     hidePopup();
-    showDoubleBtnPopup('logoff', 'All unsaved progress will be lost', 'Are you sure you want to log off?');
+    showDoubleBtnPopup('', 'logoff', 'All unsaved progress will be lost', 'Are you sure you want to log off?');
   }
 };
 
