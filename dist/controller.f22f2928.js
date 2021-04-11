@@ -347,7 +347,7 @@ module.exports = {
       "ticker": "AAL",
       "avgReturn": 0.58,
       "trades": [{
-        "id": "7Ft7s4w",
+        "id": 11500,
         "shares": 60,
         "returnCash": 121,
         "returnPercent": 1.44
@@ -386,7 +386,7 @@ module.exports = {
   },
   "calendarData": {
     "jul21": [{
-      "dateLong": "Mon Mar 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Mon Jul 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "6/3/21",
       "trades": [{
         "id": 730,
@@ -394,13 +394,13 @@ module.exports = {
         "returnCash": -90,
         "returnPercent": -0.9
       }, {
-        "id": 820,
+        "id": 11500,
         "side": "long",
-        "returnCash": 120,
-        "returnPercent": 1.6
+        "returnCash": 112.52,
+        "returnPercent": 1.63
       }]
     }, {
-      "dateLong": "Mon Mar 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Mon Jul 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "4/3/21",
       "trades": [{
         "id": 2140,
@@ -415,7 +415,7 @@ module.exports = {
       }]
     }],
     "aug21": [{
-      "dateLong": "Mon Apr 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Mon Aug 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "2/4/21",
       "trades": [{
         "id": 854,
@@ -429,7 +429,7 @@ module.exports = {
         "returnPercent": -0.45
       }]
     }, {
-      "dateLong": "Mon Apr 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Mon Aug 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "7/4/21",
       "trades": [{
         "id": 652,
@@ -447,7 +447,8 @@ module.exports = {
   "journal": [{
     "id": 115,
     "ticker": "ROKU",
-    "dateShort": "28/07/21",
+    "dateShort": "9/7/21",
+    "dateLong": "Mon Jul 09 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
     "side": "short",
     "sharesAmount": 100,
     "avgEntry": 180.84,
@@ -459,8 +460,9 @@ module.exports = {
     "body": "Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra."
   }, {
     "id": 11500,
-    "ticker": "RIOT",
-    "dateShort": "29/07/21",
+    "ticker": "AAL",
+    "dateShort": "6/3/21",
+    "dateLong": "Mon Jul 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
     "side": "long",
     "sharesAmount": 100,
     "avgEntry": 180.84,
@@ -1003,7 +1005,25 @@ var targetSelectedEntry = function targetSelectedEntry(entryID) {
   var indexInBest = user.bestTrades.map(function (trade) {
     return trade.id;
   }).indexOf(entryID);
-  if (indexInBest !== -1) user.bestTrades.splice(indexInBest, 1);
+  if (indexInBest !== -1) user.bestTrades.splice(indexInBest, 1); // tickers
+
+  var indexInTickers = user.tickers[foundEntry.ticker].trades.map(function (trade) {
+    return trade.id;
+  }).indexOf(entryID);
+  if (indexInTickers !== -1) user.tickers[foundEntry.ticker].trades.splice(indexInTickers, 1); // calendar data
+
+  var dateKey = _config.MONTHS_FORMAT[new Date(foundEntry.dateLong).getMonth()] + String(new Date(foundEntry.dateLong).getFullYear()).slice(-2);
+  var indexInCalendar = user.calendarData[dateKey].map(function (day) {
+    return day.dateShort;
+  }).indexOf(foundEntry.dateShort);
+
+  if (indexInCalendar !== -1) {
+    var indexInTrades = user.calendarData[dateKey][indexInCalendar].trades.map(function (trade) {
+      return trade.id;
+    }).indexOf(entryID);
+    if (indexInTrades !== -1) user.calendarData[dateKey][indexInCalendar].trades.splice(indexInTrades, 1);
+  }
+
   console.log('~~~~~~~~~~~~~~~~~~~~~~');
   console.log(foundEntry);
   console.log(user);

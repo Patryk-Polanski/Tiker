@@ -500,6 +500,34 @@ export const targetSelectedEntry = function (entryID) {
   const indexInBest = user.bestTrades.map(trade => trade.id).indexOf(entryID);
   if (indexInBest !== -1) user.bestTrades.splice(indexInBest, 1);
 
+  // tickers
+  const indexInTickers = user.tickers[foundEntry.ticker].trades
+    .map(trade => trade.id)
+    .indexOf(entryID);
+  if (indexInTickers !== -1)
+    user.tickers[foundEntry.ticker].trades.splice(indexInTickers, 1);
+
+  // calendar data
+
+  const dateKey =
+    MONTHS_FORMAT[new Date(foundEntry.dateLong).getMonth()] +
+    String(new Date(foundEntry.dateLong).getFullYear()).slice(-2);
+
+  const indexInCalendar = user.calendarData[dateKey]
+    .map(day => day.dateShort)
+    .indexOf(foundEntry.dateShort);
+
+  if (indexInCalendar !== -1) {
+    const indexInTrades = user.calendarData[dateKey][indexInCalendar].trades
+      .map(trade => trade.id)
+      .indexOf(entryID);
+    if (indexInTrades !== -1)
+      user.calendarData[dateKey][indexInCalendar].trades.splice(
+        indexInTrades,
+        1
+      );
+  }
+
   console.log('~~~~~~~~~~~~~~~~~~~~~~');
   console.log(foundEntry);
   console.log(user);
