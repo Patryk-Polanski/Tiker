@@ -347,11 +347,6 @@ const addToCalendarData = function (newEntry) {
   console.log(dateKey);
   const currentKey = user.calendarData[dateKey];
   if (currentKey) {
-    console.log(currentKey.map(day => day.dateShort));
-    console.log(
-      currentKey.map(day => day.dateShort).indexOf(newEntry.dateShort)
-    );
-    console.log(newEntry.dateShort);
     const entryDateIndex = currentKey
       .map(day => day.dateShort)
       .indexOf(newEntry.dateShort);
@@ -362,6 +357,7 @@ const addToCalendarData = function (newEntry) {
         side: newEntry.side,
         returnCash: newEntry.returnCash,
         returnPercent: newEntry.returnPercent,
+        total: newEntry.total,
       });
     }
     if (entryDateIndex === -1) {
@@ -374,6 +370,7 @@ const addToCalendarData = function (newEntry) {
             side: newEntry.side,
             returnCash: newEntry.returnCash,
             returnPercent: newEntry.returnPercent,
+            total: newEntry.total,
           },
         ],
       });
@@ -390,6 +387,7 @@ const addToCalendarData = function (newEntry) {
             side: newEntry.side,
             returnCash: newEntry.returnCash,
             returnPercent: newEntry.returnPercent,
+            total: newEntry.total,
           },
         ],
       },
@@ -438,8 +436,9 @@ export const updateJournalData = function (newEntry) {
   const newEntryIndex = user.journal.map(e => e.id).indexOf(newEntry.id);
   let previousSide;
   // if the id already exists, meaning the journal entry has been updated
-  if (newEntryIndex > -1) {
+  if (newEntryIndex !== -1) {
     updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
+    newEntry.total = user.capital;
     previousSide = user.journal[newEntryIndex].side;
     user.journal[newEntryIndex] = newEntry;
     updateCapital(newEntry.returnCash, 'plus');
@@ -448,12 +447,16 @@ export const updateJournalData = function (newEntry) {
   // newEntryIndex is -1, meaning the jounal entry is new
   if (newEntryIndex === -1) {
     updateCapital(newEntry.returnCash, 'plus');
+    newEntry.total = user.capital;
     user.journal.push(newEntry);
     // sort the data
     sortJournal(user.journal);
   }
 
   compareStatistics(newEntry, newEntryIndex, previousSide);
+
+  console.log('><><><><');
+  console.log(user);
 
   return [user.capital];
 };

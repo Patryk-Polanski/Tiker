@@ -4,8 +4,7 @@ const formatShortDate = function (dateShort) {
   return splitDate.join('/');
 };
 
-const formatMonthlyData = function (calendarData, capital) {
-  let currentCapital = capital;
+const formatMonthlyData = function (calendarData) {
   let monthsArr = [];
 
   Object.keys(calendarData).forEach(monthKey => {
@@ -21,11 +20,14 @@ const formatMonthlyData = function (calendarData, capital) {
       .reduce((acc, num) => acc + num, 0);
     const dateLong = month[0].dateLong;
     const dateShort = formatShortDate(month[0].dateShort);
+    const lastDay = month[month.length - 1];
+    const lastTradeTotal = lastDay[lastDay.length - 1].total;
 
     formattedMonthsArr.push({
       returnCash,
       dateLong,
       dateShort,
+      total: lastTradeTotal,
     });
   });
 
@@ -34,16 +36,13 @@ const formatMonthlyData = function (calendarData, capital) {
   );
 
   formattedMonthsArr.forEach((month, index) => {
-    currentCapital += month.returnCash;
-    month.total = currentCapital;
     month.position = index;
   });
 
   return formattedMonthsArr;
 };
 
-const formatDailyData = function (calendarData, capital) {
-  let currentCapital = capital;
+const formatDailyData = function (calendarData) {
   let daysArr = [];
 
   Object.keys(calendarData).forEach(monthKey => {
@@ -62,18 +61,18 @@ const formatDailyData = function (calendarData, capital) {
         if (trade.returnCash) return trade.returnCash;
       })
       .reduce((acc, num) => acc + num, 0);
+    const total = day[day.length - 1].total;
     return {
       dateShort: day.dateShort,
       dateLong: day.dateLong,
       returnCash,
+      total,
     };
   });
 
   formattedDaysArr.sort((a, b) => new Date(a.dateLong) - new Date(b.dateLong));
 
   formattedDaysArr.forEach((day, index) => {
-    currentCapital += day.returnCash;
-    day.total = currentCapital;
     day.position = index;
   });
 

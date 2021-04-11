@@ -1,15 +1,15 @@
 {
-  "capital": 8000,
+  "capital": 7231,
   "overall": {
-    "total": 3,
+    "total": 5,
     "proportions": [
       {
         "side": "long",
-        "total": 2
+        "total": 3
       },
       {
         "side": "short",
-        "total": 1
+        "total": 2
       }
     ]
   },
@@ -17,353 +17,261 @@
     "wins": {
       "trades": [
         {
-          "id": 1150,
-          "ticker": "NFLX",
-          "date": "14/06/21",
-          "returnCash": 253
+          "id": 1618178927841,
+          "ticker": "AMC",
+          "date": "9/3/21",
+          "returnCash": 111
         },
         {
-          "id": 115,
-          "ticker": "VREZ",
-          "date": "15/06/21",
-          "returnCash": 312
-        },
-        {
-          "id": 11500,
+          "id": 1618178976232,
           "ticker": "RIOT",
-          "date": "29/07/21",
-          "returnCash": 112.52
+          "date": "12/3/21",
+          "returnCash": 84
         }
       ]
     },
     "losses": {
-      "trades": [
-        {
-          "id": "liJ56D3",
-          "ticker": "AMZN",
-          "date": "12/08/21",
-          "returnCash": -90
-        },
-        {
-          "id": "Y58P1M",
-          "ticker": "X",
-          "date": "21/07/21",
-          "returnCash": -112
-        }
-      ]
+      "trades": []
     },
     "current": {
       "trades": [
         {
-          "id": "ZYRwa5z",
-          "ticker": "NFLX",
-          "date": "14/06/21",
-          "returnCash": 253
+          "id": 1618179185438,
+          "ticker": "NIO",
+          "date": "19/3/21",
+          "returnCash": 16
+        },
+        {
+          "id": 1618179285427,
+          "ticker": "BMBL",
+          "date": "24/3/21",
+          "returnCash": 80
         }
       ]
     }
   },
   "worstTrades": [
     {
-      "id": 300,
-      "ticker": "NFLX",
-      "date": "14/06/21",
-      "returnCash": -234
-    },
-    {
-      "id": 250,
-      "ticker": "BMBL",
-      "date": "15/06/21",
-      "returnCash": -151
-    },
-    {
-      "id": 11500,
-      "ticker": "GME",
-      "date": "7/7/21",
-      "returnCash": -180
+      "id": 1618179060347,
+      "dateFull": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "14/3/21",
+      "ticker": "SNAP",
+      "side": "short",
+      "tradeEntries": [[63.11, 60]],
+      "tradeExits": [[64.11, 60]],
+      "exitsPrices": [64.11],
+      "sharesAmount": 60,
+      "avgEntry": 63.11,
+      "avgExit": 64.11,
+      "returnCash": -60,
+      "returnPercent": -0.83,
+      "body": ""
     }
   ],
   "bestTrades": [
     {
-      "id": 11500,
-      "ticker": "NFLX",
-      "date": "14/06/21",
-      "returnCash": 253
+      "id": 1618178927841,
+      "dateFull": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "9/3/21",
+      "ticker": "AMC",
+      "side": "long",
+      "tradeEntries": [
+        [9.35, 50],
+        [9.55, 50]
+      ],
+      "tradeExits": [
+        [10.54, 50],
+        [10.59, 50]
+      ],
+      "exitsPrices": [10.54, 10.59],
+      "sharesAmount": 100,
+      "avgEntry": 9.45,
+      "avgExit": 10.56,
+      "returnCash": 111,
+      "returnPercent": 1.59,
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis volutpat est velit egestas dui id ornare. Eget magna fermentum iaculis eu non. In tellus integer feugiat scelerisque varius morbi enim nunc faucibus. A lacus vestibulum sed arcu non odio euismod lacinia. Etiam sit amet nisl purus. Lorem sed risus ultricies tristique nulla aliquet enim. Augue ut lectus arcu bibendum at varius vel. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. "
     },
     {
-      "id": 900,
+      "id": 1618178976232,
+      "dateFull": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "12/3/21",
+      "ticker": "RIOT",
+      "side": "long",
+      "tradeEntries": [[49.62, 70]],
+      "tradeExits": [[50.82, 70]],
+      "exitsPrices": [50.82],
+      "sharesAmount": 70,
+      "avgEntry": 49.62,
+      "avgExit": 50.82,
+      "returnCash": 84,
+      "returnPercent": 1.18,
+      "body": ""
+    },
+    {
+      "id": 1618179285427,
+      "dateFull": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "24/3/21",
       "ticker": "BMBL",
-      "date": "15/06/21",
-      "returnCash": 312
+      "side": "long",
+      "tradeEntries": [
+        [60.24, 50],
+        [60.41, 50]
+      ],
+      "tradeExits": [
+        [60.98, 40],
+        [61.23, 60]
+      ],
+      "exitsPrices": [60.98, 61.23],
+      "sharesAmount": 100,
+      "avgEntry": 60.33,
+      "avgExit": 61.13,
+      "returnCash": 80,
+      "returnPercent": 1.12,
+      "body": ""
     },
     {
-      "id": 450,
-      "ticker": "SNAP",
-      "date": "13/08/21",
-      "returnCash": 187
+      "id": 1618179185438,
+      "dateFull": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "19/3/21",
+      "ticker": "NIO",
+      "side": "short",
+      "tradeEntries": [[39.84, 50]],
+      "tradeExits": [[39.52, 50]],
+      "exitsPrices": [39.52],
+      "sharesAmount": 50,
+      "avgEntry": 39.84,
+      "avgExit": 39.52,
+      "returnCash": 16,
+      "returnPercent": 0.22,
+      "body": "Urna nunc id cursus metus aliquam eleifend mi in. Ullamcorper sit amet risus nullam eget felis eget. Sit amet facilisis magna etiam tempor orci. Sed egestas egestas fringilla phasellus faucibus. Nulla aliquet enim tortor at auctor. Scelerisque viverra mauris in aliquam. Nisl rhoncus mattis rhoncus urna neque viverra justo nec ultrices. Consequat nisl vel pretium lectus quam id."
     }
   ],
   "tickers": {
-    "AAL": {
-      "ticker": "AAL",
-      "avgReturn": 0.58,
+    "AMC": {
+      "ticker": "AMC",
+      "avgReturn": 111,
       "trades": [
         {
-          "id": 11500,
-          "shares": 60,
-          "returnCash": 121,
-          "returnPercent": 1.44
-        },
+          "id": 1618178927841,
+          "shares": 100,
+          "returnCash": 111,
+          "returnPercent": 1.59
+        }
+      ]
+    },
+    "RIOT": {
+      "ticker": "RIOT",
+      "avgReturn": 84,
+      "trades": [
         {
-          "id": "p8Hi52N",
-          "shares": 72,
-          "returnCash": 118,
-          "returnPercent": 1.32
-        },
-        {
-          "id": "Jk6sDew",
+          "id": 1618178976232,
           "shares": 70,
-          "returnCash": -82,
-          "returnPercent": -1
+          "returnCash": 84,
+          "returnPercent": 1.18
         }
       ]
     },
-    "AAPL": {
-      "ticker": "AAPL",
-      "avgReturn": 0.59,
+    "SNAP": {
+      "ticker": "SNAP",
+      "avgReturn": -60,
       "trades": [
         {
-          "id": "QHnv65t",
-          "shares": 40,
-          "returnCash": 175,
-          "returnPercent": 1.54
-        },
+          "id": 1618179060347,
+          "shares": 60,
+          "returnCash": -60,
+          "returnPercent": -0.83
+        }
+      ]
+    },
+    "NIO": {
+      "ticker": "NIO",
+      "avgReturn": 16,
+      "trades": [
         {
-          "id": "kG24s8i",
+          "id": 1618179185438,
           "shares": 50,
-          "returnCash": 125,
-          "returnPercent": 1.23
-        },
-        {
-          "id": "Vz9qA1k",
-          "shares": 42,
-          "returnCash": -102,
-          "returnPercent": -1.1
+          "returnCash": 16,
+          "returnPercent": 0.22
         }
       ]
     },
-    "AAX": {
-      "ticker": "AAX",
-      "avgReturn": 0.59,
+    "BMBL": {
+      "ticker": "BMBL",
+      "avgReturn": 80,
       "trades": [
         {
-          "id": "QHnv65t",
-          "shares": 40,
-          "returnCash": 175,
-          "returnPercent": 1.54
-        },
-        {
-          "id": "kG24s8i",
-          "shares": 50,
-          "returnCash": 125,
-          "returnPercent": 1.23
-        },
-        {
-          "id": "Vz9qA1k",
-          "shares": 42,
-          "returnCash": -102,
-          "returnPercent": -1.1
-        }
-      ]
-    },
-    "AASS": {
-      "ticker": "AASS",
-      "avgReturn": 0.59,
-      "trades": [
-        {
-          "id": "QHnv65t",
-          "shares": 40,
-          "returnCash": 175,
-          "returnPercent": 1.54
-        },
-        {
-          "id": "kG24s8i",
-          "shares": 50,
-          "returnCash": 125,
-          "returnPercent": 1.23
-        },
-        {
-          "id": "Vz9qA1k",
-          "shares": 42,
-          "returnCash": -102,
-          "returnPercent": -1.1
-        }
-      ]
-    },
-    "AATT": {
-      "ticker": "AATT",
-      "avgReturn": 0.59,
-      "trades": [
-        {
-          "id": "QHnv65t",
-          "shares": 40,
-          "returnCash": 175,
-          "returnPercent": 1.54
-        },
-        {
-          "id": "kG24s8i",
-          "shares": 50,
-          "returnCash": 125,
-          "returnPercent": 1.23
-        },
-        {
-          "id": "Vz9qA1k",
-          "shares": 42,
-          "returnCash": -102,
-          "returnPercent": -1.1
-        }
-      ]
-    },
-    "AAVV": {
-      "ticker": "AAVV",
-      "avgReturn": 0.59,
-      "trades": [
-        {
-          "id": "QHnv65t",
-          "shares": 40,
-          "returnCash": 175,
-          "returnPercent": 1.54
-        },
-        {
-          "id": "kG24s8i",
-          "shares": 50,
-          "returnCash": 125,
-          "returnPercent": 1.23
-        },
-        {
-          "id": "Vz9qA1k",
-          "shares": 42,
-          "returnCash": -102,
-          "returnPercent": -1.1
-        }
-      ]
-    },
-    "AAQQ": {
-      "ticker": "AAQQ",
-      "avgReturn": 0.59,
-      "trades": [
-        {
-          "id": "QHnv65t",
-          "shares": 40,
-          "returnCash": 175,
-          "returnPercent": 1.54
-        },
-        {
-          "id": "kG24s8i",
-          "shares": 50,
-          "returnCash": 125,
-          "returnPercent": 1.23
-        },
-        {
-          "id": "Vz9qA1k",
-          "shares": 42,
-          "returnCash": -102,
-          "returnPercent": -1.1
-        }
-      ]
-    },
-    "BMTW": {
-      "ticker": "BMTW",
-      "avgReturn": 0.59,
-      "trades": [
-        {
-          "id": "QHnv65t",
-          "shares": 40,
-          "returnCash": 175,
-          "returnPercent": 1.54
-        },
-        {
-          "id": "Vz9qA1k",
-          "shares": 42,
-          "returnCash": -102,
-          "returnPercent": -1.1
+          "id": 1618179285427,
+          "shares": 100,
+          "returnCash": 80,
+          "returnPercent": 1.12
         }
       ]
     }
   },
   "calendarData": {
-    "jul21": [
+    "mar21": [
       {
-        "dateLong": "Mon Jul 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
-        "dateShort": "6/3/21",
+        "dateLong": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+        "dateShort": "9/3/21",
         "trades": [
           {
-            "id": 730,
-            "side": "short",
-            "returnCash": -90,
-            "returnPercent": -0.9
-          },
-          {
-            "id": 11500,
+            "id": 1618178927841,
             "side": "long",
-            "returnCash": 112.52,
-            "returnPercent": 1.63
+            "returnCash": 111,
+            "returnPercent": 1.59,
+            "total": 7111
           }
         ]
       },
       {
-        "dateLong": "Mon Jul 04 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
-        "dateShort": "4/3/21",
+        "dateLong": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+        "dateShort": "12/3/21",
         "trades": [
           {
-            "id": 2140,
-            "side": "short",
-            "returnCash": 100,
-            "returnPercent": 1.3
-          },
-          {
-            "id": 820,
-            "side": "short",
-            "returnCash": -50,
-            "returnPercent": -0.7
-          }
-        ]
-      }
-    ],
-    "aug21": [
-      {
-        "dateLong": "Mon Aug 02 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
-        "dateShort": "2/4/21",
-        "trades": [
-          {
-            "id": 854,
+            "id": 1618178976232,
             "side": "long",
-            "returnCash": 110,
-            "returnPercent": 1.3
-          },
-          {
-            "id": 820,
-            "side": "long",
-            "returnCash": -30,
-            "returnPercent": -0.45
+            "returnCash": 84,
+            "returnPercent": 1.18,
+            "total": 7195
           }
         ]
       },
       {
-        "dateLong": "Mon Aug 07 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
-        "dateShort": "7/4/21",
+        "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+        "dateShort": "14/3/21",
         "trades": [
           {
-            "id": 652,
-            "side": "long",
-            "returnCash": -111,
-            "returnPercent": -1.2
-          },
-          {
-            "id": 1167,
+            "id": 1618179060347,
             "side": "short",
-            "returnCash": -70,
-            "returnPercent": -1.1
+            "returnCash": -60,
+            "returnPercent": -0.83,
+            "total": 7135
+          }
+        ]
+      },
+      {
+        "dateLong": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+        "dateShort": "19/3/21",
+        "trades": [
+          {
+            "id": 1618179185438,
+            "side": "short",
+            "returnCash": 16,
+            "returnPercent": 0.22,
+            "total": 7151
+          }
+        ]
+      },
+      {
+        "dateLong": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+        "dateShort": "24/3/21",
+        "trades": [
+          {
+            "id": 1618179285427,
+            "side": "long",
+            "returnCash": 80,
+            "returnPercent": 1.12,
+            "total": 7231
           }
         ]
       }
@@ -371,69 +279,101 @@
   },
   "journal": [
     {
-      "id": 115,
-      "ticker": "ROKU",
-      "dateShort": "9/7/21",
-      "dateLong": "Mon Jul 09 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
-      "side": "short",
-      "sharesAmount": 100,
-      "avgEntry": 180.84,
-      "avgExit": 181.9,
-      "returnCash": 112.52,
-      "returnPercent": 1.63,
-      "tradeEntries": [
-        [180.75, 40],
-        [180.9, 60]
-      ],
-      "tradeExits": [
-        [181.15, 20],
-        [181.42, 20],
-        [182.69, 60]
-      ],
-      "body": "Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra."
-    },
-    {
-      "id": 11500,
-      "ticker": "AAL",
-      "dateShort": "6/3/21",
-      "dateLong": "Mon Jul 06 2021 23:14:58 GMT+0000 (Greenwich Mean Time)",
+      "id": 1618178927841,
+      "dateFull": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "9/3/21",
+      "ticker": "AMC",
       "side": "long",
-      "sharesAmount": 100,
-      "avgEntry": 180.84,
-      "avgExit": 181.9,
-      "returnCash": 112.52,
-      "returnPercent": 1.63,
       "tradeEntries": [
-        [180.75, 40],
-        [180.9, 60]
+        [9.35, 50],
+        [9.55, 50]
       ],
       "tradeExits": [
-        [181.15, 20],
-        [181.42, 20],
-        [182.69, 60]
+        [10.54, 50],
+        [10.59, 50]
       ],
-      "body": "Commodo ullamcorper a lacus vestibulum sed. Non odio euismod lacinia at quis risus. Ultrices tincidunt arcu non sodales neque sodales. Sodales neque sodales ut etiam sit amet. Viverra orci sagittis eu volutpat. In nisl nisi scelerisque eu ultrices vitae auctor eu augue. Ultrices in iaculis nunc sed augue lacus viverra."
+      "exitsPrices": [10.54, 10.59],
+      "sharesAmount": 100,
+      "avgEntry": 9.45,
+      "avgExit": 10.56,
+      "returnCash": 111,
+      "returnPercent": 1.59,
+      "total": 7111,
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis volutpat est velit egestas dui id ornare. Eget magna fermentum iaculis eu non. In tellus integer feugiat scelerisque varius morbi enim nunc faucibus. A lacus vestibulum sed arcu non odio euismod lacinia. Etiam sit amet nisl purus. Lorem sed risus ultricies tristique nulla aliquet enim. Augue ut lectus arcu bibendum at varius vel. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. "
     },
     {
-      "id": 1150,
-      "ticker": "MSFT",
-      "dateShort": "30/07/21",
+      "id": 1618178976232,
+      "dateFull": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "12/3/21",
+      "ticker": "RIOT",
+      "side": "long",
+      "tradeEntries": [[49.62, 70]],
+      "tradeExits": [[50.82, 70]],
+      "exitsPrices": [50.82],
+      "sharesAmount": 70,
+      "avgEntry": 49.62,
+      "avgExit": 50.82,
+      "returnCash": 84,
+      "returnPercent": 1.18,
+      "total": 7195,
+      "body": ""
+    },
+    {
+      "id": 1618179060347,
+      "dateFull": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "14/3/21",
+      "ticker": "SNAP",
       "side": "short",
-      "sharesAmount": 110,
-      "avgEntry": 180.84,
-      "avgExit": 181.9,
-      "returnCash": 112.52,
-      "returnPercent": 1.63,
+      "tradeEntries": [[63.11, 60]],
+      "tradeExits": [[64.11, 60]],
+      "exitsPrices": [64.11],
+      "sharesAmount": 60,
+      "avgEntry": 63.11,
+      "avgExit": 64.11,
+      "returnCash": -60,
+      "returnPercent": -0.83,
+      "total": 7135,
+      "body": ""
+    },
+    {
+      "id": 1618179185438,
+      "dateFull": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "19/3/21",
+      "ticker": "NIO",
+      "side": "short",
+      "tradeEntries": [[39.84, 50]],
+      "tradeExits": [[39.52, 50]],
+      "exitsPrices": [39.52],
+      "sharesAmount": 50,
+      "avgEntry": 39.84,
+      "avgExit": 39.52,
+      "returnCash": 16,
+      "returnPercent": 0.22,
+      "total": 7151,
+      "body": "Urna nunc id cursus metus aliquam eleifend mi in. Ullamcorper sit amet risus nullam eget felis eget. Sit amet facilisis magna etiam tempor orci. Sed egestas egestas fringilla phasellus faucibus. Nulla aliquet enim tortor at auctor. Scelerisque viverra mauris in aliquam. Nisl rhoncus mattis rhoncus urna neque viverra justo nec ultrices. Consequat nisl vel pretium lectus quam id."
+    },
+    {
+      "id": 1618179285427,
+      "dateFull": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "24/3/21",
+      "ticker": "BMBL",
+      "side": "long",
       "tradeEntries": [
-        [180.75, 50],
-        [180.9, 60]
+        [60.24, 50],
+        [60.41, 50]
       ],
       "tradeExits": [
-        [181.15, 20],
-        [181.42, 20],
-        [182.69, 70]
+        [60.98, 40],
+        [61.23, 60]
       ],
-      "body": "In hac habitasse platea dictumst. Diam donec adipiscing tristique risus. Velit scelerisque in dictum non consectetur. Vel pretium lectus quam id leo in vitae. Urna porttitor rhoncus dolor purus. Ultrices gravida dictum fusce ut placerat. Vel quam elementum pulvinar etiam non quam lacus suspendisse. Commodo elit at imperdiet dui accumsan sit amet nulla facilisi. Luctus accumsan tortor posuere ac ut consequat."
+      "exitsPrices": [60.98, 61.23],
+      "sharesAmount": 100,
+      "avgEntry": 60.33,
+      "avgExit": 61.13,
+      "returnCash": 80,
+      "returnPercent": 1.12,
+      "total": 7231,
+      "body": ""
     }
   ],
   "dummyJournal": [

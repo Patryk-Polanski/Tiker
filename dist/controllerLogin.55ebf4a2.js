@@ -248,7 +248,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.USER_PASSWORD = exports.USER_USERNAME = exports.MONTHS_FORMAT = exports.ENTRIES_PER_PAGE = void 0;
-var ENTRIES_PER_PAGE = 2;
+var ENTRIES_PER_PAGE = 8;
 exports.ENTRIES_PER_PAGE = ENTRIES_PER_PAGE;
 var MONTHS_FORMAT = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 exports.MONTHS_FORMAT = MONTHS_FORMAT;
