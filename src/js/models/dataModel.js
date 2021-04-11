@@ -467,7 +467,11 @@ export const findJournalEntry = function (id) {
 // ZONE - deleting an entry
 
 export const targetSelectedEntry = function (entryID) {
-  const [foundEntry] = user.journal.filter(entry => entry.id === entryID);
+  // const [foundEntry] = user.journal.filter(entry => entry.id === entryID);
+  const IndexInJournal = user.journal
+    .map(journal => journal.id)
+    .indexOf(entryID);
+  const foundEntry = user.journal[IndexInJournal];
 
   // capital
   user.capital -= foundEntry.returnCash;
@@ -527,6 +531,9 @@ export const targetSelectedEntry = function (entryID) {
         1
       );
   }
+
+  // journal
+  user.journal.splice(IndexInJournal, 1);
 
   console.log('~~~~~~~~~~~~~~~~~~~~~~');
   console.log(foundEntry);

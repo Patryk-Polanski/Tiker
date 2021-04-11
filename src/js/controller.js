@@ -126,7 +126,6 @@ const controlPopups = function (action, dataAttr, entryID) {
       redirectToLogin();
     }
     if (dataAttr === 'reset') {
-      console.log('we need to reset the app!', dataAttr);
       clearUserObject();
       controlNoDataScreens();
       controlProfitableRender();
@@ -147,6 +146,14 @@ const controlPopups = function (action, dataAttr, entryID) {
       console.log('we need to delete an entry', dataAttr, entryID);
       hidePopup();
       targetSelectedEntry(+entryID);
+      controlNoDataScreens();
+      controlProfitableRender();
+      controlOverallRender();
+      controlPerformanceRender();
+      controlWorstBestRender();
+      controlMonthlyRender();
+      controlLongShortPieRender();
+      controlJournalRender();
       showSingleBtnPopup('Entry has been deleted');
     }
   }
