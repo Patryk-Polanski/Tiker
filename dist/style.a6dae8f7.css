@@ -403,9 +403,7 @@ body {
 }
 
 .s-core-hidden-section {
-  position: absolute !important;
-  top: -9999px !important;
-  left: -9999px !important;
+  display: none !important;
 }
 
 .s-content {

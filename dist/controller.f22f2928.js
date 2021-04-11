@@ -772,8 +772,7 @@ var user = {
   }]
 };
 
-var fetchUserFromJSON = function fetchUserFromJSON() {
-  if (_data.default) user = _data.default;
+var fetchUserFromJSON = function fetchUserFromJSON() {// if (jsonData) user = jsonData;
 };
 
 exports.fetchUserFromJSON = fetchUserFromJSON;
@@ -1299,6 +1298,7 @@ var toggleSections = function toggleSections(targetEl) {
     hideAllSections();
     coreEls.sectionOverview.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
+    return 'rerender';
   }
 
   if (targetEl.classList.contains('js-nav-monthly-btn')) {
@@ -8760,7 +8760,16 @@ var controlNoDataScreens = function controlNoDataScreens() {
 };
 
 var controlNavigation = function controlNavigation(targetEl) {
-  (0, _coreView.toggleSections)(targetEl);
+  var furtherAction = (0, _coreView.toggleSections)(targetEl);
+
+  if (furtherAction === 'rerender') {
+    (0, _chartPerformanceView.clearPerformanceCanvas)();
+    (0, _chartWorstBestView.clearWorstBestCanvas)();
+    (0, _chartOverallView.clearLongShortCanvas)();
+    (0, _chartPerformanceView.renderPerformanceChart)();
+    (0, _chartWorstBestView.renderWorstBestChart)();
+    (0, _chartOverallView.renderLongShortPie)();
+  }
 };
 
 var controlPopups = function controlPopups(action, dataAttr, entryID) {

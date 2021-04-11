@@ -104,7 +104,15 @@ const controlNoDataScreens = function () {
 };
 
 const controlNavigation = function (targetEl) {
-  toggleSections(targetEl);
+  const furtherAction = toggleSections(targetEl);
+  if (furtherAction === 'rerender') {
+    clearPerformanceCanvas();
+    clearWorstBestCanvas();
+    clearLongShortCanvas();
+    renderPerformanceChart();
+    renderWorstBestChart();
+    renderLongShortPie();
+  }
 };
 
 const controlPopups = function (action, dataAttr, entryID) {

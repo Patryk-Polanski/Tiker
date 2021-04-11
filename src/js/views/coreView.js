@@ -128,6 +128,7 @@ export const toggleSections = function (targetEl) {
     hideAllSections();
     coreEls.sectionOverview.classList.remove('s-core-hidden-section');
     toggleActiveNavBtns(targetEl);
+    return 'rerender';
   }
   if (targetEl.classList.contains('js-nav-monthly-btn')) {
     hidePopup();
