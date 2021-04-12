@@ -690,8 +690,8 @@ var startingUserObject = {
 };
 
 var fetchUserFromJSON = function fetchUserFromJSON() {
-  user = startingUserObject;
-  if (_data.default) user = _data.default;
+  user = startingUserObject; // if (jsonData) user = jsonData;
+
   console.log(user);
 };
 
@@ -901,29 +901,46 @@ var compareToWorstBest = function compareToWorstBest(newEntry) {
   }
 };
 
-var addToTickers = function addToTickers(newEntry) {
-  var currentTicker = user.tickers[newEntry.ticker]; // if the ticker already exists in the array
+var addToTickers = function addToTickers(entry) {
+  // if the current ticker and previous ticker don't match, meaning the ticker has changed
+  if (entry.ticker !== entry.previousTicker && entry.previousTicker.length > 0) {
+    var previousTicker = user.tickers[entry.previousTicker];
+    console.log('this is the previous ticker');
+    console.log(previousTicker);
+    var tradesIndex = user.tickers[entry.previousTicker].trades.map(function (trade) {
+      return trade.id;
+    }).indexOf(entry.id);
+
+    if (tradesIndex !== -1) {
+      user.tickers[entry.previousTicker].trades.splice(tradesIndex, 1);
+      console.log('this is the spliced user object');
+      console.log(user);
+    }
+  }
+
+  entry.previousTicker = entry.ticker;
+  var currentTicker = user.tickers[entry.ticker]; // if the ticker already exists in the array
 
   if (currentTicker) {
     var indexInTrades = currentTicker.trades.map(function (trade) {
       return trade.id;
-    }).indexOf(newEntry.id);
+    }).indexOf(entry.id);
 
     if (indexInTrades !== -1) {
       currentTicker.trades[indexInTrades] = {
-        id: newEntry.id,
-        shares: newEntry.sharesAmount,
-        returnCash: newEntry.returnCash,
-        returnPercent: newEntry.returnPercent
+        id: entry.id,
+        shares: entry.sharesAmount,
+        returnCash: entry.returnCash,
+        returnPercent: entry.returnPercent
       };
     }
 
     if (indexInTrades === -1) {
       currentTicker.trades.push({
-        id: newEntry.id,
-        shares: newEntry.sharesAmount,
-        returnCash: newEntry.returnCash,
-        returnPercent: newEntry.returnPercent
+        id: entry.id,
+        shares: entry.sharesAmount,
+        returnCash: entry.returnCash,
+        returnPercent: entry.returnPercent
       });
     }
 
@@ -936,14 +953,14 @@ var addToTickers = function addToTickers(newEntry) {
 
 
   if (!currentTicker) {
-    user.tickers[newEntry.ticker] = {
-      ticker: newEntry.ticker,
-      avgReturn: newEntry.returnCash,
+    user.tickers[entry.ticker] = {
+      ticker: entry.ticker,
+      avgReturn: entry.returnCash,
       trades: [{
-        id: newEntry.id,
-        shares: newEntry.sharesAmount,
-        returnCash: newEntry.returnCash,
-        returnPercent: newEntry.returnPercent
+        id: entry.id,
+        shares: entry.sharesAmount,
+        returnCash: entry.returnCash,
+        returnPercent: entry.returnPercent
       }]
     };
   }
@@ -951,7 +968,6 @@ var addToTickers = function addToTickers(newEntry) {
 
 var addToCalendarData = function addToCalendarData(newEntry) {
   var dateKey = _config.MONTHS_FORMAT[new Date(newEntry.dateFull).getMonth()] + String(new Date(newEntry.dateFull).getFullYear()).slice(-2);
-  console.log(dateKey);
   var currentKey = user.calendarData[dateKey];
 
   if (currentKey) {
@@ -1000,13 +1016,13 @@ var addToCalendarData = function addToCalendarData(newEntry) {
   }
 };
 
-var compareStatistics = function compareStatistics(newEntry, newEntryIndex) {
+var compareStatistics = function compareStatistics(entry, newEntryIndex) {
   var previousSide = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-  addToOverall(newEntry, newEntryIndex, previousSide);
-  compareToStreaks(newEntry);
-  compareToWorstBest(newEntry);
-  addToTickers(newEntry);
-  addToCalendarData(newEntry);
+  addToOverall(entry, newEntryIndex, previousSide);
+  compareToStreaks(entry);
+  compareToWorstBest(entry);
+  addToTickers(entry);
+  addToCalendarData(entry);
 };
 
 var passData = function passData(field) {
@@ -1051,10 +1067,14 @@ var updateJournalData = function updateJournalData(newEntry) {
   if (newEntryIndex !== -1) {
     updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
     newEntry.total = user.capital;
-    previousSide = user.journal[newEntryIndex].side;
+    previousSide = user.journal[newEntryIndex].side; // previous tickers and dates
+
+    var previousTicker = user.journal[newEntryIndex].ticker;
     user.journal[newEntryIndex] = newEntry;
+    user.journal[newEntryIndex].previousTicker = previousTicker;
     updateCapital(newEntry.returnCash, 'plus');
-  } // newEntryIndex is -1, meaning the jounal entry is new
+    newEntry.total = user.capital;
+  } // newEntryIndex is -1, meaning the journal entry is new
 
 
   if (newEntryIndex === -1) {
@@ -1066,8 +1086,6 @@ var updateJournalData = function updateJournalData(newEntry) {
   }
 
   compareStatistics(newEntry, newEntryIndex, previousSide);
-  console.log('><><><><');
-  console.log(user);
   return [user.capital];
 };
 
@@ -1078,7 +1096,6 @@ var findJournalEntry = function findJournalEntry(id) {
   return user.journal.filter(function (entry) {
     return entry.id === id;
   });
-  s;
 }; // ZONE - deleting an entry
 
 
@@ -8694,7 +8711,9 @@ var validateJournalForm = function validateJournalForm(inputData) {
     avgExit: avgExit,
     returnCash: returnCash,
     returnPercent: returnPercent,
-    body: body
+    body: body,
+    previousTicker: '',
+    previousDate: ''
   }; // all validation checks passed
 
   return ['PASS', entryObj];

@@ -122,6 +122,8 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
     returnCash,
     returnPercent,
     body,
+    previousTicker: '',
+    previousDate: '',
   };
 
   // all validation checks passed
