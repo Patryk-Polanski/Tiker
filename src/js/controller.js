@@ -144,7 +144,6 @@ const controlPopups = function (action, dataAttr, entryID) {
       );
     }
     if (dataAttr === 'delete') {
-      console.log('we need to delete an entry', dataAttr, entryID);
       hidePopup();
       targetSelectedEntry(+entryID);
       controlNoDataScreens();
@@ -321,7 +320,6 @@ const controlJournalPagination = function (paginationBtn) {
 };
 
 const controlAppReset = function () {
-  console.log('reset initiated');
   showDoubleBtnPopup(
     '',
     'reset',
@@ -348,7 +346,6 @@ const queryDOM = function () {
 // ZONE - event listeners
 
 window.addEventListener('DOMContentLoaded', e => {
-  console.log('DOM app is loaded');
   fetchUserFromJSON();
   queryDOM();
   controlNoDataScreens();

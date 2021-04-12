@@ -1558,8 +1558,6 @@ var calcPositionResult = function calcPositionResult(accountCapital, dataArr) {
 exports.calcPositionResult = calcPositionResult;
 
 var calcRatioResult = function calcRatioResult(dataArr) {
-  console.log('fresh array', dataArr);
-
   var _dataArr2 = _slicedToArray(dataArr, 3),
       entry = _dataArr2[0],
       exit = _dataArr2[1],
@@ -5572,8 +5570,6 @@ var formatMonthlyData = function formatMonthlyData(calendarData) {
 };
 
 var formatDailyData = function formatDailyData(calendarData) {
-  console.log('this is the calendar data');
-  console.log(calendarData);
   var daysArr = [];
   Object.keys(calendarData).forEach(function (monthKey) {
     daysArr.push.apply(daysArr, _toConsumableArray(calendarData[monthKey].map(function (day) {
@@ -8698,7 +8694,6 @@ var validateJournalForm = function validateJournalForm(inputData) {
   var entriesRegex = /^\d+(\.\d+)*$/;
   var areEntriesValid = true;
   [].concat(_toConsumableArray(entriesPrices), _toConsumableArray(entriesShares), _toConsumableArray(exitsPrices), _toConsumableArray(exitsShares)).forEach(function (digit) {
-    console.log(entriesRegex.test(digit));
     if (!entriesRegex.test(digit)) areEntriesValid = false;
   });
   if (!areEntriesValid) return ['ERROR', 'All entries, exits and shares must be positive and only contain digits and dots'];
@@ -8876,7 +8871,6 @@ var controlPopups = function controlPopups(action, dataAttr, entryID) {
     }
 
     if (dataAttr === 'delete') {
-      console.log('we need to delete an entry', dataAttr, entryID);
       (0, _coreView.hidePopup)();
       (0, _dataModel.targetSelectedEntry)(+entryID);
       controlNoDataScreens();
@@ -9045,7 +9039,6 @@ var controlJournalPagination = function controlJournalPagination(paginationBtn) 
 };
 
 var controlAppReset = function controlAppReset() {
-  console.log('reset initiated');
   (0, _coreView.showDoubleBtnPopup)('', 'reset', 'All user data will be deleted', 'Are you sure you want to reset the application?');
 };
 
@@ -9066,7 +9059,6 @@ var queryDOM = function queryDOM() {
 
 
 window.addEventListener('DOMContentLoaded', function (e) {
-  console.log('DOM app is loaded');
   (0, _dataModel.fetchUserFromJSON)();
   queryDOM();
   controlNoDataScreens();

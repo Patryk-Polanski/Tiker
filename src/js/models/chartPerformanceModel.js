@@ -43,8 +43,6 @@ const formatMonthlyData = function (calendarData) {
 };
 
 const formatDailyData = function (calendarData) {
-  console.log('this is the calendar data');
-  console.log(calendarData);
   let daysArr = [];
 
   Object.keys(calendarData).forEach(monthKey => {

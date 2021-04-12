@@ -324,7 +324,6 @@ var _loginView = require("./views/loginView");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 window.addEventListener('DOMContentLoaded', function (e) {
-  console.log('DOM is loaded');
   (0, _loginView.addHandlerLogin)();
 });
 },{"./helpers":"js/helpers.js","./views/loginView":"js/views/loginView.js"}],"../../../Users/Patryk/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {

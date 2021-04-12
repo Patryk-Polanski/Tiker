@@ -8,7 +8,6 @@ export const calcPositionResult = function (accountCapital, dataArr) {
 };
 
 export const calcRatioResult = function (dataArr) {
-  console.log('fresh array', dataArr);
   const [entry, exit, stop] = dataArr;
   if (dataArr.sort((a, b) => a - b).indexOf(entry) !== 1) return;
   const exitDistance = makeAbsolute(exit - entry);

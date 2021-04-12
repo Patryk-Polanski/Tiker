@@ -56,7 +56,6 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
   let areEntriesValid = true;
   [...entriesPrices, ...entriesShares, ...exitsPrices, ...exitsShares].forEach(
     digit => {
-      console.log(entriesRegex.test(digit));
       if (!entriesRegex.test(digit)) areEntriesValid = false;
     }
   );
