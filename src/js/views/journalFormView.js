@@ -81,7 +81,7 @@ const addKeyEventToDetailsInputs = function () {
         clearTimeout(keystrokeTimer);
         keystrokeTimer = setTimeout(() => {
           calculateDetailsOutput(e.target);
-        }, 1600);
+        }, 1000);
       });
     });
 };

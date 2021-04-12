@@ -1463,6 +1463,7 @@ body {
 .c-journal-form__error-message {
   margin-top: 30px;
   color: #c4456f;
+  line-height: 1.4;
 }
 .c-journal-form__hidden-el {
   opacity: 0;

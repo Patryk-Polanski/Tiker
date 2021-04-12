@@ -4,11 +4,10 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
   if (accountCapital < 1)
     return ['ERROR', 'Account capital needs to be above zero'];
 
-  let dateRegex = /^[0-9\/]+$/;
-
   const dateLong = createLongDate(inputData.date);
 
   // dates validation
+  let dateRegex = /^[0-9\/]+$/;
   if (dateLong === 'ERROR')
     return ['ERROR', 'date must be in the format of dd/mm/yy'];
 
@@ -39,22 +38,33 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
       'All entries, exits and shares rows must be filled in or deleted',
     ];
 
-  const entriesPrices = inputData.entriesPrices.map(entry => +entry);
-  const entriesShares = inputData.entriesShares.map(entry => +entry);
-  const exitsPrices = inputData.exitsPrices.map(exit => +exit);
-  const exitsShares = inputData.exitsShares.map(exit => +exit);
+  const entriesPrices = inputData.entriesPrices
+    .map(entry => +entry)
+    .filter(entry => entry > 0);
+  const entriesShares = inputData.entriesShares
+    .map(entry => +entry)
+    .filter(entry => entry > 0);
+  const exitsPrices = inputData.exitsPrices
+    .map(exit => +exit)
+    .filter(entry => entry > 0);
+  const exitsShares = inputData.exitsShares
+    .map(exit => +exit)
+    .filter(entry => entry > 0);
 
-  const absoluteNumberCheck = [
-    ...entriesPrices,
-    ...entriesShares,
-    ...exitsPrices,
-    ...exitsShares,
-  ].filter(number => number < 0);
+  // validating if prices and shares only have digits and dots
+  let entriesRegex = /^\d+(\.\d+)*$/;
+  let areEntriesValid = true;
+  [...entriesPrices, ...entriesShares, ...exitsPrices, ...exitsShares].forEach(
+    digit => {
+      console.log(entriesRegex.test(digit));
+      if (!entriesRegex.test(digit)) areEntriesValid = false;
+    }
+  );
 
-  if (absoluteNumberCheck.length > 0)
+  if (!areEntriesValid)
     return [
       'ERROR',
-      'All entries, exits and shares must have a positive value',
+      'All entries, exits and shares must be positive and only contain digits and dots',
     ];
 
   if (
@@ -63,7 +73,7 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
   )
     return [
       'ERROR',
-      'All entries, exits and shares rows must be filled in or deleted',
+      'All entries, exits and shares rows must be filled in or deleted. Only positive digits and dots are accepted',
     ];
 
   // check if the number of entry shares equals the number of exit shares

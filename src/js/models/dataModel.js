@@ -589,6 +589,13 @@ export const targetSelectedEntry = function (entryID) {
       );
   }
 
+  // check if this was the last trade for the date
+  if (user.calendarData[dateKey][indexInCalendar].trades.length < 1)
+    user.calendarData[dateKey].splice(indexInCalendar, 1);
+
+  // check if month key doesn't have any more trades
+  if (user.calendarData[dateKey].length < 1) delete user.calendarData[dateKey];
+
   // journal
   user.journal.splice(IndexInJournal, 1);
 

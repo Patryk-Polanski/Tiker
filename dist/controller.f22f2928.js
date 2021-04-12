@@ -1175,8 +1175,12 @@ var targetSelectedEntry = function targetSelectedEntry(entryID) {
       return trade.id;
     }).indexOf(entryID);
     if (indexInTrades !== -1) user.calendarData[dateKey][indexInCalendar].trades.splice(indexInTrades, 1);
-  } // journal
+  } // check if this was the last trade for the date
 
+
+  if (user.calendarData[dateKey][indexInCalendar].trades.length < 1) user.calendarData[dateKey].splice(indexInCalendar, 1); // check if month key doesn't have any more trades
+
+  if (user.calendarData[dateKey].length < 1) delete user.calendarData[dateKey]; // journal
 
   user.journal.splice(IndexInJournal, 1);
   console.log(user);
@@ -5568,6 +5572,8 @@ var formatMonthlyData = function formatMonthlyData(calendarData) {
 };
 
 var formatDailyData = function formatDailyData(calendarData) {
+  console.log('this is the calendar data');
+  console.log(calendarData);
   var daysArr = [];
   Object.keys(calendarData).forEach(function (monthKey) {
     daysArr.push.apply(daysArr, _toConsumableArray(calendarData[monthKey].map(function (day) {
@@ -8417,7 +8423,7 @@ var addKeyEventToDetailsInputs = function addKeyEventToDetailsInputs() {
       clearTimeout(keystrokeTimer);
       keystrokeTimer = setTimeout(function () {
         calculateDetailsOutput(e.target);
-      }, 1600);
+      }, 1000);
     });
   });
 };
@@ -8652,9 +8658,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 var validateJournalForm = function validateJournalForm(inputData) {
   var accountCapital = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   if (accountCapital < 1) return ['ERROR', 'Account capital needs to be above zero'];
-  var dateRegex = /^[0-9\/]+$/;
   var dateLong = (0, _helpers.createLongDate)(inputData.date); // dates validation
 
+  var dateRegex = /^[0-9\/]+$/;
   if (dateLong === 'ERROR') return ['ERROR', 'date must be in the format of dd/mm/yy'];
   var dateShort = (0, _helpers.createShortDate)(dateLong); // stock ticker validation
 
@@ -8670,21 +8676,33 @@ var validateJournalForm = function validateJournalForm(inputData) {
   if (!inputData.entriesPrices || !inputData.entriesShares || !inputData.exitsPrices || !inputData.exitsShares) return ['ERROR', 'All entries, exits and shares rows must be filled in or deleted'];
   var entriesPrices = inputData.entriesPrices.map(function (entry) {
     return +entry;
+  }).filter(function (entry) {
+    return entry > 0;
   });
   var entriesShares = inputData.entriesShares.map(function (entry) {
     return +entry;
+  }).filter(function (entry) {
+    return entry > 0;
   });
   var exitsPrices = inputData.exitsPrices.map(function (exit) {
     return +exit;
+  }).filter(function (entry) {
+    return entry > 0;
   });
   var exitsShares = inputData.exitsShares.map(function (exit) {
     return +exit;
+  }).filter(function (entry) {
+    return entry > 0;
+  }); // validating if prices and shares only have digits and dots
+
+  var entriesRegex = /^\d+(\.\d+)*$/;
+  var areEntriesValid = true;
+  [].concat(_toConsumableArray(entriesPrices), _toConsumableArray(entriesShares), _toConsumableArray(exitsPrices), _toConsumableArray(exitsShares)).forEach(function (digit) {
+    console.log(entriesRegex.test(digit));
+    if (!entriesRegex.test(digit)) areEntriesValid = false;
   });
-  var absoluteNumberCheck = [].concat(_toConsumableArray(entriesPrices), _toConsumableArray(entriesShares), _toConsumableArray(exitsPrices), _toConsumableArray(exitsShares)).filter(function (number) {
-    return number < 0;
-  });
-  if (absoluteNumberCheck.length > 0) return ['ERROR', 'All entries, exits and shares must have a positive value'];
-  if (entriesPrices.length !== entriesShares.length || exitsPrices.length !== exitsShares.length) return ['ERROR', 'All entries, exits and shares rows must be filled in or deleted']; // check if the number of entry shares equals the number of exit shares
+  if (!areEntriesValid) return ['ERROR', 'All entries, exits and shares must be positive and only contain digits and dots'];
+  if (entriesPrices.length !== entriesShares.length || exitsPrices.length !== exitsShares.length) return ['ERROR', 'All entries, exits and shares rows must be filled in or deleted. Only positive digits and dots are accepted']; // check if the number of entry shares equals the number of exit shares
 
   var sharesAmount = entriesShares.reduce(function (acc, num) {
     return acc + num;
