@@ -47,7 +47,7 @@
   "worstTrades": [
     {
       "id": 1618183416710,
-      "dateFull": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
       "dateShort": "3/4/21",
       "ticker": "VZ",
       "side": "short",
@@ -64,7 +64,7 @@
     },
     {
       "id": 1618179060347,
-      "dateFull": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "14/3/21",
       "ticker": "SNAP",
       "side": "short",
@@ -82,7 +82,7 @@
   "bestTrades": [
     {
       "id": 1618178927841,
-      "dateFull": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "9/3/21",
       "ticker": "AMC",
       "side": "long",
@@ -104,7 +104,7 @@
     },
     {
       "id": 1618178976232,
-      "dateFull": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "12/3/21",
       "ticker": "RIOT",
       "side": "long",
@@ -120,7 +120,7 @@
     },
     {
       "id": 1618179285427,
-      "dateFull": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "24/3/21",
       "ticker": "BMBL",
       "side": "long",
@@ -142,7 +142,7 @@
     },
     {
       "id": 1618179185438,
-      "dateFull": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "19/3/21",
       "ticker": "NIO",
       "side": "short",
@@ -318,7 +318,7 @@
   "journal": [
     {
       "id": 1618178927841,
-      "dateFull": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "9/3/21",
       "ticker": "AMC",
       "side": "long",
@@ -341,7 +341,7 @@
     },
     {
       "id": 1618178976232,
-      "dateFull": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "12/3/21",
       "ticker": "RIOT",
       "side": "long",
@@ -358,7 +358,7 @@
     },
     {
       "id": 1618179060347,
-      "dateFull": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "14/3/21",
       "ticker": "SNAP",
       "side": "short",
@@ -375,7 +375,7 @@
     },
     {
       "id": 1618179185438,
-      "dateFull": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "19/3/21",
       "ticker": "NIO",
       "side": "short",
@@ -392,7 +392,7 @@
     },
     {
       "id": 1618179285427,
-      "dateFull": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateLong": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "24/3/21",
       "ticker": "BMBL",
       "side": "long",
@@ -415,7 +415,7 @@
     },
     {
       "id": 1618183416710,
-      "dateFull": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
       "dateShort": "3/4/21",
       "ticker": "VZ",
       "side": "short",

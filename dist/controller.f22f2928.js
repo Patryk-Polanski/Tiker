@@ -297,7 +297,7 @@ module.exports = {
   },
   "worstTrades": [{
     "id": 1618183416710,
-    "dateFull": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
     "dateShort": "3/4/21",
     "ticker": "VZ",
     "side": "short",
@@ -313,7 +313,7 @@ module.exports = {
     "total": 7167
   }, {
     "id": 1618179060347,
-    "dateFull": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "14/3/21",
     "ticker": "SNAP",
     "side": "short",
@@ -329,7 +329,7 @@ module.exports = {
   }],
   "bestTrades": [{
     "id": 1618178927841,
-    "dateFull": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "9/3/21",
     "ticker": "AMC",
     "side": "long",
@@ -344,7 +344,7 @@ module.exports = {
     "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis volutpat est velit egestas dui id ornare. Eget magna fermentum iaculis eu non. In tellus integer feugiat scelerisque varius morbi enim nunc faucibus. A lacus vestibulum sed arcu non odio euismod lacinia. Etiam sit amet nisl purus. Lorem sed risus ultricies tristique nulla aliquet enim. Augue ut lectus arcu bibendum at varius vel. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. "
   }, {
     "id": 1618178976232,
-    "dateFull": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "12/3/21",
     "ticker": "RIOT",
     "side": "long",
@@ -359,7 +359,7 @@ module.exports = {
     "body": ""
   }, {
     "id": 1618179285427,
-    "dateFull": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "24/3/21",
     "ticker": "BMBL",
     "side": "long",
@@ -374,7 +374,7 @@ module.exports = {
     "body": ""
   }, {
     "id": 1618179185438,
-    "dateFull": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "19/3/21",
     "ticker": "NIO",
     "side": "short",
@@ -516,7 +516,7 @@ module.exports = {
   },
   "journal": [{
     "id": 1618178927841,
-    "dateFull": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "9/3/21",
     "ticker": "AMC",
     "side": "long",
@@ -532,7 +532,7 @@ module.exports = {
     "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis volutpat est velit egestas dui id ornare. Eget magna fermentum iaculis eu non. In tellus integer feugiat scelerisque varius morbi enim nunc faucibus. A lacus vestibulum sed arcu non odio euismod lacinia. Etiam sit amet nisl purus. Lorem sed risus ultricies tristique nulla aliquet enim. Augue ut lectus arcu bibendum at varius vel. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. "
   }, {
     "id": 1618178976232,
-    "dateFull": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "12/3/21",
     "ticker": "RIOT",
     "side": "long",
@@ -548,7 +548,7 @@ module.exports = {
     "body": ""
   }, {
     "id": 1618179060347,
-    "dateFull": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "14/3/21",
     "ticker": "SNAP",
     "side": "short",
@@ -564,7 +564,7 @@ module.exports = {
     "body": ""
   }, {
     "id": 1618179185438,
-    "dateFull": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "19/3/21",
     "ticker": "NIO",
     "side": "short",
@@ -580,7 +580,7 @@ module.exports = {
     "body": "Urna nunc id cursus metus aliquam eleifend mi in. Ullamcorper sit amet risus nullam eget felis eget. Sit amet facilisis magna etiam tempor orci. Sed egestas egestas fringilla phasellus faucibus. Nulla aliquet enim tortor at auctor. Scelerisque viverra mauris in aliquam. Nisl rhoncus mattis rhoncus urna neque viverra justo nec ultrices. Consequat nisl vel pretium lectus quam id."
   }, {
     "id": 1618179285427,
-    "dateFull": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateLong": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "24/3/21",
     "ticker": "BMBL",
     "side": "long",
@@ -596,7 +596,7 @@ module.exports = {
     "body": ""
   }, {
     "id": 1618183416710,
-    "dateFull": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
     "dateShort": "3/4/21",
     "ticker": "VZ",
     "side": "short",
@@ -699,7 +699,6 @@ exports.fetchUserFromJSON = fetchUserFromJSON;
 
 var clearUserObject = function clearUserObject() {
   user = startingUserObject;
-  console.log('this is the cleared user object');
   console.log(user);
 };
 
@@ -905,16 +904,12 @@ var addToTickers = function addToTickers(entry) {
   // if the current ticker and previous ticker don't match, meaning the ticker has changed
   if (entry.ticker !== entry.previousTicker && entry.previousTicker.length > 0) {
     var previousTicker = user.tickers[entry.previousTicker];
-    console.log('this is the previous ticker');
-    console.log(previousTicker);
     var tradesIndex = user.tickers[entry.previousTicker].trades.map(function (trade) {
       return trade.id;
     }).indexOf(entry.id);
 
     if (tradesIndex !== -1) {
       user.tickers[entry.previousTicker].trades.splice(tradesIndex, 1);
-      console.log('this is the spliced user object');
-      console.log(user);
     }
   }
 
@@ -966,36 +961,61 @@ var addToTickers = function addToTickers(entry) {
   }
 };
 
-var addToCalendarData = function addToCalendarData(newEntry) {
-  var dateKey = _config.MONTHS_FORMAT[new Date(newEntry.dateFull).getMonth()] + String(new Date(newEntry.dateFull).getFullYear()).slice(-2);
+var addToCalendarData = function addToCalendarData(entry) {
+  // if the currentDate and previousDate don't match, this means the date has changed
+  if (entry.dateShort !== entry.previousDateShort && entry.previousDateShort.length > 0) {
+    var previousDateKey = _config.MONTHS_FORMAT[new Date(entry.previousDateLong).getMonth()] + String(new Date(entry.previousDateLong).getFullYear()).slice(-2);
+    var previousDateIndex = user.calendarData[previousDateKey].map(function (day) {
+      return day.dateShort;
+    }).indexOf(entry.previousDateShort);
+    var tradeIndex;
+
+    if (previousDateIndex !== -1) {
+      tradeIndex = user.calendarData[previousDateKey][previousDateIndex].trades.map(function (trade) {
+        return trade.id;
+      }).indexOf(entry.id);
+    }
+
+    if (tradeIndex !== -1) {
+      user.calendarData[previousDateKey][previousDateIndex].trades.splice(tradeIndex, 1);
+    } // check if this was the last trade for the date
+
+
+    if (user.calendarData[previousDateKey][previousDateIndex].trades.length < 1) user.calendarData[previousDateKey].splice(previousDateIndex, 1); // check if month key doesn't have any more trades
+
+    if (user.calendarData[previousDateKey].length < 1) delete user.calendarData[previousDateKey];
+  }
+
+  entry.previousDateShort = entry.dateShort;
+  entry.previousDateLong = entry.dateLong;
+  var dateKey = _config.MONTHS_FORMAT[new Date(entry.dateLong).getMonth()] + String(new Date(entry.dateLong).getFullYear()).slice(-2);
   var currentKey = user.calendarData[dateKey];
 
   if (currentKey) {
     var entryDateIndex = currentKey.map(function (day) {
       return day.dateShort;
-    }).indexOf(newEntry.dateShort);
+    }).indexOf(entry.dateShort);
 
     if (entryDateIndex !== -1) {
-      console.log('it is the same day');
       currentKey[entryDateIndex].trades.push({
-        id: newEntry.id,
-        side: newEntry.side,
-        returnCash: newEntry.returnCash,
-        returnPercent: newEntry.returnPercent,
-        total: newEntry.total
+        id: entry.id,
+        side: entry.side,
+        returnCash: entry.returnCash,
+        returnPercent: entry.returnPercent,
+        total: entry.total
       });
     }
 
     if (entryDateIndex === -1) {
       currentKey.push({
-        dateLong: newEntry.dateFull,
-        dateShort: newEntry.dateShort,
+        dateLong: entry.dateLong,
+        dateShort: entry.dateShort,
         trades: [{
-          id: newEntry.id,
-          side: newEntry.side,
-          returnCash: newEntry.returnCash,
-          returnPercent: newEntry.returnPercent,
-          total: newEntry.total
+          id: entry.id,
+          side: entry.side,
+          returnCash: entry.returnCash,
+          returnPercent: entry.returnPercent,
+          total: entry.total
         }]
       });
     }
@@ -1003,14 +1023,14 @@ var addToCalendarData = function addToCalendarData(newEntry) {
 
   if (!currentKey) {
     user.calendarData[dateKey] = [{
-      dateLong: newEntry.dateFull,
-      dateShort: newEntry.dateShort,
+      dateLong: entry.dateLong,
+      dateShort: entry.dateShort,
       trades: [{
-        id: newEntry.id,
-        side: newEntry.side,
-        returnCash: newEntry.returnCash,
-        returnPercent: newEntry.returnPercent,
-        total: newEntry.total
+        id: entry.id,
+        side: entry.side,
+        returnCash: entry.returnCash,
+        returnPercent: entry.returnPercent,
+        total: entry.total
       }]
     }];
   }
@@ -1070,8 +1090,12 @@ var updateJournalData = function updateJournalData(newEntry) {
     previousSide = user.journal[newEntryIndex].side; // previous tickers and dates
 
     var previousTicker = user.journal[newEntryIndex].ticker;
+    var previousDateShort = user.journal[newEntryIndex].dateShort;
+    var previousDateLong = user.journal[newEntryIndex].dateLong;
     user.journal[newEntryIndex] = newEntry;
     user.journal[newEntryIndex].previousTicker = previousTicker;
+    user.journal[newEntryIndex].previousDateShort = previousDateShort;
+    user.journal[newEntryIndex].previousDateLong = previousDateLong;
     updateCapital(newEntry.returnCash, 'plus');
     newEntry.total = user.capital;
   } // newEntryIndex is -1, meaning the journal entry is new
@@ -1155,8 +1179,6 @@ var targetSelectedEntry = function targetSelectedEntry(entryID) {
 
 
   user.journal.splice(IndexInJournal, 1);
-  console.log('~~~~~~~~~~~~~~~~~~~~~~');
-  console.log(foundEntry);
   console.log(user);
 };
 
@@ -1164,6 +1186,7 @@ exports.targetSelectedEntry = targetSelectedEntry;
 
 var saveToLocalStorage = function saveToLocalStorage() {
   localStorage.setItem('TikerData', JSON.stringify(user));
+  console.log(user);
 };
 
 exports.saveToLocalStorage = saveToLocalStorage;
@@ -8394,7 +8417,7 @@ var addKeyEventToDetailsInputs = function addKeyEventToDetailsInputs() {
       clearTimeout(keystrokeTimer);
       keystrokeTimer = setTimeout(function () {
         calculateDetailsOutput(e.target);
-      }, 2000);
+      }, 1600);
     });
   });
 };
@@ -8630,10 +8653,10 @@ var validateJournalForm = function validateJournalForm(inputData) {
   var accountCapital = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   if (accountCapital < 1) return ['ERROR', 'Account capital needs to be above zero'];
   var dateRegex = /^[0-9\/]+$/;
-  var dateFull = (0, _helpers.createLongDate)(inputData.date); // dates validation
+  var dateLong = (0, _helpers.createLongDate)(inputData.date); // dates validation
 
-  if (dateFull === 'ERROR') return ['ERROR', 'date must be in the format of dd/mm/yy'];
-  var dateShort = (0, _helpers.createShortDate)(dateFull); // stock ticker validation
+  if (dateLong === 'ERROR') return ['ERROR', 'date must be in the format of dd/mm/yy'];
+  var dateShort = (0, _helpers.createShortDate)(dateLong); // stock ticker validation
 
   var tickerRegex = /^[a-zA-Z]+$/;
   var ticker;
@@ -8699,7 +8722,7 @@ var validateJournalForm = function validateJournalForm(inputData) {
   var body = inputData.body;
   var entryObj = {
     id: id,
-    dateFull: dateFull,
+    dateLong: dateLong,
     dateShort: dateShort,
     ticker: ticker,
     side: side,
@@ -8713,7 +8736,8 @@ var validateJournalForm = function validateJournalForm(inputData) {
     returnPercent: returnPercent,
     body: body,
     previousTicker: '',
-    previousDate: ''
+    previousDateShort: '',
+    previousDateLong: ''
   }; // all validation checks passed
 
   return ['PASS', entryObj];
@@ -9092,7 +9116,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64767" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52674" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

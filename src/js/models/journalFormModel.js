@@ -6,13 +6,13 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
 
   let dateRegex = /^[0-9\/]+$/;
 
-  const dateFull = createLongDate(inputData.date);
+  const dateLong = createLongDate(inputData.date);
 
   // dates validation
-  if (dateFull === 'ERROR')
+  if (dateLong === 'ERROR')
     return ['ERROR', 'date must be in the format of dd/mm/yy'];
 
-  const dateShort = createShortDate(dateFull);
+  const dateShort = createShortDate(dateLong);
 
   // stock ticker validation
   let tickerRegex = /^[a-zA-Z]+$/;
@@ -109,7 +109,7 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
 
   const entryObj = {
     id,
-    dateFull,
+    dateLong,
     dateShort,
     ticker,
     side,
@@ -123,7 +123,8 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
     returnPercent,
     body,
     previousTicker: '',
-    previousDate: '',
+    previousDateShort: '',
+    previousDateLong: '',
   };
 
   // all validation checks passed

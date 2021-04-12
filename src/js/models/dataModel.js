@@ -55,7 +55,6 @@ export const fetchUserFromJSON = function () {
 
 export const clearUserObject = function () {
   user = startingUserObject;
-  console.log('this is the cleared user object');
   console.log(user);
 };
 
@@ -296,16 +295,12 @@ const addToTickers = function (entry) {
     entry.previousTicker.length > 0
   ) {
     let previousTicker = user.tickers[entry.previousTicker];
-    console.log('this is the previous ticker');
-    console.log(previousTicker);
 
     const tradesIndex = user.tickers[entry.previousTicker].trades
       .map(trade => trade.id)
       .indexOf(entry.id);
     if (tradesIndex !== -1) {
       user.tickers[entry.previousTicker].trades.splice(tradesIndex, 1);
-      console.log('this is the spliced user object');
-      console.log(user);
     }
   }
 
@@ -361,36 +356,75 @@ const addToTickers = function (entry) {
   }
 };
 
-const addToCalendarData = function (newEntry) {
+const addToCalendarData = function (entry) {
+  // if the currentDate and previousDate don't match, this means the date has changed
+  if (
+    entry.dateShort !== entry.previousDateShort &&
+    entry.previousDateShort.length > 0
+  ) {
+    const previousDateKey =
+      MONTHS_FORMAT[new Date(entry.previousDateLong).getMonth()] +
+      String(new Date(entry.previousDateLong).getFullYear()).slice(-2);
+
+    const previousDateIndex = user.calendarData[previousDateKey]
+      .map(day => day.dateShort)
+      .indexOf(entry.previousDateShort);
+
+    let tradeIndex;
+    if (previousDateIndex !== -1) {
+      tradeIndex = user.calendarData[previousDateKey][previousDateIndex].trades
+        .map(trade => trade.id)
+        .indexOf(entry.id);
+    }
+
+    if (tradeIndex !== -1) {
+      user.calendarData[previousDateKey][previousDateIndex].trades.splice(
+        tradeIndex,
+        1
+      );
+    }
+
+    // check if this was the last trade for the date
+    if (user.calendarData[previousDateKey][previousDateIndex].trades.length < 1)
+      user.calendarData[previousDateKey].splice(previousDateIndex, 1);
+
+    // check if month key doesn't have any more trades
+    if (user.calendarData[previousDateKey].length < 1)
+      delete user.calendarData[previousDateKey];
+  }
+
+  entry.previousDateShort = entry.dateShort;
+  entry.previousDateLong = entry.dateLong;
+
   const dateKey =
-    MONTHS_FORMAT[new Date(newEntry.dateFull).getMonth()] +
-    String(new Date(newEntry.dateFull).getFullYear()).slice(-2);
+    MONTHS_FORMAT[new Date(entry.dateLong).getMonth()] +
+    String(new Date(entry.dateLong).getFullYear()).slice(-2);
+
   const currentKey = user.calendarData[dateKey];
   if (currentKey) {
     const entryDateIndex = currentKey
       .map(day => day.dateShort)
-      .indexOf(newEntry.dateShort);
+      .indexOf(entry.dateShort);
     if (entryDateIndex !== -1) {
-      console.log('it is the same day');
       currentKey[entryDateIndex].trades.push({
-        id: newEntry.id,
-        side: newEntry.side,
-        returnCash: newEntry.returnCash,
-        returnPercent: newEntry.returnPercent,
-        total: newEntry.total,
+        id: entry.id,
+        side: entry.side,
+        returnCash: entry.returnCash,
+        returnPercent: entry.returnPercent,
+        total: entry.total,
       });
     }
     if (entryDateIndex === -1) {
       currentKey.push({
-        dateLong: newEntry.dateFull,
-        dateShort: newEntry.dateShort,
+        dateLong: entry.dateLong,
+        dateShort: entry.dateShort,
         trades: [
           {
-            id: newEntry.id,
-            side: newEntry.side,
-            returnCash: newEntry.returnCash,
-            returnPercent: newEntry.returnPercent,
-            total: newEntry.total,
+            id: entry.id,
+            side: entry.side,
+            returnCash: entry.returnCash,
+            returnPercent: entry.returnPercent,
+            total: entry.total,
           },
         ],
       });
@@ -399,15 +433,15 @@ const addToCalendarData = function (newEntry) {
   if (!currentKey) {
     user.calendarData[dateKey] = [
       {
-        dateLong: newEntry.dateFull,
-        dateShort: newEntry.dateShort,
+        dateLong: entry.dateLong,
+        dateShort: entry.dateShort,
         trades: [
           {
-            id: newEntry.id,
-            side: newEntry.side,
-            returnCash: newEntry.returnCash,
-            returnPercent: newEntry.returnPercent,
-            total: newEntry.total,
+            id: entry.id,
+            side: entry.side,
+            returnCash: entry.returnCash,
+            returnPercent: entry.returnPercent,
+            total: entry.total,
           },
         ],
       },
@@ -458,8 +492,13 @@ export const updateJournalData = function (newEntry) {
     previousSide = user.journal[newEntryIndex].side;
     // previous tickers and dates
     const previousTicker = user.journal[newEntryIndex].ticker;
+    const previousDateShort = user.journal[newEntryIndex].dateShort;
+    const previousDateLong = user.journal[newEntryIndex].dateLong;
     user.journal[newEntryIndex] = newEntry;
     user.journal[newEntryIndex].previousTicker = previousTicker;
+    user.journal[newEntryIndex].previousDateShort = previousDateShort;
+    user.journal[newEntryIndex].previousDateLong = previousDateLong;
+
     updateCapital(newEntry.returnCash, 'plus');
     newEntry.total = user.capital;
   }
@@ -553,11 +592,10 @@ export const targetSelectedEntry = function (entryID) {
   // journal
   user.journal.splice(IndexInJournal, 1);
 
-  console.log('~~~~~~~~~~~~~~~~~~~~~~');
-  console.log(foundEntry);
   console.log(user);
 };
 
 export const saveToLocalStorage = function () {
   localStorage.setItem('TikerData', JSON.stringify(user));
+  console.log(user);
 };
