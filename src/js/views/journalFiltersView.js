@@ -19,5 +19,7 @@ export const addJournalFiltersHandler = function (handler) {
     );
     if (e.target.classList.contains('js-new-trade-btn') && !existingNewEntry)
       handler('new');
+    if (e.target.classList.contains('js-filter-btn') && !existingNewEntry)
+      handler('filter');
   });
 };

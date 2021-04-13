@@ -308,6 +308,10 @@ const controlJournalFilters = function (action, id = '') {
     renderJournalForm(passData('dummyJournal'));
     checkFormMode();
   }
+  if (action === 'filter')
+    showSingleBtnPopup(
+      'Unfortunately the filters feature is not available in the current version'
+    );
 };
 
 const controlJournalPagination = function (paginationBtn) {

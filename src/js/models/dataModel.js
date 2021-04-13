@@ -259,7 +259,13 @@ const compareToWorstBest = function (newEntry) {
       return;
     }
 
-    user.bestTrades.push(newEntry);
+    user.bestTrades.push({
+      id: newEntry.id,
+      dateLong: newEntry.dateLong,
+      dateShort: newEntry.dateShort,
+      ticker: newEntry.ticker,
+      returnCash: newEntry.returnCash,
+    });
     user.bestTrades = user.bestTrades.sort(
       (a, b) => b.returnCash - a.returnCash
     );
@@ -280,7 +286,13 @@ const compareToWorstBest = function (newEntry) {
       return;
     }
 
-    user.worstTrades.push(newEntry);
+    user.worstTrades.push({
+      id: newEntry.id,
+      dateLong: newEntry.dateLong,
+      dateShort: newEntry.dateShort,
+      ticker: newEntry.ticker,
+      returnCash: newEntry.returnCash,
+    });
     user.worstTrades = user.worstTrades.sort(
       (a, b) => a.returnCash - b.returnCash
     );
