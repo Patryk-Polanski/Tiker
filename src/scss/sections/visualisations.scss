@@ -1,5 +1,6 @@
 .s-visualisations {
   min-height: 100vh;
+  max-height: 1440px;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -40,6 +41,7 @@
   }
 
   &__grid {
+    min-height: calc(100vh - 60px);
     min-width: 900px;
     padding: 10px;
     margin-top: 20px;
