@@ -6,6 +6,8 @@ let user;
 
 const startingUserObject = {
   capital: 0,
+  initialCapital: 0,
+  newAccount: true,
   overall: {
     total: 0,
     proportions: [
@@ -32,16 +34,21 @@ const startingUserObject = {
   dummyJournal: [
     {
       id: '',
-      ticker: '',
+      dateLong: '',
       dateShort: '',
+      ticker: '',
       side: '',
+      tradeEntries: [['', '']],
+      tradeExits: [['', '']],
       sharesAmount: '',
       avgEntry: '',
       avgExit: '',
       returnCash: '',
       returnPercent: '',
-      tradeEntries: [['', '']],
-      tradeExits: [['', '']],
+      total: '',
+      previousTicker: '',
+      previousDateShort: '',
+      previousDateLong: '',
       body: '',
     },
   ],
@@ -483,8 +490,23 @@ export const passNestedData = function (field, field2) {
 };
 
 export const updateCapital = function (amount = '', action = '') {
+  if (amount && action) {
+    if (action === 'minus') {
+      if (user.journal.length > 0) {
+        user.journal[user.journal.length - 1].total -= Math.round(amount);
+        user.capital = user.journal[user.journal.length - 1].total;
+      } else {
+        user.capital -= Math.round(amount);
+      }
+    }
+    if (action === 'plus') user.capital += Math.round(amount);
+    if (action === 'plus' && user.newAccount) {
+      user.initialCapital += Math.round(amount);
+      user.newAccount = false;
+    }
+    return [action, stringifyNum(amount), stringifyNum(user.capital)];
+  }
   user.capital = Math.round(user.journal[user.journal.length - 1].total);
-  return [action, stringifyNum(amount), stringifyNum(user.capital)];
 };
 
 export const updateCalendarData = function (obj) {
@@ -538,7 +560,7 @@ const updateJournalTradesTotals = function () {
       // return;
     } else {
       console.log('trade', trade, 'index', index);
-      user.journal[index].total = 7000 + trade.returnCash;
+      user.journal[index].total = user.initialCapital + trade.returnCash;
     }
   });
 };

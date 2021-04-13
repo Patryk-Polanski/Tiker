@@ -26,9 +26,6 @@ const formatMonthlyData = function (calendarData, journal) {
       .map(trade => trade.id)
       .indexOf(lastDay[lastDay.length - 1].id);
 
-    console.log('this is the lastTradeIndexInJournal! month');
-    console.log(lastTradeIndexInJournal);
-
     formattedMonthsArr.push({
       returnCash,
       dateLong,
@@ -71,9 +68,6 @@ const formatDailyData = function (calendarData, journal) {
     const lastTradeIndexInJournal = journal
       .map(trade => trade.id)
       .indexOf(day[day.length - 1].id);
-
-    console.log('this is the lastTradeIndexInJournal! day');
-    console.log(lastTradeIndexInJournal);
 
     return {
       dateShort: day.dateShort,

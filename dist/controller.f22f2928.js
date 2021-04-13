@@ -259,6 +259,8 @@ exports.USER_PASSWORD = USER_PASSWORD;
 },{}],"data.json":[function(require,module,exports) {
 module.exports = {
   "capital": 7261,
+  "initialCapital": 7000,
+  "newAccount": false,
   "overall": {
     "total": 8,
     "proportions": [{
@@ -435,8 +437,7 @@ module.exports = {
         "id": 1618178927841,
         "side": "long",
         "returnCash": 111,
-        "returnPercent": 1.59,
-        "total": 7111
+        "returnPercent": 1.59
       }]
     }, {
       "dateLong": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
@@ -445,8 +446,7 @@ module.exports = {
         "id": 1618178976232,
         "side": "long",
         "returnCash": 84,
-        "returnPercent": 1.18,
-        "total": 7195
+        "returnPercent": 1.18
       }]
     }, {
       "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
@@ -455,8 +455,7 @@ module.exports = {
         "id": 1618179060347,
         "side": "short",
         "returnCash": -60,
-        "returnPercent": -0.83,
-        "total": 7135
+        "returnPercent": -0.83
       }]
     }, {
       "dateLong": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
@@ -465,8 +464,7 @@ module.exports = {
         "id": 1618179185438,
         "side": "short",
         "returnCash": 16,
-        "returnPercent": 0.22,
-        "total": 7151
+        "returnPercent": 0.22
       }]
     }, {
       "dateLong": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
@@ -475,8 +473,7 @@ module.exports = {
         "id": 1618179285427,
         "side": "long",
         "returnCash": 80,
-        "returnPercent": 1.12,
-        "total": 7231
+        "returnPercent": 1.12
       }]
     }],
     "apr21": [{
@@ -486,8 +483,7 @@ module.exports = {
         "id": 1618183416710,
         "side": "short",
         "returnCash": -64.02,
-        "returnPercent": -0.89,
-        "total": 7167
+        "returnPercent": -0.89
       }]
     }, {
       "dateLong": "Tue Apr 13 2021 00:00:00 GMT+0100 (British Summer Time)",
@@ -496,8 +492,7 @@ module.exports = {
         "id": 1618330460149,
         "side": "long",
         "returnCash": 126,
-        "returnPercent": 1.76,
-        "total": 7293
+        "returnPercent": 1.76
       }]
     }, {
       "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
@@ -506,8 +501,7 @@ module.exports = {
         "id": 1618330625831,
         "side": "short",
         "returnCash": -32.2,
-        "returnPercent": -0.44,
-        "total": 7261
+        "returnPercent": -0.44
       }]
     }]
   },
@@ -697,6 +691,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var user;
 var startingUserObject = {
   capital: 0,
+  initialCapital: 0,
+  newAccount: true,
   overall: {
     total: 0,
     proportions: [{
@@ -725,16 +721,21 @@ var startingUserObject = {
   journal: [],
   dummyJournal: [{
     id: '',
-    ticker: '',
+    dateLong: '',
     dateShort: '',
+    ticker: '',
     side: '',
+    tradeEntries: [['', '']],
+    tradeExits: [['', '']],
     sharesAmount: '',
     avgEntry: '',
     avgExit: '',
     returnCash: '',
     returnPercent: '',
-    tradeEntries: [['', '']],
-    tradeExits: [['', '']],
+    total: '',
+    previousTicker: '',
+    previousDateShort: '',
+    previousDateLong: '',
     body: ''
   }]
 };
@@ -1126,8 +1127,28 @@ exports.passNestedData = passNestedData;
 var updateCapital = function updateCapital() {
   var amount = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+  if (amount && action) {
+    if (action === 'minus') {
+      if (user.journal.length > 0) {
+        user.journal[user.journal.length - 1].total -= Math.round(amount);
+        user.capital = user.journal[user.journal.length - 1].total;
+      } else {
+        user.capital -= Math.round(amount);
+      }
+    }
+
+    if (action === 'plus') user.capital += Math.round(amount);
+
+    if (action === 'plus' && user.newAccount) {
+      user.initialCapital += Math.round(amount);
+      user.newAccount = false;
+    }
+
+    return [action, (0, _helpers.stringifyNum)(amount), (0, _helpers.stringifyNum)(user.capital)];
+  }
+
   user.capital = Math.round(user.journal[user.journal.length - 1].total);
-  return [action, (0, _helpers.stringifyNum)(amount), (0, _helpers.stringifyNum)(user.capital)];
 };
 
 exports.updateCapital = updateCapital;
@@ -1185,7 +1206,7 @@ var updateJournalTradesTotals = function updateJournalTradesTotals() {
       console.log('trade', trade, 'index', index); // return;
     } else {
       console.log('trade', trade, 'index', index);
-      user.journal[index].total = 7000 + trade.returnCash;
+      user.journal[index].total = user.initialCapital + trade.returnCash;
     }
   });
 };
@@ -5640,8 +5661,6 @@ var formatMonthlyData = function formatMonthlyData(calendarData, journal) {
     var lastTradeIndexInJournal = journal.map(function (trade) {
       return trade.id;
     }).indexOf(lastDay[lastDay.length - 1].id);
-    console.log('this is the lastTradeIndexInJournal! month');
-    console.log(lastTradeIndexInJournal);
     formattedMonthsArr.push({
       returnCash: returnCash,
       dateLong: dateLong,
@@ -5676,8 +5695,6 @@ var formatDailyData = function formatDailyData(calendarData, journal) {
     var lastTradeIndexInJournal = journal.map(function (trade) {
       return trade.id;
     }).indexOf(day[day.length - 1].id);
-    console.log('this is the lastTradeIndexInJournal! day');
-    console.log(lastTradeIndexInJournal);
     return {
       dateShort: day.dateShort,
       dateLong: day.dateLong,
@@ -8975,6 +8992,8 @@ var controlPopups = function controlPopups(action, dataAttr, entryID) {
       controlLongShortPieRender();
       controlJournalRender();
       (0, _coreView.showSingleBtnPopup)('Entry has been deleted');
+      (0, _dataModel.updateCapital)();
+      (0, _accountDetailsView.updateCapitalOutput)((0, _dataModel.passData)('capital'));
     }
   }
 };

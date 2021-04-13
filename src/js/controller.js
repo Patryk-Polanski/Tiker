@@ -155,6 +155,8 @@ const controlPopups = function (action, dataAttr, entryID) {
       controlLongShortPieRender();
       controlJournalRender();
       showSingleBtnPopup('Entry has been deleted');
+      updateCapital();
+      updateCapitalOutput(passData('capital'));
     }
   }
 };

@@ -1,5 +1,7 @@
 {
   "capital": 7261,
+  "initialCapital": 7000,
+  "newAccount": false,
   "overall": {
     "total": 8,
     "proportions": [
@@ -212,8 +214,7 @@
             "id": 1618178927841,
             "side": "long",
             "returnCash": 111,
-            "returnPercent": 1.59,
-            "total": 7111
+            "returnPercent": 1.59
           }
         ]
       },
@@ -225,8 +226,7 @@
             "id": 1618178976232,
             "side": "long",
             "returnCash": 84,
-            "returnPercent": 1.18,
-            "total": 7195
+            "returnPercent": 1.18
           }
         ]
       },
@@ -238,8 +238,7 @@
             "id": 1618179060347,
             "side": "short",
             "returnCash": -60,
-            "returnPercent": -0.83,
-            "total": 7135
+            "returnPercent": -0.83
           }
         ]
       },
@@ -251,8 +250,7 @@
             "id": 1618179185438,
             "side": "short",
             "returnCash": 16,
-            "returnPercent": 0.22,
-            "total": 7151
+            "returnPercent": 0.22
           }
         ]
       },
@@ -264,8 +262,7 @@
             "id": 1618179285427,
             "side": "long",
             "returnCash": 80,
-            "returnPercent": 1.12,
-            "total": 7231
+            "returnPercent": 1.12
           }
         ]
       }
@@ -279,8 +276,7 @@
             "id": 1618183416710,
             "side": "short",
             "returnCash": -64.02,
-            "returnPercent": -0.89,
-            "total": 7167
+            "returnPercent": -0.89
           }
         ]
       },
@@ -292,8 +288,7 @@
             "id": 1618330460149,
             "side": "long",
             "returnCash": 126,
-            "returnPercent": 1.76,
-            "total": 7293
+            "returnPercent": 1.76
           }
         ]
       },
@@ -305,8 +300,7 @@
             "id": 1618330625831,
             "side": "short",
             "returnCash": -32.2,
-            "returnPercent": -0.44,
-            "total": 7261
+            "returnPercent": -0.44
           }
         ]
       }
