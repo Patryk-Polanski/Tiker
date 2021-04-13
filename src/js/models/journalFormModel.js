@@ -124,7 +124,6 @@ export const validateJournalForm = function (inputData, accountCapital = 0) {
     side,
     tradeEntries,
     tradeExits,
-    exitsPrices,
     sharesAmount,
     avgEntry,
     avgExit,

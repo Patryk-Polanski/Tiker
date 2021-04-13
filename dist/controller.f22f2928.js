@@ -467,13 +467,15 @@ module.exports = {
     "side": "long",
     "tradeEntries": [[9.35, 50], [9.55, 50]],
     "tradeExits": [[10.54, 50], [10.59, 50]],
-    "exitsPrices": [10.54, 10.59],
     "sharesAmount": 100,
     "avgEntry": 9.45,
     "avgExit": 10.56,
     "returnCash": 111,
     "returnPercent": 1.59,
     "total": 7111,
+    "previousTicker": "",
+    "previousDateShort": "",
+    "previousDateLong": "",
     "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis volutpat est velit egestas dui id ornare. Eget magna fermentum iaculis eu non. In tellus integer feugiat scelerisque varius morbi enim nunc faucibus. A lacus vestibulum sed arcu non odio euismod lacinia. Etiam sit amet nisl purus. Lorem sed risus ultricies tristique nulla aliquet enim. Augue ut lectus arcu bibendum at varius vel. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. "
   }, {
     "id": 1618178976232,
@@ -483,13 +485,15 @@ module.exports = {
     "side": "long",
     "tradeEntries": [[49.62, 70]],
     "tradeExits": [[50.82, 70]],
-    "exitsPrices": [50.82],
     "sharesAmount": 70,
     "avgEntry": 49.62,
     "avgExit": 50.82,
     "returnCash": 84,
     "returnPercent": 1.18,
     "total": 7195,
+    "previousTicker": "",
+    "previousDateShort": "",
+    "previousDateLong": "",
     "body": ""
   }, {
     "id": 1618179060347,
@@ -499,13 +503,15 @@ module.exports = {
     "side": "short",
     "tradeEntries": [[63.11, 60]],
     "tradeExits": [[64.11, 60]],
-    "exitsPrices": [64.11],
     "sharesAmount": 60,
     "avgEntry": 63.11,
     "avgExit": 64.11,
     "returnCash": -60,
     "returnPercent": -0.83,
     "total": 7135,
+    "previousTicker": "",
+    "previousDateShort": "",
+    "previousDateLong": "",
     "body": ""
   }, {
     "id": 1618179185438,
@@ -515,13 +521,15 @@ module.exports = {
     "side": "short",
     "tradeEntries": [[39.84, 50]],
     "tradeExits": [[39.52, 50]],
-    "exitsPrices": [39.52],
     "sharesAmount": 50,
     "avgEntry": 39.84,
     "avgExit": 39.52,
     "returnCash": 16,
     "returnPercent": 0.22,
     "total": 7151,
+    "previousTicker": "",
+    "previousDateShort": "",
+    "previousDateLong": "",
     "body": "Urna nunc id cursus metus aliquam eleifend mi in. Ullamcorper sit amet risus nullam eget felis eget. Sit amet facilisis magna etiam tempor orci. Sed egestas egestas fringilla phasellus faucibus. Nulla aliquet enim tortor at auctor. Scelerisque viverra mauris in aliquam. Nisl rhoncus mattis rhoncus urna neque viverra justo nec ultrices. Consequat nisl vel pretium lectus quam id."
   }, {
     "id": 1618179285427,
@@ -531,13 +539,15 @@ module.exports = {
     "side": "long",
     "tradeEntries": [[60.24, 50], [60.41, 50]],
     "tradeExits": [[60.98, 40], [61.23, 60]],
-    "exitsPrices": [60.98, 61.23],
     "sharesAmount": 100,
     "avgEntry": 60.33,
     "avgExit": 61.13,
     "returnCash": 80,
     "returnPercent": 1.12,
     "total": 7231,
+    "previousTicker": "",
+    "previousDateShort": "",
+    "previousDateLong": "",
     "body": ""
   }, {
     "id": 1618183416710,
@@ -547,27 +557,34 @@ module.exports = {
     "side": "short",
     "tradeEntries": [[56.65, 66]],
     "tradeExits": [[57.62, 66]],
-    "exitsPrices": [57.62],
     "sharesAmount": 66,
     "avgEntry": 56.65,
     "avgExit": 57.62,
     "returnCash": -64.02,
     "returnPercent": -0.89,
-    "body": "Orci sagittis eu volutpat odio facilisis. Sed blandit libero volutpat sed cras ornare arcu. Sit amet porttitor eget dolor morbi non arcu risus quis. Diam sit amet nisl suscipit. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et. Nunc non blandit massa enim nec dui nunc. Elementum sagittis vitae et leo. Accumsan in nisl nisi scelerisque. Vitae sapien pellentesque habitant morbi tristique senectus et netus. Accumsan lacus vel facilisis volutpat est velit egestas.",
-    "total": 7167
+    "total": 7167,
+    "previousTicker": "",
+    "previousDateShort": "",
+    "previousDateLong": "",
+    "body": "Orci sagittis eu volutpat odio facilisis. Sed blandit libero volutpat sed cras ornare arcu. Sit amet porttitor eget dolor morbi non arcu risus quis. Diam sit amet nisl suscipit. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et. Nunc non blandit massa enim nec dui nunc. Elementum sagittis vitae et leo. Accumsan in nisl nisi scelerisque. Vitae sapien pellentesque habitant morbi tristique senectus et netus. Accumsan lacus vel facilisis volutpat est velit egestas."
   }],
   "dummyJournal": [{
     "id": "",
-    "ticker": "",
+    "dateLong": "",
     "dateShort": "",
+    "ticker": "",
     "side": "",
+    "tradeEntries": [["", ""]],
+    "tradeExits": [["", ""]],
     "sharesAmount": "",
     "avgEntry": "",
     "avgExit": "",
     "returnCash": "",
     "returnPercent": "",
-    "tradeEntries": [["", ""]],
-    "tradeExits": [["", ""]],
+    "total": "",
+    "previousTicker": "",
+    "previousDateShort": "",
+    "previousDateLong": "",
     "body": ""
   }]
 };
@@ -635,8 +652,8 @@ var startingUserObject = {
 };
 
 var fetchUserFromJSON = function fetchUserFromJSON() {
-  user = startingUserObject; // if (jsonData) user = jsonData;
-
+  user = startingUserObject;
+  if (_data.default) user = _data.default;
   console.log(user);
 };
 
@@ -8699,7 +8716,6 @@ var validateJournalForm = function validateJournalForm(inputData) {
     side: side,
     tradeEntries: tradeEntries,
     tradeExits: tradeExits,
-    exitsPrices: exitsPrices,
     sharesAmount: sharesAmount,
     avgEntry: avgEntry,
     avgExit: avgExit,

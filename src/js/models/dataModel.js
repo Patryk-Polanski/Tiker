@@ -49,7 +49,7 @@ const startingUserObject = {
 
 export const fetchUserFromJSON = function () {
   user = startingUserObject;
-  // if (jsonData) user = jsonData;
+  if (jsonData) user = jsonData;
   console.log(user);
 };
 
