@@ -121,8 +121,6 @@ export const renderWorstBestChart = function (passedData) {
       .attr('fill', 'orange');
 
     // update and append virtual elements
-    console.log('@@@@');
-    console.log(x.bandwidth());
     rects
       .enter()
       .append('rect')

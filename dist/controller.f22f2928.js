@@ -5850,8 +5850,6 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
       return y(total);
     }).attr('fill', 'orange'); // update and append virtual elements
 
-    console.log('@@@@');
-    console.log(x.bandwidth());
     rects.enter().append('rect').attr('width', x.bandwidth < 62 ? x.bandwidth : 62).attr('height', 0).attr('y', graphHeight).attr('x', function (d) {
       return x(d.ticker);
     }).attr('fill', 'orange').attr('height', function (d) {
