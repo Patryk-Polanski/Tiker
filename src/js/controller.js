@@ -267,7 +267,7 @@ const controlJournalFormEvents = function (action, id = '', targetEl = '') {
       showSingleBtnPopup(
         `% return: ${validationOutcome[1].returnPercent}, cash return: ${validationOutcome[1].returnCash}`,
         `stock: ${validationOutcome[1].ticker}, date: ${validationOutcome[1].dateShort}`,
-        'Journal Updated'
+        'Journal has been updated and sorted'
       );
       switchJournalFormModes('read-only');
       controlJournalRender();

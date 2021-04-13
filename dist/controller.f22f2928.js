@@ -763,7 +763,7 @@ exports.checkIfJournalEmpty = checkIfJournalEmpty;
 
 var sortJournal = function sortJournal(data) {
   return data.sort(function (a, b) {
-    return a.id - b.id;
+    return new Date(a.dateLong) - new Date(b.dateLong);
   });
 };
 
@@ -9061,7 +9061,7 @@ var controlJournalFormEvents = function controlJournalFormEvents(action) {
     if (validationOutcome[0] === 'PASS') {
       (0, _journalFormView.clearFormValidationError)();
       var updatedCapital = (0, _dataModel.updateJournalData)(validationOutcome[1]);
-      (0, _coreView.showSingleBtnPopup)("% return: ".concat(validationOutcome[1].returnPercent, ", cash return: ").concat(validationOutcome[1].returnCash), "stock: ".concat(validationOutcome[1].ticker, ", date: ").concat(validationOutcome[1].dateShort), 'Journal Updated');
+      (0, _coreView.showSingleBtnPopup)("% return: ".concat(validationOutcome[1].returnPercent, ", cash return: ").concat(validationOutcome[1].returnCash), "stock: ".concat(validationOutcome[1].ticker, ", date: ").concat(validationOutcome[1].dateShort), 'Journal has been updated and sorted');
       (0, _journalFormView.switchJournalFormModes)('read-only');
       controlJournalRender();
       (0, _accountDetailsView.updateCapitalOutput)(updatedCapital); // re-render visualisations

@@ -63,7 +63,8 @@ export const checkIfJournalEmpty = function () {
   if (user.journal.length > 0) return 'full';
 };
 
-const sortJournal = data => data.sort((a, b) => a.id - b.id);
+const sortJournal = data =>
+  data.sort((a, b) => new Date(a.dateLong) - new Date(b.dateLong));
 
 const addToOverall = function (newEntry, newEntryIndex, previousSide) {
   if (newEntryIndex === -1) user.overall.total++;
