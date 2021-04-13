@@ -17,8 +17,13 @@ export const renderMonthlyTable = function (data) {
     Array.from(monthlyEls.monthlyTableRows).forEach(row => row.remove());
   }
 
-  const keys = Object.keys(data).reverse();
-  keys.forEach(key => {
+  const keys = Object.keys(data);
+  const sortedKeys = keys
+    .map(key => [key, data[key].dateLong])
+    .sort((a, b) => new Date(a[1]) - new Date(b[1]))
+    .map(key => key[0]);
+
+  sortedKeys.forEach(key => {
     const current = data[key];
     const html = `
     <tr class="js-table-monthly-row">

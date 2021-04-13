@@ -3,6 +3,7 @@ import { crunchData, reduceData, filterNonStrings } from '../helpers';
 
 const createPlaceholderObj = function (key) {
   return {
+    dateLong: '',
     total: {
       month: key,
       monthlyReturn: [0],
@@ -59,6 +60,8 @@ export const computeMonthlyData = function (rawData) {
   keys.forEach(key => {
     const currentMonth = rawData[key];
     let tableUnit = createPlaceholderObj(key);
+
+    tableUnit.dateLong = currentMonth[0].dateLong;
 
     // grab all the trades from that month and flatten into one array
     const flattenedDays = currentMonth.map(day => day.trades).flat();

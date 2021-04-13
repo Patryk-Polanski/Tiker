@@ -258,15 +258,15 @@ var USER_PASSWORD = 'app';
 exports.USER_PASSWORD = USER_PASSWORD;
 },{}],"data.json":[function(require,module,exports) {
 module.exports = {
-  "capital": 7167,
+  "capital": 7261,
   "overall": {
-    "total": 6,
+    "total": 8,
     "proportions": [{
       "side": "long",
-      "total": 3
+      "total": 4
     }, {
       "side": "short",
-      "total": 3
+      "total": 4
     }]
   },
   "streaks": {
@@ -288,10 +288,10 @@ module.exports = {
     },
     "current": {
       "trades": [{
-        "id": 1618183416710,
-        "ticker": "VZ",
-        "date": "3/4/21",
-        "returnCash": -64.02
+        "id": 1618330625831,
+        "ticker": "OCGN",
+        "date": "14/4/21",
+        "returnCash": -32.2
       }]
     }
   },
@@ -307,8 +307,20 @@ module.exports = {
     "dateShort": "14/3/21",
     "ticker": "SNAP",
     "returnCash": -60
+  }, {
+    "id": 1618330625831,
+    "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "14/4/21",
+    "ticker": "OCGN",
+    "returnCash": -32.2
   }],
   "bestTrades": [{
+    "id": 1618330460149,
+    "dateLong": "Tue Apr 13 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "13/4/21",
+    "ticker": "TWTR",
+    "returnCash": 126
+  }, {
     "id": 1618178927841,
     "dateLong": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "9/3/21",
@@ -393,6 +405,26 @@ module.exports = {
         "returnCash": -64.02,
         "returnPercent": -0.89
       }]
+    },
+    "TWTR": {
+      "ticker": "TWTR",
+      "avgReturn": 126,
+      "trades": [{
+        "id": 1618330460149,
+        "shares": 120,
+        "returnCash": 126,
+        "returnPercent": 1.76
+      }]
+    },
+    "OCGN": {
+      "ticker": "OCGN",
+      "avgReturn": -32.2,
+      "trades": [{
+        "id": 1618330625831,
+        "shares": 70,
+        "returnCash": -32.2,
+        "returnPercent": -0.44
+      }]
     }
   },
   "calendarData": {
@@ -456,6 +488,26 @@ module.exports = {
         "returnCash": -64.02,
         "returnPercent": -0.89,
         "total": 7167
+      }]
+    }, {
+      "dateLong": "Tue Apr 13 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "13/4/21",
+      "trades": [{
+        "id": 1618330460149,
+        "side": "long",
+        "returnCash": 126,
+        "returnPercent": 1.76,
+        "total": 7293
+      }]
+    }, {
+      "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "14/4/21",
+      "trades": [{
+        "id": 1618330625831,
+        "side": "short",
+        "returnCash": -32.2,
+        "returnPercent": -0.44,
+        "total": 7261
       }]
     }]
   },
@@ -567,6 +619,42 @@ module.exports = {
     "previousDateShort": "",
     "previousDateLong": "",
     "body": "Orci sagittis eu volutpat odio facilisis. Sed blandit libero volutpat sed cras ornare arcu. Sit amet porttitor eget dolor morbi non arcu risus quis. Diam sit amet nisl suscipit. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et. Nunc non blandit massa enim nec dui nunc. Elementum sagittis vitae et leo. Accumsan in nisl nisi scelerisque. Vitae sapien pellentesque habitant morbi tristique senectus et netus. Accumsan lacus vel facilisis volutpat est velit egestas."
+  }, {
+    "id": 1618330460149,
+    "dateLong": "Tue Apr 13 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "13/4/21",
+    "ticker": "TWTR",
+    "side": "long",
+    "tradeEntries": [[72.09, 60], [72.24, 60]],
+    "tradeExits": [[73.21, 120]],
+    "sharesAmount": 120,
+    "avgEntry": 72.16,
+    "avgExit": 73.21,
+    "returnCash": 126,
+    "returnPercent": 1.76,
+    "body": "Eu lobortis elementum nibh tellus molestie nunc non. Bibendum neque egestas congue quisque egestas diam in. Varius vel pharetra vel turpis nunc eget lorem. Ultrices sagittis orci a scelerisque. Quis eleifend quam adipiscing vitae proin. Risus feugiat in ante metus dictum at tempor. Urna condimentum mattis pellentesque id nibh tortor id aliquet lectus.",
+    "previousTicker": "TWTR",
+    "previousDateShort": "13/4/21",
+    "previousDateLong": "Tue Apr 13 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 7293
+  }, {
+    "id": 1618330625831,
+    "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "14/4/21",
+    "ticker": "OCGN",
+    "side": "short",
+    "tradeEntries": [[6.68, 70]],
+    "tradeExits": [[7.14, 70]],
+    "sharesAmount": 70,
+    "avgEntry": 6.68,
+    "avgExit": 7.14,
+    "returnCash": -32.2,
+    "returnPercent": -0.44,
+    "body": "",
+    "previousTicker": "OCGN",
+    "previousDateShort": "14/4/21",
+    "previousDateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 7261
   }],
   "dummyJournal": [{
     "id": "",
@@ -1575,8 +1663,15 @@ var renderMonthlyTable = function renderMonthlyTable(data) {
     });
   }
 
-  var keys = Object.keys(data).reverse();
-  keys.forEach(function (key) {
+  var keys = Object.keys(data);
+  var sortedKeys = keys.map(function (key) {
+    return [key, data[key].dateLong];
+  }).sort(function (a, b) {
+    return new Date(a[1]) - new Date(b[1]);
+  }).map(function (key) {
+    return key[0];
+  });
+  sortedKeys.forEach(function (key) {
     var current = data[key];
     var html = "\n    <tr class=\"js-table-monthly-row\">\n        <th>".concat(current.total.month, "</th>\n        <td class=\"").concat(current.total.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.total.monthlyReturn.toFixed(2), "</td>\n        <td>").concat(current.total.totalTrades, "</td>\n        <td class=\"").concat(current.total.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.total.avgReturn, "</td>\n        <td>").concat(+current.total.avgWinPercent, "%</td>\n        <td>").concat(+current.total.avgLossPercent, "%</td>\n        <td>").concat(+current.total.battingAvg, "%</td>\n        <td>").concat(current.total.winLossRatio, "</td>\n    </tr>\n    <tr class=\"js-table-monthly-row\">\n        <th>").concat(current.long.side, "</th>\n        <td class=\"").concat(current.long.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.long.monthlyReturn.toFixed(2), "</td>\n        <td>").concat(current.long.totalTrades, "</td>\n        <td class=\"").concat(current.long.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.long.avgReturn, "</td>\n        <td>").concat(+current.long.avgWinPercent, "%</td>\n        <td>").concat(+current.long.avgLossPercent, "%</td>\n        <td>").concat(+current.long.battingAvg, "%</td>\n        <td>").concat(current.long.winLossRatio, "</td>\n    </tr>\n    <tr class=\"s-monthly__table-unit js-table-monthly-row\">\n        <th>").concat(current.short.side, "</th>\n        <td class=\"").concat(current.short.monthlyReturn >= 0 ? '' : 'negative', "\">").concat(current.short.monthlyReturn.toFixed(2), "</td>\n        <td>").concat(current.short.totalTrades, "</td>\n        <td class=\"").concat(current.short.avgReturn >= 0 ? '' : 'negative', "\">").concat(current.short.avgReturn, "</td>\n        <td>").concat(+current.short.avgWinPercent, "%</td>\n        <td>").concat(+current.short.avgLossPercent, "%</td>\n        <td>").concat(+current.short.battingAvg, "%</td>\n        <td>").concat(current.short.winLossRatio, "</td>\n    </tr>\n    ");
     monthlyEls.monthlyTableHead.insertAdjacentHTML('afterend', html);
@@ -1769,6 +1864,7 @@ var _helpers = require("../helpers");
 // import { reduce } from 'core-js/core/array';
 var createPlaceholderObj = function createPlaceholderObj(key) {
   return {
+    dateLong: '',
     total: {
       month: key,
       monthlyReturn: [0],
@@ -1823,7 +1919,8 @@ var computeMonthlyData = function computeMonthlyData(rawData) {
   var keys = Object.keys(rawData);
   keys.forEach(function (key) {
     var currentMonth = rawData[key];
-    var tableUnit = createPlaceholderObj(key); // grab all the trades from that month and flatten into one array
+    var tableUnit = createPlaceholderObj(key);
+    tableUnit.dateLong = currentMonth[0].dateLong; // grab all the trades from that month and flatten into one array
 
     var flattenedDays = currentMonth.map(function (day) {
       return day.trades;
