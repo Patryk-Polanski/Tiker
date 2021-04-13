@@ -5486,7 +5486,7 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
 
   if (passedData) {
     type = passedData[0];
-    data = passedData[1].slice(0, 15);
+    data = passedData[1].slice(0, 16);
     updatePerformanceHeading(type);
     clearPerformanceCanvas();
   }
@@ -5850,7 +5850,9 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
       return y(total);
     }).attr('fill', 'orange'); // update and append virtual elements
 
-    rects.enter().append('rect').attr('width', x.bandwidth).attr('height', 0).attr('y', graphHeight).attr('x', function (d) {
+    console.log('@@@@');
+    console.log(x.bandwidth());
+    rects.enter().append('rect').attr('width', x.bandwidth < 62 ? x.bandwidth : 62).attr('height', 0).attr('y', graphHeight).attr('x', function (d) {
       return x(d.ticker);
     }).attr('fill', 'orange').attr('height', function (d) {
       return graphHeight - y(d.returnCash);

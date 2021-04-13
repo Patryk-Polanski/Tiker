@@ -121,10 +121,12 @@ export const renderWorstBestChart = function (passedData) {
       .attr('fill', 'orange');
 
     // update and append virtual elements
+    console.log('@@@@');
+    console.log(x.bandwidth());
     rects
       .enter()
       .append('rect')
-      .attr('width', x.bandwidth)
+      .attr('width', x.bandwidth < 62 ? x.bandwidth : 62)
       .attr('height', 0)
       .attr('y', graphHeight)
       .attr('x', d => x(d.ticker))

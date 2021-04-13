@@ -1,11 +1,3 @@
-.performance-canvas {
-  //   flex-grow: 1;
-  //   width: 100%;
-  //   min-height: 400px;
-  //   height: 100%;
-  //   max-height: 50vh;
-}
-
 .worst-best-canvas {
   width: 100%;
 }
@@ -83,11 +75,6 @@
 .worst-best-overlay-line {
   stroke: $grey-light;
   stroke-width: 2;
-}
-
-.long-short-pie {
-  // @include ts-heading-3;
-  // @include font-family-one;
 }
 
 .pie-chart-legend {
