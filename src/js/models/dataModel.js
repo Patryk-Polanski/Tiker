@@ -482,9 +482,8 @@ export const passNestedData = function (field, field2) {
   }
 };
 
-export const updateCapital = function (amount, action) {
-  if (action === 'minus') user.capital -= Math.round(amount);
-  if (action === 'plus') user.capital += Math.round(amount);
+export const updateCapital = function (amount = '', action = '') {
+  user.capital = Math.round(user.journal[user.journal.length - 1].total);
   return [action, stringifyNum(amount), stringifyNum(user.capital)];
 };
 
@@ -500,7 +499,6 @@ export const updateJournalData = function (newEntry) {
   let previousSide;
   // if the id already exists, meaning the journal entry has been updated
   if (newEntryIndex !== -1) {
-    updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
     newEntry.total = user.capital;
     previousSide = user.journal[newEntryIndex].side;
     // previous tickers and dates
@@ -512,21 +510,37 @@ export const updateJournalData = function (newEntry) {
     user.journal[newEntryIndex].previousDateShort = previousDateShort;
     user.journal[newEntryIndex].previousDateLong = previousDateLong;
 
-    updateCapital(newEntry.returnCash, 'plus');
-    newEntry.total = user.capital;
+    sortJournal(user.journal);
+
+    updateJournalTradesTotals();
+    updateCapital();
   }
 
   // newEntryIndex is -1, meaning the journal entry is new
   if (newEntryIndex === -1) {
-    updateCapital(newEntry.returnCash, 'plus');
-    newEntry.total = user.capital;
     user.journal.push(newEntry);
     // sort the data
     sortJournal(user.journal);
+    updateJournalTradesTotals();
+    updateCapital();
   }
   compareStatistics(newEntry, newEntryIndex, previousSide);
 
   return [user.capital];
+};
+
+const updateJournalTradesTotals = function () {
+  user.journal.forEach((trade, index, arr) => {
+    if (index != 0) {
+      user.journal[index].total =
+        user.journal[index - 1].total + trade.returnCash;
+      console.log('trade', trade, 'index', index);
+      // return;
+    } else {
+      console.log('trade', trade, 'index', index);
+      user.journal[index].total = 7000 + trade.returnCash;
+    }
+  });
 };
 
 export const findJournalEntry = function (id) {
@@ -543,8 +557,12 @@ export const targetSelectedEntry = function (entryID) {
     .indexOf(entryID);
   const foundEntry = user.journal[IndexInJournal];
 
-  // capital
-  user.capital -= foundEntry.returnCash;
+  // journal
+  user.journal.splice(IndexInJournal, 1);
+
+  sortJournal(user.journal);
+  updateCapital();
+  updateJournalTradesTotals();
 
   // overall
   if (foundEntry.side === 'short') user.overall.proportions[1].total--;
@@ -608,9 +626,6 @@ export const targetSelectedEntry = function (entryID) {
 
   // check if month key doesn't have any more trades
   if (user.calendarData[dateKey].length < 1) delete user.calendarData[dateKey];
-
-  // journal
-  user.journal.splice(IndexInJournal, 1);
 
   console.log(user);
 };

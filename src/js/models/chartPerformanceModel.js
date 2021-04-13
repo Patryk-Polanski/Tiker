@@ -4,7 +4,7 @@ const formatShortDate = function (dateShort) {
   return splitDate.join('/');
 };
 
-const formatMonthlyData = function (calendarData) {
+const formatMonthlyData = function (calendarData, journal) {
   let monthsArr = [];
 
   Object.keys(calendarData).forEach(monthKey => {
@@ -21,13 +21,19 @@ const formatMonthlyData = function (calendarData) {
     const dateLong = month[0].dateLong;
     const dateShort = formatShortDate(month[0].dateShort);
     const lastDay = month[month.length - 1];
-    const lastTradeTotal = lastDay[lastDay.length - 1].total;
+
+    const lastTradeIndexInJournal = journal
+      .map(trade => trade.id)
+      .indexOf(lastDay[lastDay.length - 1].id);
+
+    console.log('this is the lastTradeIndexInJournal! month');
+    console.log(lastTradeIndexInJournal);
 
     formattedMonthsArr.push({
       returnCash,
       dateLong,
       dateShort,
-      total: lastTradeTotal,
+      total: Math.round(journal[lastTradeIndexInJournal].total),
     });
   });
 
@@ -42,7 +48,7 @@ const formatMonthlyData = function (calendarData) {
   return formattedMonthsArr;
 };
 
-const formatDailyData = function (calendarData) {
+const formatDailyData = function (calendarData, journal) {
   let daysArr = [];
 
   Object.keys(calendarData).forEach(monthKey => {
@@ -61,12 +67,19 @@ const formatDailyData = function (calendarData) {
         if (trade.returnCash) return trade.returnCash;
       })
       .reduce((acc, num) => acc + num, 0);
-    const total = day[day.length - 1].total;
+
+    const lastTradeIndexInJournal = journal
+      .map(trade => trade.id)
+      .indexOf(day[day.length - 1].id);
+
+    console.log('this is the lastTradeIndexInJournal! day');
+    console.log(lastTradeIndexInJournal);
+
     return {
       dateShort: day.dateShort,
       dateLong: day.dateLong,
       returnCash,
-      total,
+      total: Math.round(journal[lastTradeIndexInJournal].total),
     };
   });
 
@@ -79,8 +92,14 @@ const formatDailyData = function (calendarData) {
   return formattedDaysArr;
 };
 
-export const formatPerformanceData = function (calendarData, capital, type) {
-  if (type === 'day') return ['Daily', formatDailyData(calendarData, capital)];
+export const formatPerformanceData = function (
+  calendarData,
+  capital,
+  journal,
+  type
+) {
+  if (type === 'day')
+    return ['Daily', formatDailyData(calendarData, journal, capital)];
   if (type === 'month')
-    return ['Monthly', formatMonthlyData(calendarData, capital)];
+    return ['Monthly', formatMonthlyData(calendarData, journal, capital)];
 };

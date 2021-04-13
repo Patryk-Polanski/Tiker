@@ -1123,9 +1123,10 @@ var passNestedData = function passNestedData(field, field2) {
 
 exports.passNestedData = passNestedData;
 
-var updateCapital = function updateCapital(amount, action) {
-  if (action === 'minus') user.capital -= Math.round(amount);
-  if (action === 'plus') user.capital += Math.round(amount);
+var updateCapital = function updateCapital() {
+  var amount = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  user.capital = Math.round(user.journal[user.journal.length - 1].total);
   return [action, (0, _helpers.stringifyNum)(amount), (0, _helpers.stringifyNum)(user.capital)];
 };
 
@@ -1147,7 +1148,6 @@ var updateJournalData = function updateJournalData(newEntry) {
   var previousSide; // if the id already exists, meaning the journal entry has been updated
 
   if (newEntryIndex !== -1) {
-    updateCapital(user.journal[newEntryIndex].returnCash, 'minus');
     newEntry.total = user.capital;
     previousSide = user.journal[newEntryIndex].side; // previous tickers and dates
 
@@ -1158,17 +1158,18 @@ var updateJournalData = function updateJournalData(newEntry) {
     user.journal[newEntryIndex].previousTicker = previousTicker;
     user.journal[newEntryIndex].previousDateShort = previousDateShort;
     user.journal[newEntryIndex].previousDateLong = previousDateLong;
-    updateCapital(newEntry.returnCash, 'plus');
-    newEntry.total = user.capital;
+    sortJournal(user.journal);
+    updateJournalTradesTotals();
+    updateCapital();
   } // newEntryIndex is -1, meaning the journal entry is new
 
 
   if (newEntryIndex === -1) {
-    updateCapital(newEntry.returnCash, 'plus');
-    newEntry.total = user.capital;
     user.journal.push(newEntry); // sort the data
 
     sortJournal(user.journal);
+    updateJournalTradesTotals();
+    updateCapital();
   }
 
   compareStatistics(newEntry, newEntryIndex, previousSide);
@@ -1176,6 +1177,18 @@ var updateJournalData = function updateJournalData(newEntry) {
 };
 
 exports.updateJournalData = updateJournalData;
+
+var updateJournalTradesTotals = function updateJournalTradesTotals() {
+  user.journal.forEach(function (trade, index, arr) {
+    if (index != 0) {
+      user.journal[index].total = user.journal[index - 1].total + trade.returnCash;
+      console.log('trade', trade, 'index', index); // return;
+    } else {
+      console.log('trade', trade, 'index', index);
+      user.journal[index].total = 7000 + trade.returnCash;
+    }
+  });
+};
 
 var findJournalEntry = function findJournalEntry(id) {
   if (!id) return;
@@ -1192,9 +1205,12 @@ var targetSelectedEntry = function targetSelectedEntry(entryID) {
   var IndexInJournal = user.journal.map(function (journal) {
     return journal.id;
   }).indexOf(entryID);
-  var foundEntry = user.journal[IndexInJournal]; // capital
+  var foundEntry = user.journal[IndexInJournal]; // journal
 
-  user.capital -= foundEntry.returnCash; // overall
+  user.journal.splice(IndexInJournal, 1);
+  sortJournal(user.journal);
+  updateCapital();
+  updateJournalTradesTotals(); // overall
 
   if (foundEntry.side === 'short') user.overall.proportions[1].total--;
   if (foundEntry.side === 'long') user.overall.proportions[0].total--;
@@ -1242,9 +1258,7 @@ var targetSelectedEntry = function targetSelectedEntry(entryID) {
 
   if (user.calendarData[dateKey][indexInCalendar].trades.length < 1) user.calendarData[dateKey].splice(indexInCalendar, 1); // check if month key doesn't have any more trades
 
-  if (user.calendarData[dateKey].length < 1) delete user.calendarData[dateKey]; // journal
-
-  user.journal.splice(IndexInJournal, 1);
+  if (user.calendarData[dateKey].length < 1) delete user.calendarData[dateKey];
   console.log(user);
 };
 
@@ -5606,7 +5620,7 @@ var formatShortDate = function formatShortDate(dateShort) {
   return splitDate.join('/');
 };
 
-var formatMonthlyData = function formatMonthlyData(calendarData) {
+var formatMonthlyData = function formatMonthlyData(calendarData, journal) {
   var monthsArr = [];
   Object.keys(calendarData).forEach(function (monthKey) {
     monthsArr.push(calendarData[monthKey].map(function (day) {
@@ -5623,12 +5637,16 @@ var formatMonthlyData = function formatMonthlyData(calendarData) {
     var dateLong = month[0].dateLong;
     var dateShort = formatShortDate(month[0].dateShort);
     var lastDay = month[month.length - 1];
-    var lastTradeTotal = lastDay[lastDay.length - 1].total;
+    var lastTradeIndexInJournal = journal.map(function (trade) {
+      return trade.id;
+    }).indexOf(lastDay[lastDay.length - 1].id);
+    console.log('this is the lastTradeIndexInJournal! month');
+    console.log(lastTradeIndexInJournal);
     formattedMonthsArr.push({
       returnCash: returnCash,
       dateLong: dateLong,
       dateShort: dateShort,
-      total: lastTradeTotal
+      total: Math.round(journal[lastTradeIndexInJournal].total)
     });
   });
   formattedMonthsArr.sort(function (a, b) {
@@ -5640,7 +5658,7 @@ var formatMonthlyData = function formatMonthlyData(calendarData) {
   return formattedMonthsArr;
 };
 
-var formatDailyData = function formatDailyData(calendarData) {
+var formatDailyData = function formatDailyData(calendarData, journal) {
   var daysArr = [];
   Object.keys(calendarData).forEach(function (monthKey) {
     daysArr.push.apply(daysArr, _toConsumableArray(calendarData[monthKey].map(function (day) {
@@ -5655,12 +5673,16 @@ var formatDailyData = function formatDailyData(calendarData) {
     }).reduce(function (acc, num) {
       return acc + num;
     }, 0);
-    var total = day[day.length - 1].total;
+    var lastTradeIndexInJournal = journal.map(function (trade) {
+      return trade.id;
+    }).indexOf(day[day.length - 1].id);
+    console.log('this is the lastTradeIndexInJournal! day');
+    console.log(lastTradeIndexInJournal);
     return {
       dateShort: day.dateShort,
       dateLong: day.dateLong,
       returnCash: returnCash,
-      total: total
+      total: Math.round(journal[lastTradeIndexInJournal].total)
     };
   });
   formattedDaysArr.sort(function (a, b) {
@@ -5672,9 +5694,9 @@ var formatDailyData = function formatDailyData(calendarData) {
   return formattedDaysArr;
 };
 
-var formatPerformanceData = function formatPerformanceData(calendarData, capital, type) {
-  if (type === 'day') return ['Daily', formatDailyData(calendarData, capital)];
-  if (type === 'month') return ['Monthly', formatMonthlyData(calendarData, capital)];
+var formatPerformanceData = function formatPerformanceData(calendarData, capital, journal, type) {
+  if (type === 'day') return ['Daily', formatDailyData(calendarData, journal, capital)];
+  if (type === 'month') return ['Monthly', formatMonthlyData(calendarData, journal, capital)];
 };
 
 exports.formatPerformanceData = formatPerformanceData;
@@ -8995,7 +9017,7 @@ var controlOverallRender = function controlOverallRender() {
 
 var controlPerformanceRender = function controlPerformanceRender() {
   var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'day';
-  (0, _chartPerformanceView.renderPerformanceChart)((0, _chartPerformanceModel.formatPerformanceData)((0, _dataModel.passData)('calendarData'), (0, _dataModel.passData)('capital'), type));
+  (0, _chartPerformanceView.renderPerformanceChart)((0, _chartPerformanceModel.formatPerformanceData)((0, _dataModel.passData)('calendarData'), (0, _dataModel.passData)('capital'), (0, _dataModel.passData)('journal'), type));
 };
 
 var controlWorstBestRender = function controlWorstBestRender() {

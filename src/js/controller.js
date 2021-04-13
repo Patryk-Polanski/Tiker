@@ -197,7 +197,12 @@ const controlOverallRender = function () {
 
 const controlPerformanceRender = function (type = 'day') {
   renderPerformanceChart(
-    formatPerformanceData(passData('calendarData'), passData('capital'), type)
+    formatPerformanceData(
+      passData('calendarData'),
+      passData('capital'),
+      passData('journal'),
+      type
+    )
   );
 };
 
