@@ -90,7 +90,12 @@
 
     &:hover {
       background-color: $brown-light;
+      background-color: pink;
       outline: 0;
+
+      & svg {
+        background-color: $brown-light;
+      }
     }
 
     & svg {

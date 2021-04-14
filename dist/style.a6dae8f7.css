@@ -205,13 +205,13 @@ span {
   width: 75px;
 }
 .svg--nav:nth-of-type(1) {
-  background-color: rgba(10, 12, 10, 0.6);
+  background-color: #0a0c0a;
 }
 .svg--nav:nth-of-type(2), .svg--nav:nth-of-type(4) {
-  background-color: rgba(12, 10, 10, 0.6);
+  background-color: #0c0a0a;
 }
 .svg--nav:nth-of-type(3) {
-  background-color: rgba(22, 18, 22, 0.5);
+  background-color: #161216;
 }
 .svg--plus, .svg--minus {
   height: 13px;
@@ -287,7 +287,7 @@ input[type=number] {
 }
 
 .performance-graph-line {
-  stroke: #201c20;
+  stroke: #1d191d;
   stroke-width: 1;
 }
 
@@ -377,7 +377,7 @@ body {
 
 .background-gradient {
   background: #080808;
-  background: linear-gradient(0deg, #0f0d0f 0%, #111010 50%, #0f0d0f);
+  background: linear-gradient(0deg, #0f0d0f 0%, #1d181d 50%, #0f0d0f);
 }
 
 .s-calculators {
@@ -619,7 +619,7 @@ body {
   pointer-events: none;
 }
 .s-journal__form-wrapper--edit-mode .c-journal-form__manual-input {
-  background-color: #0d0d0d;
+  background-color: #131212;
   border: none;
   border-bottom: 2px solid #aaaaaa;
   color: #aaaaaa;
@@ -736,7 +736,7 @@ body {
   line-height: 22px;
 }
 .s-monthly__table th ~ th {
-  border-right: 1px solid #201c20;
+  border-right: 1px solid #1d191d;
 }
 .s-monthly__table th:first-child {
   padding-left: 0;
@@ -749,7 +749,7 @@ body {
   color: #189fae;
 }
 .s-monthly__table td {
-  border-right: 1px solid #201c20;
+  border-right: 1px solid #1d191d;
 }
 .s-monthly__table td:last-of-type,
 .s-monthly__table th:last-of-type {
@@ -853,24 +853,24 @@ body {
   outline: 0;
 }
 .btn--secondary {
-  background-color: #201c20;
+  background-color: #1d191d;
 }
 .btn--secondary:hover {
   background-color: #762e88;
 }
 .btn--tertiary {
-  background-color: #0d0d0d;
+  background-color: #131212;
   width: 80px;
   height: 42px;
   padding: 2px;
   transition: background-color 0.1s ease-in;
 }
 .btn--tertiary:focus {
-  background-color: #201c20;
+  background-color: #1d191d;
   outline: 0;
 }
 .btn--tertiary:hover {
-  background-color: #201c20;
+  background-color: #1d191d;
   outline: 0;
 }
 .btn--tertiary::before {
@@ -904,12 +904,16 @@ body {
   transform: translateX(-9px);
 }
 .btn--nav:focus {
-  background-color: #201c20;
+  background-color: #1d191d;
   outline: 0;
 }
 .btn--nav:hover {
-  background-color: #201c20;
+  background-color: #1d191d;
+  background-color: pink;
   outline: 0;
+}
+.btn--nav:hover svg {
+  background-color: #1d191d;
 }
 .btn--nav svg {
   pointer-events: none;
@@ -919,7 +923,7 @@ body {
   padding: 1px;
   height: 35px;
   width: 45px;
-  background-color: #0d0d0d;
+  background-color: #131212;
   border-bottom: 2px solid #aaaaaa;
   display: flex;
   justify-content: center;
@@ -938,7 +942,7 @@ body {
   height: 28px;
   width: 28px;
   padding: 2px;
-  background-color: #201c20;
+  background-color: #1d191d;
   position: relative;
 }
 .btn--pagination::before {
@@ -993,7 +997,7 @@ body {
 }
 .c-calculator-capital__action-sign {
   padding: 6px 16px;
-  background-color: #0d0d0d;
+  background-color: #131212;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1188,7 +1192,7 @@ body {
 }
 
 .c-input-text {
-  background-color: #0d0d0d;
+  background-color: #131212;
   border: none;
   border-bottom: 2px solid #aaaaaa;
   color: #aaaaaa;
@@ -1199,7 +1203,7 @@ body {
   border-bottom: 2px solid #370943;
 }
 .c-input-text::placeholder {
-  color: #201c20;
+  color: #1d191d;
   opacity: 1;
 }
 .c-input-text--no-border {
@@ -1217,7 +1221,7 @@ body {
   opacity: 1;
 }
 .c-input-text--activated {
-  background-color: #0d0d0d;
+  background-color: #131212;
   border: none;
   border-bottom: 2px solid #aaaaaa;
   color: #aaaaaa;
@@ -1242,7 +1246,7 @@ body {
   }
 }
 .c-journal-entry:hover {
-  background-color: #0d0d0d;
+  background-color: #131212;
 }
 .c-journal-entry:first-child {
   margin-top: 0;
@@ -1412,7 +1416,7 @@ body {
   justify-content: center;
   padding: 2px 6px 4px;
   cursor: pointer;
-  background-color: #201c20;
+  background-color: #1d191d;
   border-radius: 50%;
   margin-top: 10px;
   margin-left: 8px;
@@ -1451,7 +1455,7 @@ body {
   margin: 20px auto 0;
   width: 96%;
   padding: 10px;
-  background-color: #0d0d0d;
+  background-color: #131212;
   border: none;
   border-radius: 10px;
 }
@@ -1706,7 +1710,7 @@ body {
   border-bottom: 1px solid #aaaaaa;
 }
 .c-table-profitable__table th ~ th {
-  border-right: 1px solid #201c20;
+  border-right: 1px solid #1d191d;
 }
 .c-table-profitable__table th:first-child {
   padding-left: 0;
@@ -1719,7 +1723,7 @@ body {
   color: #189fae;
 }
 .c-table-profitable__table td {
-  border-right: 1px solid #201c20;
+  border-right: 1px solid #1d191d;
 }
 .c-table-profitable__table tr:first-of-type {
   line-height: 22px;

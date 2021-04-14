@@ -76,6 +76,11 @@ const sortJournal = data =>
 const addToOverall = function (newEntry, newEntryIndex, previousSide) {
   if (newEntryIndex === -1) user.overall.total++;
 
+  if (newEntryIndex !== -1 && previousSide === 'short')
+    user.overall.proportions[1].total--;
+  if (newEntryIndex !== -1 && previousSide === 'long')
+    user.overall.proportions[0].total--;
+
   if (previousSide === 'short' && newEntry.side === 'long') {
     user.overall.proportions[0].total++;
     user.overall.proportions[1].total--;
@@ -493,13 +498,24 @@ export const updateCapital = function (amount = '', action = '') {
   if (amount && action) {
     if (action === 'minus') {
       if (user.journal.length > 0) {
-        user.journal[user.journal.length - 1].total -= Math.round(amount);
-        user.capital = user.journal[user.journal.length - 1].total;
+        const lastJournalTrade = user.journal[user.journal.length - 1];
+        lastJournalTrade.total -= Math.round(amount);
+        user.capital = lastJournalTrade.total;
+        lastJournalTrade.capitalChange = -Math.abs(amount);
       } else {
         user.capital -= Math.round(amount);
       }
     }
-    if (action === 'plus') user.capital += Math.round(amount);
+    if (action === 'plus') {
+      if (user.journal.length > 0) {
+        const lastJournalTrade = user.journal[user.journal.length - 1];
+        lastJournalTrade.total += Math.round(amount);
+        user.capital = lastJournalTrade.total;
+        lastJournalTrade.capitalChange = Math.abs(amount);
+      } else {
+        user.capital += Math.round(amount);
+      }
+    }
     if (action === 'plus' && user.newAccount) {
       user.initialCapital += Math.round(amount);
       user.newAccount = false;
@@ -556,11 +572,13 @@ const updateJournalTradesTotals = function () {
     if (index != 0) {
       user.journal[index].total =
         user.journal[index - 1].total + trade.returnCash;
-      console.log('trade', trade, 'index', index);
+      if (user.journal[index].capitalChange)
+        user.journal[index].total += user.journal[index].capitalChange;
       // return;
     } else {
-      console.log('trade', trade, 'index', index);
       user.journal[index].total = user.initialCapital + trade.returnCash;
+      if (user.journal[index].capitalChange)
+        user.journal[index].total += user.journal[index].capitalChange;
     }
   });
 };
