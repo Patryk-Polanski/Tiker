@@ -8623,6 +8623,10 @@ var renderExtraDetailsRows = function renderExtraDetailsRows(targetEl) {
   lastRow.insertAdjacentElement('afterend', rowClone);
   addKeyEventToDetailsInputs();
   addCrossIconToExtraRows(targetEl);
+  journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares('.c-journal-form__entry-size');
+  journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares('.c-journal-form__exit-size');
+  journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__entry', '.c-journal-form__entry-size');
+  journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice('.c-journal-form__exit', '.c-journal-form__exit-size');
 };
 
 exports.renderExtraDetailsRows = renderExtraDetailsRows;
@@ -9240,7 +9244,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52658" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54074" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

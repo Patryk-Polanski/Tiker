@@ -230,6 +230,20 @@ export const renderExtraDetailsRows = function (targetEl) {
   lastRow.insertAdjacentElement('afterend', rowClone);
   addKeyEventToDetailsInputs();
   addCrossIconToExtraRows(targetEl);
+  journalFormEls.detailsEntrySharesTotal.textContent = recalculateDetailsShares(
+    '.c-journal-form__entry-size'
+  );
+  journalFormEls.detailsExitSharesTotal.textContent = recalculateDetailsShares(
+    '.c-journal-form__exit-size'
+  );
+  journalFormEls.detailsEntryPriceAvg.textContent = recalculateDetailsPrice(
+    '.c-journal-form__entry',
+    '.c-journal-form__entry-size'
+  );
+  journalFormEls.detailsExitPriceAvg.textContent = recalculateDetailsPrice(
+    '.c-journal-form__exit',
+    '.c-journal-form__exit-size'
+  );
 };
 
 export const checkFormMode = function () {
