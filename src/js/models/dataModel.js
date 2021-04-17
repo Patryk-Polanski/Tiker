@@ -431,13 +431,26 @@ const addToCalendarData = function (entry) {
       .map(day => day.dateShort)
       .indexOf(entry.dateShort);
     if (entryDateIndex !== -1) {
-      currentKey[entryDateIndex].trades.push({
-        id: entry.id,
-        side: entry.side,
-        returnCash: entry.returnCash,
-        returnPercent: entry.returnPercent,
-        total: entry.total,
-      });
+      const entryIDinTrades = currentKey[entryDateIndex].trades
+        .map(trade => trade.id)
+        .indexOf(entry.id);
+      if (entryIDinTrades !== -1) {
+        currentKey[entryDateIndex].trades[entryIDinTrades] = {
+          id: entry.id,
+          side: entry.side,
+          returnCash: entry.returnCash,
+          returnPercent: entry.returnPercent,
+          total: entry.total,
+        };
+      } else {
+        currentKey[entryDateIndex].trades.push({
+          id: entry.id,
+          side: entry.side,
+          returnCash: entry.returnCash,
+          returnPercent: entry.returnPercent,
+          total: entry.total,
+        });
+      }
     }
     if (entryDateIndex === -1) {
       currentKey.push({

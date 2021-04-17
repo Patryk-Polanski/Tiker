@@ -258,397 +258,895 @@ var USER_PASSWORD = 'app';
 exports.USER_PASSWORD = USER_PASSWORD;
 },{}],"data.json":[function(require,module,exports) {
 module.exports = {
-  "capital": 7261,
+  "capital": 7103,
   "initialCapital": 7000,
   "newAccount": false,
   "overall": {
-    "total": 8,
+    "total": 19,
     "proportions": [{
       "side": "long",
-      "total": 4
+      "total": 10
     }, {
       "side": "short",
-      "total": 4
+      "total": 9
     }]
   },
   "streaks": {
     "wins": {
       "trades": [{
-        "id": 1618178927841,
+        "id": 1618614968296,
         "ticker": "AMC",
-        "date": "9/3/21",
-        "returnCash": 111
+        "date": "17/2/21",
+        "returnCash": 91.2
       }, {
-        "id": 1618178976232,
+        "id": 1618615064324,
         "ticker": "RIOT",
-        "date": "12/3/21",
-        "returnCash": 84
+        "date": "19/2/21",
+        "returnCash": 106.8
       }]
     },
     "losses": {
-      "trades": []
+      "trades": [{
+        "id": 1618616776636,
+        "ticker": "SNAP",
+        "date": "21/3/21",
+        "returnCash": -119
+      }, {
+        "id": 1618616362173,
+        "ticker": "AAL",
+        "date": "14/3/21",
+        "returnCash": -79
+      }, {
+        "id": 1618619647172,
+        "ticker": "WFC",
+        "date": "6/4/21",
+        "returnCash": -21.5
+      }]
     },
     "current": {
-      "trades": [{
-        "id": 1618330625831,
-        "ticker": "OCGN",
-        "date": "14/4/21",
-        "returnCash": -32.2
-      }]
+      "trades": []
     }
   },
   "worstTrades": [{
-    "id": 1618183416710,
-    "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
-    "dateShort": "3/4/21",
-    "ticker": "VZ",
-    "returnCash": -64.02
+    "id": 1618617108387,
+    "dateLong": "Sun Mar 28 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "28/3/21",
+    "ticker": "TWTR",
+    "returnCash": -223.6
   }, {
-    "id": 1618179060347,
+    "id": 1618619238124,
+    "dateLong": "Sun Apr 04 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "4/4/21",
+    "ticker": "OCGN",
+    "side": "short",
+    "tradeEntries": [[7.26, 90]],
+    "tradeExits": [[9.02, 90]],
+    "sharesAmount": 90,
+    "avgEntry": 7.26,
+    "avgExit": 9.02,
+    "returnCash": -158.4,
+    "returnPercent": -2.24,
+    "body": "Volutpat consequat mauris nunc congue nisi vitae suscipit. Egestas diam in arcu cursus euismod quis viverra. Integer feugiat scelerisque varius morbi enim. Sapien nec sagittis aliquam malesuada. Tellus in metus vulputate eu. Venenatis cras sed felis eget velit aliquet sagittis id consectetur.",
+    "previousTicker": "OCGN",
+    "previousDateShort": "4/4/21",
+    "previousDateLong": "Sun Apr 04 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 6935.8
+  }, {
+    "id": 1618616776636,
+    "dateLong": "Sun Mar 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "21/3/21",
+    "ticker": "SNAP",
+    "side": "long",
+    "tradeEntries": [[64.66, 40], [64.56, 30]],
+    "tradeExits": [[62.92, 70]],
+    "sharesAmount": 70,
+    "avgEntry": 64.62,
+    "avgExit": 62.92,
+    "returnCash": -119,
+    "returnPercent": -1.67,
+    "body": "Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Cras sed felis eget velit aliquet. Vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Feugiat pretium nibh ipsum consequat nisl vel pretium. Est placerat in egestas erat imperdiet sed euismod. Tincidunt id aliquet risus feugiat in.",
+    "previousTicker": "SNAP",
+    "previousDateShort": "21/3/21",
+    "previousDateLong": "Sun Mar 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7110.8
+  }, {
+    "id": 1618615421802,
+    "dateLong": "Tue Mar 02 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "2/3/21",
+    "ticker": "VZ",
+    "returnCash": -98.4
+  }, {
+    "id": 1618616362173,
     "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "14/3/21",
-    "ticker": "SNAP",
-    "returnCash": -60
+    "ticker": "AAL",
+    "side": "long",
+    "tradeEntries": [[22.03, 60], [21.98, 40]],
+    "tradeExits": [[21.22, 100]],
+    "sharesAmount": 100,
+    "avgEntry": 22.01,
+    "avgExit": 21.22,
+    "returnCash": -79,
+    "returnPercent": -1.12,
+    "body": "Ut tristique et egestas quis ipsum. Lacinia quis vel eros donec ac odio tempor. Elit eget gravida cum sociis natoque penatibus et magnis dis. Bibendum est ultricies integer quis auctor elit. At auctor urna nunc id cursus metus aliquam eleifend mi.",
+    "previousTicker": "AAL",
+    "previousDateShort": "14/3/21",
+    "previousDateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7182.6
   }, {
-    "id": 1618330625831,
-    "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
-    "dateShort": "14/4/21",
-    "ticker": "OCGN",
-    "returnCash": -32.2
+    "id": 1618615180187,
+    "dateLong": "Sun Feb 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "21/2/21",
+    "ticker": "SNAP",
+    "returnCash": -30
+  }, {
+    "id": 1618615496785,
+    "dateLong": "Sat Mar 06 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "6/3/21",
+    "ticker": "TWTR",
+    "returnCash": -28.7
+  }, {
+    "id": 1618619647172,
+    "dateLong": "Tue Apr 06 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "6/4/21",
+    "ticker": "WFC",
+    "returnCash": -21.5
   }],
   "bestTrades": [{
-    "id": 1618330460149,
-    "dateLong": "Tue Apr 13 2021 00:00:00 GMT+0100 (British Summer Time)",
-    "dateShort": "13/4/21",
-    "ticker": "TWTR",
-    "returnCash": 126
-  }, {
-    "id": 1618178927841,
-    "dateLong": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-    "dateShort": "9/3/21",
-    "ticker": "AMC",
-    "returnCash": 111
-  }, {
-    "id": 1618178976232,
-    "dateLong": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-    "dateShort": "12/3/21",
-    "ticker": "RIOT",
-    "returnCash": 84
-  }, {
-    "id": 1618179285427,
-    "dateLong": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-    "dateShort": "24/3/21",
-    "ticker": "BMBL",
-    "returnCash": 80
-  }, {
-    "id": 1618179185438,
-    "dateLong": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-    "dateShort": "19/3/21",
+    "id": 1618616899482,
+    "dateLong": "Sun Mar 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "21/3/21",
     "ticker": "NIO",
+    "returnCash": 116
+  }, {
+    "id": 1618615064324,
+    "dateLong": "Fri Feb 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "19/2/21",
+    "ticker": "RIOT",
+    "returnCash": 106.8
+  }, {
+    "id": 1618615290439,
+    "dateLong": "Thu Feb 25 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "25/2/21",
+    "ticker": "NIO",
+    "returnCash": 101
+  }, {
+    "id": 1618614968296,
+    "dateLong": "Wed Feb 17 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "17/2/21",
+    "ticker": "AMC",
+    "returnCash": 91.2
+  }, {
+    "id": 1618617211555,
+    "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "3/4/21",
+    "ticker": "AMC",
+    "returnCash": 91
+  }, {
+    "id": 1618615342836,
+    "dateLong": "Tue Mar 02 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "2/3/21",
+    "ticker": "BMBL",
+    "returnCash": 63.7
+  }, {
+    "id": 1618619402031,
+    "dateLong": "Sun Apr 04 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "4/4/21",
+    "ticker": "BMBL",
+    "returnCash": 60.9
+  }, {
+    "id": 1618616186399,
+    "dateLong": "Thu Mar 11 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "11/3/21",
+    "ticker": "NIO",
+    "returnCash": 41
+  }, {
+    "id": 1618616594524,
+    "dateLong": "Thu Mar 18 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "18/3/21",
+    "ticker": "AMC",
+    "returnCash": 31.2
+  }, {
+    "id": 1618616468487,
+    "dateLong": "Thu Mar 18 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "18/3/21",
+    "ticker": "WFC",
     "returnCash": 16
+  }, {
+    "id": 1618615594133,
+    "dateLong": "Thu Mar 11 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "11/3/21",
+    "ticker": "OCGN",
+    "returnCash": 15
   }],
   "tickers": {
     "AMC": {
       "ticker": "AMC",
-      "avgReturn": 111,
+      "avgReturn": 71.13,
       "trades": [{
-        "id": 1618178927841,
+        "id": 1618614968296,
+        "shares": 80,
+        "returnCash": 91.2,
+        "returnPercent": 1.3
+      }, {
+        "id": 1618616594524,
+        "shares": 60,
+        "returnCash": 31.2,
+        "returnPercent": 0.43
+      }, {
+        "id": 1618617211555,
         "shares": 100,
-        "returnCash": 111,
-        "returnPercent": 1.59
+        "returnCash": 91,
+        "returnPercent": 1.28
       }]
     },
     "RIOT": {
       "ticker": "RIOT",
-      "avgReturn": 84,
+      "avgReturn": 106.8,
       "trades": [{
-        "id": 1618178976232,
-        "shares": 70,
-        "returnCash": 84,
-        "returnPercent": 1.18
+        "id": 1618615064324,
+        "shares": 60,
+        "returnCash": 106.8,
+        "returnPercent": 1.51
       }]
     },
     "SNAP": {
       "ticker": "SNAP",
-      "avgReturn": -60,
+      "avgReturn": -74.5,
       "trades": [{
-        "id": 1618179060347,
+        "id": 1618615180187,
         "shares": 60,
-        "returnCash": -60,
-        "returnPercent": -0.83
+        "returnCash": -30,
+        "returnPercent": -0.42
+      }, {
+        "id": 1618616776636,
+        "shares": 70,
+        "returnCash": -119,
+        "returnPercent": -1.67
       }]
     },
     "NIO": {
       "ticker": "NIO",
-      "avgReturn": 16,
+      "avgReturn": 86,
       "trades": [{
-        "id": 1618179185438,
-        "shares": 50,
-        "returnCash": 16,
-        "returnPercent": 0.22
+        "id": 1618615290439,
+        "shares": 100,
+        "returnCash": 101,
+        "returnPercent": 1.41
+      }, {
+        "id": 1618616186399,
+        "shares": 100,
+        "returnCash": 41,
+        "returnPercent": 0.57
+      }, {
+        "id": 1618616899482,
+        "shares": 80,
+        "returnCash": 116,
+        "returnPercent": 1.61
       }]
     },
     "BMBL": {
       "ticker": "BMBL",
-      "avgReturn": 80,
+      "avgReturn": 62.3,
       "trades": [{
-        "id": 1618179285427,
-        "shares": 100,
-        "returnCash": 80,
-        "returnPercent": 1.12
+        "id": 1618615342836,
+        "shares": 70,
+        "returnCash": 63.7,
+        "returnPercent": 0.88
+      }, {
+        "id": 1618619402031,
+        "shares": 70,
+        "returnCash": 60.9,
+        "returnPercent": 0.86
       }]
     },
     "VZ": {
       "ticker": "VZ",
-      "avgReturn": -64.02,
+      "avgReturn": 14.8,
       "trades": [{
-        "id": 1618183416710,
-        "shares": 66,
-        "returnCash": -64.02,
-        "returnPercent": -0.89
+        "id": 1618615421802,
+        "shares": 80,
+        "returnCash": -98.4,
+        "returnPercent": -1.34
       }]
     },
     "TWTR": {
       "ticker": "TWTR",
-      "avgReturn": 126,
+      "avgReturn": -126.15,
       "trades": [{
-        "id": 1618330460149,
-        "shares": 120,
-        "returnCash": 126,
-        "returnPercent": 1.76
+        "id": 1618615496785,
+        "shares": 70,
+        "returnCash": -28.7,
+        "returnPercent": -0.4
+      }, {
+        "id": 1618617108387,
+        "shares": 130,
+        "returnCash": -223.6,
+        "returnPercent": -3.05
       }]
     },
     "OCGN": {
       "ticker": "OCGN",
-      "avgReturn": -32.2,
+      "avgReturn": -71.7,
       "trades": [{
-        "id": 1618330625831,
-        "shares": 70,
-        "returnCash": -32.2,
-        "returnPercent": -0.44
+        "id": 1618615594133,
+        "shares": 50,
+        "returnCash": 15,
+        "returnPercent": 0.21
+      }, {
+        "id": 1618619238124,
+        "shares": 90,
+        "returnCash": -158.4,
+        "returnPercent": -2.24
+      }]
+    },
+    "AAL": {
+      "ticker": "AAL",
+      "avgReturn": -79,
+      "trades": [{
+        "id": 1618616362173,
+        "shares": 100,
+        "returnCash": -79,
+        "returnPercent": -1.12
+      }]
+    },
+    "WFC": {
+      "ticker": "WFC",
+      "avgReturn": -2.75,
+      "trades": [{
+        "id": 1618616468487,
+        "shares": 100,
+        "returnCash": 16,
+        "returnPercent": 0.22
+      }, {
+        "id": 1618619647172,
+        "shares": 50,
+        "returnCash": -21.5,
+        "returnPercent": -0.31
       }]
     }
   },
   "calendarData": {
-    "mar21": [{
-      "dateLong": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-      "dateShort": "9/3/21",
+    "feb21": [{
+      "dateLong": "Wed Feb 17 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "17/2/21",
       "trades": [{
-        "id": 1618178927841,
+        "id": 1618614968296,
         "side": "long",
-        "returnCash": 111,
-        "returnPercent": 1.59
+        "returnCash": 91.2,
+        "returnPercent": 1.3,
+        "total": 7091.2
       }]
     }, {
-      "dateLong": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-      "dateShort": "12/3/21",
+      "dateLong": "Fri Feb 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "19/2/21",
       "trades": [{
-        "id": 1618178976232,
+        "id": 1618615064324,
+        "side": "short",
+        "returnCash": 106.8,
+        "returnPercent": 1.51,
+        "total": 7198
+      }]
+    }, {
+      "dateLong": "Sun Feb 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "21/2/21",
+      "trades": [{
+        "id": 1618615180187,
+        "side": "short",
+        "returnCash": -30,
+        "returnPercent": -0.42,
+        "total": 7168
+      }]
+    }, {
+      "dateLong": "Thu Feb 25 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "25/2/21",
+      "trades": [{
+        "id": 1618615290439,
         "side": "long",
-        "returnCash": 84,
-        "returnPercent": 1.18
+        "returnCash": 101,
+        "returnPercent": 1.41,
+        "total": 7269
+      }]
+    }],
+    "mar21": [{
+      "dateLong": "Tue Mar 02 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "2/3/21",
+      "trades": [{
+        "id": 1618615342836,
+        "side": "long",
+        "returnCash": 63.7,
+        "returnPercent": 0.88,
+        "total": 7332.7
+      }, {
+        "id": 1618615421802,
+        "side": "long",
+        "returnCash": -98.4,
+        "returnPercent": -1.34,
+        "total": 7234.3
+      }]
+    }, {
+      "dateLong": "Sat Mar 06 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "6/3/21",
+      "trades": [{
+        "id": 1618615496785,
+        "side": "short",
+        "returnCash": -28.7,
+        "returnPercent": -0.4,
+        "total": 7205.6
+      }]
+    }, {
+      "dateLong": "Thu Mar 11 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "11/3/21",
+      "trades": [{
+        "id": 1618615594133,
+        "side": "long",
+        "returnCash": 15,
+        "returnPercent": 0.21,
+        "total": 7220.6
+      }, {
+        "id": 1618616186399,
+        "side": "short",
+        "returnCash": 41,
+        "returnPercent": 0.57,
+        "total": 7261.6
       }]
     }, {
       "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "14/3/21",
       "trades": [{
-        "id": 1618179060347,
-        "side": "short",
-        "returnCash": -60,
-        "returnPercent": -0.83
-      }]
-    }, {
-      "dateLong": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-      "dateShort": "19/3/21",
-      "trades": [{
-        "id": 1618179185438,
-        "side": "short",
-        "returnCash": 16,
-        "returnPercent": 0.22
-      }]
-    }, {
-      "dateLong": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-      "dateShort": "24/3/21",
-      "trades": [{
-        "id": 1618179285427,
+        "id": 1618616362173,
         "side": "long",
-        "returnCash": 80,
-        "returnPercent": 1.12
+        "returnCash": -39,
+        "returnPercent": -0.54,
+        "total": 7222.6
+      }, {
+        "id": 1618616362173,
+        "side": "long",
+        "returnCash": -79,
+        "returnPercent": -1.12,
+        "total": 7182.6
+      }]
+    }, {
+      "dateLong": "Thu Mar 18 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "18/3/21",
+      "trades": [{
+        "id": 1618616468487,
+        "side": "long",
+        "returnCash": 16,
+        "returnPercent": 0.22,
+        "total": 7238.6
+      }, {
+        "id": 1618616594524,
+        "side": "short",
+        "returnCash": 31.2,
+        "returnPercent": 0.43,
+        "total": 7269.8
+      }]
+    }, {
+      "dateLong": "Sun Mar 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "21/3/21",
+      "trades": [{
+        "id": 1618616776636,
+        "side": "long",
+        "returnCash": -49,
+        "returnPercent": -0.67,
+        "total": 7220.8
+      }, {
+        "id": 1618616899482,
+        "side": "long",
+        "returnCash": 116,
+        "returnPercent": 1.61,
+        "total": 7336.8
+      }, {
+        "id": 1618616776636,
+        "side": "long",
+        "returnCash": -119,
+        "returnPercent": -1.67,
+        "total": 7150.8
+      }]
+    }, {
+      "dateLong": "Sun Mar 28 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+      "dateShort": "28/3/21",
+      "trades": [{
+        "id": 1618617108387,
+        "side": "short",
+        "returnCash": -223.6,
+        "returnPercent": -3.05,
+        "total": 7113.2
       }]
     }],
     "apr21": [{
       "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
       "dateShort": "3/4/21",
       "trades": [{
-        "id": 1618183416710,
-        "side": "short",
-        "returnCash": -64.02,
-        "returnPercent": -0.89
-      }]
-    }, {
-      "dateLong": "Tue Apr 13 2021 00:00:00 GMT+0100 (British Summer Time)",
-      "dateShort": "13/4/21",
-      "trades": [{
-        "id": 1618330460149,
+        "id": 1618617211555,
         "side": "long",
-        "returnCash": 126,
-        "returnPercent": 1.76
+        "returnCash": 91,
+        "returnPercent": 1.28,
+        "total": 7204.2
       }]
     }, {
-      "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
-      "dateShort": "14/4/21",
+      "dateLong": "Sun Apr 04 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "4/4/21",
       "trades": [{
-        "id": 1618330625831,
+        "id": 1618619238124,
         "side": "short",
-        "returnCash": -32.2,
-        "returnPercent": -0.44
+        "returnCash": -117.9,
+        "returnPercent": -1.64,
+        "total": 7086.3
+      }, {
+        "id": 1618619238124,
+        "side": "short",
+        "returnCash": -135.9,
+        "returnPercent": -1.92,
+        "total": 7068.3
+      }, {
+        "id": 1618619238124,
+        "side": "short",
+        "returnCash": -158.4,
+        "returnPercent": -2.24,
+        "total": 7045.8
+      }, {
+        "id": 1618619402031,
+        "side": "short",
+        "returnCash": 60.9,
+        "returnPercent": 0.86,
+        "total": 7106.7
+      }]
+    }, {
+      "dateLong": "Tue Apr 06 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "6/4/21",
+      "trades": [{
+        "id": 1618619647172,
+        "side": "long",
+        "returnCash": -21.5,
+        "returnPercent": -0.31,
+        "total": 6975.2
       }]
     }]
   },
   "journal": [{
-    "id": 1618178927841,
-    "dateLong": "Tue Mar 09 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-    "dateShort": "9/3/21",
+    "id": 1618614968296,
+    "dateLong": "Wed Feb 17 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "17/2/21",
     "ticker": "AMC",
     "side": "long",
-    "tradeEntries": [[9.35, 50], [9.55, 50]],
-    "tradeExits": [[10.54, 50], [10.59, 50]],
-    "sharesAmount": 100,
-    "avgEntry": 9.45,
-    "avgExit": 10.56,
-    "returnCash": 111,
-    "returnPercent": 1.59,
-    "total": 7111,
-    "previousTicker": "",
-    "previousDateShort": "",
-    "previousDateLong": "",
-    "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Facilisis volutpat est velit egestas dui id ornare. Eget magna fermentum iaculis eu non. In tellus integer feugiat scelerisque varius morbi enim nunc faucibus. A lacus vestibulum sed arcu non odio euismod lacinia. Etiam sit amet nisl purus. Lorem sed risus ultricies tristique nulla aliquet enim. Augue ut lectus arcu bibendum at varius vel. Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum. "
+    "tradeEntries": [[9.45, 40], [9.62, 40]],
+    "tradeExits": [[10.68, 80]],
+    "sharesAmount": 80,
+    "avgEntry": 9.54,
+    "avgExit": 10.68,
+    "returnCash": 91.2,
+    "returnPercent": 1.3,
+    "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae justo eget magna fermentum iaculis eu non diam phasellus. Pretium lectus quam id leo in vitae turpis. Dolor morbi non arcu risus quis varius. Sed ullamcorper morbi tincidunt ornare massa eget egestas. Sit amet purus gravida quis blandit. Vel pretium lectus quam id leo in vitae turpis. Dui ut ornare lectus sit amet est placerat. Est placerat in egestas erat imperdiet. Quam viverra orci sagittis eu volutpat odio facilisis mauris sit. Scelerisque eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada.",
+    "previousTicker": "AMC",
+    "previousDateShort": "17/2/21",
+    "previousDateLong": "Wed Feb 17 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7091.2
   }, {
-    "id": 1618178976232,
-    "dateLong": "Fri Mar 12 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-    "dateShort": "12/3/21",
+    "id": 1618615064324,
+    "dateLong": "Fri Feb 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "19/2/21",
     "ticker": "RIOT",
-    "side": "long",
-    "tradeEntries": [[49.62, 70]],
-    "tradeExits": [[50.82, 70]],
-    "sharesAmount": 70,
-    "avgEntry": 49.62,
-    "avgExit": 50.82,
-    "returnCash": 84,
-    "returnPercent": 1.18,
-    "total": 7195,
-    "previousTicker": "",
-    "previousDateShort": "",
-    "previousDateLong": "",
-    "body": ""
+    "side": "short",
+    "tradeEntries": [[49.94, 60]],
+    "tradeExits": [[48.16, 60]],
+    "sharesAmount": 60,
+    "avgEntry": 49.94,
+    "avgExit": 48.16,
+    "returnCash": 106.8,
+    "returnPercent": 1.51,
+    "body": "Viverra justo nec ultrices dui. Ac tortor vitae purus faucibus ornare. Consequat id porta nibh venenatis cras sed. Amet venenatis urna cursus eget. Eget nunc lobortis mattis aliquam faucibus purus in massa tempor. Varius quam quisque id diam vel quam. Vitae tempus quam pellentesque nec nam aliquam sem et tortor. Convallis aenean et tortor at risus viverra adipiscing at. Est sit amet facilisis magna etiam. ",
+    "previousTicker": "RIOT",
+    "previousDateShort": "19/2/21",
+    "previousDateLong": "Fri Feb 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7198
   }, {
-    "id": 1618179060347,
-    "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-    "dateShort": "14/3/21",
+    "id": 1618615180187,
+    "dateLong": "Sun Feb 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "21/2/21",
     "ticker": "SNAP",
     "side": "short",
-    "tradeEntries": [[63.11, 60]],
-    "tradeExits": [[64.11, 60]],
+    "tradeEntries": [[63.17, 40], [63.33, 20]],
+    "tradeExits": [[63.72, 60]],
     "sharesAmount": 60,
-    "avgEntry": 63.11,
-    "avgExit": 64.11,
-    "returnCash": -60,
-    "returnPercent": -0.83,
-    "total": 7135,
-    "previousTicker": "",
-    "previousDateShort": "",
-    "previousDateLong": "",
-    "body": ""
+    "avgEntry": 63.22,
+    "avgExit": 63.72,
+    "returnCash": -30,
+    "returnPercent": -0.42,
+    "body": "",
+    "previousTicker": "SNAP",
+    "previousDateShort": "21/2/21",
+    "previousDateLong": "Sun Feb 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7168
   }, {
-    "id": 1618179185438,
-    "dateLong": "Fri Mar 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-    "dateShort": "19/3/21",
+    "id": 1618615290439,
+    "dateLong": "Thu Feb 25 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "25/2/21",
     "ticker": "NIO",
-    "side": "short",
-    "tradeEntries": [[39.84, 50]],
-    "tradeExits": [[39.52, 50]],
-    "sharesAmount": 50,
-    "avgEntry": 39.84,
-    "avgExit": 39.52,
-    "returnCash": 16,
-    "returnPercent": 0.22,
-    "total": 7151,
-    "previousTicker": "",
-    "previousDateShort": "",
-    "previousDateLong": "",
-    "body": "Urna nunc id cursus metus aliquam eleifend mi in. Ullamcorper sit amet risus nullam eget felis eget. Sit amet facilisis magna etiam tempor orci. Sed egestas egestas fringilla phasellus faucibus. Nulla aliquet enim tortor at auctor. Scelerisque viverra mauris in aliquam. Nisl rhoncus mattis rhoncus urna neque viverra justo nec ultrices. Consequat nisl vel pretium lectus quam id."
+    "side": "long",
+    "tradeEntries": [[38.11, 50], [38.22, 50]],
+    "tradeExits": [[39.17, 100]],
+    "sharesAmount": 100,
+    "avgEntry": 38.16,
+    "avgExit": 39.17,
+    "returnCash": 101,
+    "returnPercent": 1.41,
+    "body": "Faucibus pulvinar elementum integer enim neque volutpat ac tincidunt. Scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus. Amet consectetur adipiscing elit ut. Mattis rhoncus urna neque viverra justo nec ultrices dui. Tortor at auctor urna nunc id. Faucibus nisl tincidunt eget nullam non nisi. ",
+    "previousTicker": "NIO",
+    "previousDateShort": "25/2/21",
+    "previousDateLong": "Thu Feb 25 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7269
   }, {
-    "id": 1618179285427,
-    "dateLong": "Wed Mar 24 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
-    "dateShort": "24/3/21",
+    "id": 1618615342836,
+    "dateLong": "Tue Mar 02 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "2/3/21",
     "ticker": "BMBL",
     "side": "long",
-    "tradeEntries": [[60.24, 50], [60.41, 50]],
-    "tradeExits": [[60.98, 40], [61.23, 60]],
-    "sharesAmount": 100,
-    "avgEntry": 60.33,
-    "avgExit": 61.13,
-    "returnCash": 80,
-    "returnPercent": 1.12,
-    "total": 7231,
-    "previousTicker": "",
-    "previousDateShort": "",
-    "previousDateLong": "",
-    "body": ""
-  }, {
-    "id": 1618183416710,
-    "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
-    "dateShort": "3/4/21",
-    "ticker": "VZ",
-    "side": "short",
-    "tradeEntries": [[56.65, 66]],
-    "tradeExits": [[57.62, 66]],
-    "sharesAmount": 66,
-    "avgEntry": 56.65,
-    "avgExit": 57.62,
-    "returnCash": -64.02,
-    "returnPercent": -0.89,
-    "total": 7167,
-    "previousTicker": "",
-    "previousDateShort": "",
-    "previousDateLong": "",
-    "body": "Orci sagittis eu volutpat odio facilisis. Sed blandit libero volutpat sed cras ornare arcu. Sit amet porttitor eget dolor morbi non arcu risus quis. Diam sit amet nisl suscipit. Consectetur adipiscing elit pellentesque habitant morbi tristique senectus et. Nunc non blandit massa enim nec dui nunc. Elementum sagittis vitae et leo. Accumsan in nisl nisi scelerisque. Vitae sapien pellentesque habitant morbi tristique senectus et netus. Accumsan lacus vel facilisis volutpat est velit egestas."
-  }, {
-    "id": 1618330460149,
-    "dateLong": "Tue Apr 13 2021 00:00:00 GMT+0100 (British Summer Time)",
-    "dateShort": "13/4/21",
-    "ticker": "TWTR",
-    "side": "long",
-    "tradeEntries": [[72.09, 60], [72.24, 60]],
-    "tradeExits": [[73.21, 120]],
-    "sharesAmount": 120,
-    "avgEntry": 72.16,
-    "avgExit": 73.21,
-    "returnCash": 126,
-    "returnPercent": 1.76,
-    "body": "Eu lobortis elementum nibh tellus molestie nunc non. Bibendum neque egestas congue quisque egestas diam in. Varius vel pharetra vel turpis nunc eget lorem. Ultrices sagittis orci a scelerisque. Quis eleifend quam adipiscing vitae proin. Risus feugiat in ante metus dictum at tempor. Urna condimentum mattis pellentesque id nibh tortor id aliquet lectus.",
-    "previousTicker": "TWTR",
-    "previousDateShort": "13/4/21",
-    "previousDateLong": "Tue Apr 13 2021 00:00:00 GMT+0100 (British Summer Time)",
-    "total": 7293
-  }, {
-    "id": 1618330625831,
-    "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
-    "dateShort": "14/4/21",
-    "ticker": "OCGN",
-    "side": "short",
-    "tradeEntries": [[6.68, 70]],
-    "tradeExits": [[7.14, 70]],
+    "tradeEntries": [[60.16, 70]],
+    "tradeExits": [[61.07, 70]],
     "sharesAmount": 70,
+    "avgEntry": 60.16,
+    "avgExit": 61.07,
+    "returnCash": 63.7,
+    "returnPercent": 0.88,
+    "body": "",
+    "previousTicker": "BMBL",
+    "previousDateShort": "2/3/21",
+    "previousDateLong": "Tue Mar 02 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7332.7
+  }, {
+    "id": 1618615421802,
+    "dateLong": "Tue Mar 02 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "2/3/21",
+    "ticker": "VZ",
+    "side": "long",
+    "tradeEntries": [[57.47, 80]],
+    "tradeExits": [[56.24, 80]],
+    "sharesAmount": 80,
+    "avgEntry": 57.47,
+    "avgExit": 56.24,
+    "returnCash": -98.4,
+    "returnPercent": -1.34,
+    "body": "Amet purus gravida quis blandit turpis cursus. Id semper risus in hendrerit gravida. Ut aliquam purus sit amet luctus venenatis lectus. Rhoncus mattis rhoncus urna neque viverra justo. Iaculis eu non diam phasellus vestibulum lorem. Nisl suscipit adipiscing bibendum est. Amet volutpat consequat mauris nunc congue nisi. Diam vulputate ut pharetra sit amet. ",
+    "previousTicker": "VZ",
+    "previousDateShort": "2/3/21",
+    "previousDateLong": "Tue Mar 02 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7234.3
+  }, {
+    "id": 1618615496785,
+    "dateLong": "Sat Mar 06 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "6/3/21",
+    "ticker": "TWTR",
+    "side": "short",
+    "tradeEntries": [[71.96, 70]],
+    "tradeExits": [[72.37, 70]],
+    "sharesAmount": 70,
+    "avgEntry": 71.96,
+    "avgExit": 72.37,
+    "returnCash": -28.7,
+    "returnPercent": -0.4,
+    "body": "Dolor purus non enim praesent. Est sit amet facilisis magna etiam tempor. Massa id neque aliquam vestibulum morbi blandit. Nisi porta lorem mollis aliquam ut porttitor leo a diam. Adipiscing elit pellentesque habitant morbi tristique. Tincidunt arcu non sodales neque. At lectus urna duis convallis convallis tellus id interdum. Magna etiam tempor orci eu. Scelerisque eu ultrices vitae auctor eu augue ut. ",
+    "previousTicker": "TWTR",
+    "previousDateShort": "6/3/21",
+    "previousDateLong": "Sat Mar 06 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7205.6
+  }, {
+    "id": 1618615594133,
+    "dateLong": "Thu Mar 11 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "11/3/21",
+    "ticker": "OCGN",
+    "side": "long",
+    "tradeEntries": [[6.68, 50]],
+    "tradeExits": [[6.98, 50]],
+    "sharesAmount": 50,
     "avgEntry": 6.68,
-    "avgExit": 7.14,
-    "returnCash": -32.2,
-    "returnPercent": -0.44,
+    "avgExit": 6.98,
+    "returnCash": 15,
+    "returnPercent": 0.21,
     "body": "",
     "previousTicker": "OCGN",
-    "previousDateShort": "14/4/21",
-    "previousDateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
-    "total": 7261
+    "previousDateShort": "11/3/21",
+    "previousDateLong": "Thu Mar 11 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7220.6
+  }, {
+    "id": 1618616186399,
+    "dateLong": "Thu Mar 11 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "11/3/21",
+    "ticker": "NIO",
+    "side": "short",
+    "tradeEntries": [[34.43, 100]],
+    "tradeExits": [[34.02, 100]],
+    "sharesAmount": 100,
+    "avgEntry": 34.43,
+    "avgExit": 34.02,
+    "returnCash": 41,
+    "returnPercent": 0.57,
+    "body": "Aliquet bibendum enim facilisis gravida. Urna neque viverra justo nec ultrices dui sapien. Lorem ipsum dolor sit amet consectetur adipiscing. Volutpat ac tincidunt vitae semper. Ac tortor dignissim convallis aenean et tortor. Fames ac turpis egestas maecenas pharetra convallis posuere morbi leo. Ut placerat orci nulla pellentesque dignissim enim sit. Tincidunt praesent semper feugiat nibh. ",
+    "previousTicker": "NIO",
+    "previousDateShort": "11/3/21",
+    "previousDateLong": "Thu Mar 11 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7261.6
+  }, {
+    "id": 1618616362173,
+    "dateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "14/3/21",
+    "ticker": "AAL",
+    "side": "long",
+    "tradeEntries": [[22.03, 60], [21.98, 40]],
+    "tradeExits": [[21.22, 100]],
+    "sharesAmount": 100,
+    "avgEntry": 22.01,
+    "avgExit": 21.22,
+    "returnCash": -79,
+    "returnPercent": -1.12,
+    "body": "Ut tristique et egestas quis ipsum. Lacinia quis vel eros donec ac odio tempor. Elit eget gravida cum sociis natoque penatibus et magnis dis. Bibendum est ultricies integer quis auctor elit. At auctor urna nunc id cursus metus aliquam eleifend mi.",
+    "previousTicker": "AAL",
+    "previousDateShort": "14/3/21",
+    "previousDateLong": "Sun Mar 14 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7182.6
+  }, {
+    "id": 1618616468487,
+    "dateLong": "Thu Mar 18 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "18/3/21",
+    "ticker": "WFC",
+    "side": "long",
+    "tradeEntries": [[42.24, 50], [42.42, 50]],
+    "tradeExits": [[42.49, 100]],
+    "sharesAmount": 100,
+    "avgEntry": 42.33,
+    "avgExit": 42.49,
+    "returnCash": 16,
+    "returnPercent": 0.22,
+    "body": "Enim eu turpis egestas pretium aenean pharetra magna ac placerat. Venenatis urna cursus eget nunc scelerisque viverra mauris. Nibh cras pulvinar mattis nunc. Mi eget mauris pharetra et ultrices neque. Eget nunc scelerisque viverra mauris. Tempus iaculis urna id volutpat lacus laoreet non. Molestie at elementum eu facilisis sed. Tristique senectus et netus et.",
+    "previousTicker": "WFC",
+    "previousDateShort": "18/3/21",
+    "previousDateLong": "Thu Mar 18 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7198.6
+  }, {
+    "id": 1618616594524,
+    "dateLong": "Thu Mar 18 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "18/3/21",
+    "ticker": "AMC",
+    "side": "short",
+    "tradeEntries": [[10.76, 60]],
+    "tradeExits": [[10.24, 60]],
+    "sharesAmount": 60,
+    "avgEntry": 10.76,
+    "avgExit": 10.24,
+    "returnCash": 31.2,
+    "returnPercent": 0.43,
+    "body": "",
+    "previousTicker": "AMC",
+    "previousDateShort": "18/3/21",
+    "previousDateLong": "Thu Mar 18 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7229.8
+  }, {
+    "id": 1618616776636,
+    "dateLong": "Sun Mar 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "21/3/21",
+    "ticker": "SNAP",
+    "side": "long",
+    "tradeEntries": [[64.66, 40], [64.56, 30]],
+    "tradeExits": [[62.92, 70]],
+    "sharesAmount": 70,
+    "avgEntry": 64.62,
+    "avgExit": 62.92,
+    "returnCash": -119,
+    "returnPercent": -1.67,
+    "body": "Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Cras sed felis eget velit aliquet. Vulputate odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Feugiat pretium nibh ipsum consequat nisl vel pretium. Est placerat in egestas erat imperdiet sed euismod. Tincidunt id aliquet risus feugiat in.",
+    "previousTicker": "SNAP",
+    "previousDateShort": "21/3/21",
+    "previousDateLong": "Sun Mar 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7110.8
+  }, {
+    "id": 1618616899482,
+    "dateLong": "Sun Mar 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "21/3/21",
+    "ticker": "NIO",
+    "side": "long",
+    "tradeEntries": [[44.43, 50], [44.67, 30]],
+    "tradeExits": [[45.97, 80]],
+    "sharesAmount": 80,
+    "avgEntry": 44.52,
+    "avgExit": 45.97,
+    "returnCash": 116,
+    "returnPercent": 1.61,
+    "body": "Habitant morbi tristique senectus et netus et. Amet risus nullam eget felis. Dolor sit amet consectetur adipiscing elit duis tristique sollicitudin nibh. Amet mauris commodo quis imperdiet massa. Natoque penatibus et magnis dis parturient. Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. Faucibus et molestie ac feugiat sed lectus. A scelerisque purus semper eget duis at. Cursus sit amet dictum sit. In hac habitasse platea dictumst quisque sagittis purus sit.",
+    "previousTicker": "NIO",
+    "previousDateShort": "21/3/21",
+    "previousDateLong": "Sun Mar 21 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7226.8
+  }, {
+    "id": 1618617108387,
+    "dateLong": "Sun Mar 28 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "dateShort": "28/3/21",
+    "ticker": "TWTR",
+    "side": "short",
+    "tradeEntries": [[78.45, 100], [78.32, 30]],
+    "tradeExits": [[80.14, 130]],
+    "sharesAmount": 130,
+    "avgEntry": 78.42,
+    "avgExit": 80.14,
+    "returnCash": -223.6,
+    "returnPercent": -3.05,
+    "body": "",
+    "previousTicker": "TWTR",
+    "previousDateShort": "28/3/21",
+    "previousDateLong": "Sun Mar 28 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
+    "total": 7003.2
+  }, {
+    "id": 1618617211555,
+    "dateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "3/4/21",
+    "ticker": "AMC",
+    "side": "long",
+    "tradeEntries": [[12.47, 50], [12.61, 50]],
+    "tradeExits": [[13.45, 100]],
+    "sharesAmount": 100,
+    "avgEntry": 12.54,
+    "avgExit": 13.45,
+    "returnCash": 91,
+    "returnPercent": 1.28,
+    "body": "At elementum eu facilisis sed odio morbi quis commodo. Lectus vestibulum mattis ullamcorper velit sed ullamcorper. Habitant morbi tristique senectus et netus et malesuada. Sed adipiscing diam donec adipiscing tristique risus nec feugiat. Sapien et ligula ullamcorper malesuada proin libero nunc. Dui sapien eget mi proin sed libero enim sed faucibus. Purus gravida quis blandit turpis cursus in hac. Molestie nunc non blandit massa enim nec dui nunc mattis. Sem integer vitae justo eget magna fermentum iaculis eu non.",
+    "previousTicker": "AMC",
+    "previousDateShort": "3/4/21",
+    "previousDateLong": "Sat Apr 03 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 7094.2
+  }, {
+    "id": 1618619238124,
+    "dateLong": "Sun Apr 04 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "4/4/21",
+    "ticker": "OCGN",
+    "side": "short",
+    "tradeEntries": [[7.26, 90]],
+    "tradeExits": [[9.02, 90]],
+    "sharesAmount": 90,
+    "avgEntry": 7.26,
+    "avgExit": 9.02,
+    "returnCash": -158.4,
+    "returnPercent": -2.24,
+    "body": "Volutpat consequat mauris nunc congue nisi vitae suscipit. Egestas diam in arcu cursus euismod quis viverra. Integer feugiat scelerisque varius morbi enim. Sapien nec sagittis aliquam malesuada. Tellus in metus vulputate eu. Venenatis cras sed felis eget velit aliquet sagittis id consectetur.",
+    "previousTicker": "OCGN",
+    "previousDateShort": "4/4/21",
+    "previousDateLong": "Sun Apr 04 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 6935.8
+  }, {
+    "id": 1618619402031,
+    "dateLong": "Sun Apr 04 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "4/4/21",
+    "ticker": "BMBL",
+    "side": "short",
+    "tradeEntries": [[59.89, 70]],
+    "tradeExits": [[59.02, 70]],
+    "sharesAmount": 70,
+    "avgEntry": 59.89,
+    "avgExit": 59.02,
+    "returnCash": 60.9,
+    "returnPercent": 0.86,
+    "body": "Sollicitudin tempor id eu nisl nunc mi. Malesuada fames ac turpis egestas integer. Amet consectetur adipiscing elit pellentesque habitant morbi. Eget dolor morbi non arcu. Mattis aliquam faucibus purus in massa. Nibh sed pulvinar proin gravida. Egestas integer eget aliquet nibh praesent.",
+    "previousTicker": "BMBL",
+    "previousDateShort": "4/4/21",
+    "previousDateLong": "Sun Apr 04 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 6996.7
+  }, {
+    "id": 1618619647172,
+    "dateLong": "Tue Apr 06 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "6/4/21",
+    "ticker": "WFC",
+    "side": "long",
+    "tradeEntries": [[49.54, 50]],
+    "tradeExits": [[49.11, 50]],
+    "sharesAmount": 50,
+    "avgEntry": 49.54,
+    "avgExit": 49.11,
+    "returnCash": -21.5,
+    "returnPercent": -0.31,
+    "body": "",
+    "previousTicker": "WFC",
+    "previousDateShort": "6/4/21",
+    "previousDateLong": "Tue Apr 06 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 6975.2
   }],
   "dummyJournal": [{
     "id": "",
@@ -1062,13 +1560,27 @@ var addToCalendarData = function addToCalendarData(entry) {
     }).indexOf(entry.dateShort);
 
     if (entryDateIndex !== -1) {
-      currentKey[entryDateIndex].trades.push({
-        id: entry.id,
-        side: entry.side,
-        returnCash: entry.returnCash,
-        returnPercent: entry.returnPercent,
-        total: entry.total
-      });
+      var entryIDinTrades = currentKey[entryDateIndex].trades.map(function (trade) {
+        return trade.id;
+      }).indexOf(entry.id);
+
+      if (entryIDinTrades !== -1) {
+        currentKey[entryDateIndex].trades[entryIDinTrades] = {
+          id: entry.id,
+          side: entry.side,
+          returnCash: entry.returnCash,
+          returnPercent: entry.returnPercent,
+          total: entry.total
+        };
+      } else {
+        currentKey[entryDateIndex].trades.push({
+          id: entry.id,
+          side: entry.side,
+          returnCash: entry.returnCash,
+          returnPercent: entry.returnPercent,
+          total: entry.total
+        });
+      }
     }
 
     if (entryDateIndex === -1) {
@@ -1829,14 +2341,14 @@ var renderStreaks = function renderStreaks(data) {
     return trade.returnCash;
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0) : 0;
+  }, 0).toFixed(2) : 0;
   overallEls.winStreakDate.textContent = "".concat(data.wins.trades.length > 0 ? data.wins.trades[0].date : 'xx/xx/xx', " - ").concat(data.wins.trades.length > 0 ? data.wins.trades[data.wins.trades.length - 1].date : 'xx/xx/xx');
   overallEls.lossStreakTotal.textContent = data.losses.trades ? data.losses.trades.length : 0;
   overallEls.lossStreakProfit.textContent = data.losses.trades ? data.losses.trades.map(function (trade) {
     return trade.returnCash;
   }).reduce(function (acc, num) {
     return acc + num;
-  }, 0) : 0;
+  }, 0).toFixed(2) : 0;
   overallEls.lossStreakDate.textContent = "".concat(data.losses.trades.length > 0 ? data.losses.trades[0].date : 'xx/xx/xx', " - ").concat(data.losses.trades.length > 0 ? data.losses.trades[data.losses.trades.length - 1].date : 'xx/xx/xx');
 }; // ZONE - D3
 
@@ -5611,7 +6123,7 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
     var labelsGroup = graph.append('g');
 
     for (var _i = 0; _i < pointsCoords.length; _i++) {
-      var label = labelsGroup.append('text').text((0, _helpers.kFormatter)(data[_i].total, 9999)).attr('class', "".concat(data[_i].returnCash >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i][0] - 20, ", ").concat(pointsCoords[_i][1] - (data[_i].returnCash >= 0 ? 15 : -25), ")"));
+      labelsGroup.append('text').text((0, _helpers.kFormatter)(data[_i].total, 9999)).attr('class', "".concat(data[_i].returnCash >= 0 ? 'performance-label' : 'performance-label--negative')).attr('transform', "translate(".concat(pointsCoords[_i][0] - 20, ", ").concat(pointsCoords[_i][1] - (data[_i].returnCash >= 0 ? 15 : -25), ")"));
     } // select x axis text and translate down every odd text to make space
 
 
@@ -5833,7 +6345,10 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
   var yAxisGroup = graph.append('g').attr('class', 'worst-best-axis-y'); // create and call the axes
 
   var xAxis = d3.axisBottom(x).tickFormat(function (d) {
-    return d;
+    var index = data.map(function (item) {
+      return item.id;
+    }).indexOf(d);
+    return data[index].ticker;
   });
   var yAxis = d3.axisLeft(y).ticks(6).tickFormat(function (d) {
     if (type === 'worst') return -Math.abs((0, _helpers.kFormatter)(d, 9999));
@@ -5852,7 +6367,7 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
       return d.returnCash;
     }) + gap]);
     x.domain(data.map(function (item) {
-      return item.ticker;
+      return item.id;
     })); // join data to rectangles inside our graph group
 
     var rects = graph.selectAll('rect').data(data); // remove any unwanted shapes
@@ -5863,8 +6378,8 @@ var renderWorstBestChart = function renderWorstBestChart(passedData) {
       return y(total);
     }).attr('fill', 'orange'); // update and append virtual elements
 
-    rects.enter().append('rect').attr('width', x.bandwidth < 62 ? x.bandwidth : 62).attr('height', 0).attr('y', graphHeight).attr('x', function (d) {
-      return x(d.ticker);
+    rects.enter().append('rect').attr('width', x.bandwidth).attr('height', 0).attr('y', graphHeight).attr('x', function (d) {
+      return x(d.id);
     }).attr('fill', 'orange').attr('height', function (d) {
       return graphHeight - y(d.returnCash);
     }).attr('y', function (d) {
@@ -5925,10 +6440,10 @@ var formatWorstBestData = function formatWorstBestData(type, stocksData) {
     dataCopy.forEach(function (stock) {
       return stock.returnCash = Math.abs(stock.returnCash);
     });
-    return ['worst', dataCopy];
+    return ['worst', dataCopy.slice(0, 8)];
   }
 
-  if (type === 'best') return ['best', stocksData];
+  if (type === 'best') return ['best', stocksData.slice(0, 8)];
 };
 
 exports.formatWorstBestData = formatWorstBestData;
@@ -9257,7 +9772,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56824" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64126" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -200,7 +200,7 @@ export const renderPerformanceChart = function (passedData) {
     const labelsGroup = graph.append('g');
 
     for (let i = 0; i < pointsCoords.length; i++) {
-      const label = labelsGroup
+      labelsGroup
         .append('text')
         .text(kFormatter(data[i].total, 9999))
         .attr(

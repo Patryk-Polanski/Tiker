@@ -89,7 +89,10 @@ export const renderWorstBestChart = function (passedData) {
   const yAxisGroup = graph.append('g').attr('class', 'worst-best-axis-y');
 
   // create and call the axes
-  const xAxis = d3.axisBottom(x).tickFormat(d => d);
+  const xAxis = d3.axisBottom(x).tickFormat(d => {
+    const index = data.map(item => item.id).indexOf(d);
+    return data[index].ticker;
+  });
   const yAxis = d3
     .axisLeft(y)
     .ticks(6)
@@ -106,7 +109,7 @@ export const renderWorstBestChart = function (passedData) {
 
     // set scale domains
     y.domain([0, d3.max(data, d => d.returnCash) + gap]);
-    x.domain(data.map(item => item.ticker));
+    x.domain(data.map(item => item.id));
 
     // join data to rectangles inside our graph group
     const rects = graph.selectAll('rect').data(data);
@@ -124,10 +127,10 @@ export const renderWorstBestChart = function (passedData) {
     rects
       .enter()
       .append('rect')
-      .attr('width', x.bandwidth < 62 ? x.bandwidth : 62)
+      .attr('width', x.bandwidth)
       .attr('height', 0)
       .attr('y', graphHeight)
-      .attr('x', d => x(d.ticker))
+      .attr('x', d => x(d.id))
       .attr('fill', 'orange')
       .attr('height', d => graphHeight - y(d.returnCash))
       .attr('y', d => y(d.returnCash))

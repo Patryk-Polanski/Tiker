@@ -63,6 +63,7 @@ export const renderStreaks = function (data) {
     ? data.wins.trades
         .map(trade => trade.returnCash)
         .reduce((acc, num) => acc + num, 0)
+        .toFixed(2)
     : 0;
 
   overallEls.winStreakDate.textContent = `${
@@ -81,6 +82,7 @@ export const renderStreaks = function (data) {
     ? data.losses.trades
         .map(trade => trade.returnCash)
         .reduce((acc, num) => acc + num, 0)
+        .toFixed(2)
     : 0;
 
   overallEls.lossStreakDate.textContent = `${
