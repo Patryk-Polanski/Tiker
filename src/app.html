@@ -573,12 +573,37 @@
                             <img class="s-help__guide-img" src="./img/cursor-journal.png"
                                 alt="Screenshot of the journal icon">
                             <p class="s-help__guide-body">
-                                All of your recorded trades will appear on the left hand side. To get started, clock on
+                                All of your recorded trades will appear on the left hand side. To get started, click on
                                 the ‘new trade’ button. This will show a form that needs to be filled in to record every
                                 trade. The required data is the date, stock traded, side of the trade (long or short),
-                                entries, exits, position size and stop losses. You can also enter the descriptive sides
-                                of the trade such as your reasoning and emotional state.
+                                entries, exits and position size. Each of the inputs that require data has a white
+                                bottom border. If you need to add more entries or exits, you can do so with the 'plus'
+                                button. You can also enter the descriptive sides of the trade such as your reasoning and
+                                emotional state.
                             </p>
+                            <img class="s-help__guide-img" src="./img/help-journal-form-pic.jpg"
+                                alt="Screenshot of the journal form">
+                            <p class="s-help__guide-body">
+                                The buttons at the bottom of the form are used to save an entry or delete/edit an
+                                existing entry. You can select a different journal entry by clicking on one of the
+                                other cards on the left side of the form. Know you know how to use the application.
+                                There are a few other functionalities that could be useful.
+                            </p>
+                            <p class="s-help__guide-body">
+                                The reset option in the settings can be used to clear all data and start from a
+                                complete zero. Be careful with this functionality as the deleted data will be
+                                erased from the application.
+                            </p>
+                            <img class="s-help__guide-img" src="./img/help-settings-pic.jpg"
+                                alt="Screenshot of the settings section">
+                            <p class="s-help__guide-body">
+                                The 'Capital management' section also consists of a few calculators to help you with
+                                your trading. You can use the Risk to Reward ratio calculator to see if the trade is
+                                worth taking. The Position sizing calculator can help you determine how many trades
+                                you should buy to follow good risk management.
+                            </p>
+                            <img class="s-help__guide-img" src="./img/help-calculators-pic.jpg"
+                                alt="Screenshot of the calculators in the 'Capital management' section">
                         </div>
                         <div class="s-help__glossary">
                             <h2 class="s-help__glossary-heading">Glossary</h2>
@@ -590,7 +615,7 @@
                                     Same applied to the monthly performance that can be viewed by clicking on the button
                                     in the upper right corner.
                                 </p>
-                                <img class="s-help__glossary-img" src="../src/img/glossary-daily-performance.png"
+                                <img class="s-help__glossary-img" src="../src/img/glossary-performance.png"
                                     alt="Screenshot of the daily performance section">
                             </div>
                             <div class="s-help__glossary-keyword-wrapper">
@@ -600,7 +625,7 @@
                                     recording your trades in the journal section. You can also see the proportions of
                                     long and short positions.
                                 </p>
-                                <img class="s-help__glossary-img" src="../src/img/glossary-overall-trades.png"
+                                <img class="s-help__glossary-img" src="../src/img/glossary-proportions-pic.png"
                                     alt="Screenshot of the overall trades section">
                             </div>
                             <div class="s-help__glossary-keyword-wrapper">
@@ -619,7 +644,7 @@
                                     A list of 6 best performing stocks, ordered by the average return. For the stock to
                                     qualify, it must have been traded at least three times.
                                 </p>
-                                <img class="s-help__glossary-img" src="../src/img/glossary-profitable.png"
+                                <img class="s-help__glossary-img" src="../src/img/glossary-profitable-pic.png"
                                     alt="Screenshot of the most profitable stocks section">
                             </div>
                             <div class="s-help__glossary-keyword-wrapper">
@@ -629,7 +654,7 @@
                                     date. The chart can be toggled in the upper right corner to show eight best single
                                     trades.
                                 </p>
-                                <img class="s-help__glossary-img" src="../src/img/glossary-worst-best.png"
+                                <img class="s-help__glossary-img" src="../src/img/glossary-worst-best-pic.png"
                                     alt="Screenshot of the worst and best stocks section">
                             </div>
                             <div class="s-help__glossary-keyword-wrapper">
@@ -638,8 +663,42 @@
                                     Displays trading performance from a monthly perspective. The performance is broken
                                     down into short and long positions for better trading insight.
                                 </p>
-                                <img class="s-help__glossary-img" src="../src/img/glossary-monthly.png"
+                                <img class="s-help__glossary-img" src="../src/img/glossary-monthly-pic.png"
                                     alt="Screenshot of the monthly report section">
+                            </div>
+                            <div class="s-help__glossary-keyword-wrapper">
+                                <p class="s-help__glossary-body">
+                                    <span class="s-help__glossary-keyword">Account Risk %:</span>
+                                    Guideline for much how much of the capital should be risked per trade. It is
+                                    recommended to choose a percentage between 1 and 2 to manage risk properly
+                                    and reduce the impact of losing positions on an account.
+                                </p>
+                            </div>
+                            <div class="s-help__glossary-keyword-wrapper">
+                                <p class="s-help__glossary-body">
+                                    <span class="s-help__glossary-keyword">Batting Average:</span>
+                                    A statistic that shows how many times you have been right, represented in
+                                    percentages. For example, if your batting average is 60% on long positions, you have
+                                    been correct 60% of the time while going long.
+                                </p>
+                            </div>
+                            <div class="s-help__glossary-keyword-wrapper">
+                                <p class="s-help__glossary-body">
+                                    <span class="s-help__glossary-keyword">Win to Loss Ratio:</span>
+                                    Represented in decimals, this statistic shows how many winning positions you have
+                                    had compared to losing trades. For example, if your win to loss ratio is 1.5, you
+                                    have had one and a half winning positions per one losing position.
+                                </p>
+                            </div>
+                            <div class="s-help__glossary-keyword-wrapper">
+                                <p class="s-help__glossary-body">
+                                    <span class="s-help__glossary-keyword">Risk To Reward Ratio:</span>
+                                    Metric used to determine the worthiness of the trade. It takes into account the
+                                    entry
+                                    price, exit target and a stop loss. Risk to Reward ratio of at least 2 is
+                                    recommended
+                                    to make sure that only quality trades are taken.
+                                </p>
                             </div>
                         </div>
                     </section>
