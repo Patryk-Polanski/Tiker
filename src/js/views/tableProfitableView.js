@@ -24,7 +24,7 @@ export const renderProfitableTable = function (tableData) {
     const html = `
         <tr>
             <th>${data}</th>
-            <td>${ticker.totalProfit}</td>
+            <td>${ticker.totalProfit.toFixed(2)}</td>
             <td>${ticker.totalTrades}/${kFormatter(
       ticker.totalShares,
       9999
