@@ -853,7 +853,7 @@ body {
   outline: 0;
 }
 .btn--secondary {
-  background-color: #1d191d;
+  background-color: #302930;
 }
 .btn--secondary:hover {
   background-color: #762e88;
@@ -866,11 +866,11 @@ body {
   transition: background-color 0.1s ease-in;
 }
 .btn--tertiary:focus {
-  background-color: #1d191d;
+  background-color: #302930;
   outline: 0;
 }
 .btn--tertiary:hover {
-  background-color: #1d191d;
+  background-color: #302930;
   outline: 0;
 }
 .btn--tertiary::before {
@@ -942,7 +942,7 @@ body {
   height: 28px;
   width: 28px;
   padding: 2px;
-  background-color: #1d191d;
+  background-color: #302930;
   position: relative;
 }
 .btn--pagination::before {
@@ -956,6 +956,9 @@ body {
   background-color: #762e88;
   border-radius: 5px;
   z-index: -1;
+}
+.btn--pagination:hover {
+  background-color: #762e88;
 }
 .btn--pagination--active::before {
   left: -4px;
@@ -1203,7 +1206,7 @@ body {
   border-bottom: 2px solid #370943;
 }
 .c-input-text::placeholder {
-  color: #1d191d;
+  color: #302930;
   opacity: 1;
 }
 .c-input-text--no-border {
@@ -1246,7 +1249,7 @@ body {
   }
 }
 .c-journal-entry:hover {
-  background-color: #131212;
+  background-color: #302930;
 }
 .c-journal-entry:first-child {
   margin-top: 0;

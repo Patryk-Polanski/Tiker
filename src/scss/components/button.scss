@@ -20,7 +20,7 @@
   }
 
   &--secondary {
-    background-color: $brown-light;
+    background-color: $velvet-medium;
 
     &:hover {
       background-color: $purple-light;
@@ -35,12 +35,12 @@
     transition: background-color 0.1s ease-in;
 
     &:focus {
-      background-color: $brown-light;
+      background-color: $velvet-medium;
       outline: 0;
     }
 
     &:hover {
-      background-color: $brown-light;
+      background-color: $velvet-medium;
       outline: 0;
     }
 
@@ -130,7 +130,7 @@
     height: 28px;
     width: 28px;
     padding: 2px;
-    background-color: $brown-light;
+    background-color: $velvet-medium;
     position: relative;
 
     &::before {
@@ -144,6 +144,10 @@
       background-color: $purple-light;
       border-radius: 5px;
       z-index: -1;
+    }
+
+    &:hover {
+      background-color: $purple-light;
     }
 
     &--active {
