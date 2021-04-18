@@ -461,6 +461,8 @@ body {
 .s-content__popup--active {
   display: flex;
   opacity: 1;
+  height: 100vh;
+  position: fixed;
 }
 .s-content__popup-wrapper {
   min-height: 350px;

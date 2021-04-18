@@ -63,6 +63,8 @@
   &__popup--active {
     display: flex;
     opacity: 1;
+    height: 100vh;
+    position: fixed;
   }
 
   &__popup-wrapper {
