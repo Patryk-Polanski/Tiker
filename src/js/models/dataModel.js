@@ -513,7 +513,7 @@ export const updateCapital = function (amount = '', action = '') {
       if (user.journal.length > 0) {
         const lastJournalTrade = user.journal[user.journal.length - 1];
         lastJournalTrade.total -= Math.round(amount);
-        user.capital = lastJournalTrade.total;
+        user.capital = Math.round(lastJournalTrade.total);
         lastJournalTrade.capitalChange = -Math.abs(amount);
       } else {
         user.capital -= Math.round(amount);
@@ -523,7 +523,7 @@ export const updateCapital = function (amount = '', action = '') {
       if (user.journal.length > 0) {
         const lastJournalTrade = user.journal[user.journal.length - 1];
         lastJournalTrade.total += Math.round(amount);
-        user.capital = lastJournalTrade.total;
+        user.capital = Math.round(lastJournalTrade.total);
         lastJournalTrade.capitalChange = Math.abs(amount);
       } else {
         user.capital += Math.round(amount);

@@ -1784,7 +1784,7 @@ var updateCapital = function updateCapital() {
       if (user.journal.length > 0) {
         var lastJournalTrade = user.journal[user.journal.length - 1];
         lastJournalTrade.total -= Math.round(amount);
-        user.capital = lastJournalTrade.total;
+        user.capital = Math.round(lastJournalTrade.total);
         lastJournalTrade.capitalChange = -Math.abs(amount);
       } else {
         user.capital -= Math.round(amount);
@@ -1795,7 +1795,7 @@ var updateCapital = function updateCapital() {
       if (user.journal.length > 0) {
         var _lastJournalTrade = user.journal[user.journal.length - 1];
         _lastJournalTrade.total += Math.round(amount);
-        user.capital = _lastJournalTrade.total;
+        user.capital = Math.round(_lastJournalTrade.total);
         _lastJournalTrade.capitalChange = Math.abs(amount);
       } else {
         user.capital += Math.round(amount);
@@ -9913,7 +9913,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50371" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51346" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
