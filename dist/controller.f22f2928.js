@@ -1948,7 +1948,7 @@ var targetSelectedEntry = function targetSelectedEntry(entryID) {
 exports.targetSelectedEntry = targetSelectedEntry;
 
 var saveToLocalStorage = function saveToLocalStorage() {
-  localStorage.setItem('TikerData', JSON.stringify(user));
+  // localStorage.setItem('TikerData', JSON.stringify(user));
   console.log(user);
 };
 
