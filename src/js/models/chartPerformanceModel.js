@@ -34,6 +34,8 @@ const formatMonthlyData = function (calendarData, journal) {
     });
   });
 
+  formattedMonthsArr = formattedMonthsArr.slice(-16);
+
   formattedMonthsArr.sort(
     (a, b) => new Date(a.dateLong) - new Date(b.dateLong)
   );
@@ -76,6 +78,8 @@ const formatDailyData = function (calendarData, journal) {
       total: Math.round(journal[lastTradeIndexInJournal].total),
     };
   });
+
+  formattedDaysArr = formattedDaysArr.slice(-16);
 
   formattedDaysArr.sort((a, b) => new Date(a.dateLong) - new Date(b.dateLong));
 

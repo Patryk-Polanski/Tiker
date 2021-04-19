@@ -1,17 +1,17 @@
 {
-  "capital": 7104,
+  "capital": 7175,
   "initialCapital": 7000,
   "newAccount": false,
   "overall": {
-    "total": 20,
+    "total": 24,
     "proportions": [
       {
         "side": "long",
-        "total": 11
+        "total": 13
       },
       {
         "side": "short",
-        "total": 9
+        "total": 11
       }
     ]
   },
@@ -51,10 +51,22 @@
     "current": {
       "trades": [
         {
-          "id": 1618788552011,
-          "ticker": "BMBL",
-          "date": "8/4/21",
-          "returnCash": 123.6
+          "id": 1618788949757,
+          "ticker": "WFC",
+          "date": "10/4/21",
+          "returnCash": 112.8
+        },
+        {
+          "id": 1618790095230,
+          "ticker": "RIOT",
+          "date": "14/4/21",
+          "returnCash": 19.6
+        },
+        {
+          "id": 1618790222518,
+          "ticker": "RIOT",
+          "date": "14/4/21",
+          "returnCash": 42.7
         }
       ]
     }
@@ -80,6 +92,13 @@
       "dateShort": "21/3/21",
       "ticker": "SNAP",
       "returnCash": -119
+    },
+    {
+      "id": 1618788815800,
+      "dateLong": "Thu Apr 08 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "8/4/21",
+      "ticker": "AAL",
+      "returnCash": -105
     },
     {
       "id": 1618787639837,
@@ -133,6 +152,13 @@
       "returnCash": 116
     },
     {
+      "id": 1618788949757,
+      "dateLong": "Sat Apr 10 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "10/4/21",
+      "ticker": "WFC",
+      "returnCash": 112.8
+    },
+    {
       "id": 1618787468705,
       "dateLong": "Fri Feb 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "19/2/21",
@@ -175,6 +201,13 @@
       "returnCash": 63.7
     },
     {
+      "id": 1618790222518,
+      "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "14/4/21",
+      "ticker": "RIOT",
+      "returnCash": 42.7
+    },
+    {
       "id": 1618787828559,
       "dateLong": "Thu Mar 11 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
       "dateShort": "11/3/21",
@@ -187,6 +220,13 @@
       "dateShort": "18/3/21",
       "ticker": "AMC",
       "returnCash": 31.2
+    },
+    {
+      "id": 1618790095230,
+      "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "14/4/21",
+      "ticker": "RIOT",
+      "returnCash": 19.6
     },
     {
       "id": 1618787937979,
@@ -230,13 +270,25 @@
     },
     "RIOT": {
       "ticker": "RIOT",
-      "avgReturn": 106.8,
+      "avgReturn": 56.37,
       "trades": [
         {
           "id": 1618787468705,
           "shares": 60,
           "returnCash": 106.8,
           "returnPercent": 1.51
+        },
+        {
+          "id": 1618790095230,
+          "shares": 70,
+          "returnCash": 19.6,
+          "returnPercent": 0.28
+        },
+        {
+          "id": 1618790222518,
+          "shares": 70,
+          "returnCash": 42.7,
+          "returnPercent": 0.6
         }
       ]
     },
@@ -356,19 +408,25 @@
     },
     "AAL": {
       "ticker": "AAL",
-      "avgReturn": -79,
+      "avgReturn": -92,
       "trades": [
         {
           "id": 1618787878176,
           "shares": 100,
           "returnCash": -79,
           "returnPercent": -1.09
+        },
+        {
+          "id": 1618788815800,
+          "shares": 100,
+          "returnCash": -105,
+          "returnPercent": -1.48
         }
       ]
     },
     "WFC": {
       "ticker": "WFC",
-      "avgReturn": -2.75,
+      "avgReturn": 35.77,
       "trades": [
         {
           "id": 1618787937979,
@@ -381,6 +439,12 @@
           "shares": 50,
           "returnCash": -21.5,
           "returnPercent": -0.31
+        },
+        {
+          "id": 1618788949757,
+          "shares": 120,
+          "returnCash": 112.8,
+          "returnPercent": 1.61
         }
       ]
     }
@@ -618,6 +682,46 @@
             "returnCash": 123.6,
             "returnPercent": 1.77,
             "total": 7104.400000000001
+          },
+          {
+            "id": 1618788815800,
+            "side": "long",
+            "returnCash": -105,
+            "returnPercent": -1.48,
+            "total": 6999.400000000001
+          }
+        ]
+      },
+      {
+        "dateLong": "Sat Apr 10 2021 00:00:00 GMT+0100 (British Summer Time)",
+        "dateShort": "10/4/21",
+        "trades": [
+          {
+            "id": 1618788949757,
+            "side": "short",
+            "returnCash": 112.8,
+            "returnPercent": 1.61,
+            "total": 7112.200000000001
+          }
+        ]
+      },
+      {
+        "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+        "dateShort": "14/4/21",
+        "trades": [
+          {
+            "id": 1618790095230,
+            "side": "long",
+            "returnCash": 19.6,
+            "returnPercent": 0.28,
+            "total": 7131.800000000001
+          },
+          {
+            "id": 1618790222518,
+            "side": "short",
+            "returnCash": 42.7,
+            "returnPercent": 0.6,
+            "total": 7174.500000000001
           }
         ]
       }
@@ -1039,6 +1143,92 @@
       "previousDateShort": "8/4/21",
       "previousDateLong": "Thu Apr 08 2021 00:00:00 GMT+0100 (British Summer Time)",
       "total": 7104.400000000001
+    },
+    {
+      "id": 1618788815800,
+      "dateLong": "Thu Apr 08 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "8/4/21",
+      "ticker": "AAL",
+      "side": "long",
+      "tradeEntries": [[23.57, 100]],
+      "tradeExits": [[22.52, 100]],
+      "sharesAmount": 100,
+      "avgEntry": 23.57,
+      "avgExit": 22.52,
+      "returnCash": -105,
+      "returnPercent": -1.48,
+      "body": "",
+      "previousTicker": "AAL",
+      "previousDateShort": "8/4/21",
+      "previousDateLong": "Thu Apr 08 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "total": 6999.400000000001
+    },
+    {
+      "id": 1618788949757,
+      "dateLong": "Sat Apr 10 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "10/4/21",
+      "ticker": "WFC",
+      "side": "short",
+      "tradeEntries": [
+        [42.27, 70],
+        [42.11, 50]
+      ],
+      "tradeExits": [
+        [41.44, 40],
+        [41.31, 40],
+        [41.02, 40]
+      ],
+      "sharesAmount": 120,
+      "avgEntry": 42.2,
+      "avgExit": 41.26,
+      "returnCash": 112.8,
+      "returnPercent": 1.61,
+      "body": "Enim tortor at auctor urna nunc. Pellentesque pulvinar pellentesque habitant morbi tristique. Leo vel orci porta non pulvinar. Porta nibh venenatis cras sed. Sapien pellentesque habitant morbi tristique senectus. At ultrices mi tempus imperdiet. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Integer eget aliquet nibh praesent tristique magna sit amet purus. Ullamcorper sit amet risus nullam eget felis eget nunc lobortis. Enim sit amet venenatis urna cursus eget. Sed nisi lacus sed viverra tellus. Morbi tempus iaculis urna id volutpat. Ipsum dolor sit amet consectetur adipiscing elit ut aliquam purus. Sapien eget mi proin sed libero enim sed faucibus turpis. Neque egestas congue quisque egestas diam in arcu cursus.",
+      "previousTicker": "WFC",
+      "previousDateShort": "10/4/21",
+      "previousDateLong": "Sat Apr 10 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "total": 7112.200000000001
+    },
+    {
+      "id": 1618790095230,
+      "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "14/4/21",
+      "ticker": "RIOT",
+      "side": "long",
+      "tradeEntries": [[49.7, 70]],
+      "tradeExits": [[49.98, 70]],
+      "sharesAmount": 70,
+      "avgEntry": 49.7,
+      "avgExit": 49.98,
+      "returnCash": 19.6,
+      "returnPercent": 0.28,
+      "body": "",
+      "previousTicker": "RIOT",
+      "previousDateShort": "14/4/21",
+      "previousDateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "total": 7131.800000000001
+    },
+    {
+      "id": 1618790222518,
+      "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "14/4/21",
+      "ticker": "RIOT",
+      "side": "short",
+      "tradeEntries": [[50.69, 70]],
+      "tradeExits": [
+        [50.13, 30],
+        [50.04, 40]
+      ],
+      "sharesAmount": 70,
+      "avgEntry": 50.69,
+      "avgExit": 50.08,
+      "returnCash": 42.7,
+      "returnPercent": 0.6,
+      "body": "",
+      "previousTicker": "RIOT",
+      "previousDateShort": "14/4/21",
+      "previousDateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "total": 7174.500000000001
     }
   ],
   "dummyJournal": [

@@ -258,17 +258,17 @@ var USER_PASSWORD = 'app';
 exports.USER_PASSWORD = USER_PASSWORD;
 },{}],"data.json":[function(require,module,exports) {
 module.exports = {
-  "capital": 7104,
+  "capital": 7175,
   "initialCapital": 7000,
   "newAccount": false,
   "overall": {
-    "total": 20,
+    "total": 24,
     "proportions": [{
       "side": "long",
-      "total": 11
+      "total": 13
     }, {
       "side": "short",
-      "total": 9
+      "total": 11
     }]
   },
   "streaks": {
@@ -300,10 +300,20 @@ module.exports = {
     },
     "current": {
       "trades": [{
-        "id": 1618788552011,
-        "ticker": "BMBL",
-        "date": "8/4/21",
-        "returnCash": 123.6
+        "id": 1618788949757,
+        "ticker": "WFC",
+        "date": "10/4/21",
+        "returnCash": 112.8
+      }, {
+        "id": 1618790095230,
+        "ticker": "RIOT",
+        "date": "14/4/21",
+        "returnCash": 19.6
+      }, {
+        "id": 1618790222518,
+        "ticker": "RIOT",
+        "date": "14/4/21",
+        "returnCash": 42.7
       }]
     }
   },
@@ -325,6 +335,12 @@ module.exports = {
     "dateShort": "21/3/21",
     "ticker": "SNAP",
     "returnCash": -119
+  }, {
+    "id": 1618788815800,
+    "dateLong": "Thu Apr 08 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "8/4/21",
+    "ticker": "AAL",
+    "returnCash": -105
   }, {
     "id": 1618787639837,
     "dateLong": "Tue Mar 02 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
@@ -369,6 +385,12 @@ module.exports = {
     "ticker": "NIO",
     "returnCash": 116
   }, {
+    "id": 1618788949757,
+    "dateLong": "Sat Apr 10 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "10/4/21",
+    "ticker": "WFC",
+    "returnCash": 112.8
+  }, {
     "id": 1618787468705,
     "dateLong": "Fri Feb 19 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "19/2/21",
@@ -405,6 +427,12 @@ module.exports = {
     "ticker": "BMBL",
     "returnCash": 63.7
   }, {
+    "id": 1618790222518,
+    "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "14/4/21",
+    "ticker": "RIOT",
+    "returnCash": 42.7
+  }, {
     "id": 1618787828559,
     "dateLong": "Thu Mar 11 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
     "dateShort": "11/3/21",
@@ -416,6 +444,12 @@ module.exports = {
     "dateShort": "18/3/21",
     "ticker": "AMC",
     "returnCash": 31.2
+  }, {
+    "id": 1618790095230,
+    "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "14/4/21",
+    "ticker": "RIOT",
+    "returnCash": 19.6
   }, {
     "id": 1618787937979,
     "dateLong": "Thu Mar 18 2021 00:00:00 GMT+0000 (Greenwich Mean Time)",
@@ -452,12 +486,22 @@ module.exports = {
     },
     "RIOT": {
       "ticker": "RIOT",
-      "avgReturn": 106.8,
+      "avgReturn": 56.37,
       "trades": [{
         "id": 1618787468705,
         "shares": 60,
         "returnCash": 106.8,
         "returnPercent": 1.51
+      }, {
+        "id": 1618790095230,
+        "shares": 70,
+        "returnCash": 19.6,
+        "returnPercent": 0.28
+      }, {
+        "id": 1618790222518,
+        "shares": 70,
+        "returnCash": 42.7,
+        "returnPercent": 0.6
       }]
     },
     "SNAP": {
@@ -557,17 +601,22 @@ module.exports = {
     },
     "AAL": {
       "ticker": "AAL",
-      "avgReturn": -79,
+      "avgReturn": -92,
       "trades": [{
         "id": 1618787878176,
         "shares": 100,
         "returnCash": -79,
         "returnPercent": -1.09
+      }, {
+        "id": 1618788815800,
+        "shares": 100,
+        "returnCash": -105,
+        "returnPercent": -1.48
       }]
     },
     "WFC": {
       "ticker": "WFC",
-      "avgReturn": -2.75,
+      "avgReturn": 35.77,
       "trades": [{
         "id": 1618787937979,
         "shares": 100,
@@ -578,6 +627,11 @@ module.exports = {
         "shares": 50,
         "returnCash": -21.5,
         "returnPercent": -0.31
+      }, {
+        "id": 1618788949757,
+        "shares": 120,
+        "returnCash": 112.8,
+        "returnPercent": 1.61
       }]
     }
   },
@@ -763,6 +817,38 @@ module.exports = {
         "returnCash": 123.6,
         "returnPercent": 1.77,
         "total": 7104.400000000001
+      }, {
+        "id": 1618788815800,
+        "side": "long",
+        "returnCash": -105,
+        "returnPercent": -1.48,
+        "total": 6999.400000000001
+      }]
+    }, {
+      "dateLong": "Sat Apr 10 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "10/4/21",
+      "trades": [{
+        "id": 1618788949757,
+        "side": "short",
+        "returnCash": 112.8,
+        "returnPercent": 1.61,
+        "total": 7112.200000000001
+      }]
+    }, {
+      "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+      "dateShort": "14/4/21",
+      "trades": [{
+        "id": 1618790095230,
+        "side": "long",
+        "returnCash": 19.6,
+        "returnPercent": 0.28,
+        "total": 7131.800000000001
+      }, {
+        "id": 1618790222518,
+        "side": "short",
+        "returnCash": 42.7,
+        "returnPercent": 0.6,
+        "total": 7174.500000000001
       }]
     }]
   },
@@ -1126,6 +1212,78 @@ module.exports = {
     "previousDateShort": "8/4/21",
     "previousDateLong": "Thu Apr 08 2021 00:00:00 GMT+0100 (British Summer Time)",
     "total": 7104.400000000001
+  }, {
+    "id": 1618788815800,
+    "dateLong": "Thu Apr 08 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "8/4/21",
+    "ticker": "AAL",
+    "side": "long",
+    "tradeEntries": [[23.57, 100]],
+    "tradeExits": [[22.52, 100]],
+    "sharesAmount": 100,
+    "avgEntry": 23.57,
+    "avgExit": 22.52,
+    "returnCash": -105,
+    "returnPercent": -1.48,
+    "body": "",
+    "previousTicker": "AAL",
+    "previousDateShort": "8/4/21",
+    "previousDateLong": "Thu Apr 08 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 6999.400000000001
+  }, {
+    "id": 1618788949757,
+    "dateLong": "Sat Apr 10 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "10/4/21",
+    "ticker": "WFC",
+    "side": "short",
+    "tradeEntries": [[42.27, 70], [42.11, 50]],
+    "tradeExits": [[41.44, 40], [41.31, 40], [41.02, 40]],
+    "sharesAmount": 120,
+    "avgEntry": 42.2,
+    "avgExit": 41.26,
+    "returnCash": 112.8,
+    "returnPercent": 1.61,
+    "body": "Enim tortor at auctor urna nunc. Pellentesque pulvinar pellentesque habitant morbi tristique. Leo vel orci porta non pulvinar. Porta nibh venenatis cras sed. Sapien pellentesque habitant morbi tristique senectus. At ultrices mi tempus imperdiet. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu vitae. Integer eget aliquet nibh praesent tristique magna sit amet purus. Ullamcorper sit amet risus nullam eget felis eget nunc lobortis. Enim sit amet venenatis urna cursus eget. Sed nisi lacus sed viverra tellus. Morbi tempus iaculis urna id volutpat. Ipsum dolor sit amet consectetur adipiscing elit ut aliquam purus. Sapien eget mi proin sed libero enim sed faucibus turpis. Neque egestas congue quisque egestas diam in arcu cursus.",
+    "previousTicker": "WFC",
+    "previousDateShort": "10/4/21",
+    "previousDateLong": "Sat Apr 10 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 7112.200000000001
+  }, {
+    "id": 1618790095230,
+    "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "14/4/21",
+    "ticker": "RIOT",
+    "side": "long",
+    "tradeEntries": [[49.7, 70]],
+    "tradeExits": [[49.98, 70]],
+    "sharesAmount": 70,
+    "avgEntry": 49.7,
+    "avgExit": 49.98,
+    "returnCash": 19.6,
+    "returnPercent": 0.28,
+    "body": "",
+    "previousTicker": "RIOT",
+    "previousDateShort": "14/4/21",
+    "previousDateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 7131.800000000001
+  }, {
+    "id": 1618790222518,
+    "dateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "dateShort": "14/4/21",
+    "ticker": "RIOT",
+    "side": "short",
+    "tradeEntries": [[50.69, 70]],
+    "tradeExits": [[50.13, 30], [50.04, 40]],
+    "sharesAmount": 70,
+    "avgEntry": 50.69,
+    "avgExit": 50.08,
+    "returnCash": 42.7,
+    "returnPercent": 0.6,
+    "body": "",
+    "previousTicker": "RIOT",
+    "previousDateShort": "14/4/21",
+    "previousDateLong": "Wed Apr 14 2021 00:00:00 GMT+0100 (British Summer Time)",
+    "total": 7174.500000000001
   }],
   "dummyJournal": [{
     "id": "",
@@ -5990,7 +6148,8 @@ var renderPerformanceChart = function renderPerformanceChart(passedData) {
 
   if (passedData) {
     type = passedData[0];
-    data = passedData[1].slice(0, 16);
+    data = passedData[1];
+    console.log(data);
     updatePerformanceHeading(type);
     clearPerformanceCanvas();
   }
@@ -6172,6 +6331,7 @@ var formatMonthlyData = function formatMonthlyData(calendarData, journal) {
       total: Math.round(journal[lastTradeIndexInJournal].total)
     });
   });
+  formattedMonthsArr = formattedMonthsArr.slice(-16);
   formattedMonthsArr.sort(function (a, b) {
     return new Date(a.dateLong) - new Date(b.dateLong);
   });
@@ -6206,6 +6366,7 @@ var formatDailyData = function formatDailyData(calendarData, journal) {
       total: Math.round(journal[lastTradeIndexInJournal].total)
     };
   });
+  formattedDaysArr = formattedDaysArr.slice(-16);
   formattedDaysArr.sort(function (a, b) {
     return new Date(a.dateLong) - new Date(b.dateLong);
   });
@@ -9204,7 +9365,7 @@ var renderJournalForm = function renderJournalForm(singleEntry) {
   var _singleEntry2 = _slicedToArray(_singleEntry, 1);
 
   singleEntry = _singleEntry2[0];
-  var html = "\n    <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n      <div class=\"c-journal-form__upper-region\">\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">date: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-date-input\"\n                       value=\"").concat(singleEntry.dateShort ? singleEntry.dateShort : (0, _helpers.createShortDate)(), "\" disabled>\n              </span>\n              <span class=\"c-journal-form__data\">stock: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-input\"\n                      type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <div class=\"c-journal-form__trade-side-wrapper\">\n                  <span class=\"c-journal-form__data\">side: <input\n                          class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-side\"\n                          type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                  <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                      <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                          xmlns=\"http://www.w3.org/2000/svg\">\n                          <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                              fill=\"#C4C4C4\" />\n                          <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                              fill=\"#C4C4C4\" />\n                      </svg>\n  \n                  </button>\n              </div>\n              <span class=\"c-journal-form__data\">%return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">shares: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n              <span class=\"c-journal-form__data\">return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnCash, "\" disabled></span>\n          </div>\n      </div>\n      <div class=\"c-journal-form__middle-region\">\n          <div class=\"c-journal-form__entries-wrapper\">\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">entries</span>\n                  <span class=\"c-journal-form__entries-label\">shares</span>\n              </div>\n              <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                  \n              </div>\n              <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                  <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                      xmlns=\"http://www.w3.org/2000/svg\">\n                      <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                      <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                      <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                  </svg>\n  \n              </button>\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">average: <br><span\n                          class=\"c-journal-form__entries-label-result js-details-entry-price-average\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
+  var html = "\n    <div class=\"c-journal-form js-journal-form\" data-id=\"".concat(singleEntry.id, "\">\n      <div class=\"c-journal-form__upper-region\">\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">date: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-date-input\"\n                       value=\"").concat(singleEntry.dateShort ? singleEntry.dateShort : (0, _helpers.createShortDate)(), "\" disabled>\n              </span>\n              <span class=\"c-journal-form__data\">stock: <input\n                      class=\"c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-input\"\n                      type=\"text\" value=\"").concat(singleEntry.ticker, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <div class=\"c-journal-form__trade-side-wrapper\">\n                  <span class=\"c-journal-form__data\">side: <input\n                          class=\"c-input-text c-input-text--compact c-journal-form__side-input js-form-stock-side\"\n                          type=\"text\" value=\"").concat(singleEntry.side ? singleEntry.side : 'long', "\" disabled></span>\n                  <button class=\"c-journal-form__swap btn btn--form-icon c-journal-form__edit-mode-btn js-form-swap-btn\">\n                      <svg class=\"svg svg--swap\" viewBox=\"0 0 17 29\"\n                          xmlns=\"http://www.w3.org/2000/svg\">\n                          <path d=\"M8.5 0L15.8612 12.75L1.13878 12.75L8.5 0Z\"\n                              fill=\"#C4C4C4\" />\n                          <path d=\"M8.5 29L1.13879 16.25L15.8612 16.25L8.5 29Z\"\n                              fill=\"#C4C4C4\" />\n                      </svg>\n  \n                  </button>\n              </div>\n              <span class=\"c-journal-form__data\">%return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnPercent, "\" disabled></span>\n          </div>\n          <div class=\"c-journal-form__unit-wrapper\">\n              <span class=\"c-journal-form__data\">shares: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.sharesAmount, "\" disabled></span>\n              <span class=\"c-journal-form__data\">return: <input\n                      class=\"c-input-text c-input-text--compact\" type=\"number\"\n                      value=\"").concat(singleEntry.returnCash, "\" disabled></span>\n          </div>\n      </div>\n      <div class=\"c-journal-form__middle-region\">\n          <div class=\"c-journal-form__entries-wrapper\">\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">entries</span>\n                  <span class=\"c-journal-form__entries-label\">shares</span>\n              </div>\n              <div class=\"c-journal-form__entries-inner-wrapper js-entries-wrapper\">\n                  \n              </div>\n              <button class=\"c-journal-form__plus-entry btn btn--icon c-journal-form__edit-mode-btn js-form-plus-btn\">\n                  <svg class=\"svg svg--plus-circle\" viewBox=\"0 0 17 17\"\n                      xmlns=\"http://www.w3.org/2000/svg\">\n                      <circle cx=\"8.5\" cy=\"8.5\" r=\"8.5\" fill=\"#29242A\" />\n                      <path d=\"M14 7H3V10H14V7Z\" fill=\"#C4C4C4\" />\n                      <path d=\"M10 14V3H7L7 14H10Z\" fill=\"#C4C4C4\" />\n                  </svg>\n  \n              </button>\n              <div class=\"c-journal-form__entries-labels-wrapper\">\n                  <span class=\"c-journal-form__entries-label\">average: <br><span\n                          class=\"c-journal-form__entries-label-result js-details-entry-price-average\">").concat(singleEntry.tradeEntries[0][0] ? (singleEntry.tradeEntries.map(function (single) {
     return single[0] * single[1];
   }).reduce(function (acc, num) {
     return acc + num;

@@ -331,7 +331,7 @@ export const renderJournalForm = function (singleEntry) {
           <div class="c-journal-form__unit-wrapper">
               <div class="c-journal-form__trade-side-wrapper">
                   <span class="c-journal-form__data">side: <input
-                          class="c-input-text c-input-text--compact c-journal-form__manual-input js-form-stock-side"
+                          class="c-input-text c-input-text--compact c-journal-form__side-input js-form-stock-side"
                           type="text" value="${
                             singleEntry.side ? singleEntry.side : 'long'
                           }" disabled></span>

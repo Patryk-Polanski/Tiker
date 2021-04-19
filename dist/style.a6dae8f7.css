@@ -620,7 +620,8 @@ body {
   opacity: 0;
   pointer-events: none;
 }
-.s-journal__form-wrapper--edit-mode .c-journal-form__manual-input {
+.s-journal__form-wrapper--edit-mode .c-journal-form__manual-input,
+.s-journal__form-wrapper--edit-mode .c-journal-form__side-input {
   background-color: #131212;
   border: none;
   border-bottom: 2px solid #aaaaaa;

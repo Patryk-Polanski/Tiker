@@ -47,7 +47,8 @@ export const renderPerformanceChart = function (passedData) {
   let type, data;
   if (passedData) {
     type = passedData[0];
-    data = passedData[1].slice(0, 16);
+    data = passedData[1];
+    console.log(data);
     updatePerformanceHeading(type);
     clearPerformanceCanvas();
   }
