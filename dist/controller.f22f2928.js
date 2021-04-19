@@ -9648,6 +9648,7 @@ var controlPopups = function controlPopups(action, dataAttr, entryID) {
       controlMonthlyRender();
       controlLongShortPieRender();
       controlJournalRender();
+      (0, _accountDetailsView.updateCapitalOutput)((0, _dataModel.passData)('capital'));
       (0, _coreView.hidePopup)();
       (0, _coreView.showSingleBtnPopup)('You can do so in the capital management section', 'Your account capital is now 0 and needs to be updated', 'Application has been reset');
     }
@@ -9912,7 +9913,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54703" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65128" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

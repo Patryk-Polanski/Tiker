@@ -136,6 +136,7 @@ const controlPopups = function (action, dataAttr, entryID) {
       controlMonthlyRender();
       controlLongShortPieRender();
       controlJournalRender();
+      updateCapitalOutput(passData('capital'));
       hidePopup();
       showSingleBtnPopup(
         'You can do so in the capital management section',
