@@ -2715,7 +2715,7 @@ var convertToLeader = function convertToLeader(data) {
   current.profitable = winPercentTrades.length;
   current.battingAvgPercent = +(current.profitable / current.totalTrades * 100).toFixed(2);
   current.winLossRatio = +(current.profitable / (current.totalTrades - current.profitable)).toFixed(2);
-  if (!isFinite(current.winLossRatio)) current.winLossRatio = 1;
+  if (!isFinite(current.winLossRatio)) current.winLossRatio = data.trades.length;
   return formattedLeader;
 };
 
@@ -9913,7 +9913,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65128" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50371" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

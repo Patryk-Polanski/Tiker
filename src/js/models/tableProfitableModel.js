@@ -37,7 +37,8 @@ const convertToLeader = function (data) {
     current.profitable /
     (current.totalTrades - current.profitable)
   ).toFixed(2);
-  if (!isFinite(current.winLossRatio)) current.winLossRatio = 1;
+  if (!isFinite(current.winLossRatio))
+    current.winLossRatio = data.trades.length;
   return formattedLeader;
 };
 
