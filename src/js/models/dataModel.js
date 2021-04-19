@@ -154,10 +154,11 @@ const compareToStreaks = function (newEntry) {
     }
     // checks if new Entry's cash return is positive and the previous or next element's cash return is also positive
     // if this is the case, overwrite the index as the new Entry already exists in the array
+    console.log(newEntry.returnCash);
     if (
       newEntry.returnCash > -1 &&
-      (user.streaks.current.trades[indexInCurrent - 1].returnCash > -1 ||
-        user.streaks.current.trades[indexInCurrent + 1].returnCash > -1)
+      (user.streaks.current.trades[indexInCurrent - 1]?.returnCash > -1 ||
+        user.streaks.current.trades[indexInCurrent + 1]?.returnCash > -1)
     ) {
       user.streaks.current.trades[indexInCurrent] = streakObj;
       return;
@@ -167,8 +168,8 @@ const compareToStreaks = function (newEntry) {
     // if this is the case, the streak is broken, so remove the existing new entry index from the array
     if (
       newEntry.returnCash > -1 &&
-      (user.streaks.current.trades[indexInCurrent - 1].returnCash < 0 ||
-        user.streaks.current.trades[indexInCurrent + 1].returnCash < 0)
+      (user.streaks.current.trades[indexInCurrent - 1]?.returnCash < 0 ||
+        user.streaks.current.trades[indexInCurrent + 1]?.returnCash < 0)
     ) {
       user.streaks.current.trades.splice(indexInCurrent, 1);
       return;

@@ -1470,6 +1470,8 @@ var compareToStreaks = function compareToStreaks(newEntry) {
   }).indexOf(newEntry.id) : -1;
 
   if (indexInCurrent !== -1) {
+    var _user$streaks$current, _user$streaks$current2, _user$streaks$current3, _user$streaks$current4;
+
     var currentStreakLength = user.streaks.current.trades.length; // if the current streak is 1, overwrite the index as the new Entry already exists in the array
 
     if (currentStreakLength === 1) {
@@ -1479,14 +1481,16 @@ var compareToStreaks = function compareToStreaks(newEntry) {
     // if this is the case, overwrite the index as the new Entry already exists in the array
 
 
-    if (newEntry.returnCash > -1 && (user.streaks.current.trades[indexInCurrent - 1].returnCash > -1 || user.streaks.current.trades[indexInCurrent + 1].returnCash > -1)) {
+    console.log(newEntry.returnCash);
+
+    if (newEntry.returnCash > -1 && (((_user$streaks$current = user.streaks.current.trades[indexInCurrent - 1]) === null || _user$streaks$current === void 0 ? void 0 : _user$streaks$current.returnCash) > -1 || ((_user$streaks$current2 = user.streaks.current.trades[indexInCurrent + 1]) === null || _user$streaks$current2 === void 0 ? void 0 : _user$streaks$current2.returnCash) > -1)) {
       user.streaks.current.trades[indexInCurrent] = streakObj;
       return;
     } // checks if new Entry's cash return is positive and the previous or next element's cash return is negative
     // if this is the case, the streak is broken, so remove the existing new entry index from the array
 
 
-    if (newEntry.returnCash > -1 && (user.streaks.current.trades[indexInCurrent - 1].returnCash < 0 || user.streaks.current.trades[indexInCurrent + 1].returnCash < 0)) {
+    if (newEntry.returnCash > -1 && (((_user$streaks$current3 = user.streaks.current.trades[indexInCurrent - 1]) === null || _user$streaks$current3 === void 0 ? void 0 : _user$streaks$current3.returnCash) < 0 || ((_user$streaks$current4 = user.streaks.current.trades[indexInCurrent + 1]) === null || _user$streaks$current4 === void 0 ? void 0 : _user$streaks$current4.returnCash) < 0)) {
       user.streaks.current.trades.splice(indexInCurrent, 1);
       return;
     } // checks if new Entry's cash return is negative and the previous or next element's cash return is also negative
