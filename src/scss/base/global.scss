@@ -1,18 +1,11 @@
-html {
-  box-sizing: border-box;
-  font-size: 65.5%; // to make 1rem equal 10px
-  ::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 body {
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100svh;
   background-color: $black;
 }
 
 .container {
-  height: 100vh;
+  height: inherit;
   max-width: 2560px;
   margin: 0 auto;
 }

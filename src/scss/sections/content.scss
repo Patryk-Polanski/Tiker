@@ -3,6 +3,10 @@
   margin-left: 75px;
   position: relative;
 
+  @media only screen and (max-width: $bp-medium) {
+    margin-left: 0;
+  }
+
   &__loading-wrapper {
     position: absolute;
     top: 0;

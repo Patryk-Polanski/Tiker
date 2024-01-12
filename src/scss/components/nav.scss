@@ -10,6 +10,11 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 5px;
+  transform: translateX(0);
+
+  @media only screen and (max-width: $bp-medium) {
+    transform: translateX(-110%);
+  }
 
   &__logo {
     width: 66px;
