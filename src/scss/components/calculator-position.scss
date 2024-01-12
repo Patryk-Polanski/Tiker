@@ -1,6 +1,6 @@
 .c-calculator-position {
-  width: 800px;
-  min-width: 800px;
+  width: 100%;
+  max-width: 800px;
   background-color: $grey-dark;
   border-radius: 10px;
   padding: 30px 10px;
@@ -15,6 +15,12 @@
     align-items: flex-start;
     justify-content: space-evenly;
     margin-top: 40px;
+    gap: 4rem;
+
+    @media only screen and (max-width: $bp-medium) {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   &__entry-wrapper,
