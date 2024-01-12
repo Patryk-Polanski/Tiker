@@ -11,10 +11,19 @@
     grid-column: 1 / -1;
   }
 
+  @media only screen and (max-width: $bp-medium) {
+    grid-row: auto;
+  }
+
   &__heading {
     @include ts-heading-2;
     margin-top: 20px;
     flex-grow: 0;
+
+    @media only screen and (max-width: $bp-medium) {
+      text-align: left;
+      margin-left: 2rem;
+    }
 
     & span {
       font-size: 18px;

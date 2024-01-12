@@ -1,6 +1,5 @@
 .c-chart-worst-best {
   background-color: $grey-dark;
-  // background-color: orange;
   grid-column: 3 / -1;
   grid-row: 7 / -1;
   border-radius: 10px;
@@ -13,11 +12,21 @@
     grid-row: 13 / span 5;
   }
 
+  @media only screen and (max-width: $bp-medium) {
+    grid-area: unset;
+    grid-row: auto;
+  }
+
   &__heading {
     @include ts-heading-2;
     margin-top: 20px;
     margin-left: 20%;
     text-align: left;
+
+    @media only screen and (max-width: $bp-medium) {
+      text-align: left;
+      margin-left: 2rem;
+    }
   }
 
   &__button-wrapper {

@@ -1,6 +1,5 @@
 .c-pie-streak {
   background-color: $grey-dark;
-  // background-color: green;
   grid-column: 4 / -1;
   grid-row: 1 / span 6;
   border-radius: 10px;
@@ -19,6 +18,12 @@
     grid-row: 7 / -1;
   }
 
+  @media only screen and (max-width: $bp-medium) {
+    grid-column: 1;
+    grid-row: 4 / -1;
+    flex-direction: row;
+  }
+
   & h3,
   p,
   span {
@@ -35,6 +40,11 @@
     @media only screen and (max-width: $bp-large) {
       flex-direction: column;
     }
+
+    @media only screen and (max-width: $bp-medium) {
+      justify-content: center;
+      gap: 1rem;
+    }
   }
 
   &__heading,
@@ -44,6 +54,10 @@
   &__streak-loss-heading {
     @include ts-heading-2;
     text-align: left;
+
+    @media only screen and (max-width: $bp-medium) {
+      text-align: center;
+    }
   }
 
   &__heading {
@@ -82,6 +96,10 @@
     @media only screen and (max-width: $bp-large) {
       flex-direction: column;
       height: 250px;
+    }
+
+    @media only screen and (max-width: $bp-medium) {
+      align-self: center;
     }
   }
 
@@ -139,6 +157,11 @@
       flex-direction: column;
       align-items: center;
     }
+
+    @media only screen and (max-width: $bp-medium) {
+      justify-content: flex-start;
+      gap: 2rem;
+    }
   }
 
   &__win-inner-wrapper,
@@ -147,6 +170,10 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-around;
+
+    @media only screen and (max-width: $bp-medium) {
+      align-items: center;
+    }
   }
 
   &__win-date,
@@ -179,6 +206,13 @@
 
     @media only screen and (max-width: $bp-large) {
       flex-direction: column;
+    }
+
+    @media only screen and (max-width: $bp-medium) {
+      justify-content: flex-end;
+      gap: 2rem;
+      margin-top: 0;
+      margin-bottom: 14px;
     }
   }
 }

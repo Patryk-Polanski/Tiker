@@ -70,7 +70,7 @@ export const checkIfJournalEmpty = function () {
   if (user.journal.length > 0) return 'full';
 };
 
-const sortJournal = data =>
+const sortJournal = (data) =>
   data.sort((a, b) => new Date(a.dateLong) - new Date(b.dateLong));
 
 const addToOverall = function (newEntry, newEntryIndex, previousSide) {
@@ -112,7 +112,7 @@ const compareToStreaks = function (newEntry) {
 
   // losing streak - checks whether the entry exists in the losing streak
   const indexInLosses = user.streaks.losses.trades
-    ? user.streaks.losses.trades.map(loss => loss.id).indexOf(newEntry.id)
+    ? user.streaks.losses.trades.map((loss) => loss.id).indexOf(newEntry.id)
     : -1;
 
   // if the index exists and the new entry's cash return is smaller than zero, overwrite the index
@@ -127,7 +127,7 @@ const compareToStreaks = function (newEntry) {
 
   // winning streak - checks whether the entry exists in the winning streak
   const indexInWins = user.streaks.wins.trades
-    ? user.streaks.wins.trades.map(win => win.id).indexOf(newEntry.id)
+    ? user.streaks.wins.trades.map((win) => win.id).indexOf(newEntry.id)
     : -1;
 
   // if the index exists and the new entry's cash return is bigger than zero, overwrite the index
@@ -142,7 +142,7 @@ const compareToStreaks = function (newEntry) {
 
   // current streak - checks whether the entry exists in the streak
   const indexInCurrent = user.streaks.current.trades
-    ? user.streaks.current.trades.map(cur => cur.id).indexOf(newEntry.id)
+    ? user.streaks.current.trades.map((cur) => cur.id).indexOf(newEntry.id)
     : -1;
 
   if (indexInCurrent !== -1) {
@@ -262,7 +262,7 @@ const compareToWorstBest = function (newEntry) {
   // best comparison
   if (newEntry.returnCash > -1) {
     const indexInBest = user.bestTrades
-      .map(trade => trade.id)
+      .map((trade) => trade.id)
       .indexOf(newEntry.id);
 
     if (indexInBest !== -1) {
@@ -289,7 +289,7 @@ const compareToWorstBest = function (newEntry) {
   // worst comparison
   if (newEntry.returnCash < 0) {
     const indexInWorst = user.worstTrades
-      .map(trade => trade.id)
+      .map((trade) => trade.id)
       .indexOf(newEntry.id);
 
     if (indexInWorst !== -1) {
@@ -323,7 +323,7 @@ const addToTickers = function (entry) {
     let previousTicker = user.tickers[entry.previousTicker];
 
     const tradesIndex = user.tickers[entry.previousTicker].trades
-      .map(trade => trade.id)
+      .map((trade) => trade.id)
       .indexOf(entry.id);
     if (tradesIndex !== -1) {
       user.tickers[entry.previousTicker].trades.splice(tradesIndex, 1);
@@ -337,7 +337,7 @@ const addToTickers = function (entry) {
   // if the ticker already exists in the array
   if (currentTicker) {
     const indexInTrades = currentTicker.trades
-      .map(trade => trade.id)
+      .map((trade) => trade.id)
       .indexOf(entry.id);
 
     if (indexInTrades !== -1) {
@@ -360,7 +360,7 @@ const addToTickers = function (entry) {
 
     currentTicker.avgReturn = +(
       currentTicker.trades
-        .map(trade => trade.returnCash)
+        .map((trade) => trade.returnCash)
         .reduce((acc, num) => acc + num, 0) / currentTicker.trades.length
     ).toFixed(2);
   }
@@ -393,13 +393,13 @@ const addToCalendarData = function (entry) {
       String(new Date(entry.previousDateLong).getFullYear()).slice(-2);
 
     const previousDateIndex = user.calendarData[previousDateKey]
-      .map(day => day.dateShort)
+      .map((day) => day.dateShort)
       .indexOf(entry.previousDateShort);
 
     let tradeIndex;
     if (previousDateIndex !== -1) {
       tradeIndex = user.calendarData[previousDateKey][previousDateIndex].trades
-        .map(trade => trade.id)
+        .map((trade) => trade.id)
         .indexOf(entry.id);
     }
 
@@ -429,11 +429,11 @@ const addToCalendarData = function (entry) {
   const currentKey = user.calendarData[dateKey];
   if (currentKey) {
     const entryDateIndex = currentKey
-      .map(day => day.dateShort)
+      .map((day) => day.dateShort)
       .indexOf(entry.dateShort);
     if (entryDateIndex !== -1) {
       const entryIDinTrades = currentKey[entryDateIndex].trades
-        .map(trade => trade.id)
+        .map((trade) => trade.id)
         .indexOf(entry.id);
       if (entryIDinTrades !== -1) {
         currentKey[entryDateIndex].trades[entryIDinTrades] = {
@@ -540,14 +540,14 @@ export const updateCapital = function (amount = '', action = '') {
 };
 
 export const updateCalendarData = function (obj) {
-  Object.keys(obj).forEach(key => {
+  Object.keys(obj).forEach((key) => {
     user.calendarData[key] = obj[key];
   });
   return user.calendarData;
 };
 
 export const updateJournalData = function (newEntry) {
-  const newEntryIndex = user.journal.map(e => e.id).indexOf(newEntry.id);
+  const newEntryIndex = user.journal.map((e) => e.id).indexOf(newEntry.id);
   let previousSide;
   // if the id already exists, meaning the journal entry has been updated
   if (newEntryIndex !== -1) {
@@ -599,7 +599,7 @@ const updateJournalTradesTotals = function () {
 
 export const findJournalEntry = function (id) {
   if (!id) return;
-  return user.journal.filter(entry => entry.id === id);
+  return user.journal.filter((entry) => entry.id === id);
 };
 
 // ZONE - deleting an entry
@@ -607,7 +607,7 @@ export const findJournalEntry = function (id) {
 export const targetSelectedEntry = function (entryID) {
   // const [foundEntry] = user.journal.filter(entry => entry.id === entryID);
   const IndexInJournal = user.journal
-    .map(journal => journal.id)
+    .map((journal) => journal.id)
     .indexOf(entryID);
   const foundEntry = user.journal[IndexInJournal];
 
@@ -625,30 +625,32 @@ export const targetSelectedEntry = function (entryID) {
 
   // streaks
   const indexInWinsStreak = user.streaks.wins.trades
-    .map(trade => trade.id)
+    .map((trade) => trade.id)
     .indexOf(entryID);
   if (indexInWinsStreak !== -1)
     user.streaks.wins.trades.splice(indexInWinsStreak, 1);
   const indexInLossStreak = user.streaks.losses.trades
-    .map(trade => trade.id)
+    .map((trade) => trade.id)
     .indexOf(entryID);
   if (indexInLossStreak !== -1)
     user.streaks.losses.trades.splice(indexInWinsStreak, 1);
   const indexInCurrentStreak = user.streaks.current.trades
-    .map(trade => trade.id)
+    .map((trade) => trade.id)
     .indexOf(entryID);
   if (indexInCurrentStreak !== -1)
     user.streaks.current.trades.splice(indexInCurrentStreak, 1);
 
   // worst and best trades
-  const indexInWorst = user.worstTrades.map(trade => trade.id).indexOf(entryID);
+  const indexInWorst = user.worstTrades
+    .map((trade) => trade.id)
+    .indexOf(entryID);
   if (indexInWorst !== -1) user.worstTrades.splice(indexInWorst, 1);
-  const indexInBest = user.bestTrades.map(trade => trade.id).indexOf(entryID);
+  const indexInBest = user.bestTrades.map((trade) => trade.id).indexOf(entryID);
   if (indexInBest !== -1) user.bestTrades.splice(indexInBest, 1);
 
   // tickers
   const indexInTickers = user.tickers[foundEntry.ticker].trades
-    .map(trade => trade.id)
+    .map((trade) => trade.id)
     .indexOf(entryID);
   if (indexInTickers !== -1)
     user.tickers[foundEntry.ticker].trades.splice(indexInTickers, 1);
@@ -660,12 +662,12 @@ export const targetSelectedEntry = function (entryID) {
     String(new Date(foundEntry.dateLong).getFullYear()).slice(-2);
 
   const indexInCalendar = user.calendarData[dateKey]
-    .map(day => day.dateShort)
+    .map((day) => day.dateShort)
     .indexOf(foundEntry.dateShort);
 
   if (indexInCalendar !== -1) {
     const indexInTrades = user.calendarData[dateKey][indexInCalendar].trades
-      .map(trade => trade.id)
+      .map((trade) => trade.id)
       .indexOf(entryID);
     if (indexInTrades !== -1)
       user.calendarData[dateKey][indexInCalendar].trades.splice(
