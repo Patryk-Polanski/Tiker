@@ -14,44 +14,42 @@
     <div class="container">
       <section class="s-login">
         <div class="s-login__container">
-          <div class="s-login__container">
-            <img
-              class="s-login__logo"
-              src="./img/tiker-big-logo.png"
-              alt="Tiker logo"
+          <img
+            class="s-login__logo"
+            src="./img/tiker-big-logo.png"
+            alt="Tiker logo"
+          />
+          <form class="s-login__form">
+            <label class="s-login__form-username-label" for="username"
+              >username</label
+            >
+            <input
+              class="s-login__form-username-input c-input-text js-login-username"
+              type="text"
+              name="username"
             />
-            <form class="s-login__form">
-              <label class="s-login__form-username-label" for="username"
-                >username</label
+            <label class="s-login__form-password-label" for="password"
+              >password</label
+            >
+            <input
+              class="s-login__form-password-input c-input-text js-login-password"
+              type="password"
+              name="password"
+            />
+            <div class="s-login__form-button-wrapper">
+              <a
+                class="s-login__form-button btn btn--secondary js-join-btn"
+                href="#"
+                >join</a
               >
-              <input
-                class="s-login__form-username-input c-input-text js-login-username"
-                type="text"
-                name="username"
-              />
-              <label class="s-login__form-password-label" for="password"
-                >password</label
+              <a
+                class="s-login__form-button btn btn--primary js-enter-btn"
+                href="./app.html"
+                >enter</a
               >
-              <input
-                class="s-login__form-password-input c-input-text js-login-password"
-                type="password"
-                name="password"
-              />
-              <div class="s-login__form-button-wrapper">
-                <a
-                  class="s-login__form-button btn btn--secondary js-join-btn"
-                  href="#"
-                  >join</a
-                >
-                <a
-                  class="s-login__form-button btn btn--primary js-enter-btn"
-                  href="./app.html"
-                  >enter</a
-                >
-              </div>
-            </form>
-            <p class="s-login__form-message js-form-message"></p>
-          </div>
+            </div>
+          </form>
+          <p class="s-login__form-message js-form-message"></p>
         </div>
       </section>
     </div>

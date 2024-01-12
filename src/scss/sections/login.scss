@@ -6,16 +6,22 @@
   min-height: 100svh;
 
   &__container {
-    // height: 500px;
     padding: 20px 40px 40px;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     background-color: $black;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 1rem;
+
+    @media only screen and (max-width: $bp-medium) {
+      padding: 16px 20px 32px;
+    }
   }
+
   &__logo {
     width: 250px;
     height: auto;
@@ -39,6 +45,7 @@
   &__form-username-input,
   &__form-password-input {
     max-width: 200px;
+    width: 100%;
   }
 
   &__form-password-input {
