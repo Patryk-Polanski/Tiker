@@ -1,5 +1,6 @@
 .c-nav {
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100svh;
   width: 75px;
   background-color: $black;
   position: fixed;
@@ -46,6 +47,7 @@
 }
 
 .c-nav-trigger {
+  cursor: pointer;
   position: fixed;
   z-index: 1;
   top: 1rem;
