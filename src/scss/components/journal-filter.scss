@@ -6,6 +6,10 @@
   align-items: flex-end;
   padding: 26px;
 
+  @media only screen and (max-width: $bp-medium) {
+    margin: 20px 10px 0;
+  }
+
   & > * {
     margin-right: 26px;
   }
