@@ -13,8 +13,10 @@ import {
 } from './models/dataModel';
 import {
   addNavigationHandler,
+  addNavigationTriggerHandler,
   queryCoreEls,
   toggleSections,
+  toggleMobileNav,
   removeLoadingScreen,
   showNoDataScreens,
   hideNoDataScreens,
@@ -119,6 +121,8 @@ const controlNavigation = function (targetEl) {
     renderLongShortPie();
   }
 };
+
+const mobileMenuTrigger = function () {};
 
 const controlPopups = function (action, dataAttr, entryID) {
   if (action === 'hide') hidePopup();
@@ -357,11 +361,12 @@ const queryDOM = function () {
 
 // ZONE - event listeners
 
-window.addEventListener('DOMContentLoaded', e => {
+window.addEventListener('DOMContentLoaded', (e) => {
   fetchUserFromJSON();
   queryDOM();
   controlNoDataScreens();
   addNavigationHandler(controlNavigation);
+  addNavigationTriggerHandler(toggleMobileNav);
   updateCapitalOutput(passData('capital'));
   addCalcPositionHandler(controlCalcPosition);
   addCalcRatioHandler(controlCalcRatio);
@@ -387,7 +392,7 @@ window.addEventListener('DOMContentLoaded', e => {
 });
 
 let resizeTimer;
-window.addEventListener('resize', e => {
+window.addEventListener('resize', (e) => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
     clearPerformanceCanvas();

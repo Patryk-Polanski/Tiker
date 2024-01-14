@@ -3,6 +3,7 @@ let coreEls = {};
 const getElements = function (obj = {}) {
   obj.core = document.querySelector('.js-core');
   obj.nav = obj.core.querySelector('.js-nav');
+  obj.navTrigger = obj.core.querySelector('.js-nav-trigger');
   obj.loadingScreen = obj.core.querySelector('.js-loading');
   obj.singleBtnPopup = obj.core.querySelector('.js-single-btn-popup');
   obj.doubleBtnPopup = obj.core.querySelector('.js-double-btn-popup');
@@ -30,7 +31,7 @@ const hideAllSections = function () {
     coreEls.sectionCalculators,
     coreEls.sectionSettings,
     coreEls.sectionHelp,
-  ].forEach(section => section.classList.add('s-core-hidden-section'));
+  ].forEach((section) => section.classList.add('s-core-hidden-section'));
 };
 
 const toggleActiveNavBtns = function (targetEl) {
@@ -45,7 +46,7 @@ export const showSingleBtnPopup = function (...messages) {
 
   const popupContentWrapper = coreEls.singleBtnPopup.children[0];
 
-  messages.forEach(message => {
+  messages.forEach((message) => {
     const html = `
       <p class="s-content__popup-text">${message}</p>
     `;
@@ -64,7 +65,7 @@ export const showDoubleBtnPopup = function (
 
   const popupContentWrapper = coreEls.doubleBtnPopup.children[0];
 
-  messages.forEach(message => {
+  messages.forEach((message) => {
     const html = `
       <p class="s-content__popup-text">${message}</p>
     `;
@@ -77,7 +78,7 @@ export const hidePopup = function () {
   if (activePopup) {
     activePopup.children[0]
       .querySelectorAll('p')
-      .forEach(text => text.remove());
+      .forEach((text) => text.remove());
     activePopup.classList.remove('s-content__popup--active');
   }
 };
@@ -91,28 +92,36 @@ export const queryCoreEls = function () {
 };
 
 export const addNavigationHandler = function (handler) {
-  coreEls.nav.addEventListener('click', e => handler(e.target));
+  coreEls.nav.addEventListener('click', (e) => handler(e.target));
+};
+
+export const toggleMobileNav = function () {
+  coreEls.nav.classList.toggle('c-nav--is-active');
+};
+
+export const addNavigationTriggerHandler = function (handler) {
+  coreEls.navTrigger.addEventListener('click', () => handler());
 };
 
 export const addPopupHandler = function (handler) {
-  coreEls.singleBtnPopupOkBtn.addEventListener('click', e => {
+  coreEls.singleBtnPopupOkBtn.addEventListener('click', (e) => {
     e.preventDefault();
     handler('hide');
   });
-  coreEls.singleBtnPopup.children[0].addEventListener('click', e => {
+  coreEls.singleBtnPopup.children[0].addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
   });
-  coreEls.singleBtnPopup.addEventListener('click', e => {
+  coreEls.singleBtnPopup.addEventListener('click', (e) => {
     e.preventDefault();
     handler('hide');
   });
 
-  coreEls.doubleBtnPopupNoBtn.addEventListener('click', e => {
+  coreEls.doubleBtnPopupNoBtn.addEventListener('click', (e) => {
     e.preventDefault();
     handler('hide');
   });
-  coreEls.doubleBtnPopupYesBtn.addEventListener('click', e => {
+  coreEls.doubleBtnPopupYesBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     handler(
       'proceed',
@@ -120,11 +129,11 @@ export const addPopupHandler = function (handler) {
       coreEls.doubleBtnPopup.getAttribute('entry-id')
     );
   });
-  coreEls.doubleBtnPopup.children[0].addEventListener('click', e => {
+  coreEls.doubleBtnPopup.children[0].addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
   });
-  coreEls.doubleBtnPopup.addEventListener('click', e => {
+  coreEls.doubleBtnPopup.addEventListener('click', (e) => {
     e.preventDefault();
     handler('hide');
   });
@@ -190,7 +199,7 @@ export const showNoDataScreens = function () {
     coreEls.overallChart,
     coreEls.tableProfitable,
     coreEls.worstBestChart,
-  ].forEach(card => card.classList.add('s-content__no-data'));
+  ].forEach((card) => card.classList.add('s-content__no-data'));
 };
 
 export const hideNoDataScreens = function () {
@@ -199,5 +208,5 @@ export const hideNoDataScreens = function () {
     coreEls.overallChart,
     coreEls.tableProfitable,
     coreEls.worstBestChart,
-  ].forEach(card => card.classList.remove('s-content__no-data'));
+  ].forEach((card) => card.classList.remove('s-content__no-data'));
 };
